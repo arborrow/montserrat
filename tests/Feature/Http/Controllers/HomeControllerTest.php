@@ -14,7 +14,7 @@ class HomeControllerTest extends TestCase
     /**
      * @test
      */
-    public function goodbye_returns_an_ok_response()
+    public function goodbye_returns_an_ok_response(): void
     {
         $response = $this->get('goodbye');
 
@@ -25,7 +25,7 @@ class HomeControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $response = $this->get(route('home'));
 

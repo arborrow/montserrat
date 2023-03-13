@@ -11,7 +11,7 @@ class ContactTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $self_contact = \App\Models\Contact::create([
             'contact_type' => config('polanco.contact_type.organization'),

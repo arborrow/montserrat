@@ -14,7 +14,7 @@ class OrganizationFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $subcontact_type = $this->faker->numberBetween(9, 11);
         $organizaton_name = $this->faker->company();

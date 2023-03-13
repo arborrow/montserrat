@@ -58,7 +58,7 @@ class RelationshipTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function addme_validates_with_a_form_request()
+    public function addme_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RelationshipTypeController::class,
@@ -70,7 +70,7 @@ class RelationshipTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-relationshiptype');
 
@@ -85,7 +85,7 @@ class RelationshipTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-relationshiptype');
 
@@ -101,7 +101,7 @@ class RelationshipTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::factory()->create();
@@ -136,7 +136,7 @@ class RelationshipTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::factory()->create();
@@ -184,7 +184,7 @@ class RelationshipTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function make_validates_with_a_form_request()
+    public function make_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RelationshipTypeController::class,
@@ -196,7 +196,7 @@ class RelationshipTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::factory()->create();
@@ -213,7 +213,7 @@ class RelationshipTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-relationshiptype');
 
@@ -248,7 +248,7 @@ class RelationshipTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RelationshipTypeController::class,
@@ -260,7 +260,7 @@ class RelationshipTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-relationshiptype');
 
@@ -291,7 +291,7 @@ class RelationshipTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RelationshipTypeController::class,

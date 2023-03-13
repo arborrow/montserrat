@@ -13,7 +13,7 @@ class PermissionFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $actions = ['show', 'create', 'update', 'delete', 'manage'];
         $action = $actions[array_rand($actions)];

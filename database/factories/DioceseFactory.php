@@ -14,7 +14,7 @@ class DioceseFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $city_name = $this->faker->city();
         $diocese_name = 'Diocese of '.$city_name;

@@ -14,7 +14,7 @@ class ActivityFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'source_record_id' => $this->faker->randomNumber(),

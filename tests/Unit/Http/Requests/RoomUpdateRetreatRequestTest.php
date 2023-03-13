@@ -22,7 +22,7 @@ class RoomUpdateRetreatRequestTest extends TestCase
     /**
      * @test
      */
-    public function authorize()
+    public function authorize(): void
     {
         $actual = $this->subject->authorize();
 
@@ -32,7 +32,7 @@ class RoomUpdateRetreatRequestTest extends TestCase
     /**
      * @test
      */
-    public function rules()
+    public function rules(): void
     {
         $actual = $this->subject->rules();
 
@@ -44,7 +44,7 @@ class RoomUpdateRetreatRequestTest extends TestCase
     /**
      * @test
      */
-    public function messages()
+    public function messages(): void
     {
         $actual = $this->subject->messages();
 

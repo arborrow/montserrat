@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Models\SquarespaceContribution;
 use App\Models\StripeBalanceTransaction;
 use App\Models\StripePayout;
@@ -22,7 +24,7 @@ class StripePayoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-stripe-payout');
 
@@ -84,7 +86,7 @@ class StripePayoutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($payout_id)
+    public function show($payout_id): View
     {
         $this->authorize('show-stripe-payout');
 
@@ -169,7 +171,7 @@ class StripePayoutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         //
     }
@@ -180,7 +182,7 @@ class StripePayoutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function process_fees($id = null)
+    public function process_fees(int $id = null): RedirectResponse
     {
         $this->authorize('update-stripe-payout');
 
@@ -213,7 +215,7 @@ class StripePayoutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         //
     }
@@ -224,7 +226,7 @@ class StripePayoutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         //
     }
@@ -234,7 +236,7 @@ class StripePayoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function import()
+    public function import(): RedirectResponse
     {
         $this->authorize('import-stripe-payout');
         // dd('Stripe Payout Import');
@@ -277,7 +279,7 @@ class StripePayoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function process($id)
+    public function process($id): RedirectResponse
     {
         $this->authorize('import-stripe-payout');
         // dd('Stripe Payout Import');

@@ -14,7 +14,7 @@ class ActivityContactFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'activity_id' => $this->faker->randomNumber(),

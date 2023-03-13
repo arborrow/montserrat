@@ -13,7 +13,7 @@ class RoomstateFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'room_id' => function () {

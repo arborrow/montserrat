@@ -18,7 +18,7 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
 
@@ -32,7 +32,7 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
-    public function agc_returns_an_ok_response()
+    public function agc_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
         $response = $this->actingAs($user)->get(route('dashboard.agc'));
@@ -45,7 +45,7 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
-    public function agc_donations_returns_an_ok_response()
+    public function agc_donations_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         $response = $this->actingAs($user)->get(route('dashboard.agc_donations'));
@@ -60,7 +60,7 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
-    public function agc_donations_returns_403_response()
+    public function agc_donations_returns_403_response(): void
     {   // requires show-donation permission, so ensure a 403 when that permission is missing
         $user = $this->createUserWithPermission('show-dashboard');
         $response = $this->actingAs($user)->get(route('dashboard.agc_donations'));
@@ -71,7 +71,7 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
-    public function agc_with_years_returns_an_ok_response()
+    public function agc_with_years_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
         $current_fiscal_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
@@ -89,7 +89,7 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
-    public function donation_description_chart_returns_an_ok_response()
+    public function donation_description_chart_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
 
@@ -104,7 +104,7 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
-    public function donation_description_chart_with_donation_description_returns_an_ok_response()
+    public function donation_description_chart_with_donation_description_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
         $donation_type = \App\Models\DonationType::active()->get()->random();
@@ -124,7 +124,7 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
-    public function events_returns_an_ok_response()
+    public function events_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
 
@@ -144,7 +144,7 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
-    public function events_with_year_returns_an_ok_response()
+    public function events_with_year_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
         $last_year = Carbon::now()->subYear()->year;
@@ -166,7 +166,7 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
-    public function drilldown_returns_an_ok_response()
+    public function drilldown_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
         $event_type = \App\Models\EventType::get()->random();

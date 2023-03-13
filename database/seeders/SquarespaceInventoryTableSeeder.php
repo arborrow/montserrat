@@ -11,7 +11,7 @@ class SquarespaceInventoryTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         \DB::table('squarespace_inventory')->delete();
 

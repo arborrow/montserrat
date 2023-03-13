@@ -17,7 +17,7 @@ class ExportListControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-export-list');
 
@@ -32,7 +32,7 @@ class ExportListControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-export-list');
         $export_list = \App\Models\ExportList::factory()->create();
@@ -47,7 +47,7 @@ class ExportListControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-export-list');
         $export_list = \App\Models\ExportList::factory()->create();
@@ -65,7 +65,7 @@ class ExportListControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-export-list');
 
@@ -79,7 +79,7 @@ class ExportListControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-export-list');
         $export_list = \App\Models\ExportList::factory()->create();
@@ -95,7 +95,7 @@ class ExportListControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $this->withoutExceptionHandling();
 
@@ -124,7 +124,7 @@ class ExportListControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-export-list');
 

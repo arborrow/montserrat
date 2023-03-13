@@ -12,7 +12,7 @@ class EventTypeTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('event_type')->delete();
 

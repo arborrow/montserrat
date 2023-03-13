@@ -18,7 +18,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-room');
 
@@ -34,7 +34,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-room');
         $room = \App\Models\Room::factory()->create();
@@ -49,7 +49,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-room');
         $room = \App\Models\Room::factory()->create();
@@ -91,7 +91,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-room');
 
@@ -106,7 +106,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function schedule_returns_an_ok_response()
+    public function schedule_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-room');
 
@@ -125,7 +125,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function schedule_with_hyphenated_date_returns_an_ok_response()
+    public function schedule_with_hyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-room');
         $yesterday = Carbon::now()->subDay()->toDateString();
@@ -145,7 +145,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function schedule_with_unhyphenated_date_returns_an_ok_response()
+    public function schedule_with_unhyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-room');
         $yesterday = Carbon::now()->subDay()->toDateString();
@@ -167,7 +167,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-room');
         $room = \App\Models\Room::factory()->create();
@@ -183,7 +183,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-room');
 
@@ -215,7 +215,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RoomController::class,
@@ -227,7 +227,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-room');
         $room = \App\Models\Room::factory()->create();
@@ -254,7 +254,7 @@ class RoomControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RoomController::class,

@@ -17,7 +17,7 @@ class SquarespaceOrderFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $inventory = SquarespaceInventory::where('id', '<', 10)->first();
         $prefix = Prefix::get()->random();

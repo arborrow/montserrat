@@ -16,7 +16,7 @@ class UnauthenticatedAboutTest extends TestCase
 
     protected $runTestInSeparateProcess = true;
 
-    public function testAbout()
+    public function testAbout(): void
     {
         // test attempt to see about page without authentication
         $route = route('about');

@@ -15,7 +15,7 @@ class RelationshipFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $relationship_type = \App\Models\RelationshipType::whereIsActive(1)->get()->random();
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());

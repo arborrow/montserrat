@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 use App\Models\Address;
@@ -24,7 +26,7 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-address');
         $addresses = \App\Models\Address::orderBy('postal_code', 'asc')->with('addressee')->paginate(25, ['*'], 'addresses');
@@ -37,7 +39,7 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-address');
         $countries = \App\Models\Country::orderBy('iso_code')->pluck('iso_code', 'id');
@@ -56,7 +58,7 @@ class AddressController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAddressRequest $request)
+    public function store(StoreAddressRequest $request): RedirectResponse
     {
         $this->authorize('create-address');
         $address = new \App\Models\Address;
@@ -82,7 +84,7 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-address');
         $address = \App\Models\Address::with('addressee')->findOrFail($id);
@@ -96,7 +98,7 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-address');
 
@@ -118,7 +120,7 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAddressRequest $request, $id)
+    public function update(UpdateAddressRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-address');
         $address = \App\Models\Address::findOrFail($id);
@@ -144,7 +146,7 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-address');
         $address = \App\Models\Address::findOrFail($id);

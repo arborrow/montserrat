@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreSquarespaceInventoryRequest;
 use App\Http\Requests\UpdateSquarespaceInventoryRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -18,7 +20,7 @@ class SquarespaceInventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-squarespace-inventory');
 
@@ -32,7 +34,7 @@ class SquarespaceInventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-squarespace-inventory');
         $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->pluck('name', 'id');
@@ -46,7 +48,7 @@ class SquarespaceInventoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSquarespaceInventoryRequest $request)
+    public function store(StoreSquarespaceInventoryRequest $request): RedirectResponse
     {
         $this->authorize('create-squarespace-inventory');
 
@@ -67,7 +69,7 @@ class SquarespaceInventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-squarespace-inventory');
 
@@ -82,7 +84,7 @@ class SquarespaceInventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-squarespace-inventory');
 
@@ -99,7 +101,7 @@ class SquarespaceInventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSquarespaceInventoryRequest $request, $id)
+    public function update(UpdateSquarespaceInventoryRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-squarespace-inventory');
 
@@ -121,7 +123,7 @@ class SquarespaceInventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-squarespace-inventory');
         $inventory = \App\Models\SquarespaceInventory::findOrFail($id);

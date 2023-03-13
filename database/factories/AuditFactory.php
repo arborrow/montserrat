@@ -13,7 +13,7 @@ class AuditFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'user_type' => \App\Models\User::class,

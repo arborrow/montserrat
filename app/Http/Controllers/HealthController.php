@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use DB;
 
 class HealthController extends Controller
@@ -16,7 +18,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -40,7 +42,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_primary_address()
+    public function check_primary_address(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -54,7 +56,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_primary_email()
+    public function check_primary_email(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -68,7 +70,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_primary_phone()
+    public function check_primary_phone(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -82,7 +84,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_abandoned_donations()
+    public function check_abandoned_donations(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -103,7 +105,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_donations_with_zero_event_id()
+    public function check_donations_with_zero_event_id(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -124,7 +126,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_abandoned_payments()
+    public function check_abandoned_payments(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -145,7 +147,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_abandoned_registrations()
+    public function check_abandoned_registrations(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -166,7 +168,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_duplicate_relationships()
+    public function check_duplicate_relationships(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -188,7 +190,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_address_with_no_country()
+    public function check_address_with_no_country(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -210,7 +212,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_polygamy()
+    public function check_polygamy(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -244,7 +246,7 @@ class HealthController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_anonymous_balance_transactions()
+    public function check_anonymous_balance_transactions(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);

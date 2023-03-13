@@ -11,7 +11,7 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         \DB::table('squarespace_custom_form_field')->delete();
 

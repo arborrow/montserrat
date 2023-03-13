@@ -14,7 +14,7 @@ class PaymentFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $payment_methods = config('polanco.payment_method');
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\AddmeRelationshipTypeRequest;
 use App\Http\Requests\MakeRelationshipTypeRequest;
 use App\Http\Requests\StoreRelationshipTypeRequest;
@@ -24,7 +26,7 @@ class RelationshipTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-relationshiptype');
         $relationship_types = \App\Models\RelationshipType::whereIsActive(1)->orderBy('description')->get();
@@ -37,7 +39,7 @@ class RelationshipTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-relationshiptype');
         $contact_types = \App\Models\ContactType::OrderBy('name')->pluck('name', 'name');
@@ -51,7 +53,7 @@ class RelationshipTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRelationshipTypeRequest $request)
+    public function store(StoreRelationshipTypeRequest $request): RedirectResponse
     {
         $this->authorize('create-relationshiptype');
 
@@ -99,7 +101,7 @@ class RelationshipTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::findOrFail($id);
@@ -114,7 +116,7 @@ class RelationshipTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::findOrFail($id);
@@ -129,7 +131,7 @@ class RelationshipTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRelationshipTypeRequest $request, $id)
+    public function update(UpdateRelationshipTypeRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-relationshiptype');
 
@@ -155,7 +157,7 @@ class RelationshipTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-relationshiptype');
 
@@ -167,7 +169,7 @@ class RelationshipTypeController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function addme(AddmeRelationshipTypeRequest $request)
+    public function addme(AddmeRelationshipTypeRequest $request): View
     {
         $this->authorize('create-relationship');
         $relationship_type_name = $request->input('relationship_type_name');
@@ -268,7 +270,7 @@ class RelationshipTypeController extends Controller
         return view('relationships.types.add', compact('relationship_type', 'primary_contact', 'contact_list', 'direction'));
     }
 
-    public function make(MakeRelationshipTypeRequest $request)
+    public function make(MakeRelationshipTypeRequest $request): RedirectResponse
     {
         $this->authorize('create-relationship');
         // a very hacky way to get the contact_id of the user that we are creating a relationship for

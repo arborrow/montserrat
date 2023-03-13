@@ -11,7 +11,7 @@ class EventsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $retreat = \App\Models\Retreat::create([
             'title' => 'Open Deposits',

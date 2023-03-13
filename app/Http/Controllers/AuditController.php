@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use App\Http\Requests\AuditSearchRequest;
 use App\Models\Audit;
 use App\Models\User;
@@ -20,7 +22,7 @@ class AuditController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
@@ -29,7 +31,7 @@ class AuditController extends Controller
         return view('admin.audits.index', compact('audits', 'users'));
     }
 
-    public function index_type($user_id = null)
+    public function index_type($user_id = null): View
     {
         $this->authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
@@ -43,7 +45,7 @@ class AuditController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): RedirectResponse
     {
         // cannot manually create audits
         $this->authorize('create-audit');
@@ -58,7 +60,7 @@ class AuditController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         // cannot manually create audits
         $this->authorize('create-audit');
@@ -73,7 +75,7 @@ class AuditController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-audit');
 
@@ -90,7 +92,7 @@ class AuditController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): RedirectResponse
     {
         // cannot manually edit audits
         $this->authorize('update-audit');
@@ -106,7 +108,7 @@ class AuditController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         // cannot manually edit audits
         $this->authorize('update-audit');
@@ -121,7 +123,7 @@ class AuditController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         // cannot manually destroy audits
         $this->authorize('delete-audit');
@@ -130,7 +132,7 @@ class AuditController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function search()
+    public function search(): View
     {
         $this->authorize('show-audit');
 
@@ -145,7 +147,7 @@ class AuditController extends Controller
         return view('admin.audits.search', compact('users', 'models', 'actions'));
     }
 
-    public function results(AuditSearchRequest $request)
+    public function results(AuditSearchRequest $request): View
     {
         $this->authorize('show-audit');
         if (! empty($request)) {

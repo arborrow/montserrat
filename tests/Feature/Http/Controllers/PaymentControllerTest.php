@@ -18,7 +18,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-payment');
         $donation = \App\Models\Donation::factory()->create();
@@ -35,7 +35,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-payment');
         $payment = \App\Models\Payment::factory()->create();
@@ -49,7 +49,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-payment');
         $payment = \App\Models\Payment::factory()->create();
@@ -72,7 +72,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');
         $payment = \App\Models\Payment::factory()->create();
@@ -89,7 +89,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');
         $payment = \App\Models\Payment::factory()->create();
@@ -105,7 +105,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-payment');
         $donation = \App\Models\Donation::factory()->create();
@@ -129,7 +129,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\PaymentController::class,
@@ -141,7 +141,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-payment');
         $payment = \App\Models\Payment::factory()->create();
@@ -164,7 +164,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_403_response()
+    public function update_returns_403_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');
         $payment = \App\Models\Payment::factory()->create();
@@ -183,7 +183,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\PaymentController::class,
@@ -195,7 +195,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function results_returns_an_ok_response()
+    public function results_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');
 
@@ -213,7 +213,7 @@ class PaymentControllerTest extends TestCase
     /**
      * @test
      */
-    public function search_returns_an_ok_response()
+    public function search_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');
 

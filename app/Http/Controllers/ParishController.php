@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use App\Http\Requests\StoreParishRequest;
 use App\Http\Requests\UpdateParishRequest;
 use Illuminate\Support\Arr;
@@ -37,7 +39,7 @@ class ParishController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-contact');
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
@@ -61,7 +63,7 @@ class ParishController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreParishRequest $request)
+    public function store(StoreParishRequest $request): RedirectResponse
     {
         $this->authorize('create-contact');
         $parish = new \App\Models\Contact;
@@ -184,7 +186,7 @@ class ParishController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-contact');
         $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'note_parish', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a')->findOrFail($id);
@@ -206,7 +208,7 @@ class ParishController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-contact');
 
@@ -267,7 +269,7 @@ class ParishController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateParishRequest $request, $id)
+    public function update(UpdateParishRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-contact');
 
@@ -438,7 +440,7 @@ class ParishController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-contact');
         $parish = \App\Models\Parish::findOrFail($id);
@@ -465,7 +467,7 @@ class ParishController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function parish_index_by_diocese($diocese_id)
+    public function parish_index_by_diocese($diocese_id): View
     {
         $this->authorize('show-contact');
         $diocese = \App\Models\Contact::findOrFail($diocese_id);

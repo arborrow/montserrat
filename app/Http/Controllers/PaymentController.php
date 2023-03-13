@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\PaymentSearchRequest;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
@@ -19,7 +21,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-payment');
         $payments = \App\Models\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(25, ['*'], 'payments');
@@ -50,7 +52,7 @@ class PaymentController extends Controller
         }
     }
 
-    public function search()
+    public function search(): View
     {
         $this->authorize('show-payment');
 
@@ -63,7 +65,7 @@ class PaymentController extends Controller
         return view('payments.search', compact('payment_methods', 'descriptions'));
     }
 
-    public function results(PaymentSearchRequest $request)
+    public function results(PaymentSearchRequest $request): View
     {
         $this->authorize('show-payment');
         if (! empty($request)) {
@@ -84,7 +86,7 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePaymentRequest $request)
+    public function store(StorePaymentRequest $request): RedirectResponse
     {
         $this->authorize('create-payment');
         // dd($request);
@@ -116,7 +118,7 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-payment');
         $payment = \App\Models\Payment::with('donation.retreat', 'donation.contact', 'balance_transaction')->findOrFail($id);
@@ -130,7 +132,7 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-payment');
         //get this retreat's information
@@ -147,7 +149,7 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePaymentRequest $request, $id)
+    public function update(UpdatePaymentRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-payment');
 
@@ -177,7 +179,7 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-payment');
         $payment = \App\Models\Payment::findOrFail($id);

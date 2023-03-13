@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreSquarespaceCustomFormFieldRequest;
 use App\Http\Requests\StoreSquarespaceCustomFormRequest;
 use App\Http\Requests\UpdateSquarespaceCustomFormFieldRequest;
@@ -20,7 +22,7 @@ class SquarespaceCustomFormController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-squarespace-custom-form');
 
@@ -34,7 +36,7 @@ class SquarespaceCustomFormController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-squarespace-custom-form');
 
@@ -46,7 +48,7 @@ class SquarespaceCustomFormController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create_field($id)
+    public function create_field($id): View
     {
         $this->authorize('create-squarespace-custom-form');
         $custom_form = \App\Models\SquarespaceCustomForm::findOrFail($id);
@@ -60,7 +62,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSquarespaceCustomFormRequest $request)
+    public function store(StoreSquarespaceCustomFormRequest $request): RedirectResponse
     {
         $this->authorize('create-squarespace-custom-form');
 
@@ -79,7 +81,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store_field(StoreSquarespaceCustomFormFieldRequest $request)
+    public function store_field(StoreSquarespaceCustomFormFieldRequest $request): RedirectResponse
     {
         $this->authorize('create-squarespace-custom-form');
         $id = $request->input('id');
@@ -103,7 +105,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-squarespace-custom-form');
 
@@ -118,7 +120,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-squarespace-custom-form');
 
@@ -133,7 +135,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit_field($id)
+    public function edit_field(int $id): View
     {
         $this->authorize('update-squarespace-custom-form');
 
@@ -149,7 +151,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSquarespaceCustomFormRequest $request, $id)
+    public function update(UpdateSquarespaceCustomFormRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-squarespace-custom-form');
 
@@ -170,7 +172,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update_field(UpdateSquarespaceCustomFormFieldRequest $request)
+    public function update_field(UpdateSquarespaceCustomFormFieldRequest $request): RedirectResponse
     {
         $this->authorize('update-squarespace-custom-form');
 
@@ -193,7 +195,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-squarespace-custom-form');
         $custom_form = \App\Models\SquarespaceCustomForm::findOrFail($id);

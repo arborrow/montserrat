@@ -24,7 +24,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function about_displays_view()
+    public function about_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -37,7 +37,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function bookstore_displays_view()
+    public function bookstore_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -50,7 +50,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_index_returns_an_ok_response()
+    public function config_index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
 
@@ -63,7 +63,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_index_client_returns_403()
+    public function config_index_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -74,7 +74,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_application_returns_an_ok_response()
+    public function config_application_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
 
@@ -87,7 +87,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_application_client_returns_403()
+    public function config_application_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -98,7 +98,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_mail_returns_an_ok_response()
+    public function config_mail_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
 
@@ -111,7 +111,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_mail_client_returns_403()
+    public function config_mail_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -122,7 +122,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_gate_returns_an_ok_response()
+    public function config_gate_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
 
@@ -135,7 +135,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_gate_client_returns_403()
+    public function config_gate_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -146,7 +146,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_google_calendar_returns_an_ok_response()
+    public function config_google_calendar_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
 
@@ -159,7 +159,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_google_calendar_client_returns_403()
+    public function config_google_calendar_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -170,7 +170,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_google_client_returns_an_ok_response()
+    public function config_google_client_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
 
@@ -183,7 +183,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_google_client_returns_403()
+    public function config_google_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -194,7 +194,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_mailgun_displays_view()
+    public function config_mailgun_displays_view(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
 
@@ -207,7 +207,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_mailgun_returns_403()
+    public function config_mailgun_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -219,7 +219,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_twilio_displays_view()
+    public function config_twilio_displays_view(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
 
@@ -232,7 +232,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function config_twilio_returns_403()
+    public function config_twilio_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -244,7 +244,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function contact_info_report_displays_view()
+    public function contact_info_report_displays_view(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $contact = \App\Models\Contact::factory()->create();
@@ -259,7 +259,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function contact_info_returns_404()
+    public function contact_info_returns_404(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -271,7 +271,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_displays_view()
+    public function finance_displays_view(): void
     {
         $user = $this->createUserWithPermission('show-donation');
 
@@ -284,7 +284,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_returns_403()
+    public function finance_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -296,7 +296,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_agc_acknowledge_returns_an_ok_response()
+    public function finance_agc_acknowledge_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         $email = \App\Models\Email::factory()->create([
@@ -323,7 +323,7 @@ class PageControllerTest extends TestCase
      * when there is no contact associated with the current authenticated user, the AGC Acknowledgement letter touchpoint cannot be created
      * the user is redirected back to the page they came from and a flash error message tells them to create a contact associated with their email address
      */
-    public function finance_agc_acknowledge_no_email_returns_a_flash_response()
+    public function finance_agc_acknowledge_no_email_returns_a_flash_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         $payment = \App\Models\Payment::factory()->create();
@@ -356,7 +356,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_agc_acknowledge_returns_403()
+    public function finance_agc_acknowledge_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
         $payment = \App\Models\Payment::factory()->create();
@@ -369,7 +369,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function eoy_acknowledgment_returns_403()
+    public function eoy_acknowledgment_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
         $contact = \App\Models\Contact::factory()->create();
@@ -381,7 +381,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_cash_deposit_returns_an_ok_response()
+    public function finance_cash_deposit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
 
@@ -397,7 +397,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_cash_deposit_with_hyphenated_date_returns_an_ok_response()
+    public function finance_cash_deposit_with_hyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         $yesterday = Carbon::now()->subDay()->toDateString();
@@ -422,7 +422,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_cash_deposit_with_unhyphenated_date_returns_an_ok_response()
+    public function finance_cash_deposit_with_unhyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         $yesterday = Carbon::now()->subDay()->toDateString();
@@ -450,7 +450,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_cc_deposit_returns_an_ok_response()
+    public function finance_cc_deposit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
 
@@ -466,7 +466,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_cc_deposit_with_hyphenated_date_returns_an_ok_response()
+    public function finance_cc_deposit_with_hyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         $yesterday = Carbon::now()->subDay()->toDateString();
@@ -495,7 +495,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_cc_deposit_with_unhyphenated_date_returns_an_ok_response()
+    public function finance_cc_deposit_with_unhyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         $yesterday = Carbon::now()->subDay()->toDateString();
@@ -527,7 +527,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_deposits_returns_an_ok_response()
+    public function finance_deposits_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
 
@@ -542,7 +542,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_invoice_report_displays_view()
+    public function finance_invoice_report_displays_view(): void
     {
         // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-donation');
@@ -559,7 +559,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_invoice_returns_404()
+    public function finance_invoice_returns_404(): void
     {
         $user = $this->createUserWithPermission('show-donation');
 
@@ -571,7 +571,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_reconcile_deposit_show_returns_an_ok_response()
+    public function finance_reconcile_deposit_show_returns_an_ok_response(): void
     {
         $user = \App\Models\User::factory()->create();
         $user->assignRole('test-role:finance_reconcile_deposit_show');
@@ -592,7 +592,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_reconcile_deposit_show_with_event_id_returns_an_ok_response()
+    public function finance_reconcile_deposit_show_with_event_id_returns_an_ok_response(): void
     {
         $user = \App\Models\User::factory()->create();
         $user->assignRole('test-role:finance_reconcile_deposit_show');
@@ -613,7 +613,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_retreatdonations_returns_an_ok_response()
+    public function finance_retreatdonations_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -642,7 +642,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function grounds_displays_view()
+    public function grounds_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -655,7 +655,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function housekeeping_displays_view()
+    public function housekeeping_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -668,7 +668,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function kitchen_displays_view()
+    public function kitchen_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -681,7 +681,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function maintenance_displays_view()
+    public function maintenance_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -694,7 +694,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function reservation_displays_view()
+    public function reservation_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -707,7 +707,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function restricted_displays_view()
+    public function restricted_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -720,7 +720,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function retreat_displays_view()
+    public function retreat_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -733,7 +733,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function retreatantinforeport_displays_view()
+    public function retreatantinforeport_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
         $user->assignRole('test-role:retreatantinforeport');
@@ -755,7 +755,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function retreatlistingreport_returns_an_ok_response()
+    public function retreatlistingreport_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -776,7 +776,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function retreatrosterreport_returns_an_ok_response()
+    public function retreatrosterreport_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -791,7 +791,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function retreatregistrationsreport_returns_an_ok_response()
+    public function retreatregistrationsreport_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -806,7 +806,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function support_displays_view()
+    public function support_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -820,7 +820,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function user_displays_view()
+    public function user_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -833,7 +833,7 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function welcome_displays_view()
+    public function welcome_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
 

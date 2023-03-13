@@ -18,7 +18,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function delete_asset_photo_returns_an_ok_response()
+    public function delete_asset_photo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
         //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
@@ -44,7 +44,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function delete_avatar_returns_an_ok_response()
+    public function delete_avatar_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
 
@@ -71,7 +71,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function delete_asset_attachment_returns_an_ok_response()
+    public function delete_asset_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
 
@@ -98,7 +98,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function delete_contact_attachment_returns_an_ok_response()
+    public function delete_contact_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
 
@@ -126,7 +126,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function delete_event_attachment_returns_an_ok_response()
+    public function delete_event_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
 
@@ -154,7 +154,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function delete_event_contract_returns_an_ok_response()
+    public function delete_event_contract_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
         //create a retreat, create a fake contract for that retreat, see if you can delete the contract
@@ -180,7 +180,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function delete_event_evaluations_returns_an_ok_response()
+    public function delete_event_evaluations_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
         //create a retreat, create a fake evaluation for that retreat, see if you can delete the evaluation
@@ -206,7 +206,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function delete_event_group_photo_returns_an_ok_response()
+    public function delete_event_group_photo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
         //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
@@ -232,7 +232,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function delete_event_schedule_returns_an_ok_response()
+    public function delete_event_schedule_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
         //create a retreat, create a fake schedule for that retreat, see if you can display the schedule
@@ -258,7 +258,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function get_asset_photo_returns_an_ok_response()
+    public function get_asset_photo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset');
         $asset = \App\Models\Asset::factory()->create();
@@ -283,7 +283,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function get_avatar_returns_an_ok_response()
+    public function get_avatar_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-avatar');
 
@@ -310,7 +310,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function get_event_contract_returns_an_ok_response()
+    public function get_event_contract_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-attachment');
         //create a retreat, create a fake contract for that retreat, see if you can display the contract
@@ -336,7 +336,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function get_event_evaluations_returns_an_ok_response()
+    public function get_event_evaluations_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-evaluation');
         //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
@@ -362,7 +362,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function get_event_group_photo_returns_an_ok_response()
+    public function get_event_group_photo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-group-photo');
         //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
@@ -388,7 +388,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function get_event_schedule_returns_an_ok_response()
+    public function get_event_schedule_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-schedule');
         //create a retreat, create a fake schedule for that retreat, see if you can display the schedule
@@ -414,7 +414,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_contact_attachment_returns_an_ok_response()
+    public function show_contact_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-attachment');
 
@@ -442,7 +442,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_event_attachment_returns_an_ok_response()
+    public function show_event_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-attachment');
 
@@ -470,7 +470,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_asset_attachment_returns_an_ok_response()
+    public function show_asset_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-attachment');
 
@@ -498,7 +498,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_back_with_flash_response()
+    public function create_returns_back_with_flash_response(): void
     {
         $user = $this->createUserWithPermission('create-attachment');
 
@@ -511,7 +511,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
         $contact = \App\Models\Contact::factory()->create([
@@ -533,7 +533,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-attachment');
         $contact = \App\Models\Contact::factory()->create([
@@ -560,7 +560,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-attachment');
 
@@ -575,7 +575,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-attachment');
         $contact = \App\Models\Contact::factory()->create([
@@ -600,7 +600,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-attachment');
 
@@ -620,7 +620,7 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-attachment');
         $contact = \App\Models\Contact::factory()->create([

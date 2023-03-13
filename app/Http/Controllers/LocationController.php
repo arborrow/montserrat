@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
 use Illuminate\Support\Arr;
@@ -15,7 +17,7 @@ class LocationController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-location');
 
@@ -27,7 +29,7 @@ class LocationController extends Controller
         return view('admin.locations.index', compact('locations', 'location_types'));
     }
 
-    public function index_type($type = null)
+    public function index_type($type = null): View
     {
         $this->authorize('show-location');
 
@@ -44,7 +46,7 @@ class LocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-location');
 
@@ -66,7 +68,7 @@ class LocationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreLocationRequest $request)
+    public function store(StoreLocationRequest $request): RedirectResponse
     {
         $this->authorize('create-location');
 
@@ -95,7 +97,7 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-location');
 
@@ -111,7 +113,7 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-location');
 
@@ -136,7 +138,7 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateLocationRequest $request, $id)
+    public function update(UpdateLocationRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-location');
 
@@ -166,7 +168,7 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-location');
 

@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('asset_task', function (Blueprint $table) {
             $table->integer('frequency_interval')->nullable(false)->default(1)->change();
@@ -23,7 +23,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('asset_task', function (Blueprint $table) {
             $table->integer('frequency_interval')->nullable(true)->default(null)->change();

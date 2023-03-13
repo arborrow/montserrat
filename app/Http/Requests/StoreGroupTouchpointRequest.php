@@ -11,7 +11,7 @@ class StoreGroupTouchpointRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class StoreGroupTouchpointRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'group_id' => 'required|integer|min:0',
@@ -36,7 +36,7 @@ class StoreGroupTouchpointRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

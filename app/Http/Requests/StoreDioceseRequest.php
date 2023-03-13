@@ -11,7 +11,7 @@ class StoreDioceseRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class StoreDioceseRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {   // if Twilio is enabled then validate phone numbers otherwise allow strings
         if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
             return [
@@ -61,7 +61,7 @@ class StoreDioceseRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

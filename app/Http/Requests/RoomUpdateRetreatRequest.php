@@ -11,7 +11,7 @@ class RoomUpdateRetreatRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class RoomUpdateRetreatRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return ['retreat_id' => 'integer|min:0'];
     }
@@ -31,7 +31,7 @@ class RoomUpdateRetreatRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

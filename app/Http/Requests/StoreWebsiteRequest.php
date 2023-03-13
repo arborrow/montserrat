@@ -11,7 +11,7 @@ class StoreWebsiteRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class StoreWebsiteRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'website_type' => 'string|in:'.implode(',', config('polanco.website_types')).'|required',
@@ -37,7 +37,7 @@ class StoreWebsiteRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

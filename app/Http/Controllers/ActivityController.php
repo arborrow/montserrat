@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
 use Illuminate\Http\Request;
@@ -19,7 +21,7 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-activity');
         $activities = \App\Models\Activity::orderBy('activity_date_time', 'desc')->paginate(25, ['*'], 'activities');
@@ -32,7 +34,7 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request): View
     {
         $this->authorize('create-activity');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -65,7 +67,7 @@ class ActivityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreActivityRequest $request)
+    public function store(StoreActivityRequest $request): RedirectResponse
     {
         $this->authorize('create-activity');
         $activity_type = \App\Models\ActivityType::findOrFail($request->input('activity_type_id'));
@@ -109,7 +111,7 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-activity');
         $activity = \App\Models\Activity::with('assignees', 'creators', 'targets')->findOrFail($id);
@@ -123,7 +125,7 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-activity');
         $activity = \App\Models\Activity::findOrFail($id);
@@ -162,7 +164,7 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateActivityRequest $request, $id)
+    public function update(UpdateActivityRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-activity');
         $activity_type = \App\Models\ActivityType::findOrFail($request->input('activity_type_id'));
@@ -201,7 +203,7 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         // delete activity contacts and then the activity (could be handled in model with cascading deletes)
 

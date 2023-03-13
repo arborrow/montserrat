@@ -11,7 +11,7 @@ class LocationFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $name = $this->faker->lastName().' of '.$this->faker->city();
 

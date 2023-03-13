@@ -17,7 +17,7 @@ class RetreatFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());
         $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $start_date)->addDays($this->faker->numberBetween(1, 5));

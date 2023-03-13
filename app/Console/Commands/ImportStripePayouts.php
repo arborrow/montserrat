@@ -39,7 +39,7 @@ class ImportStripePayouts extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         $latest_payout = StripePayout::orderByDesc('date')->first();
         $stripe = new StripeClient(config('services.stripe.secret'));

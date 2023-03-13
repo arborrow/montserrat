@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\UpdateStripeBalanceTransactionRequest;
 use App\Models\Contact;
 use App\Models\Donation;
@@ -31,7 +33,7 @@ class StripeBalanceTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-stripe-balance-transaction');
 
@@ -71,7 +73,7 @@ class StripeBalanceTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($stripe_balance_transaction_id)
+    public function show($stripe_balance_transaction_id): View
     {
         $this->authorize('show-stripe-balance-transaction');
 
@@ -90,7 +92,7 @@ class StripeBalanceTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show_id($id)
+    public function show_id(int $id): View
     {
         $this->authorize('show-stripe-balance-transaction');
 
@@ -109,7 +111,7 @@ class StripeBalanceTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $this->authorize('update-stripe-balance-transaction');
         $unprocessed_squarespace_contributions = collect();
@@ -273,7 +275,7 @@ class StripeBalanceTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateStripeBalanceTransactionRequest $request, $id)
+    public function update(UpdateStripeBalanceTransactionRequest $request, int $id)
     {
         $this->authorize('update-stripe-balance-transaction');
 
@@ -505,7 +507,7 @@ class StripeBalanceTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         //
     }
@@ -515,7 +517,7 @@ class StripeBalanceTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function import($payout_id)
+    public function import($payout_id): RedirectResponse
     {
         $this->authorize('import-stripe-balance_transaction');
         $payout = StripePayout::findOrFail($payout_id);
@@ -621,7 +623,7 @@ class StripeBalanceTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function reset($id)
+    public function reset(int $id): RedirectResponse
     {
         $this->authorize('update-stripe-balance-transaction');
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\RedirectResponse;
 use App\AuthenticateUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -50,7 +51,7 @@ class LoginController extends Controller
      *
      * @return Response
      */
-    public function redirectToProvider()
+    public function redirectToProvider(): Response
     {
         return Socialite::driver('google')->redirect();
     }
@@ -60,7 +61,7 @@ class LoginController extends Controller
      *
      * @return Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback(): RedirectResponse
     {
         $user = Socialite::driver('google')->stateless()->user();
         $socialite_restrict_domain = config('settings.socialite_restrict_domain');
@@ -89,7 +90,7 @@ class LoginController extends Controller
         }
     }
 
-    public function logout(AuthenticateUser $authenticateUser, Request $request, $provider = 'google')
+    public function logout(AuthenticateUser $authenticateUser, Request $request, $provider = 'google'): RedirectResponse
     {
         Auth::logout();
 

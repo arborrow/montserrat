@@ -18,7 +18,7 @@ class DonationFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $description = \App\Models\DonationType::whereIsActive(1)->get()->random();
 

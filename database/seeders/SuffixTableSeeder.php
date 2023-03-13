@@ -12,7 +12,7 @@ class SuffixTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('suffix')->delete();
 

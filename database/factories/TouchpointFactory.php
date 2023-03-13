@@ -13,7 +13,7 @@ class TouchpointFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),

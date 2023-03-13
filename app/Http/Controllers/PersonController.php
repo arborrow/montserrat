@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
 use Carbon\Carbon;
@@ -23,7 +25,7 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-contact');
 
@@ -32,7 +34,7 @@ class PersonController extends Controller
         return view('persons.index', compact('persons'));
     }
 
-    public function lastnames($letter = null)
+    public function lastnames($letter = null): View
     {
         $this->authorize('show-contact');
         $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $letter.'%')->paginate(25, ['*'], 'persons');
@@ -45,7 +47,7 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-contact');
         $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
@@ -109,7 +111,7 @@ class PersonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePersonRequest $request)
+    public function store(StorePersonRequest $request): RedirectResponse
     {
         $this->authorize('create-contact');
         $person = new \App\Models\Contact;
@@ -632,7 +634,7 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $this->authorize('show-contact');
         $person = \App\Models\Contact::with(
@@ -726,7 +728,7 @@ class PersonController extends Controller
      * @return \Illuminate\Http\Response
      * TODO: Shift suggestion - review these instances for dynamic validation rules - handle in a custom request like EnvelopeRequest
      */
-    public function envelope($id, Request $request)
+    public function envelope(int $id, Request $request)
     {
         $this->authorize('show-contact');
 
@@ -779,7 +781,7 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-contact');
         $person = \App\Models\Contact::with('prefix', 'suffix', 'addresses.location', 'emails.location', 'phones.location', 'websites', 'parish', 'emergency_contact', 'notes')->findOrFail($id);
@@ -940,7 +942,7 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePersonRequest $request, $id)
+    public function update(UpdatePersonRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-contact');
 
@@ -1575,7 +1577,7 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-contact');
 
@@ -1604,7 +1606,7 @@ class PersonController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function merge_destroy($id, $return_id)
+    public function merge_destroy($id, $return_id): RedirectResponse
     {
         // TODO: consider creating a restore/{id} or undelete/{id}
         $this->authorize('delete-duplicate');
@@ -1707,7 +1709,7 @@ class PersonController extends Controller
         return $this->role(config('polanco.group_id.volunteer'));
     }
 
-    public function role($group_id)
+    public function role($group_id): View
     {
         $this->authorize('show-contact');
 
@@ -1786,7 +1788,7 @@ class PersonController extends Controller
         }
     }
 
-    public function duplicates()
+    public function duplicates(): View
     {
         $this->authorize('update-contact');
 

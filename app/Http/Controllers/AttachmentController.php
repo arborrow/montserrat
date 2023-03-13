@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreAttachmentRequest;
 use App\Http\Requests\UpdateAttachmentRequest;
 use Carbon\Carbon;
@@ -357,7 +359,7 @@ class AttachmentController extends Controller
         $attachment->save();
     }
 
-    public function delete_attachment($file_name, $entity = 'event', $entity_id = 0, $type = null)
+    public function delete_attachment($file_name, $entity = 'event', $entity_id = 0, $type = null): RedirectResponse
     {
         $this->authorize('delete-attachment');
 
@@ -449,7 +451,7 @@ class AttachmentController extends Controller
         return $this->show_attachment('event', $event_id, 'event-attachment', $file_name);
     }
 
-    public function delete_contact_attachment($user_id, $attachment)
+    public function delete_contact_attachment($user_id, $attachment): RedirectResponse
     {
         $this->authorize('delete-attachment');
         $this->delete_attachment($attachment, 'contact', $user_id, 'attachment');
@@ -457,7 +459,7 @@ class AttachmentController extends Controller
         return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $user_id);
     }
 
-    public function delete_event_attachment($event_id, $attachment)
+    public function delete_event_attachment($event_id, $attachment): RedirectResponse
     {
         $this->authorize('delete-attachment'); // TODO: for testing simplicity I am not implementing the use of delete-event-attachment
         $this->delete_attachment($attachment, 'event', $event_id, 'event-attachment');
@@ -479,7 +481,7 @@ class AttachmentController extends Controller
         return $this->show_attachment('contact', $contact_id, 'signature', 'signature.png');
     }
 
-    public function delete_avatar($user_id)
+    public function delete_avatar($user_id): RedirectResponse
     {
         $this->authorize('delete-attachment');
         $this->delete_attachment('avatar.png', 'contact', $user_id, 'avatar');
@@ -508,7 +510,7 @@ class AttachmentController extends Controller
         return $this->show_attachment('event', $event_id, 'evaluations', null);
     }
 
-    public function delete_event_evaluations($event_id)
+    public function delete_event_evaluations($event_id): RedirectResponse
     {
         $this->authorize('delete-attachment');
         $this->delete_attachment('evaluations.pdf', 'event', $event_id, 'evaluations');
@@ -516,7 +518,7 @@ class AttachmentController extends Controller
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
-    public function delete_event_schedule($event_id)
+    public function delete_event_schedule($event_id): RedirectResponse
     {
         $this->authorize('delete-attachment');
         $this->delete_attachment('schedule.pdf', 'event', $event_id, 'schedule');
@@ -524,7 +526,7 @@ class AttachmentController extends Controller
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
-    public function delete_event_contract($event_id)
+    public function delete_event_contract($event_id): RedirectResponse
     {
         $this->authorize('delete-attachment');
         $this->delete_attachment('contract.pdf', 'event', $event_id, 'contract');
@@ -532,7 +534,7 @@ class AttachmentController extends Controller
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
-    public function delete_event_group_photo($event_id)
+    public function delete_event_group_photo($event_id): RedirectResponse
     {
         $this->authorize('delete-attachment');
         $this->delete_attachment('group_photo.jpg', 'event', $event_id, 'group_photo');
@@ -547,7 +549,7 @@ class AttachmentController extends Controller
         return $this->show_attachment('event', $event_id, 'group_photo', null);
     }
 
-    public function delete_asset_photo($asset_id)
+    public function delete_asset_photo($asset_id): RedirectResponse
     {
         $this->authorize('delete-attachment');
         $this->delete_attachment('asset_photo.jpg', 'asset', $asset_id, 'asset_photo');
@@ -569,7 +571,7 @@ class AttachmentController extends Controller
         return $this->show_attachment('asset', $asset_id, 'attachment', $file_name);
     }
 
-    public function delete_asset_attachment($asset_id, $file_name)
+    public function delete_asset_attachment($asset_id, $file_name): RedirectResponse
     {
         $this->authorize('delete-attachment');
 
@@ -584,7 +586,7 @@ class AttachmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-attachment');
         $attachment = \App\Models\Attachment::findOrFail($id);
@@ -599,7 +601,7 @@ class AttachmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-attachment');
         $attachment = \App\Models\Attachment::findOrFail($id);
@@ -615,7 +617,7 @@ class AttachmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAttachmentRequest $request, $id)
+    public function update(UpdateAttachmentRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-attachment');
 
@@ -633,7 +635,7 @@ class AttachmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-attachment');
         $attachments = \App\Models\Attachment::orderByDesc('upload_date')->paginate(25, ['*'], 'attachments');
@@ -646,7 +648,7 @@ class AttachmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): RedirectResponse
     {
         $this->authorize('create-attachment');
 
@@ -661,7 +663,7 @@ class AttachmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAttachmentRequest $request)
+    public function store(StoreAttachmentRequest $request): RedirectResponse
     {
         $this->authorize('create-attachment');
 
@@ -676,7 +678,7 @@ class AttachmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-attachment');
 

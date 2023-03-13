@@ -17,7 +17,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function assistants_returns_an_ok_response()
+    public function assistants_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -33,7 +33,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function bishops_returns_an_ok_response()
+    public function bishops_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -49,7 +49,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function boardmembers_returns_an_ok_response()
+    public function boardmembers_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -65,7 +65,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function ambassadors_returns_an_ok_response()
+    public function ambassadors_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -81,7 +81,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
 
@@ -111,7 +111,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function deacons_returns_an_ok_response()
+    public function deacons_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -127,7 +127,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-contact');
         $person = \App\Models\Contact::factory()->create([
@@ -144,7 +144,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function directors_returns_an_ok_response()
+    public function directors_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -160,7 +160,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function duplicates_returns_an_ok_response()
+    public function duplicates_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
 
@@ -175,7 +175,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
 
@@ -476,7 +476,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function envelope_returns_an_ok_response()
+    public function envelope_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $person = \App\Models\Contact::factory()->create([
@@ -493,7 +493,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_displays_paginated_contacts_contacts()
+    public function index_displays_paginated_contacts_contacts(): void
     {
         $person = \App\Models\Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.individual'),
@@ -519,7 +519,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_403_without_proper_permission()
+    public function index_returns_403_without_proper_permission(): void
     {
         $user = \App\Models\User::factory()->create();
 
@@ -531,7 +531,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function innkeepers_returns_an_ok_response()
+    public function innkeepers_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -547,7 +547,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function jesuits_returns_an_ok_response()
+    public function jesuits_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -563,7 +563,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function lastnames_returns_an_ok_response()
+    public function lastnames_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $person = \App\Models\Contact::factory()->create([
@@ -585,7 +585,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function merge_returns_an_ok_response()
+    public function merge_returns_an_ok_response(): void
     {
         $user = \App\Models\User::factory()->create();
         $user->assignRole('test-role:merge');
@@ -620,7 +620,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function merge_staff_returns_fail_response()
+    public function merge_staff_returns_fail_response(): void
     {
         $user = \App\Models\User::factory()->create();
         $user->assignRole('test-role:merge');
@@ -651,7 +651,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function merge_destroy_returns_an_ok_response()
+    public function merge_destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-duplicate');
         $person = \App\Models\Contact::factory()->create([
@@ -674,7 +674,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function pastors_returns_an_ok_response()
+    public function pastors_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -690,7 +690,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function priests_returns_an_ok_response()
+    public function priests_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -706,7 +706,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function provincials_returns_an_ok_response()
+    public function provincials_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -722,7 +722,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $person = \App\Models\Contact::factory()->create([
@@ -745,7 +745,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function staff_returns_an_ok_response()
+    public function staff_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -761,7 +761,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function stewards_returns_an_ok_response()
+    public function stewards_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -777,7 +777,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
 
@@ -826,7 +826,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\PersonController::class,
@@ -838,7 +838,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function superiors_returns_an_ok_response()
+    public function superiors_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -854,7 +854,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
         $person = \App\Models\Contact::factory()->create([
@@ -882,7 +882,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\PersonController::class,
@@ -894,7 +894,7 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function volunteers_returns_an_ok_response()
+    public function volunteers_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 

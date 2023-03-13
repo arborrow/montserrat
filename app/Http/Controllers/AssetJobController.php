@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreAssetJobRequest;
 use App\Http\Requests\UpdateAssetJobRequest;
 use Illuminate\Support\Arr;
@@ -14,7 +16,7 @@ class AssetJobController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-asset-job');
 
@@ -28,7 +30,7 @@ class AssetJobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($asset_task_id = 0)
+    public function create($asset_task_id = 0): View
     {
         $this->authorize('create-asset-job');
 
@@ -56,7 +58,7 @@ class AssetJobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAssetJobRequest $request)
+    public function store(StoreAssetJobRequest $request): RedirectResponse
     {
         $this->authorize('create-asset-job');
 
@@ -96,7 +98,7 @@ class AssetJobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-asset-job');
 
@@ -111,7 +113,7 @@ class AssetJobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-asset-job');
 
@@ -142,7 +144,7 @@ class AssetJobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAssetJobRequest $request, $id)
+    public function update(UpdateAssetJobRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-asset-job');
 
@@ -188,7 +190,7 @@ class AssetJobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-asset-job');
         $asset_job = \App\Models\AssetJob::findOrFail($id);

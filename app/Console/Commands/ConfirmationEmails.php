@@ -43,7 +43,7 @@ class ConfirmationEmails extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {   // get and store snippets
         $snippets = \App\Models\Snippet::whereTitle('event-confirmation')->get();
         foreach ($snippets as $snippet) {

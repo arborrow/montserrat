@@ -13,7 +13,7 @@ class DonorFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'donor_id' => $this->faker->randomNumber(5),

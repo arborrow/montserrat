@@ -11,7 +11,7 @@ class PaymentSearchRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class PaymentSearchRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'payment_date_operator' => 'in:'.implode(',', config('polanco.operators')).'|nullable',
@@ -40,7 +40,7 @@ class PaymentSearchRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

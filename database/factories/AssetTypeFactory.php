@@ -14,7 +14,7 @@ class AssetTypeFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $label = $this->faker->word();
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\UpdateSquarespaceContributionRequest;
 use App\Models\Address;
 use App\Models\Contact;
@@ -35,7 +37,7 @@ class SquarespaceContributionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-squarespace-contribution');
         $ss_contributions = SquarespaceContribution::whereIsProcessed(0)->orderBy('created_at')->paginate(25, ['*'], 'ss_contributions');
@@ -49,7 +51,7 @@ class SquarespaceContributionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): RedirectResponse
     {
         //use permisson of target, namely squarespace.contribution.index
         $this->authorize('show-squarespace-contribution');
@@ -63,7 +65,7 @@ class SquarespaceContributionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         //use permisson of target, namely squarespace.contribution.index
         $this->authorize('show-squarespace-contribution');
@@ -77,7 +79,7 @@ class SquarespaceContributionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-squarespace-contribution');
         $ss_contribution = SquarespaceContribution::findOrFail($id);
@@ -91,7 +93,7 @@ class SquarespaceContributionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-squarespace-contribution');
 
@@ -143,7 +145,7 @@ class SquarespaceContributionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSquarespaceContributionRequest $request, $id)
+    public function update(UpdateSquarespaceContributionRequest $request, int $id): RedirectResponse
     {
         $ss_contribution = SquarespaceContribution::findOrFail($id);
         $contact_id = $request->input('contact_id');
@@ -298,7 +300,7 @@ class SquarespaceContributionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         //use permisson of target, namely squarespace.contribution.index
         $this->authorize('show-squarespace-contribution');
@@ -312,7 +314,7 @@ class SquarespaceContributionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function reset($id)
+    public function reset(int $id): RedirectResponse
     {
         $this->authorize('update-squarespace-contribution');
 

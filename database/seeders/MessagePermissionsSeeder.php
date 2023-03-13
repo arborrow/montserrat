@@ -14,7 +14,7 @@ class MessagePermissionsSeeder extends Seeder
      */
 
     // admin-mailgun, show-mailgun, update-mailgun
-    public function run()
+    public function run(): void
     {
         DB::table('permissions')->insert([
             0 => [

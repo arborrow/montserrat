@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class StripeChargeController extends Controller
@@ -11,7 +12,7 @@ class StripeChargeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-stripe-charge');
 
@@ -49,7 +50,7 @@ class StripeChargeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($charge_id)
+    public function show($charge_id): View
     {
         $this->authorize('show-stripe-charge');
 
@@ -67,7 +68,7 @@ class StripeChargeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         //
     }
@@ -79,7 +80,7 @@ class StripeChargeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         //
     }
@@ -90,7 +91,7 @@ class StripeChargeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         //
     }
@@ -101,7 +102,7 @@ class StripeChargeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function import($id)
+    public function import(int $id)
     {
         $this->authorize('import-stripe-charge');
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));

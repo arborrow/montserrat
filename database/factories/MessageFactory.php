@@ -18,7 +18,7 @@ class MessageFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $type = $this->faker->randomElement(['order', 'touchpoint', 'donation']);
         $from = Contact::factory()->create();

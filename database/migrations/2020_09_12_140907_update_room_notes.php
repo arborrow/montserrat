@@ -10,7 +10,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('rooms', function ($table) {
             $table->text('notes', 16777215)->nullable()->change();
@@ -27,7 +27,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('rooms', function ($table) {
             $table->text('notes', 16777215)->nullable(false)->change();

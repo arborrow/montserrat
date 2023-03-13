@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use Carbon\Carbon;
@@ -37,7 +39,7 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
@@ -52,7 +54,7 @@ class RoomController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRoomRequest $request)
+    public function store(StoreRoomRequest $request): RedirectResponse
     {
         $this->authorize('create-room');
 
@@ -79,7 +81,7 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-room');
         $room = \App\Models\Room::findOrFail($id);
@@ -95,7 +97,7 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
@@ -112,7 +114,7 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoomRequest $request, $id)
+    public function update(UpdateRoomRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-room');
 
@@ -139,7 +141,7 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-room');
         $room = \App\Models\Room::findOrFail($id);
@@ -174,7 +176,7 @@ class RoomController extends Controller
      * @param  int  $ymd
      * @return \Illuminate\Http\Response
      */
-    public function schedule($ymd = null)
+    public function schedule(int $ymd = null)
     {
         $this->authorize('show-room');
         if ((! isset($ymd)) or ($ymd == 0)) {
@@ -295,7 +297,7 @@ class RoomController extends Controller
      * @param  int  $unhyphenated_date
      * @return string $hyphenated_date
      */
-    public function hyphenate_date($unhyphenated_date)
+    public function hyphenate_date(int $unhyphenated_date)
     {
         if ((strpos($unhyphenated_date, '-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date)) {
             $hyphenated_date = substr($unhyphenated_date, 0, 4).'-'.substr($unhyphenated_date, 4, 2).'-'.substr($unhyphenated_date, 6, 2);

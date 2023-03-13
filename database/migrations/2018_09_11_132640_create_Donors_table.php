@@ -10,7 +10,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('Donors', function (Blueprint $table) {
             $table->integer('donor_id')->nullable()->unique('idx_donor_id');
@@ -89,7 +89,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('Donors');
     }

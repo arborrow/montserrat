@@ -13,7 +13,7 @@ class DonationTypeFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $label = $this->faker->word();
         $value = $this->faker->numberBetween(1000, 2000);

@@ -18,7 +18,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function agc_returns_an_ok_response()
+    public function agc_returns_an_ok_response(): void
     {   // agc reports available from 2007 to 2020
         $user = $this->createUserWithPermission('show-donation');
         $year = $this->faker->numberBetween(2007, 2020);
@@ -33,7 +33,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function agc_returns_404()
+    public function agc_returns_404(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         $year = $this->faker->numberBetween(2000, 2005);
@@ -45,7 +45,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation');
         $response = $this->actingAs($user)->get(route('donation.create'));
@@ -62,7 +62,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_with_contact_id_returns_an_ok_response()
+    public function create_with_contact_id_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation');
         $contact = \App\Models\Contact::factory()->create();
@@ -83,7 +83,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_with_event_id_returns_an_ok_response()
+    public function create_with_event_id_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation');
         $contact = \App\Models\Contact::factory()->create();
@@ -109,7 +109,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_with_type_returns_an_ok_response()
+    public function create_with_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation');
         $type = array_rand(config('polanco.contact_type'));
@@ -138,7 +138,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-donation');
         $donation = \App\Models\Donation::factory()->create();
@@ -154,7 +154,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-donation');
         $donation = \App\Models\Donation::factory()->create();
@@ -185,7 +185,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
 
@@ -199,7 +199,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_type_returns_an_ok_response()
+    public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         // create a new event type, add a random number of retreats (2-10) to that event type ensuring they are all future events
@@ -224,7 +224,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function overpaid_returns_an_ok_response()
+    public function overpaid_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         $response = $this->actingAs($user)->get('donation/overpaid');
@@ -237,7 +237,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function retreat_payments_update_returns_an_ok_response()
+    public function retreat_payments_update_returns_an_ok_response(): void
     {   // create a retreat with 1-10 participants
         // update retreatant payments
         $user = $this->createUserWithPermission('update-donation');
@@ -276,7 +276,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
         // create a payment rather than just a donation so that things like percent_paid
@@ -291,7 +291,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation');
         $donor = \App\Models\Contact::factory()->create();
@@ -323,7 +323,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\DonationController::class,
@@ -335,7 +335,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('update-donation');
@@ -372,7 +372,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\DonationController::class,
@@ -384,7 +384,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function results_returns_an_ok_response()
+    public function results_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
 
@@ -402,7 +402,7 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-    public function search_returns_an_ok_response()
+    public function search_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
 

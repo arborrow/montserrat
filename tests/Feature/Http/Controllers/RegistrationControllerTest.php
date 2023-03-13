@@ -19,7 +19,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function add_returns_an_ok_response()
+    public function add_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
         $contact = \App\Models\Contact::factory()->create([
@@ -44,7 +44,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function add_group_returns_an_ok_response()
+    public function add_group_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
 
@@ -66,7 +66,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function arrive_returns_an_ok_response()
+    public function arrive_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([
@@ -89,7 +89,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function attend_returns_an_ok_response()
+    public function attend_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([
@@ -110,7 +110,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function cancel_returns_an_ok_response()
+    public function cancel_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([
@@ -132,7 +132,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function confirm_returns_an_ok_response()
+    public function confirm_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([
@@ -153,7 +153,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function confirm_attendance_returns_an_ok_response()
+    public function confirm_attendance_returns_an_ok_response(): void
     {
         $registration = \App\Models\Registration::factory()->create([
             'departed_at' => null,
@@ -175,7 +175,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
 
@@ -193,7 +193,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function depart_returns_an_ok_response()
+    public function depart_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([
@@ -212,7 +212,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-registration');
         $registration = \App\Models\Registration::factory()->create();
@@ -226,7 +226,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create();
@@ -275,7 +275,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
         $registration = \App\Models\Registration::factory()->create();
@@ -292,7 +292,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function offwaitlist_returns_an_ok_response()
+    public function offwaitlist_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([
@@ -310,7 +310,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function register_returns_an_ok_response()
+    public function register_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -341,7 +341,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function registration_email_returns_an_ok_response()
+    public function registration_email_returns_an_ok_response(): void
     {
         $registration = \App\Models\Registration::factory()->create([
             'canceled_at' => null,
@@ -372,7 +372,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function send_confirmation_email_returns_an_ok_response()
+    public function send_confirmation_email_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create();
@@ -386,7 +386,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
         $registration = \App\Models\Registration::factory()->create();
@@ -402,7 +402,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -435,7 +435,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RegistrationController::class,
@@ -447,7 +447,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_group_returns_an_ok_response()
+    public function store_group_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -474,7 +474,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_group_validates_with_a_form_request()
+    public function store_group_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RegistrationController::class,
@@ -486,7 +486,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create();
@@ -520,7 +520,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RegistrationController::class,
@@ -532,7 +532,7 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
-    public function waitlist_returns_an_ok_response()
+    public function waitlist_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([

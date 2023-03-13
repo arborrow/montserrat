@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreGroupTouchpointRequest;
 use App\Http\Requests\StoreRetreatTouchpointRequest;
 use App\Http\Requests\StoreRetreatWaitlistTouchpointRequest;
@@ -24,7 +26,7 @@ class TouchpointController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-touchpoint');
 
@@ -40,7 +42,7 @@ class TouchpointController extends Controller
      * @param  int  $staff_id
      * @return \Illuminate\Http\Response
      */
-    public function index_type($staff_id = null)
+    public function index_type(int $staff_id = null): View
     {
         $this->authorize('show-touchpoint');
 
@@ -55,7 +57,7 @@ class TouchpointController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request): View
     {
         $this->authorize('create-touchpoint');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -77,7 +79,7 @@ class TouchpointController extends Controller
         return view('touchpoints.create', compact('staff', 'persons', 'defaults'));
     }
 
-    public function add_group(Request $request, $group_id = 0)
+    public function add_group(Request $request, $group_id = 0): View
     {
         $this->authorize('create-touchpoint');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -102,7 +104,7 @@ class TouchpointController extends Controller
         return view('touchpoints.add_group', compact('staff', 'groups', 'defaults'));
     }
 
-    public function add_retreat(Request $request, $event_id = 0)
+    public function add_retreat(Request $request, $event_id = 0): View
     {
         $this->authorize('create-touchpoint');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -130,7 +132,7 @@ class TouchpointController extends Controller
         return view('touchpoints.add_retreat', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
     }
 
-    public function add_retreat_waitlist(Request $request, $event_id = 0)
+    public function add_retreat_waitlist(Request $request, $event_id = 0): View
     {
         $this->authorize('create-touchpoint');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -158,7 +160,7 @@ class TouchpointController extends Controller
         return view('touchpoints.add_retreat_waitlist', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
     }
 
-    public function add(Request $request, $id)
+    public function add(Request $request, $id): View
     {
         $this->authorize('create-touchpoint');
 
@@ -196,7 +198,7 @@ class TouchpointController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTouchpointRequest $request)
+    public function store(StoreTouchpointRequest $request): RedirectResponse
     {
         $this->authorize('create-touchpoint');
 
@@ -213,7 +215,7 @@ class TouchpointController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function store_group(StoreGroupTouchpointRequest $request)
+    public function store_group(StoreGroupTouchpointRequest $request): RedirectResponse
     {
         $this->authorize('create-touchpoint');
         $group_id = $request->input('group_id');
@@ -234,7 +236,7 @@ class TouchpointController extends Controller
         return Redirect::action([\App\Http\Controllers\GroupController::class, 'show'], $group_id);
     }
 
-    public function store_retreat(StoreRetreatTouchpointRequest $request)
+    public function store_retreat(StoreRetreatTouchpointRequest $request): RedirectResponse
     {
         $this->authorize('create-touchpoint');
         $event_id = $request->input('event_id');
@@ -255,7 +257,7 @@ class TouchpointController extends Controller
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
-    public function store_retreat_waitlist(StoreRetreatWaitlistTouchpointRequest $request)
+    public function store_retreat_waitlist(StoreRetreatWaitlistTouchpointRequest $request): RedirectResponse
     {
         $this->authorize('create-touchpoint');
         $event_id = $request->input('event_id');
@@ -282,7 +284,7 @@ class TouchpointController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-touchpoint');
         $touchpoint = \App\Models\Touchpoint::with('staff', 'person')->findOrFail($id);
@@ -296,7 +298,7 @@ class TouchpointController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-touchpoint');
         $touchpoint = \App\Models\Touchpoint::with('staff', 'person')->findOrFail($id);
@@ -332,7 +334,7 @@ class TouchpointController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTouchpointRequest $request, $id)
+    public function update(UpdateTouchpointRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-touchpoint');
         $touchpoint = \App\Models\Touchpoint::findOrFail($request->input('id'));
@@ -354,7 +356,7 @@ class TouchpointController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-touchpoint');
 

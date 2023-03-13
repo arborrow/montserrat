@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('Donations_payment', function (Blueprint $table) {
             $table->string('note', 250)->change();
@@ -23,7 +23,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('Donations_payment', function (Blueprint $table) {
             $table->string('note', 100)->change();
