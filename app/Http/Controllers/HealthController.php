@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use DB;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\View\View;
 
 class HealthController extends Controller
 {

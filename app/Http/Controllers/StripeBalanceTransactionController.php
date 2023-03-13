@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\UpdateStripeBalanceTransactionRequest;
 use App\Models\Contact;
 use App\Models\Donation;
@@ -15,8 +13,10 @@ use App\Models\StripeBalanceTransaction;
 use App\Models\StripePayout;
 use App\Traits\SquareSpaceTrait;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 use Stripe\StripeClient;
 
 class StripeBalanceTransactionController extends Controller

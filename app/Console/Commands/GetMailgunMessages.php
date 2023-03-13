@@ -310,7 +310,7 @@ class GetMailgunMessages extends Command
                         $retreat = array_filter($retreat);
                         // remove line with only a space in it that was not removed from the trim above, grrr
                         $retreat = array_filter($retreat, function ($value) {
-                        return $value !== "\xC2\xA0";
+                            return $value !== "\xC2\xA0";
                         });
                         // rekey the array
                         $retreat = array_values($retreat);
@@ -408,7 +408,7 @@ class GetMailgunMessages extends Command
                         $retreat = array_filter($retreat);
                         // remove line with only a space in it that was not removed from the trim above, grrr
                         $retreat = array_filter($retreat, function ($value) {
-                        return $value !== "\xC2\xA0";
+                            return $value !== "\xC2\xA0";
                         });
                         // rekey the array
                         $retreat = array_values($retreat);
@@ -478,7 +478,7 @@ class GetMailgunMessages extends Command
                             $deposit_amount = array_filter($deposit_amount);
                             // remove line with only a space in it that was not removed from the trim above, grrr
                             $deposit_amount = array_filter($deposit_amount, function ($value) {
-                            return $value !== "\xC2\xA0";
+                                return $value !== "\xC2\xA0";
                             });
                             // rekey the array
                             $deposit_amount = array_values($deposit_amount);

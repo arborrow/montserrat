@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\DonationAgcRequest;
 use App\Http\Requests\DonationSearchRequest;
 use App\Http\Requests\StoreDonationRequest;
@@ -15,9 +13,11 @@ use App\Models\Payment;
 use App\Models\Registration;
 use App\Models\Retreat;
 use App\Models\SquarespaceContribution;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class DonationController extends Controller
 {

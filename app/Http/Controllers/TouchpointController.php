@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreGroupTouchpointRequest;
 use App\Http\Requests\StoreRetreatTouchpointRequest;
 use App\Http\Requests\StoreRetreatWaitlistTouchpointRequest;
 use App\Http\Requests\StoreTouchpointRequest;
 use App\Http\Requests\UpdateTouchpointRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class TouchpointController extends Controller
 {

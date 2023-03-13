@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use Exception;
 use Illuminate\Support\Facades\Http;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
