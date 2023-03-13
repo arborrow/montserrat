@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAssetTypeRequest;
 use App\Http\Requests\UpdateAssetTypeRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class AssetTypeController extends Controller

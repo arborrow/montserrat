@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\StateProvince;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -185,9 +184,9 @@ class AddressControllerTest extends TestCase
     public function update_validates_with_a_form_request()
     {
         $this->assertActionUsesFormRequest(
-                \App\Http\Controllers\AddressController::class,
-                'update',
-                \App\Http\Requests\UpdateAddressRequest::class
-            );
+            \App\Http\Controllers\AddressController::class,
+            'update',
+            \App\Http\Requests\UpdateAddressRequest::class
+        );
     }
 }

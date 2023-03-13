@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 // $this->withoutExceptionHandling();

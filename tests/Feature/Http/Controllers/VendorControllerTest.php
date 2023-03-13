@@ -68,14 +68,14 @@ class VendorControllerTest extends TestCase
 
         $main_phone = \App\Models\Phone::factory()->create([
             'contact_id' => $vendor->id,
-            'location_type_id' =>  config('polanco.location_type.main'),
+            'location_type_id' => config('polanco.location_type.main'),
             'is_primary' => 1,
             'phone_type' => 'Phone',
         ]);
 
         $main_fax = \App\Models\Phone::factory()->create([
             'contact_id' => $vendor->id,
-            'location_type_id' =>  config('polanco.location_type.main'),
+            'location_type_id' => config('polanco.location_type.main'),
             'phone_type' => 'Fax',
         ]);
 

@@ -11,8 +11,11 @@ class GiftCertificateRedemption extends Mailable
     use Queueable, SerializesModels;
 
     public $gift_certificate;
+
     public $order;
+
     public $reallocation_payment;
+
     public $negative_reallocation_payment;
 
     /**

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class SquarespaceCustomFormFieldTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,1321 +13,1209 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
      */
     public function run()
     {
-        
-
         \DB::table('squarespace_custom_form_field')->delete();
-        
-        \DB::table('squarespace_custom_form_field')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('squarespace_custom_form_field')->insert([
+            0 => [
                 'id' => 1,
                 'form_id' => 2,
                 'name' => 'Title',
                 'sort_order' => 1,
                 'type' => 'select',
                 'variable_name' => 'title',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-14 06:25:29',
-                'deleted_at' => NULL,
-            ),
-            1 => 
-            array (
+                'deleted_at' => null,
+            ],
+            1 => [
                 'id' => 2,
                 'form_id' => 2,
                 'name' => 'Name',
                 'sort_order' => 2,
                 'type' => 'name',
                 'variable_name' => 'name',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            2 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            2 => [
                 'id' => 3,
                 'form_id' => 2,
                 'name' => 'Address',
                 'sort_order' => 3,
                 'type' => 'address',
                 'variable_name' => 'full_address',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            3 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            3 => [
                 'id' => 4,
                 'form_id' => 2,
                 'name' => 'Mobile Phone',
                 'sort_order' => 5,
                 'type' => 'phone',
                 'variable_name' => 'mobile_phone',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-14 06:26:17',
-                'deleted_at' => NULL,
-            ),
-            4 => 
-            array (
+                'deleted_at' => null,
+            ],
+            4 => [
                 'id' => 5,
                 'form_id' => 2,
                 'name' => 'Home Phone',
                 'sort_order' => 6,
                 'type' => 'phone',
                 'variable_name' => 'home_phone',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-14 06:27:30',
-                'deleted_at' => NULL,
-            ),
-            5 => 
-            array (
+                'deleted_at' => null,
+            ],
+            5 => [
                 'id' => 6,
                 'form_id' => 2,
                 'name' => 'Email',
                 'sort_order' => 4,
                 'type' => 'email',
                 'variable_name' => 'email',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            6 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            6 => [
                 'id' => 7,
                 'form_id' => 2,
                 'name' => 'Date of Birth',
                 'sort_order' => 14,
                 'type' => 'date',
                 'variable_name' => 'date_of_birth',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-06-04 12:17:45',
-                'deleted_at' => NULL,
-            ),
-            7 => 
-            array (
+                'deleted_at' => null,
+            ],
+            7 => [
                 'id' => 8,
                 'form_id' => 2,
                 'name' => 'Emergency Contact',
                 'sort_order' => 8,
                 'type' => 'person',
                 'variable_name' => 'emergency_contact',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            8 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            8 => [
                 'id' => 9,
                 'form_id' => 2,
                 'name' => 'Emergency Contact Relationship',
                 'sort_order' => 9,
                 'type' => 'text',
                 'variable_name' => 'emergency_contact_relationship',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            9 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            9 => [
                 'id' => 10,
                 'form_id' => 2,
                 'name' => 'Emergency Contact Phone Number',
                 'sort_order' => 10,
                 'type' => 'phone',
                 'variable_name' => 'emergency_contact_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            10 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            10 => [
                 'id' => 11,
                 'form_id' => 2,
                 'name' => 'Parish',
                 'sort_order' => 15,
                 'type' => 'text',
                 'variable_name' => 'parish',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            11 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            11 => [
                 'id' => 12,
                 'form_id' => 2,
                 'name' => 'Preferred Language',
                 'sort_order' => 13,
                 'type' => 'select',
                 'variable_name' => 'preferred_language',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            12 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            12 => [
                 'id' => 13,
                 'form_id' => 2,
                 'name' => 'How did you first hear about Montserrat?',
                 'sort_order' => 13,
                 'type' => 'select',
                 'variable_name' => 'hear_about',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 22:37:36',
-            ),
-            13 => 
-            array (
+            ],
+            13 => [
                 'id' => 14,
                 'form_id' => 2,
                 'name' => 'If other, please elaborate:',
                 'sort_order' => 14,
                 'type' => 'text',
                 'variable_name' => 'hear_other',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 22:37:58',
-            ),
-            14 => 
-            array (
+            ],
+            14 => [
                 'id' => 15,
                 'form_id' => 2,
                 'name' => 'How did you hear about this particular retreat?',
                 'sort_order' => 15,
                 'type' => 'select',
                 'variable_name' => 'hear_retreat',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 22:38:04',
-            ),
-            15 => 
-            array (
+            ],
+            15 => [
                 'id' => 16,
                 'form_id' => 2,
                 'name' => 'If Retreat Ambassador, name of Ambassador?',
                 'sort_order' => 16,
                 'type' => 'text',
                 'variable_name' => 'hear_ambassador',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 22:38:15',
-            ),
-            16 => 
-            array (
+            ],
+            16 => [
                 'id' => 17,
                 'form_id' => 2,
                 'name' => 'Room Preference',
                 'sort_order' => 12,
                 'type' => 'select',
                 'variable_name' => 'room_preference',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            17 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            17 => [
                 'id' => 18,
                 'form_id' => 2,
                 'name' => 'Dietary Restrictions, Food Allergies or Other Special Needs',
                 'sort_order' => 11,
                 'type' => 'textarea',
                 'variable_name' => 'dietary',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            18 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            18 => [
                 'id' => 19,
                 'form_id' => 2,
                 'name' => 'Comments / Questions',
                 'sort_order' => 16,
                 'type' => 'textarea',
                 'variable_name' => 'comments',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-21 11:29:49',
-                'deleted_at' => NULL,
-            ),
-            19 => 
-            array (
+                'deleted_at' => null,
+            ],
+            19 => [
                 'id' => 21,
                 'form_id' => 4,
                 'name' => 'Título',
                 'sort_order' => 1,
                 'type' => 'select',
                 'variable_name' => 'title',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            20 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            20 => [
                 'id' => 22,
                 'form_id' => 4,
                 'name' => 'Nombre/Apellido',
                 'sort_order' => 2,
                 'type' => 'name',
                 'variable_name' => 'name',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            21 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            21 => [
                 'id' => 23,
                 'form_id' => 4,
                 'name' => 'Fecha de Nacimiento',
                 'sort_order' => 14,
                 'type' => 'date',
                 'variable_name' => 'date_of_birth',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            22 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            22 => [
                 'id' => 24,
                 'form_id' => 4,
                 'name' => 'Dirección',
                 'sort_order' => 3,
                 'type' => 'address',
                 'variable_name' => 'full_address',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            23 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            23 => [
                 'id' => 25,
                 'form_id' => 4,
                 'name' => 'Correo Electrónico',
                 'sort_order' => 4,
                 'type' => 'email',
                 'variable_name' => 'email',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            24 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            24 => [
                 'id' => 26,
                 'form_id' => 4,
                 'name' => 'Número de Teléfono de Casa',
                 'sort_order' => 6,
                 'type' => 'phone',
                 'variable_name' => 'home_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            25 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            25 => [
                 'id' => 27,
                 'form_id' => 4,
                 'name' => 'Número de Teléfono Móvil',
                 'sort_order' => 5,
                 'type' => 'phone',
                 'variable_name' => 'mobile_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            26 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            26 => [
                 'id' => 28,
                 'form_id' => 4,
                 'name' => 'Número de Teléfono de Trabajo',
                 'sort_order' => 7,
                 'type' => 'phone',
                 'variable_name' => 'work_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            27 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            27 => [
                 'id' => 29,
                 'form_id' => 4,
                 'name' => 'Contacto de Emergencia',
                 'sort_order' => 8,
                 'type' => 'person',
                 'variable_name' => 'emergency_contact',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            28 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            28 => [
                 'id' => 30,
                 'form_id' => 4,
                 'name' => 'Relación a Contacto de Emergencia',
                 'sort_order' => 9,
                 'type' => 'text',
                 'variable_name' => 'emergency_contact_relationship',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            29 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            29 => [
                 'id' => 31,
                 'form_id' => 4,
                 'name' => 'Número de Teléfono de Contacto de Emergencia',
                 'sort_order' => 10,
                 'type' => 'phone',
                 'variable_name' => 'emergency_contact_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            30 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            30 => [
                 'id' => 32,
                 'form_id' => 4,
                 'name' => 'Parroquia',
                 'sort_order' => 15,
                 'type' => 'text',
                 'variable_name' => 'parish',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            31 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            31 => [
                 'id' => 33,
                 'form_id' => 4,
                 'name' => 'Idioma Preferido',
                 'sort_order' => 13,
                 'type' => 'select',
                 'variable_name' => 'preferred_language',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            32 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            32 => [
                 'id' => 34,
                 'form_id' => 4,
                 'name' => '¿Cómo se enteró de montserrat?',
                 'sort_order' => 14,
                 'type' => 'select',
                 'variable_name' => 'hear_about',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 07:12:43',
-            ),
-            33 => 
-            array (
+            ],
+            33 => [
                 'id' => 35,
                 'form_id' => 4,
                 'name' => 'Si otro, por favor elabora',
                 'sort_order' => 15,
                 'type' => 'text',
                 'variable_name' => 'hear_other',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 07:12:50',
-            ),
-            34 => 
-            array (
+            ],
+            34 => [
                 'id' => 36,
                 'form_id' => 4,
                 'name' => '¿Cómo se enteró de este retiro en particular?',
                 'sort_order' => 16,
                 'type' => 'select',
                 'variable_name' => 'hear_retreat',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 07:12:55',
-            ),
-            35 => 
-            array (
+            ],
+            35 => [
                 'id' => 37,
                 'form_id' => 4,
                 'name' => 'Si es Embajador del retiro, ¿nombre del Embajador?',
                 'sort_order' => 17,
                 'type' => 'text',
                 'variable_name' => 'hear_ambassador',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 07:13:01',
-            ),
-            36 => 
-            array (
+            ],
+            36 => [
                 'id' => 38,
                 'form_id' => 4,
                 'name' => 'Preferencia de Habitación',
                 'sort_order' => 12,
                 'type' => 'select',
                 'variable_name' => 'room_preference',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            37 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            37 => [
                 'id' => 39,
                 'form_id' => 4,
                 'name' => 'Restricciones dietéticas, alergias a los alimentos u otras necesidades',
                 'sort_order' => 11,
                 'type' => 'textbox',
                 'variable_name' => 'dietary',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-16 15:40:13',
-                'deleted_at' => NULL,
-            ),
-            38 => 
-            array (
+                'deleted_at' => null,
+            ],
+            38 => [
                 'id' => 40,
                 'form_id' => 4,
                 'name' => 'Comentarios / Preguntas',
                 'sort_order' => 16,
                 'type' => 'textbox',
                 'variable_name' => 'comments',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            39 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            39 => [
                 'id' => 41,
                 'form_id' => 4,
                 'name' => 'Asistirá su cónyuge?',
                 'sort_order' => 21,
                 'type' => 'select',
                 'variable_name' => 'is_couple',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 07:19:57',
-            ),
-            40 => 
-            array (
+            ],
+            40 => [
                 'id' => 42,
                 'form_id' => 4,
                 'name' => 'Título del Conyuge',
                 'sort_order' => 17,
                 'type' => 'select',
                 'variable_name' => 'couple_title',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            41 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            41 => [
                 'id' => 43,
                 'form_id' => 4,
                 'name' => 'Nombre del Conyuge',
                 'sort_order' => 18,
                 'type' => 'person',
                 'variable_name' => 'couple_name',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            42 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            42 => [
                 'id' => 44,
                 'form_id' => 4,
                 'name' => 'Número de Teléfono Móvil del Conyuge',
                 'sort_order' => 20,
                 'type' => 'phone',
                 'variable_name' => 'couple_mobile_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            43 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            43 => [
                 'id' => 45,
                 'form_id' => 4,
                 'name' => 'Correo electrónico del Conyuge',
                 'sort_order' => 19,
                 'type' => 'email',
                 'variable_name' => 'couple_email',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-16 15:38:00',
-                'deleted_at' => NULL,
-            ),
-            44 => 
-            array (
+                'deleted_at' => null,
+            ],
+            44 => [
                 'id' => 46,
                 'form_id' => 4,
                 'name' => 'Fecha de nacimiento del Conyuge',
                 'sort_order' => 25,
                 'type' => 'date',
                 'variable_name' => 'couple_date_of_birth',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            45 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            45 => [
                 'id' => 47,
                 'form_id' => 5,
                 'name' => 'Title',
                 'sort_order' => 1,
                 'type' => 'select',
                 'variable_name' => 'title',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            46 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            46 => [
                 'id' => 48,
                 'form_id' => 5,
                 'name' => 'Name',
                 'sort_order' => 2,
                 'type' => 'name',
                 'variable_name' => 'name',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            47 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            47 => [
                 'id' => 49,
                 'form_id' => 5,
                 'name' => 'Address',
                 'sort_order' => 3,
                 'type' => 'address',
                 'variable_name' => 'full_address',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            48 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            48 => [
                 'id' => 50,
                 'form_id' => 5,
                 'name' => 'Mobile Phone',
                 'sort_order' => 5,
                 'type' => 'phone',
                 'variable_name' => 'mobile_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            49 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            49 => [
                 'id' => 51,
                 'form_id' => 5,
                 'name' => 'Home Phone',
                 'sort_order' => 6,
                 'type' => 'phone',
                 'variable_name' => 'home_phone',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-14 21:58:04',
-                'deleted_at' => NULL,
-            ),
-            50 => 
-            array (
+                'deleted_at' => null,
+            ],
+            50 => [
                 'id' => 52,
                 'form_id' => 5,
                 'name' => 'Email',
                 'sort_order' => 4,
                 'type' => 'email',
                 'variable_name' => 'email',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            51 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            51 => [
                 'id' => 53,
                 'form_id' => 5,
                 'name' => 'Date of Birth',
                 'sort_order' => 14,
                 'type' => 'date',
                 'variable_name' => 'date_of_birth',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            52 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            52 => [
                 'id' => 54,
                 'form_id' => 5,
                 'name' => 'Emergency Contact',
                 'sort_order' => 8,
                 'type' => 'name',
                 'variable_name' => 'emergency_contact',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            53 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            53 => [
                 'id' => 55,
                 'form_id' => 5,
                 'name' => 'Emergency Contact Relationship',
                 'sort_order' => 9,
                 'type' => 'text',
                 'variable_name' => 'emergency_contact_relationship',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            54 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            54 => [
                 'id' => 56,
                 'form_id' => 5,
                 'name' => 'Emergency Contact Phone Number',
                 'sort_order' => 10,
                 'type' => 'phone',
                 'variable_name' => 'emergency_contact_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            55 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            55 => [
                 'id' => 57,
                 'form_id' => 5,
                 'name' => 'Parish',
                 'sort_order' => 15,
                 'type' => 'text',
                 'variable_name' => 'parish',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            56 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            56 => [
                 'id' => 58,
                 'form_id' => 5,
                 'name' => 'Preferred Language',
                 'sort_order' => 13,
                 'type' => 'select',
                 'variable_name' => 'preferred_language',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            57 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            57 => [
                 'id' => 59,
                 'form_id' => 5,
                 'name' => 'How did you hear about Montserrat',
                 'sort_order' => 13,
                 'type' => 'select',
                 'variable_name' => 'hear_about',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 22:51:56',
-            ),
-            58 => 
-            array (
+            ],
+            58 => [
                 'id' => 60,
                 'form_id' => 5,
                 'name' => 'If "Other" please elaborate: ',
                 'sort_order' => 14,
                 'type' => 'text',
                 'variable_name' => 'hear_other',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 22:52:02',
-            ),
-            59 => 
-            array (
+            ],
+            59 => [
                 'id' => 61,
                 'form_id' => 5,
                 'name' => 'How did you hear about this particular retreat?',
                 'sort_order' => 15,
                 'type' => 'select',
                 'variable_name' => 'hear_retreat',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 22:52:07',
-            ),
-            60 => 
-            array (
+            ],
+            60 => [
                 'id' => 62,
                 'form_id' => 5,
                 'name' => 'If "Retreat Ambassador" please name them:',
                 'sort_order' => 16,
                 'type' => 'text',
                 'variable_name' => 'hear_ambassador',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-01 22:52:13',
-            ),
-            61 => 
-            array (
+            ],
+            61 => [
                 'id' => 63,
                 'form_id' => 5,
                 'name' => 'Room Preference',
                 'sort_order' => 12,
                 'type' => 'select',
                 'variable_name' => 'room_preference',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            62 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            62 => [
                 'id' => 64,
                 'form_id' => 5,
                 'name' => 'Dietary Restrictions, Food Allergies, or Other Special Needs:',
                 'sort_order' => 11,
                 'type' => 'textbox',
                 'variable_name' => 'dietary',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            63 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            63 => [
                 'id' => 65,
                 'form_id' => 5,
                 'name' => 'Comments / Questions',
                 'sort_order' => 16,
                 'type' => 'textbox',
                 'variable_name' => 'comments',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-06-17 01:34:27',
-                'deleted_at' => NULL,
-            ),
-            64 => 
-            array (
+                'deleted_at' => null,
+            ],
+            64 => [
                 'id' => 66,
                 'form_id' => 5,
                 'name' => 'Spouse\'s Name',
                 'sort_order' => 18,
                 'type' => 'name',
                 'variable_name' => 'couple_name',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-06-03 20:56:13',
-                'deleted_at' => NULL,
-            ),
-            65 => 
-            array (
+                'deleted_at' => null,
+            ],
+            65 => [
                 'id' => 67,
                 'form_id' => 5,
                 'name' => 'Spouse\'s Mobile Phone',
                 'sort_order' => 20,
                 'type' => 'phone',
                 'variable_name' => 'couple_mobile_phone',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-21 09:57:28',
-                'deleted_at' => NULL,
-            ),
-            66 => 
-            array (
+                'deleted_at' => null,
+            ],
+            66 => [
                 'id' => 68,
                 'form_id' => 5,
                 'name' => 'Spouse\'s Email',
                 'sort_order' => 19,
                 'type' => 'email',
                 'variable_name' => 'couple_email',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            67 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            67 => [
                 'id' => 69,
                 'form_id' => 5,
                 'name' => 'Spouse\'s Date of Birth',
                 'sort_order' => 25,
                 'type' => 'date',
                 'variable_name' => 'couple_date_of_birth',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            68 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            68 => [
                 'id' => 70,
                 'form_id' => 5,
                 'name' => 'Spouse\'s Emergency Contact',
                 'sort_order' => 21,
                 'type' => 'name',
                 'variable_name' => 'couple_emergency_contact',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            69 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            69 => [
                 'id' => 71,
                 'form_id' => 5,
                 'name' => 'Spouse\'s Emergency Contact Relationship',
                 'sort_order' => 22,
                 'type' => 'text',
                 'variable_name' => 'couple_emergency_contact_relationship',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            70 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            70 => [
                 'id' => 72,
                 'form_id' => 5,
                 'name' => 'Spouse\'s Emergency Contact Phone Number',
                 'sort_order' => 23,
                 'type' => 'phone',
                 'variable_name' => 'couple_emergency_contact_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            71 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            71 => [
                 'id' => 73,
                 'form_id' => 5,
                 'name' => 'Spouse\'s Dietary Restrictions, Food Allergies, or Other Special Needs',
                 'sort_order' => 24,
                 'type' => 'textbox',
                 'variable_name' => 'couple_dietary',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-21 09:59:42',
-                'deleted_at' => NULL,
-            ),
-            72 => 
-            array (
+                'deleted_at' => null,
+            ],
+            72 => [
                 'id' => 74,
                 'form_id' => 7,
                 'name' => 'Purchaser\'s Name',
                 'sort_order' => 2,
                 'type' => 'name',
                 'variable_name' => 'name',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-11-16 07:18:39',
-                'deleted_at' => NULL,
-            ),
-            73 => 
-            array (
+                'deleted_at' => null,
+            ],
+            73 => [
                 'id' => 75,
                 'form_id' => 7,
                 'name' => 'Purchaser\'s Mobile Phone',
                 'sort_order' => 5,
                 'type' => 'phone',
                 'variable_name' => 'mobile_phone',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-11-16 07:19:53',
-                'deleted_at' => NULL,
-            ),
-            74 => 
-            array (
+                'deleted_at' => null,
+            ],
+            74 => [
                 'id' => 76,
                 'form_id' => 7,
                 'name' => 'Purchaser\'s Email',
                 'sort_order' => 4,
                 'type' => 'email',
                 'variable_name' => 'email',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-11-16 07:19:18',
-                'deleted_at' => NULL,
-            ),
-            75 => 
-            array (
+                'deleted_at' => null,
+            ],
+            75 => [
                 'id' => 77,
                 'form_id' => 7,
                 'name' => 'Purchaser\'s Address',
                 'sort_order' => 3,
                 'type' => 'address',
                 'variable_name' => 'full_address',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-11-16 07:18:51',
-                'deleted_at' => NULL,
-            ),
-            76 => 
-            array (
+                'deleted_at' => null,
+            ],
+            76 => [
                 'id' => 78,
                 'form_id' => 7,
                 'name' => 'Recipient\'s Name',
                 'sort_order' => 8,
                 'type' => 'name',
                 'variable_name' => 'couple_name',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-11-16 07:20:53',
-                'deleted_at' => NULL,
-            ),
-            77 => 
-            array (
+                'deleted_at' => null,
+            ],
+            77 => [
                 'id' => 79,
                 'form_id' => 7,
                 'name' => 'Recipient\'s Phone',
                 'sort_order' => 10,
                 'type' => 'phone',
                 'variable_name' => 'couple_mobile_phone',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-11-16 07:22:15',
-                'deleted_at' => NULL,
-            ),
-            78 => 
-            array (
+                'deleted_at' => null,
+            ],
+            78 => [
                 'id' => 80,
                 'form_id' => 7,
                 'name' => 'Recipient\'s Email',
                 'sort_order' => 9,
                 'type' => 'email',
                 'variable_name' => 'couple_email',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-11-16 07:21:48',
-                'deleted_at' => NULL,
-            ),
-            79 => 
-            array (
+                'deleted_at' => null,
+            ],
+            79 => [
                 'id' => 81,
                 'form_id' => 8,
                 'name' => 'Name',
                 'sort_order' => 1,
                 'type' => 'name',
                 'variable_name' => 'name',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            80 => 
-            array (
+            ],
+            80 => [
                 'id' => 82,
                 'form_id' => 8,
                 'name' => 'Date Of Birth',
                 'sort_order' => 2,
                 'type' => 'date',
                 'variable_name' => 'date_of_birth',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            81 => 
-            array (
+            ],
+            81 => [
                 'id' => 83,
                 'form_id' => 8,
                 'name' => 'Cell Phone',
                 'sort_order' => 3,
                 'type' => 'phone',
                 'variable_name' => 'cell_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            82 => 
-            array (
+            ],
+            82 => [
                 'id' => 84,
                 'form_id' => 8,
                 'name' => 'Email',
                 'sort_order' => 4,
                 'type' => 'email',
                 'variable_name' => 'email',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            83 => 
-            array (
+            ],
+            83 => [
                 'id' => 85,
                 'form_id' => 8,
                 'name' => 'Emergency Contact',
                 'sort_order' => 5,
                 'type' => 'name',
                 'variable_name' => 'emergency_contact',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            84 => 
-            array (
+            ],
+            84 => [
                 'id' => 86,
                 'form_id' => 8,
                 'name' => 'Emergency Contact Relationship',
                 'sort_order' => 6,
                 'type' => 'text',
                 'variable_name' => 'emergency_contact_relationship',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            85 => 
-            array (
+            ],
+            85 => [
                 'id' => 87,
                 'form_id' => 8,
                 'name' => 'Emergency Contact Phone Number',
                 'sort_order' => 7,
                 'type' => 'phone',
                 'variable_name' => 'emergency_contact_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            86 => 
-            array (
+            ],
+            86 => [
                 'id' => 88,
                 'form_id' => 8,
                 'name' => 'How did you learn about this retreat?',
                 'sort_order' => 8,
                 'type' => 'select',
                 'variable_name' => 'hear_about',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            87 => 
-            array (
+            ],
+            87 => [
                 'id' => 89,
                 'form_id' => 8,
                 'name' => 'If you are student, provide the name of your College/University',
                 'sort_order' => 9,
                 'type' => 'text',
                 'variable_name' => 'college_name',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            88 => 
-            array (
+            ],
+            88 => [
                 'id' => 90,
                 'form_id' => 8,
                 'name' => 'Room Preference',
                 'sort_order' => 10,
                 'type' => 'select',
                 'variable_name' => 'room_preference',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            89 => 
-            array (
+            ],
+            89 => [
                 'id' => 91,
                 'form_id' => 8,
                 'name' => 'Dietary Restriction, Food Allergies, or Other Special Needs',
                 'sort_order' => 11,
                 'type' => 'textbox',
                 'variable_name' => 'dietary',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            90 => 
-            array (
+            ],
+            90 => [
                 'id' => 92,
                 'form_id' => 8,
                 'name' => 'Questions / Comments',
                 'sort_order' => 12,
                 'type' => 'textbox',
                 'variable_name' => 'comments',
-                'created_at' => NULL,
-                'updated_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
                 'deleted_at' => '2022-05-15 11:04:11',
-            ),
-            91 => 
-            array (
+            ],
+            91 => [
                 'id' => 93,
                 'form_id' => 6,
                 'name' => 'Title',
                 'sort_order' => 1,
                 'type' => 'select',
                 'variable_name' => 'title',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            92 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            92 => [
                 'id' => 94,
                 'form_id' => 6,
                 'name' => 'Name',
                 'sort_order' => 2,
                 'type' => 'name',
                 'variable_name' => 'name',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            93 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            93 => [
                 'id' => 95,
                 'form_id' => 6,
                 'name' => 'Email',
                 'sort_order' => 4,
                 'type' => 'email',
                 'variable_name' => 'email',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            94 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            94 => [
                 'id' => 96,
                 'form_id' => 6,
                 'name' => 'Mobile Phone',
                 'sort_order' => 5,
                 'type' => 'phone',
                 'variable_name' => 'mobile_phone',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-15 19:48:58',
-                'deleted_at' => NULL,
-            ),
-            95 => 
-            array (
+                'deleted_at' => null,
+            ],
+            95 => [
                 'id' => 97,
                 'form_id' => 6,
                 'name' => 'Home Phone',
                 'sort_order' => 6,
                 'type' => 'phone',
                 'variable_name' => 'home_phone',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-15 19:49:12',
-                'deleted_at' => NULL,
-            ),
-            96 => 
-            array (
+                'deleted_at' => null,
+            ],
+            96 => [
                 'id' => 98,
                 'form_id' => 6,
                 'name' => 'Address',
                 'sort_order' => 3,
                 'type' => 'address',
                 'variable_name' => 'full_address',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            97 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            97 => [
                 'id' => 99,
                 'form_id' => 6,
                 'name' => 'Additional Names and Phone Numbers',
                 'sort_order' => 9,
                 'type' => 'text',
                 'variable_name' => 'additional_names_and_phone_numbers',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            98 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            98 => [
                 'id' => 100,
                 'form_id' => 6,
                 'name' => 'Comments / Questions',
                 'sort_order' => 8,
                 'type' => 'textbox',
                 'variable_name' => 'comments',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            99 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            99 => [
                 'id' => 101,
                 'form_id' => 2,
                 'name' => 'Work Phone',
                 'sort_order' => 7,
                 'type' => 'phone',
                 'variable_name' => 'work_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            100 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            100 => [
                 'id' => 102,
                 'form_id' => 5,
                 'name' => 'Work Phone',
                 'sort_order' => 7,
                 'type' => 'phone',
                 'variable_name' => 'work_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            101 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            101 => [
                 'id' => 103,
                 'form_id' => 5,
                 'name' => 'Spouse\'s Title',
                 'sort_order' => 17,
                 'type' => 'select',
                 'variable_name' => 'couple_title',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-14 22:01:32',
-                'deleted_at' => NULL,
-            ),
-            102 => 
-            array (
+                'deleted_at' => null,
+            ],
+            102 => [
                 'id' => 104,
                 'form_id' => 4,
                 'name' => 'Contacto de Emergencia del Conyuge',
                 'sort_order' => 21,
                 'type' => 'person',
                 'variable_name' => 'couple_emergency_contact',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            103 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            103 => [
                 'id' => 105,
                 'form_id' => 4,
                 'name' => 'Relación a Contacto de Emergencia del Conyuge',
                 'sort_order' => 22,
                 'type' => 'text',
                 'variable_name' => 'couple_emergency_contact_relationship',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            104 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            104 => [
                 'id' => 106,
                 'form_id' => 4,
                 'name' => 'Número de Teléfono de Contacto de Emergencia del Conyuge',
                 'sort_order' => 23,
                 'type' => 'phone',
                 'variable_name' => 'couple_emergency_contact_phone',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-05-16 15:36:40',
-                'deleted_at' => NULL,
-            ),
-            105 => 
-            array (
+                'deleted_at' => null,
+            ],
+            105 => [
                 'id' => 107,
                 'form_id' => 4,
                 'name' => 'Restricciones dietéticas, alergias a los alimentos u otras necesidades especiales del Conyuge',
                 'sort_order' => 24,
                 'type' => 'textarea',
                 'variable_name' => 'couple_dietary',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            106 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            106 => [
                 'id' => 108,
                 'form_id' => 7,
                 'name' => 'Purchaser\'s Title',
                 'sort_order' => 1,
                 'type' => 'select',
                 'variable_name' => 'title',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-11-16 07:18:07',
-                'deleted_at' => NULL,
-            ),
-            107 => 
-            array (
+                'deleted_at' => null,
+            ],
+            107 => [
                 'id' => 109,
                 'form_id' => 7,
                 'name' => 'Purchaser\'s Home Phone',
                 'sort_order' => 6,
                 'type' => 'phone',
                 'variable_name' => 'home_phone',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-11-16 07:20:02',
-                'deleted_at' => NULL,
-            ),
-            108 => 
-            array (
+                'deleted_at' => null,
+            ],
+            108 => [
                 'id' => 110,
                 'form_id' => 7,
                 'name' => 'Purchaser\'s Work Phone',
                 'sort_order' => 7,
                 'type' => 'phone',
                 'variable_name' => 'work_phone',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-11-16 07:20:10',
-                'deleted_at' => NULL,
-            ),
-            109 => 
-            array (
+                'deleted_at' => null,
+            ],
+            109 => [
                 'id' => 122,
                 'form_id' => 9,
                 'name' => 'Gift Certificate Number',
@@ -1337,10 +1224,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'gift_certificate_number',
                 'created_at' => '2022-05-15 19:16:32',
                 'updated_at' => '2022-05-15 19:34:40',
-                'deleted_at' => NULL,
-            ),
-            110 => 
-            array (
+                'deleted_at' => null,
+            ],
+            110 => [
                 'id' => 123,
                 'form_id' => 9,
                 'name' => 'Please select the retreat would you like to attend',
@@ -1349,10 +1235,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'gift_certificate_retreat',
                 'created_at' => '2022-05-15 19:20:22',
                 'updated_at' => '2023-01-24 17:24:34',
-                'deleted_at' => NULL,
-            ),
-            111 => 
-            array (
+                'deleted_at' => null,
+            ],
+            111 => [
                 'id' => 124,
                 'form_id' => 9,
                 'name' => 'Title',
@@ -1361,10 +1246,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'title',
                 'created_at' => '2022-05-15 19:20:48',
                 'updated_at' => '2022-05-15 19:20:48',
-                'deleted_at' => NULL,
-            ),
-            112 => 
-            array (
+                'deleted_at' => null,
+            ],
+            112 => [
                 'id' => 125,
                 'form_id' => 9,
                 'name' => 'Name',
@@ -1373,10 +1257,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'name',
                 'created_at' => '2022-05-15 19:21:21',
                 'updated_at' => '2022-05-15 19:21:21',
-                'deleted_at' => NULL,
-            ),
-            113 => 
-            array (
+                'deleted_at' => null,
+            ],
+            113 => [
                 'id' => 126,
                 'form_id' => 9,
                 'name' => 'Address',
@@ -1385,10 +1268,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'full_address',
                 'created_at' => '2022-05-15 19:21:42',
                 'updated_at' => '2022-05-15 19:21:42',
-                'deleted_at' => NULL,
-            ),
-            114 => 
-            array (
+                'deleted_at' => null,
+            ],
+            114 => [
                 'id' => 127,
                 'form_id' => 9,
                 'name' => 'Email',
@@ -1397,10 +1279,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'email',
                 'created_at' => '2022-05-15 19:22:02',
                 'updated_at' => '2022-05-15 19:22:02',
-                'deleted_at' => NULL,
-            ),
-            115 => 
-            array (
+                'deleted_at' => null,
+            ],
+            115 => [
                 'id' => 128,
                 'form_id' => 9,
                 'name' => 'Mobile Phone',
@@ -1409,10 +1290,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'mobile_phone',
                 'created_at' => '2022-05-15 19:22:42',
                 'updated_at' => '2022-05-15 19:22:42',
-                'deleted_at' => NULL,
-            ),
-            116 => 
-            array (
+                'deleted_at' => null,
+            ],
+            116 => [
                 'id' => 129,
                 'form_id' => 9,
                 'name' => 'Home Phone',
@@ -1421,10 +1301,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'home_phone',
                 'created_at' => '2022-05-15 19:22:58',
                 'updated_at' => '2022-05-15 19:22:58',
-                'deleted_at' => NULL,
-            ),
-            117 => 
-            array (
+                'deleted_at' => null,
+            ],
+            117 => [
                 'id' => 130,
                 'form_id' => 9,
                 'name' => 'Work Phone',
@@ -1433,10 +1312,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'work_phone',
                 'created_at' => '2022-05-15 19:23:13',
                 'updated_at' => '2022-05-15 19:23:13',
-                'deleted_at' => NULL,
-            ),
-            118 => 
-            array (
+                'deleted_at' => null,
+            ],
+            118 => [
                 'id' => 131,
                 'form_id' => 9,
                 'name' => 'Emergency Contact',
@@ -1445,10 +1323,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'emergency_contact',
                 'created_at' => '2022-05-15 19:23:48',
                 'updated_at' => '2022-05-15 19:23:48',
-                'deleted_at' => NULL,
-            ),
-            119 => 
-            array (
+                'deleted_at' => null,
+            ],
+            119 => [
                 'id' => 132,
                 'form_id' => 9,
                 'name' => 'Emergency Contact Relationship',
@@ -1457,10 +1334,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'emergency_contact_relationship',
                 'created_at' => '2022-05-15 19:24:26',
                 'updated_at' => '2022-05-15 19:24:26',
-                'deleted_at' => NULL,
-            ),
-            120 => 
-            array (
+                'deleted_at' => null,
+            ],
+            120 => [
                 'id' => 133,
                 'form_id' => 9,
                 'name' => 'Emergency Contact Phone Number',
@@ -1469,10 +1345,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'emergency_contact_phone',
                 'created_at' => '2022-05-15 19:25:00',
                 'updated_at' => '2023-01-24 17:36:58',
-                'deleted_at' => NULL,
-            ),
-            121 => 
-            array (
+                'deleted_at' => null,
+            ],
+            121 => [
                 'id' => 134,
                 'form_id' => 9,
                 'name' => 'Dietary Restrictions, Food Allergies or Other Special Needs',
@@ -1481,10 +1356,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'dietary',
                 'created_at' => '2022-05-15 19:25:47',
                 'updated_at' => '2022-05-15 19:25:55',
-                'deleted_at' => NULL,
-            ),
-            122 => 
-            array (
+                'deleted_at' => null,
+            ],
+            122 => [
                 'id' => 135,
                 'form_id' => 9,
                 'name' => 'Room Preference',
@@ -1493,10 +1367,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'room_preference',
                 'created_at' => '2022-05-15 19:26:37',
                 'updated_at' => '2022-05-15 19:26:37',
-                'deleted_at' => NULL,
-            ),
-            123 => 
-            array (
+                'deleted_at' => null,
+            ],
+            123 => [
                 'id' => 136,
                 'form_id' => 9,
                 'name' => 'Preferred Language',
@@ -1505,10 +1378,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'preferred_language',
                 'created_at' => '2022-05-15 19:27:16',
                 'updated_at' => '2022-05-15 19:27:16',
-                'deleted_at' => NULL,
-            ),
-            124 => 
-            array (
+                'deleted_at' => null,
+            ],
+            124 => [
                 'id' => 137,
                 'form_id' => 9,
                 'name' => 'Date of Birth',
@@ -1517,10 +1389,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'date_of_birth',
                 'created_at' => '2022-05-15 19:27:45',
                 'updated_at' => '2022-05-15 19:27:45',
-                'deleted_at' => NULL,
-            ),
-            125 => 
-            array (
+                'deleted_at' => null,
+            ],
+            125 => [
                 'id' => 138,
                 'form_id' => 9,
                 'name' => 'Parish',
@@ -1529,10 +1400,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'parish',
                 'created_at' => '2022-05-15 19:28:13',
                 'updated_at' => '2022-05-15 19:28:23',
-                'deleted_at' => NULL,
-            ),
-            126 => 
-            array (
+                'deleted_at' => null,
+            ],
+            126 => [
                 'id' => 139,
                 'form_id' => 9,
                 'name' => 'Comments / Questions',
@@ -1541,10 +1411,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'comments',
                 'created_at' => '2022-05-15 19:29:13',
                 'updated_at' => '2022-05-15 19:29:13',
-                'deleted_at' => NULL,
-            ),
-            127 => 
-            array (
+                'deleted_at' => null,
+            ],
+            127 => [
                 'id' => 140,
                 'form_id' => 10,
                 'name' => 'Número de certificado de regalo',
@@ -1553,10 +1422,9 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'gift_certificate_number',
                 'created_at' => '2022-05-15 19:32:09',
                 'updated_at' => '2022-05-15 19:32:09',
-                'deleted_at' => NULL,
-            ),
-            128 => 
-            array (
+                'deleted_at' => null,
+            ],
+            128 => [
                 'id' => 141,
                 'form_id' => 10,
                 'name' => '¿A qué retiro le gustaría asistir?',
@@ -1565,58 +1433,53 @@ class SquarespaceCustomFormFieldTableSeeder extends Seeder
                 'variable_name' => 'gift_certificate_retreat',
                 'created_at' => '2022-05-15 19:33:30',
                 'updated_at' => '2022-05-16 11:00:40',
-                'deleted_at' => NULL,
-            ),
-            129 => 
-            array (
+                'deleted_at' => null,
+            ],
+            129 => [
                 'id' => 144,
                 'form_id' => 10,
                 'name' => 'Título',
                 'sort_order' => 3,
                 'type' => 'select',
                 'variable_name' => 'title',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            130 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            130 => [
                 'id' => 145,
                 'form_id' => 10,
                 'name' => 'Nombre/Apellido',
                 'sort_order' => 4,
                 'type' => 'name',
                 'variable_name' => 'name',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            131 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            131 => [
                 'id' => 146,
                 'form_id' => 10,
                 'name' => 'Dirección',
                 'sort_order' => 5,
                 'type' => 'address',
                 'variable_name' => 'full_address',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            132 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            132 => [
                 'id' => 147,
                 'form_id' => 10,
                 'name' => 'Correo electrónico',
                 'sort_order' => 6,
                 'type' => 'email',
                 'variable_name' => 'email',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            133 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            133 => [
                 'id' => 148,
                 'form_id' => 10,
                 'name' => '
@@ -1624,36 +1487,33 @@ Número de Teléfono Móvil',
                 'sort_order' => 7,
                 'type' => 'phone',
                 'variable_name' => 'mobile_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            134 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            134 => [
                 'id' => 149,
                 'form_id' => 10,
                 'name' => 'Número de Teléfono de Casa',
                 'sort_order' => 8,
                 'type' => 'phone',
                 'variable_name' => 'home_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            135 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            135 => [
                 'id' => 150,
                 'form_id' => 10,
                 'name' => 'Número de Teléfono de Trabajo',
                 'sort_order' => 9,
                 'type' => 'phone',
                 'variable_name' => 'work_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            136 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            136 => [
                 'id' => 151,
                 'form_id' => 10,
                 'name' => '
@@ -1661,12 +1521,11 @@ Contacto de Emergencia',
                 'sort_order' => 10,
                 'type' => 'name',
                 'variable_name' => 'emergency_contact',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            137 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            137 => [
                 'id' => 152,
                 'form_id' => 10,
                 'name' => '
@@ -1674,12 +1533,11 @@ Relación a Contacto de Emergencia',
                 'sort_order' => 11,
                 'type' => 'text',
                 'variable_name' => 'emergency_contact_relationship',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            138 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            138 => [
                 'id' => 153,
                 'form_id' => 10,
                 'name' => '
@@ -1687,84 +1545,77 @@ Número de Teléfono de Contacto de Emergencia ',
                 'sort_order' => 12,
                 'type' => 'phone',
                 'variable_name' => 'emergency_contact_phone',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            139 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            139 => [
                 'id' => 154,
                 'form_id' => 10,
                 'name' => 'Restricciones dietéticas, alergias a los alimentos u otras necesidades especiales ',
                 'sort_order' => 13,
                 'type' => 'textarea',
                 'variable_name' => 'dietary',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            140 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            140 => [
                 'id' => 155,
                 'form_id' => 10,
                 'name' => 'Preferencia de Habitación',
                 'sort_order' => 14,
                 'type' => 'select',
                 'variable_name' => 'room_preference',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            141 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            141 => [
                 'id' => 156,
                 'form_id' => 10,
                 'name' => 'Idioma preferido',
                 'sort_order' => 15,
                 'type' => 'select',
                 'variable_name' => 'preferred_language',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            142 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            142 => [
                 'id' => 157,
                 'form_id' => 10,
                 'name' => 'Fecha de Nacimiento',
                 'sort_order' => 16,
                 'type' => 'date',
                 'variable_name' => 'date_of_birth',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            143 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            143 => [
                 'id' => 158,
                 'form_id' => 10,
                 'name' => 'Parroquia',
                 'sort_order' => 17,
                 'type' => 'text',
                 'variable_name' => 'parish',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            144 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            144 => [
                 'id' => 159,
                 'form_id' => 10,
                 'name' => 'Comentarios / Preguntas',
                 'sort_order' => 18,
                 'type' => 'textarea',
                 'variable_name' => 'comments',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            145 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            145 => [
                 'id' => 173,
                 'form_id' => 6,
                 'name' => 'Work Phone',
@@ -1773,10 +1624,8 @@ Número de Teléfono de Contacto de Emergencia ',
                 'variable_name' => 'work_phone',
                 'created_at' => '2022-05-15 19:53:57',
                 'updated_at' => '2022-05-15 19:53:57',
-                'deleted_at' => NULL,
-            ),
-        ));
-        
-        
+                'deleted_at' => null,
+            ],
+        ]);
     }
 }

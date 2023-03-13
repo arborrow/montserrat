@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('order_id')->nullable();
             $table->index('order_id', 'idx_order_id');
         });
-
     }
 
     /**
@@ -31,6 +30,5 @@ return new class extends Migration
             $table->dropColumn(['order_id']);
             $table->dropIndex('idx_order_id');
         });
-
     }
 };

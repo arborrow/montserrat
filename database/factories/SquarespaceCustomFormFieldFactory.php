@@ -13,15 +13,16 @@ class SquarespaceCustomFormFieldFactory extends Factory
      */
     public function definition()
     {
-        $name = ucwords(implode(" ",$this->faker->words(3)));
-        $variable = strtolower(str_replace(" ","_",$name));
+        $name = ucwords(implode(' ', $this->faker->words(3)));
+        $variable = strtolower(str_replace(' ', '_', $name));
+
         return [
             'name' => $name,
             'form_id' => function () {
                 return \App\Models\SquarespaceCustomForm::factory()->create()->id;
             },
             'name' => $name,
-            'sort_order' => $this->faker->numberBetween(1,20), 
+            'sort_order' => $this->faker->numberBetween(1, 20),
             'type' => $this->faker->randomElement(['select', 'name', 'address', 'phone', 'email', 'date', 'person', 'text', 'textarea']),
             'variable_name' => $variable,
         ];

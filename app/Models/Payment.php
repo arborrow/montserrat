@@ -22,7 +22,7 @@ class Payment extends Model implements Auditable
 
     protected $casts = [
         'payment_date' => 'datetime',
-        'expire_date' => 'datetime', 'payment_amount'=>'decimal:2',
+        'expire_date' => 'datetime', 'payment_amount' => 'decimal:2',
     ];
 
     public function donation()

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class SnippetsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,13 +13,10 @@ class SnippetsTableSeeder extends Seeder
      */
     public function run()
     {
-        
-
         \DB::table('snippets')->delete();
-        
-        \DB::table('snippets')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('snippets')->insert([
+            0 => [
                 'id' => 1,
                 'title' => 'agc_acknowledge',
                 'label' => 'board',
@@ -42,10 +38,9 @@ Mary Del Olmo<br />
 Deacon John O\'Leary',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2022-03-25 17:07:01',
-                'deleted_at' => NULL,
-            ),
-            1 => 
-            array (
+                'deleted_at' => null,
+            ],
+            1 => [
                 'id' => 2,
                 'title' => 'agc_acknowledge',
                 'label' => 'jesuits',
@@ -56,10 +51,9 @@ Fr. Ruiz, S.J.<br />
 Fr. Vo, S.J.',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2022-11-22 17:42:49',
-                'deleted_at' => NULL,
-            ),
-            2 => 
-            array (
+                'deleted_at' => null,
+            ],
+            2 => [
                 'id' => 3,
                 'title' => 'agc_acknowledge',
                 'label' => 'letter',
@@ -84,10 +78,9 @@ Fr. Anthony Rauschuber, S.J.<br />
 Director',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-05 22:20:35',
-                'deleted_at' => NULL,
-            ),
-            3 => 
-            array (
+                'deleted_at' => null,
+            ],
+            3 => [
                 'id' => 4,
                 'title' => 'agc_acknowledge',
                 'label' => '501c3',
@@ -99,10 +92,9 @@ No goods or services have been provided to the donor.
 Your donation is deductible to the extent allowed by law.',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            4 => 
-            array (
+                'deleted_at' => null,
+            ],
+            4 => [
                 'id' => 5,
                 'title' => 'agc_acknowledge',
                 'label' => 'footer',
@@ -122,10 +114,9 @@ Your donation is deductible to the extent allowed by law.',
 </table>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            5 => 
-            array (
+                'deleted_at' => null,
+            ],
+            5 => [
                 'id' => 6,
                 'title' => 'event-confirmation',
                 'label' => 'welcome',
@@ -136,36 +127,33 @@ We greatly look forward to welcoming and accompanying you during the retreat.   
 The safety of our retreatants and staff is our highest priority. We have put in place the following procedures to ensure the safest environment possible for you to relax and enjoy your retreat.',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2022-11-03 17:01:12',
-                'deleted_at' => NULL,
-            ),
-            6 => 
-            array (
+                'deleted_at' => null,
+            ],
+            6 => [
                 'id' => 7,
                 'title' => 'event-confirmation',
                 'label' => 'checkin',
                 'locale' => 'en_US',
-            'snippet' => 'Check-in for your retreat is between 4:00 - 6:00 p.m. on {{$participant->retreat_start_date->format(&apos;l F j, Y&apos;) }}.
+                'snippet' => 'Check-in for your retreat is between 4:00 - 6:00 p.m. on {{$participant->retreat_start_date->format(&apos;l F j, Y&apos;) }}.
 When you arrive, please come to Campion Hall to receive your room key and retreat packet.',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-10-07 20:07:55',
-                'deleted_at' => NULL,
-            ),
-            7 => 
-            array (
+                'deleted_at' => null,
+            ],
+            7 => [
                 'id' => 8,
                 'title' => 'event-confirmation',
                 'label' => 'confirm',
                 'locale' => 'en_US',
-            'snippet' => 'Kindly <a href="{{ url(&apos;intercept/&apos;.$encodedUrl ) }}">click here to confirm your attendance</a>.
+                'snippet' => 'Kindly <a href="{{ url(&apos;intercept/&apos;.$encodedUrl ) }}">click here to confirm your attendance</a>.
 If your plans have changed kindly let us know by calling us at 940-321-6020 or emailing us at registration@montserratretreat.org.
 We would be happy to help you reschedule your retreat.  Visit our <a href="https://montserratretreat.org/retreat-frequently-asked-questions">Frequently Asked Questions section</a> to know more 
 information about the retreat.',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2022-11-03 16:46:48',
-                'deleted_at' => NULL,
-            ),
-            8 => 
-            array (
+                'deleted_at' => null,
+            ],
+            8 => [
                 'id' => 9,
                 'title' => 'event-confirmation',
                 'label' => 'notices',
@@ -178,10 +166,9 @@ information about the retreat.',
 •  Please be reminded, only registered retreatants are authorized on campus during retreat hours during the pandemic <br>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2022-05-03 19:48:04',
-                'deleted_at' => NULL,
-            ),
-            9 => 
-            array (
+                'deleted_at' => null,
+            ],
+            9 => [
                 'id' => 10,
                 'title' => 'event-confirmation',
                 'label' => 'signature',
@@ -191,21 +178,19 @@ Fr. Tony Raushchuber, S.J.<br>
 Director<br><br>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            10 => 
-            array (
+                'deleted_at' => null,
+            ],
+            10 => [
                 'id' => 11,
                 'title' => 'event-confirmation',
                 'label' => 'provided',
                 'locale' => 'en_US',
-                'snippet' => NULL,
+                'snippet' => null,
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-10-07 20:16:17',
-                'deleted_at' => NULL,
-            ),
-            11 => 
-            array (
+                'deleted_at' => null,
+            ],
+            11 => [
                 'id' => 12,
                 'title' => 'event-confirmation',
                 'label' => 'bring',
@@ -219,10 +204,9 @@ Director<br><br>',
 • All buildings are air-conditioned in the summer, so a light jacket or sweater may be helpful<br>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2022-11-03 16:51:23',
-                'deleted_at' => NULL,
-            ),
-            12 => 
-            array (
+                'deleted_at' => null,
+            ],
+            12 => [
                 'id' => 13,
                 'title' => 'birthday',
                 'label' => 'footer',
@@ -242,10 +226,9 @@ Director<br><br>',
 </p>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            13 => 
-            array (
+                'deleted_at' => null,
+            ],
+            13 => [
                 'id' => 14,
                 'title' => 'birthday',
                 'label' => 'quote',
@@ -261,10 +244,9 @@ John 15:11
 </p>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            14 => 
-            array (
+                'deleted_at' => null,
+            ],
+            14 => [
                 'id' => 15,
                 'title' => 'birthday',
                 'label' => 'message',
@@ -281,10 +263,9 @@ of God&apos;s good gifts.
 </p>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            15 => 
-            array (
+                'deleted_at' => null,
+            ],
+            15 => [
                 'id' => 16,
                 'title' => 'birthday',
                 'label' => 'picture',
@@ -294,10 +275,9 @@ of God&apos;s good gifts.
 </h2>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            16 => 
-            array (
+                'deleted_at' => null,
+            ],
+            16 => [
                 'id' => 17,
                 'title' => 'birthday',
                 'label' => 'footer',
@@ -317,10 +297,9 @@ of God&apos;s good gifts.
 </p>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            17 => 
-            array (
+                'deleted_at' => null,
+            ],
+            17 => [
                 'id' => 18,
                 'title' => 'birthday',
                 'label' => 'quote',
@@ -336,10 +315,9 @@ Juan 15:11
 </p>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            18 => 
-            array (
+                'deleted_at' => null,
+            ],
+            18 => [
                 'id' => 19,
                 'title' => 'birthday',
                 'label' => 'message',
@@ -356,10 +334,9 @@ lo que Dios le regale. <br>
 </p>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            19 => 
-            array (
+                'deleted_at' => null,
+            ],
+            19 => [
                 'id' => 20,
                 'title' => 'birthday',
                 'label' => 'picture',
@@ -369,10 +346,9 @@ lo que Dios le regale. <br>
 </h2>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            20 => 
-            array (
+                'deleted_at' => null,
+            ],
+            20 => [
                 'id' => 21,
                 'title' => 'agc_acknowledge',
                 'label' => 'board',
@@ -394,10 +370,9 @@ Mary Del Olmo <br />
 Deacon John O\'Leary',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2022-03-15 17:06:13',
-                'deleted_at' => NULL,
-            ),
-            21 => 
-            array (
+                'deleted_at' => null,
+            ],
+            21 => [
                 'id' => 22,
                 'title' => 'agc_acknowledge',
                 'label' => 'jesuits',
@@ -405,10 +380,9 @@ Deacon John O\'Leary',
                 'snippet' => 'P. Rauschuber, S.J.<br /> P. French, S.J.<br /> P. Ruiz, S.J.<br /> P. Vo, S.J.',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2023-01-09 22:21:33',
-                'deleted_at' => NULL,
-            ),
-            22 => 
-            array (
+                'deleted_at' => null,
+            ],
+            22 => [
                 'id' => 23,
                 'title' => 'agc_acknowledge',
                 'label' => 'letter',
@@ -435,10 +409,9 @@ P. Anthony Rauschuber, S.J.<br />
 Director',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-05 22:29:36',
-                'deleted_at' => NULL,
-            ),
-            23 => 
-            array (
+                'deleted_at' => null,
+            ],
+            23 => [
                 'id' => 24,
                 'title' => 'agc_acknowledge',
                 'label' => '501c3',
@@ -448,10 +421,9 @@ No se han proporcionado bienes o servicios al donante.<br />
 Su donación es deducible en la medida en que la ley lo permita.',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            24 => 
-            array (
+                'deleted_at' => null,
+            ],
+            24 => [
                 'id' => 25,
                 'title' => 'agc_acknowledge',
                 'label' => 'footer',
@@ -471,10 +443,9 @@ Su donación es deducible en la medida en que la ley lo permita.',
 </table>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            25 => 
-            array (
+                'deleted_at' => null,
+            ],
+            25 => [
                 'id' => 26,
                 'title' => 'event-confirmation',
                 'label' => 'notices',
@@ -483,10 +454,9 @@ Su donación es deducible en la medida en que la ley lo permita.',
 La seguridad y la salud de nuestros participantes y del personal es nuestra máxima prioridad en este tiempo de pandemia COVID-19. Hemos implementado algunos procedimientos para garantizar un entorno mas seguro para que se relaje y disfrute de su retiro.',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2022-11-03 20:33:18',
-                'deleted_at' => NULL,
-            ),
-            26 => 
-            array (
+                'deleted_at' => null,
+            ],
+            26 => [
                 'id' => 27,
                 'title' => 'event-confirmation',
                 'label' => 'checkin',
@@ -494,22 +464,20 @@ La seguridad y la salud de nuestros participantes y del personal es nuestra máx
                 'snippet' => 'Su registración será en Campion Hall de 4:00 PM a 6:00pm en donde recibirá un paquete con las indicaciones del retiro la llave de su habitación y los horarios del servicio del comedor. Iniciando con la cena de bienvenida de 6 – 7pm.',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-10-14 16:12:53',
-                'deleted_at' => NULL,
-            ),
-            27 => 
-            array (
+                'deleted_at' => null,
+            ],
+            27 => [
                 'id' => 28,
                 'title' => 'event-confirmation',
                 'label' => 'confirm',
                 'locale' => 'es_ES',
-            'snippet' => 'Favor de tomar un momento y <a href="{{ url(&apos;intercept/&apos;.$encodedUrl ) }}">hacer clic para confirmar que va a asistir al retiro</a>.
+                'snippet' => 'Favor de tomar un momento y <a href="{{ url(&apos;intercept/&apos;.$encodedUrl ) }}">hacer clic para confirmar que va a asistir al retiro</a>.
 Si cambian sus planes, por favor avísanos lo antes posible al teléfono (940-321-6020) o por correo-electrónico (registrar@montserratretreat.org).Ya que hay una lista de espera y queremos acomodar a todos los que quieran venir. Con mucho gusto podemos cambiar su fecha de retiro. Visite la <a href="https://montserratretreat.org/retreat-frequently-asked-questions">sección de Preguntas Frecuentes </a>para obtener mayor información acerca de el retiro. Esperamos darle la bienvenida muy pronto, hasta entonces oremos los unos por los otros.',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2022-11-03 20:48:49',
-                'deleted_at' => NULL,
-            ),
-            28 => 
-            array (
+                'deleted_at' => null,
+            ],
+            28 => [
                 'id' => 29,
                 'title' => 'event-confirmation',
                 'label' => 'notices',
@@ -522,10 +490,9 @@ Si cambian sus planes, por favor avísanos lo antes posible al teléfono (940-32
 • Durante la pandemia solo las personas participando en el retiro pueden estar en el campus<br>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2022-05-03 19:52:25',
-                'deleted_at' => NULL,
-            ),
-            29 => 
-            array (
+                'deleted_at' => null,
+            ],
+            29 => [
                 'id' => 30,
                 'title' => 'event-confirmation',
                 'label' => 'signature',
@@ -535,10 +502,9 @@ director@montserratretreat.org <br>
 940-321-6020<br>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2020-09-04 15:40:36',
-                'deleted_at' => NULL,
-            ),
-            30 => 
-            array (
+                'deleted_at' => null,
+            ],
+            30 => [
                 'id' => 31,
                 'title' => 'event-confirmation',
                 'label' => 'provided',
@@ -549,10 +515,9 @@ director@montserratretreat.org <br>
 • Cada recamara tiene baño privado y aire acondicionado',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2021-05-25 21:11:00',
-                'deleted_at' => NULL,
-            ),
-            31 => 
-            array (
+                'deleted_at' => null,
+            ],
+            31 => [
                 'id' => 32,
                 'title' => 'event-confirmation',
                 'label' => 'bring',
@@ -569,10 +534,9 @@ director@montserratretreat.org <br>
 • Teléfonos: Le pedimos que apague y guarde su teléfono una vez que llegue a Montserrat. Por favor, proporcione este número de teléfono a quienes lo necesiten para fines de contacto de emergencia: 972-512-8214. El personal de Montserrat le notificará si recibe un mensaje.<br>',
                 'created_at' => '2020-09-04 15:40:36',
                 'updated_at' => '2022-05-03 19:51:13',
-                'deleted_at' => NULL,
-            ),
-            32 => 
-            array (
+                'deleted_at' => null,
+            ],
+            32 => [
                 'id' => 33,
                 'title' => 'eoy_acknowledgment',
                 'label' => 'board',
@@ -592,28 +556,26 @@ Theresa Motter<br />
 Michael Ogden <br />
 Mary Del Olmo <br />
 Deacon John O\'Leary',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2022-03-15 16:56:53',
-                'deleted_at' => NULL,
-            ),
-            33 => 
-            array (
+                'deleted_at' => null,
+            ],
+            33 => [
                 'id' => 34,
                 'title' => 'eoy_acknowledgment',
                 'label' => 'jesuits',
                 'locale' => 'en_US',
                 'snippet' => 'Fr. Rauschuber, S.J.<br /> Fr. French, S.J.<br /> Fr. Ruiz, S.J.<br /> Fr. Vo, S.J.',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2023-01-09 22:17:19',
-                'deleted_at' => NULL,
-            ),
-            34 => 
-            array (
+                'deleted_at' => null,
+            ],
+            34 => [
                 'id' => 35,
                 'title' => 'eoy_acknowledgment',
                 'label' => 'letter',
                 'locale' => 'en_US',
-            'snippet' => '@if ($payments->isEmpty())
+                'snippet' => '@if ($payments->isEmpty())
 <p>It appears that our records do not show any donations made to Montserrat from {{ date_format($start_date,"F d, Y") }} to {{ date_format($end_date,"F d, Y") }}.</p>
 @else
 <p>Thank you for your support of Montserrat Jesuit Retreat House. Below is a listing of the donations received.</p>
@@ -651,12 +613,11 @@ Deacon John O\'Leary',
 @endIf
 
 Peace,<br />',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2020-12-30 19:38:02',
-                'deleted_at' => NULL,
-            ),
-            35 => 
-            array (
+                'deleted_at' => null,
+            ],
+            35 => [
                 'id' => 36,
                 'title' => 'eoy_acknowledgment',
                 'label' => '501c3',
@@ -664,12 +625,11 @@ Peace,<br />',
                 'snippet' => 'Montserrat Jesuit Retreat House is a ministry of the Society of Jesus UCS Province
 <br />
 Your donation is deductible to the extent allowed by law.',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2020-09-22 13:33:44',
-                'deleted_at' => NULL,
-            ),
-            36 => 
-            array (
+                'deleted_at' => null,
+            ],
+            36 => [
                 'id' => 37,
                 'title' => 'eoy_acknowledgment',
                 'label' => 'footer',
@@ -687,34 +647,31 @@ Your donation is deductible to the extent allowed by law.',
 
 </tr>
 </table>',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
-            ),
-            37 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+            37 => [
                 'id' => 38,
                 'title' => 'event-confirmation',
                 'label' => 'For_ the_ Safety',
                 'locale' => 'en_US',
-                'snippet' => NULL,
+                'snippet' => null,
                 'created_at' => '2020-10-07 20:02:59',
                 'updated_at' => '2020-10-20 20:14:56',
                 'deleted_at' => '2020-10-20 20:14:56',
-            ),
-            38 => 
-            array (
+            ],
+            38 => [
                 'id' => 39,
                 'title' => 'event-confirmation',
                 'label' => 'Retreat_Attendance',
                 'locale' => 'en_US',
-                'snippet' => NULL,
+                'snippet' => null,
                 'created_at' => '2020-10-07 20:03:54',
                 'updated_at' => '2020-10-20 20:14:50',
                 'deleted_at' => '2020-10-20 20:14:50',
-            ),
-            39 => 
-            array (
+            ],
+            39 => [
                 'id' => 40,
                 'title' => 'squarespace_order_fulfillment',
                 'label' => 'body',
@@ -730,10 +687,9 @@ Please review the points below to prepare for your retreat:
 </ul>',
                 'created_at' => '2023-01-25 17:34:34',
                 'updated_at' => '2023-02-04 12:42:44',
-                'deleted_at' => NULL,
-            ),
-            40 => 
-            array (
+                'deleted_at' => null,
+            ],
+            40 => [
                 'id' => 41,
                 'title' => 'squarespace_order_fulfillment',
                 'label' => 'body',
@@ -750,10 +706,9 @@ Please review the points below to prepare for your retreat:
 </ul>',
                 'created_at' => '2023-01-26 20:28:33',
                 'updated_at' => '2023-02-04 12:41:48',
-                'deleted_at' => NULL,
-            ),
-            41 => 
-            array (
+                'deleted_at' => null,
+            ],
+            41 => [
                 'id' => 42,
                 'title' => 'squarespace_order_fulfillment',
                 'label' => 'subject',
@@ -761,10 +716,9 @@ Please review the points below to prepare for your retreat:
                 'snippet' => 'Montserrat Retreat Registration Confirmation and Helpful Information',
                 'created_at' => '2023-02-04 09:40:04',
                 'updated_at' => '2023-02-04 12:41:18',
-                'deleted_at' => NULL,
-            ),
-            42 => 
-            array (
+                'deleted_at' => null,
+            ],
+            42 => [
                 'id' => 43,
                 'title' => 'squarespace_order_fulfillment',
                 'label' => 'subject',
@@ -772,10 +726,8 @@ Please review the points below to prepare for your retreat:
                 'snippet' => 'Confirmación de registro e información útil para su Retiro en Montserrat',
                 'created_at' => '2023-02-04 10:01:47',
                 'updated_at' => '2023-02-04 18:33:17',
-                'deleted_at' => NULL,
-            ),
-        ));
-        
-        
+                'deleted_at' => null,
+            ],
+        ]);
     }
 }

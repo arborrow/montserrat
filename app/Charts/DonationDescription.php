@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Charts;
 
 use Chartisan\PHP\Chartisan;
 use ConsoleTVs\Charts\BaseChart;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 
 class DonationDescription extends BaseChart
 {
@@ -63,7 +63,7 @@ class DonationDescription extends BaseChart
                 ->dataset('Average', array_column($donors, 'average_amount'))
                 ->dataset('Donations for '.$donation_type->name, array_column($donors, 'sum'));
         } else {
-          return Chartisan::build();
+            return Chartisan::build();
         }
     }
 }

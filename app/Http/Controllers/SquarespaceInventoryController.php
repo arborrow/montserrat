@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreSquarespaceInventoryRequest;
 use App\Http\Requests\UpdateSquarespaceInventoryRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class SquarespaceInventoryController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,10 +22,9 @@ class SquarespaceInventoryController extends Controller
     {
         $this->authorize('show-squarespace-inventory');
 
-        $inventory_items = \App\Models\SquarespaceInventory::orderBy('name')->with("custom_form")->get();
+        $inventory_items = \App\Models\SquarespaceInventory::orderBy('name')->with('custom_form')->get();
 
         return view('admin.squarespace.inventory.index', compact('inventory_items'));
-
     }
 
     /**
@@ -38,10 +35,9 @@ class SquarespaceInventoryController extends Controller
     public function create()
     {
         $this->authorize('create-squarespace-inventory');
-        $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->pluck('name','id');
+        $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->pluck('name', 'id');
+
         return view('admin.squarespace.inventory.create', compact(['custom_forms']));
-
-
     }
 
     /**
@@ -63,7 +59,6 @@ class SquarespaceInventoryController extends Controller
         flash('SquareSpace Inventory: <a href="'.url('/squarespace/inventory/'.$inventory->id).'">'.$inventory->name.'</a> added')->success();
 
         return Redirect::action([self::class, 'index']);
-
     }
 
     /**
@@ -79,7 +74,6 @@ class SquarespaceInventoryController extends Controller
         $inventory = \App\Models\SquarespaceInventory::with('custom_form')->findOrFail($id);
 
         return view('admin.squarespace.inventory.show', compact('inventory'));
-
     }
 
     /**
@@ -93,10 +87,9 @@ class SquarespaceInventoryController extends Controller
         $this->authorize('update-squarespace-inventory');
 
         $inventory = \App\Models\SquarespaceInventory::findOrFail($id);
-        $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->pluck('name','id');
+        $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->pluck('name', 'id');
 
-        return view('admin.squarespace.inventory.edit', compact('inventory','custom_forms')); //
-
+        return view('admin.squarespace.inventory.edit', compact('inventory', 'custom_forms')); //
     }
 
     /**
@@ -120,7 +113,6 @@ class SquarespaceInventoryController extends Controller
         $inventory->save();
 
         return Redirect::action([self::class, 'show'], $inventory->id);
-
     }
 
     /**
@@ -138,6 +130,5 @@ class SquarespaceInventoryController extends Controller
         flash('SquareSpace Inventory: '.$inventory->name.' deleted')->warning()->important();
 
         return Redirect::action([self::class, 'index']);
-
     }
 }

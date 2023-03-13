@@ -101,7 +101,7 @@ class AuditControllerTest extends TestCase
 
         $audit = \App\Models\Audit::factory()->create();
         $response = $this->actingAs($user)->get('admin/audit/results?url='.$audit->url);
-        
+
         $response->assertOk();
         $response->assertViewIs('admin.audits.results');
         $response->assertViewHas('audits');

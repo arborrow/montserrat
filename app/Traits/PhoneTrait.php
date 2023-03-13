@@ -3,12 +3,13 @@
 namespace App\Traits;
 
 trait PhoneTrait
-{   /*
-    * Takes an unformatted phone number with possible extension
-    * Returns array with phone_numeric, phone_extension, and phone_formatted values
-    */
-    public function format_phone($phone) {
-
+{
+    /*
+     * Takes an unformatted phone number with possible extension
+     * Returns array with phone_numeric, phone_extension, and phone_formatted values
+     */
+    public function format_phone($phone)
+    {
         $phone_extension = '';
         $phone_numeric = $phone;
         $phone_numeric = str_replace(' ', '', $phone_numeric);
@@ -35,7 +36,5 @@ trait PhoneTrait
         $clean_phone['phone_formatted'] = $phone_formatted;
 
         return $clean_phone;
-
     }
-
 }

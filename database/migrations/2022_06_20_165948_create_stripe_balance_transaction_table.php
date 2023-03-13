@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('stripe_balance_transaction', function (Blueprint $table) {
             $table->id();
             $table->string('payout_id')->index('payout_id');
-            $table->string('balance_transaction_id')->index('balance_transaction_id');;
+            $table->string('balance_transaction_id')->index('balance_transaction_id');
             $table->string('customer_id')->nullable()->index('customer_id');
             $table->string('charge_id')->index('charge_id');
-            $table->dateTime('payout_date')->nullable()->index('payout_date');;
+            $table->dateTime('payout_date')->nullable()->index('payout_date');
             $table->string('description')->nullable();
             $table->string('note')->nullable();
             $table->string('type')->nullable();
@@ -38,7 +38,6 @@ return new class extends Migration
             $table->dateTime('available_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

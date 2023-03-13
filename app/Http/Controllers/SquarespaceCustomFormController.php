@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\StoreSquarespaceCustomFormRequest;
 use App\Http\Requests\StoreSquarespaceCustomFormFieldRequest;
-use App\Http\Requests\UpdateSquarespaceCustomFormRequest;
+use App\Http\Requests\StoreSquarespaceCustomFormRequest;
 use App\Http\Requests\UpdateSquarespaceCustomFormFieldRequest;
-
+use App\Http\Requests\UpdateSquarespaceCustomFormRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class SquarespaceCustomFormController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -27,10 +24,9 @@ class SquarespaceCustomFormController extends Controller
     {
         $this->authorize('show-squarespace-custom-form');
 
-        $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->with("fields")->get();
+        $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->with('fields')->get();
 
         return view('admin.squarespace.custom_forms.index', compact('custom_forms'));
-
     }
 
     /**
@@ -55,7 +51,7 @@ class SquarespaceCustomFormController extends Controller
         $this->authorize('create-squarespace-custom-form');
         $custom_form = \App\Models\SquarespaceCustomForm::findOrFail($id);
 
-        return view('admin.squarespace.custom_forms.fields.create',compact(['custom_form']));
+        return view('admin.squarespace.custom_forms.fields.create', compact(['custom_form']));
     }
 
     /**
@@ -75,9 +71,7 @@ class SquarespaceCustomFormController extends Controller
         flash('SquareSpace Custom Form: <a href="'.url('admin/squarespace/custom_form/'.$custom_form->id).'">'.$custom_form->name.'</a> added')->success();
 
         return Redirect::action([self::class, 'index']);
-
     }
-
 
     /**
      * Store a newly created custom form field in storage.
@@ -100,8 +94,7 @@ class SquarespaceCustomFormController extends Controller
 
         flash('SquareSpace Custom Form: <a href="'.url('admin/squarespace/custom_form/'.$custom_form_field->form_id).'">'.$custom_form_field->name.'</a> field added')->success();
 
-        return Redirect::action([self::class, 'show'],$id);
-
+        return Redirect::action([self::class, 'show'], $id);
     }
 
     /**
@@ -117,7 +110,6 @@ class SquarespaceCustomFormController extends Controller
         $custom_form = \App\Models\SquarespaceCustomForm::with('fields')->findOrFail($id);
 
         return view('admin.squarespace.custom_forms.show', compact('custom_form'));
-
     }
 
     /**
@@ -133,7 +125,6 @@ class SquarespaceCustomFormController extends Controller
         $custom_form = \App\Models\SquarespaceCustomForm::with('fields')->findOrFail($id);
 
         return view('admin.squarespace.custom_forms.edit', compact('custom_form')); //
-
     }
 
     /**
@@ -149,7 +140,6 @@ class SquarespaceCustomFormController extends Controller
         $custom_form_field = \App\Models\SquarespaceCustomFormField::with('form')->findOrFail($id);
 
         return view('admin.squarespace.custom_forms.fields.edit', compact('custom_form_field')); //
-
     }
 
     /**
@@ -171,7 +161,6 @@ class SquarespaceCustomFormController extends Controller
         $custom_form->save();
 
         return Redirect::action([self::class, 'show'], $custom_form->id);
-
     }
 
     /**
@@ -193,13 +182,10 @@ class SquarespaceCustomFormController extends Controller
         $custom_form_field->sort_order = $request->input('sort_order');
         $custom_form_field->save();
 
-        flash('SquareSpace Custom Form Field: <a href="'.url('admin/squarespace/custom_form/'.$custom_form_field->form_id).'">'.$custom_form_field->name.' ('. $custom_form_field->form->name . ')</a> updated')->success();
+        flash('SquareSpace Custom Form Field: <a href="'.url('admin/squarespace/custom_form/'.$custom_form_field->form_id).'">'.$custom_form_field->name.' ('.$custom_form_field->form->name.')</a> updated')->success();
 
         return Redirect::action([self::class, 'show'], $custom_form_field->form_id);
-
     }
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -216,6 +202,5 @@ class SquarespaceCustomFormController extends Controller
         flash('SquareSpace Custom Form: '.$custom_form->name.' deleted')->warning()->important();
 
         return Redirect::action([self::class, 'index']);
-
     }
 }

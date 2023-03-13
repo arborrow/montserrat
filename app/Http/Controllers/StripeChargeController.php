@@ -19,8 +19,7 @@ class StripeChargeController extends Controller
 
         $charges = $stripe->charges->all([]);
 
-        return view('stripe.charges.index',compact('charges'));   //
-
+        return view('stripe.charges.index', compact('charges'));   //
     }
 
     /**
@@ -55,12 +54,11 @@ class StripeChargeController extends Controller
         $this->authorize('show-stripe-charge');
 
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
-        $charge = $stripe->charges->retrieve($charge_id,[]);
+        $charge = $stripe->charges->retrieve($charge_id, []);
         // $invoice = $stripe->invoices->retrieve($charge->invoice,[]);
-        $customer = !is_null($charge->customer) ? $stripe->customers->retrieve($charge->customer) : NULL;
+        $customer = ! is_null($charge->customer) ? $stripe->customers->retrieve($charge->customer) : null;
 
-        return view('stripe.charges.show',compact('charge','customer'));
-
+        return view('stripe.charges.show', compact('charge', 'customer'));
     }
 
     /**
@@ -92,7 +90,6 @@ class StripeChargeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function destroy($id)
     {
         //
@@ -112,8 +109,5 @@ class StripeChargeController extends Controller
         foreach ($charges->autoPagingIterator() as $charge) {
             // TODO: create stripe_charge model, check if charge->id exists, if not insert/import it
         }
-
-
     }
-
 }

@@ -23,7 +23,7 @@ class LocationFactory extends Factory
             'label' => $name,
             'longitude' => $this->faker->longitude(-93, -103),
             'latitude' => $this->faker->latitude(30, 40),
-            'type' =>  $this->faker->randomElement(config('polanco.locations_type')),
+            'type' => $this->faker->randomElement(config('polanco.locations_type')),
         ];
     }
 }

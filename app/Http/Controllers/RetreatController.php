@@ -8,8 +8,6 @@ use App\Http\Requests\StoreRetreatRequest;
 use App\Http\Requests\UpdateRetreatRequest;
 use App\Models\Registration;
 use Auth;
-use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\GoogleCalendar\Event;
@@ -89,7 +87,7 @@ class RetreatController extends Controller
         }
         if (! null == $i) {
             asort($i);
-            $i = [0=>'N/A'] + $i;
+            $i = [0 => 'N/A'] + $i;
         }
 
         foreach ($retreat_house->retreat_directors as $director) {
@@ -97,7 +95,7 @@ class RetreatController extends Controller
         }
         if (! null == $d) {
             asort($d);
-            $d = [0=>'N/A'] + $d;
+            $d = [0 => 'N/A'] + $d;
         }
 
         foreach ($retreat_house->retreat_assistants as $assistant) {
@@ -105,7 +103,7 @@ class RetreatController extends Controller
         }
         if (! null == $a) {
             asort($a);
-            $a = [0=>'N/A'] + $a;
+            $a = [0 => 'N/A'] + $a;
         }
 
         foreach ($retreat_house->retreat_ambassadors as $ambassador) {
@@ -113,7 +111,7 @@ class RetreatController extends Controller
         }
         if (! null == $c) {
             asort($c);
-            $c = [0=>'N/A'] + $c;
+            $c = [0 => 'N/A'] + $c;
         }
 
         return view('retreats.create', compact('d', 'i', 'a', 'c', 'event_types', 'is_active'));
@@ -215,9 +213,10 @@ class RetreatController extends Controller
 
     /**
      * Add a participant to an event with a given participant role.
-     * @param int $contact_id
-     * @param int $event_id
-     * @param int $participant_role_id
+     *
+     * @param  int  $contact_id
+     * @param  int  $event_id
+     * @param  int  $participant_role_id
      * @return bool
      */
     public function add_participant($contact_id, $event_id, $participant_role_id)
@@ -291,24 +290,24 @@ class RetreatController extends Controller
                   paginate(50);
                 break;
             case 'arrived':
-            $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
-              leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
-              orderBy('contact.sort_name')->
-              whereEventId($id)->
-              whereNotNull('arrived_at')->
-              withCount('retreatant_events')->
-              paginate(50);
-            break;
+                $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
+                  leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
+                  orderBy('contact.sort_name')->
+                  whereEventId($id)->
+                  whereNotNull('arrived_at')->
+                  withCount('retreatant_events')->
+                  paginate(50);
+                break;
             case 'dawdler':
-            $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
-              leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
-              orderBy('contact.sort_name')->
-              whereEventId($id)->
-              whereNull('arrived_at')->
-              whereNull('canceled_at')->
-              withCount('retreatant_events')->
-              paginate(50);
-            break;
+                $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
+                  leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
+                  orderBy('contact.sort_name')->
+                  whereEventId($id)->
+                  whereNull('arrived_at')->
+                  whereNull('canceled_at')->
+                  withCount('retreatant_events')->
+                  paginate(50);
+                break;
             case 'departed':
                 $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
                   leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
@@ -394,14 +393,14 @@ class RetreatController extends Controller
 
         // initialize null arrays for innkeeper, assistant, director and ambassador dropdowns
 
-        $options = ['innkeepers'=>[], 'directors'=>[], 'assistants'=>[], 'ambassadors'=>[]];
+        $options = ['innkeepers' => [], 'directors' => [], 'assistants' => [], 'ambassadors' => []];
 
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $options['innkeepers'][$innkeeper->contact_id_b] = $innkeeper->contact_b->sort_name;
         }
         if (! null == $options['innkeepers']) {
             asort($options['innkeepers']);
-            $options['innkeepers'] = [0=>'N/A'] + $options['innkeepers'];
+            $options['innkeepers'] = [0 => 'N/A'] + $options['innkeepers'];
         }
 
         foreach ($retreat_house->retreat_directors as $director) {
@@ -409,7 +408,7 @@ class RetreatController extends Controller
         }
         if (! null == $options['directors']) {
             asort($options['directors']);
-            $options['directors'] = [0=>'N/A'] + $options['directors'];
+            $options['directors'] = [0 => 'N/A'] + $options['directors'];
         }
 
         foreach ($retreat_house->retreat_assistants as $assistant) {
@@ -417,7 +416,7 @@ class RetreatController extends Controller
         }
         if (! null == $options['assistants']) {
             asort($options['assistants']);
-            $options['assistants'] = [0=>'N/A'] + $options['assistants'];
+            $options['assistants'] = [0 => 'N/A'] + $options['assistants'];
         }
 
         foreach ($retreat_house->retreat_ambassadors as $ambassador) {
@@ -425,7 +424,7 @@ class RetreatController extends Controller
         }
         if (! null == $options['ambassadors']) {
             asort($options['ambassadors']);
-            $options['ambassadors'] = [0=>'N/A'] + $options['ambassadors'];
+            $options['ambassadors'] = [0 => 'N/A'] + $options['ambassadors'];
         }
 
         /* prevent losing former retreatmasters, innkeeper, assistant, or ambassador when editing retreat
@@ -837,16 +836,16 @@ class RetreatController extends Controller
             case  'retreatant': $role = config('polanco.participant_role_id.retreatant');
                 break;
             case  'director': $role = config('polanco.participant_role_id.director');
-                    break;
+                break;
             case  'innkeeper': $role = config('polanco.participant_role_id.innkeeper');
-                    break;
+                break;
             case  'assistant': $role = config('polanco.participant_role_id.assistant');
-                    break;
+                break;
             case 'ambassador':
                 $role = config('polanco.participant_role_id.ambassador');
                 break;
             case  'all': $role = null;
-                    break;
+                break;
             default: $role = config('polanco.participant_role_id.retreatant');
         }
         if (is_null($role)) {
@@ -860,7 +859,7 @@ class RetreatController extends Controller
             // if the registered retreatant is not an individual person - for example a contract group organization then use the registration note for the name of the retreatant
             if ($registration->retreatant->contact_type == config('polanco.contact_type.individual')) {
                 $name = isset($registration->retreatant->nick_name) ? $registration->retreatant->nick_name : $registration->retreatant->first_name;
-                $results[$registration->id] = $name . ' ' . $registration->retreatant->last_name;
+                $results[$registration->id] = $name.' '.$registration->retreatant->last_name;
                 $registration->badgename = $registration->retreatant->sort_name;
             } else {
                 // if there is no note; default back to the sort_name of the contact

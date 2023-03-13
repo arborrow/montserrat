@@ -15,12 +15,8 @@ class SquarespaceInventory extends Model implements Auditable
 
     protected $table = 'squarespace_inventory';
 
-
     public function custom_form()
     {
         return $this->hasOne(SquarespaceCustomForm::class, 'id', 'custom_form_id');
-
     }
-
-
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUomRequest;
 use App\Http\Requests\UpdateUomRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class UomController extends Controller

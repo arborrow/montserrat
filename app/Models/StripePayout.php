@@ -31,7 +31,7 @@ class StripePayout extends Model implements Auditable
     public function getUnreconciledCountAttribute()
     {
         $transactions = $this->transactions->whereNull('reconcile_date');
+
         return $transactions->count();
     }
-
 }

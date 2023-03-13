@@ -144,24 +144,24 @@ class RelationshipController extends Controller
         $this->authorize('update-contact');
         $relationship = \App\Models\Relationship::with('contact_a.address_primary', 'contact_b.address_primary')->findOrFail($id);
         switch ($dominant) {
-        case $relationship->contact_id_a:
-          $relationship->contact_b->address_primary->street_address = $relationship->contact_a->address_primary->street_address;
-          $relationship->contact_b->address_primary->city = $relationship->contact_a->address_primary->city;
-          $relationship->contact_b->address_primary->state_province_id = $relationship->contact_a->address_primary->state_province_id;
-          $relationship->contact_b->address_primary->postal_code = $relationship->contact_a->address_primary->postal_code;
-          $relationship->contact_b->address_primary->country_id = $relationship->contact_a->address_primary->country_id;
-          $relationship->contact_b->address_primary->save();
-        break;
-        case $relationship->contact_id_b:
-          $relationship->contact_a->address_primary->street_address = $relationship->contact_b->address_primary->street_address;
-          $relationship->contact_a->address_primary->city = $relationship->contact_b->address_primary->city;
-          $relationship->contact_a->address_primary->state_province_id = $relationship->contact_b->address_primary->state_province_id;
-          $relationship->contact_a->address_primary->postal_code = $relationship->contact_b->address_primary->postal_code;
-          $relationship->contact_a->address_primary->country_id = $relationship->contact_b->address_primary->country_id;
-          $relationship->contact_a->address_primary->save();
-        break;
-        default: // do not do anything as there is a relationship mismatch error
-      }
+            case $relationship->contact_id_a:
+                $relationship->contact_b->address_primary->street_address = $relationship->contact_a->address_primary->street_address;
+                $relationship->contact_b->address_primary->city = $relationship->contact_a->address_primary->city;
+                $relationship->contact_b->address_primary->state_province_id = $relationship->contact_a->address_primary->state_province_id;
+                $relationship->contact_b->address_primary->postal_code = $relationship->contact_a->address_primary->postal_code;
+                $relationship->contact_b->address_primary->country_id = $relationship->contact_a->address_primary->country_id;
+                $relationship->contact_b->address_primary->save();
+                break;
+            case $relationship->contact_id_b:
+                $relationship->contact_a->address_primary->street_address = $relationship->contact_b->address_primary->street_address;
+                $relationship->contact_a->address_primary->city = $relationship->contact_b->address_primary->city;
+                $relationship->contact_a->address_primary->state_province_id = $relationship->contact_b->address_primary->state_province_id;
+                $relationship->contact_a->address_primary->postal_code = $relationship->contact_b->address_primary->postal_code;
+                $relationship->contact_a->address_primary->country_id = $relationship->contact_b->address_primary->country_id;
+                $relationship->contact_a->address_primary->save();
+                break;
+            default: // do not do anything as there is a relationship mismatch error
+            }
 
         return Redirect::back();
     }

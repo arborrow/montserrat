@@ -37,7 +37,6 @@ class MailgunControllerTest extends TestCase
         }
     }
 
-
     /**
      * @test
      */
@@ -53,7 +52,7 @@ class MailgunControllerTest extends TestCase
         $response->assertViewIs('mailgun.index');
         $response->assertViewHas('messages');
         $response->assertSee('Index of Mailgun Messages');
-}
+    }
 
     /**
      * @test
@@ -68,7 +67,7 @@ class MailgunControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('mailgun.destroy', [$message]));
 
         $response->assertOk();
-        $response->assertViewIs('mailgun.index');        
+        $response->assertViewIs('mailgun.index');
     }
 
     /**
@@ -87,7 +86,6 @@ class MailgunControllerTest extends TestCase
         $response->assertViewIs('mailgun.index');
         $response->assertViewHas('messages');
         $response->assertSee('Index of Mailgun Messages');
-        
     }
 
     /**
@@ -136,7 +134,6 @@ class MailgunControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('mailgun.index');
-
     }
 
     /**
@@ -157,7 +154,5 @@ class MailgunControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('mailgun.index');
-
     }
-
 }

@@ -136,7 +136,7 @@ class UserControllerTest extends TestCase
         $new_description = $this->faker->sentence();
 
         $response = $this->actingAs($user)->put(route('user.update', [$user]), [
-            'id'  => $user->id,
+            'id' => $user->id,
             'name' => $new_name,
             'display_name' => $new_name,
             'description' => $new_description,

@@ -205,21 +205,21 @@ class AttachmentController extends Controller
                 }
                 break;
             case 'acknowledgment':
-                    $this->authorize('create-attachment');
-                    $now = Carbon::now();
-                    $filename = $now->format('YmdHi').'-acknowledgment-'.$entity_id.'.pdf';
-                    $path = $entity.'/'.$entity_id.'/attachments/';
-                    $file_type_id = config('polanco.file_type.contact_attachment');
-                    $file_name = $this->sanitize_filename($filename);
-                    $updated_file_name = basename($file_name, '.pdf').'-updated-'.time().'.pdf';
-                    $mime_type = 'application/pdf';
-                    if (File::exists(storage_path().'/app/'.$path.$file_name)) {
-                        Storage::move($path.$file_name, $path.$updated_file_name);
-                        Storage::disk('local')->put($path.$file_name, $file);
-                    } else {
-                        Storage::disk('local')->put($path.$file_name, $file);
-                    }
-                    break;
+                $this->authorize('create-attachment');
+                $now = Carbon::now();
+                $filename = $now->format('YmdHi').'-acknowledgment-'.$entity_id.'.pdf';
+                $path = $entity.'/'.$entity_id.'/attachments/';
+                $file_type_id = config('polanco.file_type.contact_attachment');
+                $file_name = $this->sanitize_filename($filename);
+                $updated_file_name = basename($file_name, '.pdf').'-updated-'.time().'.pdf';
+                $mime_type = 'application/pdf';
+                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                    Storage::move($path.$file_name, $path.$updated_file_name);
+                    Storage::disk('local')->put($path.$file_name, $file);
+                } else {
+                    Storage::disk('local')->put($path.$file_name, $file);
+                }
+                break;
             case 'gift_certificate':
                 $this->authorize('create-attachment');
                 $now = Carbon::now();
@@ -348,7 +348,7 @@ class AttachmentController extends Controller
                 $this->authorize('create-attachment');
                 break;
         }
-        $attachment = \App\Models\Attachment::firstOrNew(['entity'=>$entity, 'entity_id'=>$entity_id, 'file_type_id'=>$file_type_id, 'uri'=>$file_name]);
+        $attachment = \App\Models\Attachment::firstOrNew(['entity' => $entity, 'entity_id' => $entity_id, 'file_type_id' => $file_type_id, 'uri' => $file_name]);
         $attachment->upload_date = \Carbon\Carbon::now();
         $attachment->description = $description;
         $attachment->mime_type = $mime_type;

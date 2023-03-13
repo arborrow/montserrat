@@ -59,11 +59,10 @@ class StripeBalanceTransactionControllerTest extends TestCase
         $response->assertViewHas('inventory');
         $response->assertViewHas('custom_forms');
         $response->assertSeeText('Edit');
-        
+
         $this->assertTrue($this->findFieldValueInResponseContent('name', $inventory->name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('custom_form_id', $inventory->custom_form_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('variant_options', $inventory->variant_options, 'number', $response->getContent()));
-        
     }
 
     /**
@@ -80,7 +79,6 @@ class StripeBalanceTransactionControllerTest extends TestCase
         $response->assertViewHas('inventory_items');
         $response->assertSeeText('Squarespace Inventory Index');
     }
-
 
     /**
      * @test
@@ -107,7 +105,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
 
         $name = $this->faker->word();
         $custom_form = \App\Models\SquarespaceCustomForm::factory()->create();
-        $variant_options = $this->faker->numberBetween(2,5);
+        $variant_options = $this->faker->numberBetween(2, 5);
         $response = $this->actingAs($user)->post(route('inventory.store'), [
             'name' => $name,
             'custom_form_id' => $custom_form->id,
@@ -116,7 +114,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
 
         $response->assertRedirect(action([\App\Http\Controllers\SquarespaceInventoryController::class, 'index']));
         $response->assertSessionHas('flash_notification');
-        
+
         $this->assertDatabaseHas('squarespace_inventory', [
             'name' => $name,
             'custom_form_id' => $custom_form->id,
@@ -136,7 +134,6 @@ class StripeBalanceTransactionControllerTest extends TestCase
         );
     }
 
-
     /**
      * @test
      */
@@ -153,7 +150,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
             'id' => $inventory->id,
             'name' => $new_name,
             'custom_form_id' => $inventory->custom_form_id,
-            'variant_options' => $this->faker->numberBetween(6,8),
+            'variant_options' => $this->faker->numberBetween(6, 8),
         ]);
 
         $response->assertSessionHas('flash_notification');
@@ -176,5 +173,4 @@ class StripeBalanceTransactionControllerTest extends TestCase
             \App\Http\Requests\UpdateSquarespaceInventoryRequest::class
         );
     }
-
 }

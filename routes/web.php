@@ -36,11 +36,11 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SnippetController;
-use App\Http\Controllers\SquarespaceController;
 use App\Http\Controllers\SquarespaceContributionController;
-use App\Http\Controllers\SquarespaceOrderController;
+use App\Http\Controllers\SquarespaceController;
 use App\Http\Controllers\SquarespaceCustomFormController;
 use App\Http\Controllers\SquarespaceInventoryController;
+use App\Http\Controllers\SquarespaceOrderController;
 use App\Http\Controllers\StripeBalanceTransactionController;
 use App\Http\Controllers\StripeChargeController;
 use App\Http\Controllers\StripePayoutController;
@@ -65,8 +65,7 @@ use Illuminate\Support\Facades\Route;
 // Auth::routes();
 Route::middleware('web')->group(function () {
     Route::get('avatar/{user_id}', [AttachmentController::class, 'get_avatar'])->name('get_avatar');
-  });
-
+});
 
 Route::middleware('web', 'activity')->group(function () {
     Route::get('intercept/{code}', function ($code) {
@@ -78,7 +77,6 @@ Route::middleware('web', 'activity')->group(function () {
             abort(404);
         }
     });
-
 
     Route::get('/', [PageController::class, 'welcome']);
     Route::get('/welcome', [PageController::class, 'welcome'])->name('welcome');
@@ -144,7 +142,7 @@ Route::middleware('web', 'activity')->group(function () {
         Route::resource('asset_type', AssetTypeController::class);
         Route::get('audit/user/{user_id?}', [AuditController::class, 'index_type']);
         Route::get('audit/search', [AuditController::class, 'search'])->name('audits.search');
-        Route::get('audit/results', [AuditController::class, 'results'])->name('audits.results');    
+        Route::get('audit/results', [AuditController::class, 'results'])->name('audits.results');
         Route::resource('audit', AuditController::class);
         Route::resource('department', DepartmentController::class);
         Route::resource('donation_type', DonationTypeController::class);
@@ -168,7 +166,6 @@ Route::middleware('web', 'activity')->group(function () {
             Route::get('custom_form_field/{id}/edit', [SquarespaceCustomFormController::class, 'edit_field'])->name('custom_form.field.edit');
             Route::put('custom_form/{id}/update', [SquarespaceCustomFormController::class, 'update_field'])->name('custom_form.field.update');
         });
-
     });
 
     /* In developement - commented out for Now
@@ -373,14 +370,12 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('users', [PageController::class, 'user'])->name('users');
     Route::resource('vendor', VendorController::class);
 
-
     Route::get('mailgun/get', [MailgunController::class, 'get'])->name('mailgun.get');
     Route::get('mailgun/unprocess/{id}', [MailgunController::class, 'unprocess'])->name('mailgun.unprocess');
     Route::post('mailgun/callback', function () {
         return 'Mailgun callback';
     });
     Route::resource('mailgun', MailgunController::class);
-
 
     // Gate routes
     Route::get('gate/open/{hours?}', [GateController::class, 'open'])->name('gate.open');

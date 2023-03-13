@@ -44,7 +44,6 @@ class SquarespaceCustomFormControllerTest extends TestCase
         $response->assertSeeText('Create Squarespace Custom Form Field');
     }
 
-
     /**
      * @test
      */
@@ -73,12 +72,10 @@ class SquarespaceCustomFormControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('admin.squarespace.custom_forms.edit');
         $response->assertViewHas('custom_form');
-        $response->assertSeeText('Edit: ' . $custom_form->name);
-        
-        $this->assertTrue($this->findFieldValueInResponseContent('name', $custom_form->name, 'text', $response->getContent()));
-        
-    }
+        $response->assertSeeText('Edit: '.$custom_form->name);
 
+        $this->assertTrue($this->findFieldValueInResponseContent('name', $custom_form->name, 'text', $response->getContent()));
+    }
 
     /**
      * @test
@@ -93,13 +90,12 @@ class SquarespaceCustomFormControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('admin.squarespace.custom_forms.fields.edit');
         $response->assertViewHas('custom_form_field');
-        $response->assertSeeText('Edit Squarespace Custom Field: ' . $custom_form_field->name);
-        
+        $response->assertSeeText('Edit Squarespace Custom Field: '.$custom_form_field->name);
+
         $this->assertTrue($this->findFieldValueInResponseContent('name', $custom_form_field->name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('type', $custom_form_field->type, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('variable_name', $custom_form_field->variable_name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('sort_order', $custom_form_field->sort_order, 'number', $response->getContent()));
-
     }
 
     /**
@@ -116,7 +112,6 @@ class SquarespaceCustomFormControllerTest extends TestCase
         $response->assertViewHas('custom_forms');
         $response->assertSeeText('Squarespace Custom Forms Index');
     }
-
 
     /**
      * @test
@@ -142,14 +137,14 @@ class SquarespaceCustomFormControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-squarespace-custom-form');
 
         $name = $this->faker->word();
-        
+
         $response = $this->actingAs($user)->post(route('custom_form.store'), [
             'name' => $name,
         ]);
 
         $response->assertRedirect(action([\App\Http\Controllers\SquarespaceCustomFormController::class, 'index']));
         $response->assertSessionHas('flash_notification');
-        
+
         $this->assertDatabaseHas('squarespace_custom_form', [
             'name' => $name,
         ]);
@@ -159,15 +154,16 @@ class SquarespaceCustomFormControllerTest extends TestCase
      * @test
      */
     public function store_field_returns_an_ok_response()
-    {   $this->withoutExceptionHandling();
+    {
+        $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-squarespace-custom-form');
         $custom_form = \App\Models\SquarespaceCustomForm::factory()->create();
         $variable_name = strtolower($this->faker->word());
         $name = ucwords($variable_name);
-        $type = $this->faker->randomElement(['select' , 'name' , 'address' , 'phone' , 'email' , 'date' , 'person' , 'text']);
-        $sort_order = $this->faker->numberBetween(1,10);
-        
-        $response = $this->actingAs($user)->post(route('custom_form.field.store',['id' => $custom_form->id]), [
+        $type = $this->faker->randomElement(['select', 'name', 'address', 'phone', 'email', 'date', 'person', 'text']);
+        $sort_order = $this->faker->numberBetween(1, 10);
+
+        $response = $this->actingAs($user)->post(route('custom_form.field.store', ['id' => $custom_form->id]), [
             'id' => $custom_form->id,
             'form_id' => $custom_form->id,
             'name' => $name,
@@ -177,7 +173,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
         ]);
         $response->assertRedirect(action([\App\Http\Controllers\SquarespaceCustomFormController::class, 'show'], $custom_form->id));
         $response->assertSessionHas('flash_notification');
-        
+
         $this->assertDatabaseHas('squarespace_custom_form_field', [
             'name' => $name,
             'variable_name' => $variable_name,
@@ -210,7 +206,6 @@ class SquarespaceCustomFormControllerTest extends TestCase
         );
     }
 
-
     /**
      * @test
      */
@@ -236,7 +231,6 @@ class SquarespaceCustomFormControllerTest extends TestCase
         $this->assertEquals($updated->name, $new_name);
         $this->assertNotEquals($updated->name, $original_name);
     }
-
 
     /**
      * @test
@@ -265,7 +259,6 @@ class SquarespaceCustomFormControllerTest extends TestCase
         $this->assertNotEquals($updated->name, $original_name);
     }
 
-
     /**
      * @test
      */
@@ -289,5 +282,4 @@ class SquarespaceCustomFormControllerTest extends TestCase
             \App\Http\Requests\UpdateSquarespaceCustomFormFieldRequest::class
         );
     }
-
 }

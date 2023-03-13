@@ -2,9 +2,6 @@
 
 namespace Tests\Unit\Http\Requests;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Validation\Rule;
 use Tests\TestCase;
 
 /**
@@ -41,11 +38,11 @@ class AgcDonationsRequestTest extends TestCase
         $valid_agc_donation_type = \App\Models\DonationType::active()
              ->whereIn('name', config('polanco.agc_donation_descriptions'))
              ->get();
-         $valid_agc_donation_type_ids = $valid_agc_donation_type->modelKeys();
+        $valid_agc_donation_type_ids = $valid_agc_donation_type->modelKeys();
 
         $this->assertEquals([
-             'donation_type_id' => 'in:'.implode(',', $valid_agc_donation_type_ids).',0|integer|nullable',
-             'fiscal_year' => 'integer|nullable',
+            'donation_type_id' => 'in:'.implode(',', $valid_agc_donation_type_ids).',0|integer|nullable',
+            'fiscal_year' => 'integer|nullable',
         ], $actual);
     }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use DB;
-use Illuminate\Http\Request;
 
 class HealthController extends Controller
 {
@@ -164,6 +163,7 @@ class HealthController extends Controller
     /**
      * Run the duplicate relationships check to ensure there are no duplicated relationships
      * // SELECT CONCAT(contact_id_a,":",contact_id_b,":",relationship_type_id) , COUNT(*) FROM relationship WHERE deleted_at IS NULL GROUP BY (CONCAT(contact_id_a,":",contact_id_b,":",relationship_type_id)) HAVING COUNT(*)>1
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function check_duplicate_relationships()
@@ -185,6 +185,7 @@ class HealthController extends Controller
     /**
      * Check for primary addresses with no country
      * // SELECT * FROM address WHERE country_id = 0 AND deleted_at IS NULL AND street_address IS NOT NULL AND is_primary = 1;
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function check_address_with_no_country()
@@ -206,6 +207,7 @@ class HealthController extends Controller
     /**
      * Check for husbands with more than one wife and wives with more than one husband
      *     // SELECT contact_id_b FROM relationship WHERE deleted_at IS NULL AND relationship_type_id=2 GROUP BY contact_id_b HAVING COUNT(contact_id_b)>1;
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function check_polygamy()
@@ -239,6 +241,7 @@ class HealthController extends Controller
     /**
      * Check for primary addresses with no country
      * // SELECT * FROM address WHERE country_id = 0 AND deleted_at IS NULL AND street_address IS NOT NULL AND is_primary = 1;
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function check_anonymous_balance_transactions()
@@ -254,7 +257,6 @@ class HealthController extends Controller
 
         return $anonymous_balance_transactions;
     }
-
 
     // SELECT contact_id_b FROM relationship WHERE deleted_at IS NULL AND relationship_type_id=2 GROUP BY contact_id_b HAVING COUNT(contact_id_b)>1;
 }

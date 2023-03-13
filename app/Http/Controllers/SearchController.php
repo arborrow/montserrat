@@ -57,6 +57,7 @@ class SearchController extends Controller
         } else {
             $persons = \App\Models\Contact::orderBy('sort_name')->with('attachments')->paginate(25, ['*'], 'persons');
         }
+
         return view('search.results', compact('persons'));
     }
 

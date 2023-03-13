@@ -25,6 +25,7 @@ class Registration extends Model implements Auditable
     ];
 
     protected $fillable = ['contact_id', 'event_id', 'status_id', 'role_id', 'notes', 'register_date'];
+
     protected $appends = ['retreat_start_date'];
 
     public function generateTags(): array
@@ -295,7 +296,8 @@ class Registration extends Model implements Auditable
 
     public function getRetreatOfferingAttribute()
     {
-        $donations = Donation::whereEventId($this->event_id)->whereContactId($this->contact_id)->whereDonationDescription("Retreat Funding")->get();
+        $donations = Donation::whereEventId($this->event_id)->whereContactId($this->contact_id)->whereDonationDescription('Retreat Funding')->get();
+
         return (isset($donations)) ? $donations->SUM('donation_amount') : 0;
     }
 

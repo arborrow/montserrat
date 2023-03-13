@@ -149,7 +149,7 @@ class ParishController extends Controller
         $url_twitter->save();
 
         $current_user = $request->user();
-        $parish_note = \App\Models\Note::firstOrNew(['entity_id'=>$parish->id, 'entity_table'=>'contact', 'subject'=>'Parish Note']);
+        $parish_note = \App\Models\Note::firstOrNew(['entity_id' => $parish->id, 'entity_table' => 'contact', 'subject' => 'Parish Note']);
         if (isset($current_user->contact_id)) {
             $parish_note->contact_id = $current_user->contact_id;
         }
@@ -196,7 +196,7 @@ class ParishController extends Controller
         $relationship_filter_types = [];
         $relationship_filter_types['Parishioner'] = 'Parishioner';
         $relationship_filter_types['Primary contact'] = 'Primary contact';
-    
+
         return view('parishes.show', compact('parish', 'files', 'relationship_filter_types', 'donations', 'touchpoints', 'registrations')); //
     }
 
@@ -365,43 +365,43 @@ class ParishController extends Controller
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
 
-        $url_main = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Main']);
+        $url_main = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Main']);
         $url_main->contact_id = $parish->id;
         $url_main->url = $request->input('url_main');
         $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Work']);
+        $url_work = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Work']);
         $url_work->contact_id = $parish->id;
         $url_work->url = $request->input('url_work');
         $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Facebook']);
+        $url_facebook = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Facebook']);
         $url_facebook->contact_id = $parish->id;
         $url_facebook->url = $request->input('url_facebook');
         $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
-        $url_google = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Google']);
+        $url_google = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Google']);
         $url_google->contact_id = $parish->id;
         $url_google->url = $request->input('url_google');
         $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Instagram']);
+        $url_instagram = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Instagram']);
         $url_instagram->contact_id = $parish->id;
         $url_instagram->url = $request->input('url_instagram');
         $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'LinkedIn']);
+        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'LinkedIn']);
         $url_linkedin->contact_id = $parish->id;
         $url_linkedin->url = $request->input('url_linkedin');
         $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Twitter']);
+        $url_twitter = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Twitter']);
         $url_twitter->contact_id = $parish->id;
         $url_twitter->url = $request->input('url_twitter');
         $url_twitter->website_type = 'Twitter';
@@ -419,7 +419,7 @@ class ParishController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $parish->id, 'attachment', $description);
         }
 
-        $parish_note = \App\Models\Note::firstOrNew(['entity_id'=>$parish->id, 'entity_table'=>'contact', 'subject'=>'Parish Note']);
+        $parish_note = \App\Models\Note::firstOrNew(['entity_id' => $parish->id, 'entity_table' => 'contact', 'subject' => 'Parish Note']);
         $current_user = $request->user();
         if (isset($current_user->contact_id)) {
             $parish_note->contact_id = $current_user->contact_id;

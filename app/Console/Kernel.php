@@ -14,9 +14,9 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    { 
+    {
         $schedule->command('mailgun:get')->hourlyAt(55)
-            ->between('05:30','18:30')
+            ->between('05:30', '18:30')
             ->emailOutputOnFailure(config('polanco.admin_email'));
         $schedule->command('import:stripe_payouts')->dailyAt('08:00')->emailOutputOnFailure(config('polanco.admin_email'));
         $schedule->command('email:birthdays')->dailyAt('06:00')->emailOutputOnFailure(config('polanco.admin_email'));

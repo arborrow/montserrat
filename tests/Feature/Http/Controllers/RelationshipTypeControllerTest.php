@@ -2,12 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\RelationshipType;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Arr;
 use Tests\TestCase;
-use Carbon\Carbon;
 
 /**
  * @see \App\Http\Controllers\RelationshipTypeController
@@ -17,9 +15,6 @@ class RelationshipTypeControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * 
-     */
     public function addme_returns_an_ok_response()
     {   /* TODO: evaluate relationships and use of this function throughout Polanco, we may be able to remove addme from controller altogether
         // technically this is adding a relationship (not a relationship_type) so a bit of mismatch
@@ -57,7 +52,7 @@ class RelationshipTypeControllerTest extends TestCase
                 $relationship_type_id = \App\Models\RelationshipType::whereNameBA($relationship_type)->first();
                 // $response->assertRedirect(route('relationship_type.add', ['id' => $relationship_type_id->id, 'a' => 0, 'b' => $contact->id]));
                 break;
-            }
+        }
     }
 
     /**
@@ -155,8 +150,6 @@ class RelationshipTypeControllerTest extends TestCase
         $this->assertGreaterThanOrEqual('1', $relationship_types->count());
     }
 
-    /**
-     */
     public function make_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-relationship');

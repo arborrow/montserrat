@@ -21,7 +21,7 @@ class DepartmentFactory extends Factory
             'description' => $this->faker->sentence(),
             'notes' => $this->faker->text(100),
             'is_active' => 1,
-            'parent_id' =>  null,
+            'parent_id' => null,
         ];
     }
 }

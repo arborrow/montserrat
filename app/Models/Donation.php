@@ -152,14 +152,15 @@ class Donation extends Model implements Auditable
     }
 
     public function getDonationSummaryAttribute()
-    {   $idnumber = (isset($this->retreat_idnumber)) ? ' - #'.$this->retreat_idnumber : null;
-        return $this->donation_date_formatted . ' - ' . 
-            $this->donation_description . ' - $' . 
-            number_format($this->payments_paid,2) . ' / $' . 
-            number_format($this->donation_amount,2) . ' ('. 
-            number_format($this->percent_paid,0) . '%)' .
+    {
+        $idnumber = (isset($this->retreat_idnumber)) ? ' - #'.$this->retreat_idnumber : null;
+
+        return $this->donation_date_formatted.' - '.
+            $this->donation_description.' - $'.
+            number_format($this->payments_paid, 2).' / $'.
+            number_format($this->donation_amount, 2).' ('.
+            number_format($this->percent_paid, 0).'%)'.
             $idnumber;
-            
     }
 
     public function getDonationThankYouSentAttribute()
@@ -182,22 +183,22 @@ class Donation extends Model implements Auditable
         //while not the most efficient - I want to get the comparison operators first so I can assign them to variables to use
         foreach ($filters->query as $filter => $value) {
             switch ($filter) {
-                    case 'donation_date_operator':
-                        $donation_date_operator = ! empty($value) ? $value : '=';
-                        break;
-                    case 'donation_amount_operator':
-                        $donation_amount_operator = ! empty($value) ? $value : '=';
-                        break;
-                    case 'start_date_only_operator':
-                        $start_date_only_operator = ! empty($value) ? $value : '=';
-                        break;
-                    case 'end_date_only_operator':
-                        $end_date_only_operator = ! empty($value) ? $value : '=';
-                        break;
-                    case 'donation_install_operator':
-                        $donation_install_operator = ! empty($value) ? $value : '=';
-                        break;
-                }
+                case 'donation_date_operator':
+                    $donation_date_operator = ! empty($value) ? $value : '=';
+                    break;
+                case 'donation_amount_operator':
+                    $donation_amount_operator = ! empty($value) ? $value : '=';
+                    break;
+                case 'start_date_only_operator':
+                    $start_date_only_operator = ! empty($value) ? $value : '=';
+                    break;
+                case 'end_date_only_operator':
+                    $end_date_only_operator = ! empty($value) ? $value : '=';
+                    break;
+                case 'donation_install_operator':
+                    $donation_install_operator = ! empty($value) ? $value : '=';
+                    break;
+            }
         }
         foreach ($filters->query as $filter => $value) {
             if ($filter == 'donation_date' && ! empty($value)) {

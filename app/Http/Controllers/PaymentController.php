@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PaymentSearchRequest;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 
 class PaymentController extends Controller
@@ -120,7 +119,7 @@ class PaymentController extends Controller
     public function show($id)
     {
         $this->authorize('show-payment');
-        $payment = \App\Models\Payment::with('donation.retreat', 'donation.contact','balance_transaction')->findOrFail($id);
+        $payment = \App\Models\Payment::with('donation.retreat', 'donation.contact', 'balance_transaction')->findOrFail($id);
         //dd($payment);
         return view('payments.show', compact('payment')); //
     }
