@@ -65,7 +65,7 @@
                                         {{ $active->certificate_number}}
                                     </a></td>
                                     <td>{!! $active->purchaser->contact_link !!}</td>
-                                    <td>{!! optional($active->recipient)->contact_link !!}</td>
+                                    <td>{!! $active->recipient?->contact_link !!}</td>
                                     <td>{{ $active->purchase_date->format('m-d-Y') }} / {{ $active->expiration_date->format('m-d-Y') }}</td>
                                     <td> ${{ $active->formatted_funded_amount }}</td>
                                     <td>{{ $active->notes }}</td>
@@ -104,7 +104,7 @@
                                     {{ $applied->certificate_number}}
                                 </a></td>
                                 <td>{!! $applied->purchaser->contact_link !!}</td>
-                                <td>{!! optional($applied->recipient)->contact_link !!}</td>
+                                <td>{!! $applied->recipient?->contact_link !!}</td>
                                 <td>{{ $applied->purchase_date->format('m-d-Y') }} / {{ $applied->expiration_date->format('m-d-Y') }}</td>
                                 <td> {!! $applied->registration->event_link !!}</td>
                                 <td>{{ $applied->notes }}</td>
@@ -144,7 +144,7 @@
                                     {{ $expired->certificate_number}}
                                 </a></td>
                                 <td>{!! $expired->purchaser->contact_link !!}</td>
-                                <td>{!! optional($expired->recipient)->contact_link !!}</td>
+                                <td>{!! $expired->recipient?->contact_link !!}</td>
                                 <td>{{ $expired->expiration_date->format('m-d-Y') }}</td>
                                 <td> ${{ $expired->formatted_funded_amount }}</td>
                                 <td>{{ $expired->notes }}</td>

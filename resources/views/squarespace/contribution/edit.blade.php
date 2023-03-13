@@ -65,10 +65,10 @@
                         {{ $ss_contribution->fund }}
                     @endIf
                     {!! Form::select('donation_description', array_flip(config('polanco.donation_descriptions')), (isset($ss_contribution->fund)) ? config('polanco.donation_descriptions.'.$ss_contribution->fund) : config('polanco.donation_descriptions.'.$ss_contribution->offering_type), ['class' => 'form-control']) !!}
-                    {{ optional($ss_contribution->donation)->donation_description }}
+                    {{ $ss_contribution->donation?->donation_description }}
                 </div>
 
-                @if (optional($ss_contribution->donation)->donation_amount == $ss_contribution->amount )
+                @if ($ss_contribution->donation?->donation_amount == $ss_contribution->amount )
                     <div class="col-lg-3 col-md-6 bg-success">
                 @else
                     <div class="col-lg-3 col-md-6 bg-warning">
@@ -77,7 +77,7 @@
                         {!! Form::label('amount', 'Amount:')  !!}
                     </strong>
                         {!! Form::number('amount', $ss_contribution->amount, ['class' => 'form-control','step'=>'0.01']) !!}
-                        {{ optional($ss_contribution->donation)->donation_amount }}
+                        {{ $ss_contribution->donation?->donation_amount }}
                     </div>
 
                 <div class="col-lg-3 col-md-6">
@@ -126,7 +126,7 @@
                         <strong>
                             {!! Form::text('name', ucwords(strtolower($ss_contribution->name)), ['class' => 'form-control']) !!}
                         </strong>
-                        @if (isset(optional($ss_contribution->donor)->id))
+                        @if (isset($ss_contribution->donor?->id))
                         {!! $ss_contribution->donor->contact_link_full_name !!}
                         @endIf
                     </td>
@@ -134,94 +134,94 @@
 
                 <tr>
                     <td><strong>First Name</strong></td>
-                    @if (strtolower(trim(substr($ss_contribution->name,0,strpos($ss_contribution->name,' ')))) == strtolower(optional($ss_contribution->donor)->first_name))
+                    @if (strtolower(trim(substr($ss_contribution->name,0,strpos($ss_contribution->name,' ')))) == strtolower($ss_contribution->donor?->first_name))
                     <td class='table-success'>
                         @else
                     <td class='table-warning'>
                         @endif
                         {!! Form::text('first_name', ucwords(strtolower(trim(substr($ss_contribution->name,0,strpos($ss_contribution->name,' '))))), ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donor)->first_name }}
+                        {{ $ss_contribution->donor?->first_name }}
                     </td>
                 </tr>
 
                 <tr>
                     <td><strong>Last Name</strong></td>
-                    @if (strtolower(trim(substr($ss_contribution->name,strrpos($ss_contribution->name,' ')))) == strtolower(optional($ss_contribution->donor)->last_name))
+                    @if (strtolower(trim(substr($ss_contribution->name,strrpos($ss_contribution->name,' ')))) == strtolower($ss_contribution->donor?->last_name))
                     <td class='table-success'>
                         @else
                     <td class='table-warning'>
                         @endif
                         {!! Form::text('last_name', ucwords(strtolower(trim(substr($ss_contribution->name,strrpos($ss_contribution->name,' '))))), ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donor)->last_name }}
+                        {{ $ss_contribution->donor?->last_name }}
                     </td>
                 </tr>
 
                 <tr>
                     <td><strong>Email</strong></td>
-                    @if (strtolower(trim($ss_contribution->email)) == strtolower(optional($ss_contribution->donor)->email_primary_text))
+                    @if (strtolower(trim($ss_contribution->email)) == strtolower($ss_contribution->donor?->email_primary_text))
                     <td class='table-success'>
                         @else
                     <td class='table-warning'>
                         @endif
                         {!! Form::text('email', trim($ss_contribution->email), ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donor)->email_primary_text }}
+                        {{ $ss_contribution->donor?->email_primary_text }}
                     </td>
                 </tr>
 
                 @if (isset($ss_contribution->phone))
                 <tr>
                     <td><strong>Phone</strong></td>
-                    @if ($ss_contribution->phone_formatted == optional($ss_contribution->donor)->primary_phone_number )
+                    @if ($ss_contribution->phone_formatted == $ss_contribution->donor?->primary_phone_number )
                     <td class='table-success'>
                         @else
                     <td class='table-warning'>
                         @endif
                         {!! Form::text('phone', $ss_contribution->phone, ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donor)->primary_phone_number }}
+                        {{ $ss_contribution->donor?->primary_phone_number }}
                     </td>
                 </tr>
                 @endIf
 
                 <tr>
                     <td><strong>Address Street</strong></td>
-                    @if (ucwords(strtolower(trim($ss_contribution->address_street))) == ucwords(strtolower(optional($ss_contribution->donor)->address_primary_street)))
+                    @if (ucwords(strtolower(trim($ss_contribution->address_street))) == ucwords(strtolower($ss_contribution->donor?->address_primary_street)))
                     <td class='table-success'>
                         @else
                     <td class='table-warning'>
                         @endIf
                         {!! Form::text('address_street', ucwords(strtolower($ss_contribution->address_street)), ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donor)->address_primary_street }}
+                        {{ $ss_contribution->donor?->address_primary_street }}
                     </td>
                 </tr>
 
                 @if (isset($ss_contribution->address_supplemental))
                 <tr>
                     <td><strong>Address Supplemental</strong></td>
-                    @if (trim($ss_contribution->address_supplemental) == optional($ss_contribution->donor)->address_primary_supplemental_address )
+                    @if (trim($ss_contribution->address_supplemental) == $ss_contribution->donor?->address_primary_supplemental_address )
                     <td class='table-success'>
                         @else
                     <td class='table-warning'>
                         @endIf
                         {!! Form::text('address_supplemental', $ss_contribution->address_supplemental, ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donor)->address_primary_supplemental_address }}
+                        {{ $ss_contribution->donor?->address_primary_supplemental_address }}
                 </tr>
                 @endIf
 
                 <tr>
                     <td><strong>Address City</strong></td>
-                    @if (trim(strtolower($ss_contribution->address_city)) == strtolower(optional($ss_contribution->donor)->address_primary_city))
+                    @if (trim(strtolower($ss_contribution->address_city)) == strtolower($ss_contribution->donor?->address_primary_city))
                     <td class="table-success">
                         @else
                     <td class="table-warning">
                         @endif
                         {!! Form::text('address_city', ucwords(strtolower($ss_contribution->address_city)), ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donor)->address_primary_city }}
+                        {{ $ss_contribution->donor?->address_primary_city }}
                     </td>
                 </tr>
 
                 <tr>
                     <td><strong>Address State</strong></td>
-                    @if ($ids['address_state'] == optional($ss_contribution->donor)->address_primary_state_id && isset($ids['address_state']))
+                    @if ($ids['address_state'] == $ss_contribution->donor?->address_primary_state_id && isset($ids['address_state']))
                     <td class="table-success">
                         @else
                     <td class="table-warning">
@@ -230,32 +230,32 @@
                         {{ strtoupper($ss_contribution->address_state)}}
                         @endIf
                         {!! Form::select('address_state_id', $states, $ids['address_state'], ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donor)->address_primary_state }}
+                        {{ $ss_contribution->donor?->address_primary_state }}
                     </td>
                 </tr>
 
                 <tr>
                     <td><strong>Address Zip</strong></td>
-                    @if (trim($ss_contribution->address_zip == optional($ss_contribution->donor)->address_primary_postal_code))
+                    @if (trim($ss_contribution->address_zip == $ss_contribution->donor?->address_primary_postal_code))
                     <td class='table-success'>
                         @else
                     <td class='table-warning'>
                         @endIf
                         {!! Form::text('address_zip', $ss_contribution->address_zip, ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donor)->address_primary_postal_code }}
+                        {{ $ss_contribution->donor?->address_primary_postal_code }}
                     </td>
                 </tr>
 
                 <tr>
                     <td data-toggle="tooltip" data-placement="top" title="Address Country defaults to US"><strong>Address Country * </strong></td>
-                    @if ($ids['address_country'] == optional($ss_contribution->donor)->address_primary_country_id)
+                    @if ($ids['address_country'] == $ss_contribution->donor?->address_primary_country_id)
                     <td class='table-success'>
                         @else
                     <td class='table-warning'>
                         @endif
                         {!! Form::label('address_country_id', $ss_contribution->address_country) !!}
                         {!! Form::select('address_country_id', $countries, $ids['address_country'], ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donor)->address_primary_country_abbreviation }}
+                        {{ $ss_contribution->donor?->address_primary_country_abbreviation }}
                     </td>
                 </tr>
 
@@ -283,7 +283,7 @@
             <div class="col-lg-6 col-md-12">
                 @if ($ss_contribution->contact_id > 0)
                     <strong>Donor:</strong>
-                    {!! optional($ss_contribution->donor)->contact_link_full_name !!}
+                    {!! $ss_contribution->donor?->contact_link_full_name !!}
                     <br />
                 @endIf
                 @if (isset($ss_contribution->event_id))

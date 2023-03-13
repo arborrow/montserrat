@@ -16,7 +16,7 @@
     </div>
     
     <div class="col-lg-3">
-        <strong>Custom Form:</strong> {{ optional($inventory->custom_form)->name }}
+        <strong>Custom Form:</strong> {{ $inventory->custom_form?->name }}
     </div>
     
     <div class="col-lg-3">
