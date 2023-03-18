@@ -188,7 +188,7 @@ class ParishControllerTest extends TestCase
         $relationship_diocese = \App\Models\Relationship::factory()->create([
             'contact_id_a' => $diocese->id,
             'contact_id_b' => $parish->id,
-            'relationship_type_id' => config('polanco.relationship_type.parish'),
+            'relationship_type_id' => config('polanco.relationship_type.diocese'),
         ]);
         
         $response = $this->actingAs($user)->get('parishes/diocese/'.$diocese->id);
