@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGroupRegistrationRequest;
 use App\Http\Requests\StoreRegistrationRequest;
-use App\Http\Requests\UpdateGroupRegistrationRequest;
 use App\Http\Requests\UpdateRegistrationRequest;
 use App\Mail\RegistrationCanceledChange;
 use App\Mail\RegistrationEventChange;
@@ -20,7 +19,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
 class RegistrationController extends Controller
-{   use SquareSpaceTrait;
+{
+    use SquareSpaceTrait;
+
     public function __construct()
     {
         $this->middleware('auth')->except('confirmAttendance');
@@ -77,7 +78,7 @@ class RegistrationController extends Controller
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
         $retreatant = \App\Models\Contact::findOrFail($id);
-        
+
         $retreatants = collect();
         if ($retreatant->contact_type == config('polanco.contact_type.individual')) {
             $retreatants = $retreatant->pluck('sort_name', 'id');
@@ -246,6 +247,7 @@ class RegistrationController extends Controller
         }
 
         flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> added')->success();
+
         return redirect(url($contact->contact_url));
         // return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
     }
@@ -414,6 +416,7 @@ class RegistrationController extends Controller
         $registration->save();
 
         flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> updated')->success();
+
         return redirect(url($contact->contact_url));
 
 //        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
@@ -521,7 +524,6 @@ class RegistrationController extends Controller
         $primaryEmail = $participant->contact->primaryEmail()->first();
 
         if ($primaryEmail) {
-
             // 2. Setup infomration to be used with touchpoint for sending out registration email.
             $touchpoint = new \App\Models\Touchpoint;
             $touchpoint->person_id = $participant->contact->id;

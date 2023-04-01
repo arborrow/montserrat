@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Contact;
 use ConsoleTVs\Charts\Registrar as Charts;
 use Illuminate\Support\ServiceProvider;
-use App\Models\Contact;
 use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider

@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateStripeBalanceTransactionRequest extends FormRequest
 {
@@ -48,7 +47,7 @@ class UpdateStripeBalanceTransactionRequest extends FormRequest
             'net_amount' => 'numeric|nullable',
             'payout_date ' => 'date|nullable',
             'reconcile_date ' => 'date|nullable',
-            'available_date ' => 'date|nullable',           
+            'available_date ' => 'date|nullable',
         ];
     }
 

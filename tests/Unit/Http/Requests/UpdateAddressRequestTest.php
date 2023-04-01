@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Http\Requests;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -36,7 +34,6 @@ class UpdateAddressRequestTest extends TestCase
      */
     public function rules()
     {   // TODO: languages and referrals
-
         $actual = $this->subject->rules();
 
         $this->assertEquals([

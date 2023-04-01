@@ -142,7 +142,7 @@ class RoleControllerTest extends TestCase
         $new_description = $this->faker->sentence();
 
         $response = $this->actingAs($user)->put(route('role.update', [$role]), [
-            'id'  => $role->id,
+            'id' => $role->id,
             'name' => $new_name,
             'display_name' => $new_name,
             'description' => $new_description,

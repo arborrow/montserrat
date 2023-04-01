@@ -119,14 +119,13 @@ class OrganizationController extends Controller
         //TODO: add contact_id which is the id of the creator of the note
         if (! empty($request->input('note'))) {
         }
-        {
-            $organization_note = new \App\Models\Note;
-            $organization_note->entity_table = 'contact';
-            $organization_note->entity_id = $organization->id;
-            $organization_note->note = $request->input('note');
-            $organization_note->subject = 'Organization Note';
-            $organization_note->save();
-        }
+
+        $organization_note = new \App\Models\Note;
+        $organization_note->entity_table = 'contact';
+        $organization_note->entity_id = $organization->id;
+        $organization_note->note = $request->input('note');
+        $organization_note->subject = 'Organization Note';
+        $organization_note->save();
 
         $url_main = new \App\Models\Website;
         $url_main->contact_id = $organization->id;
@@ -315,7 +314,7 @@ class OrganizationController extends Controller
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
 
-        $organization_note = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$organization->id, 'subject'=>'Organization Note']);
+        $organization_note = \App\Models\Note::firstOrNew(['entity_table' => 'contact', 'entity_id' => $organization->id, 'subject' => 'Organization Note']);
         $organization_note->entity_table = 'contact';
         $organization_note->entity_id = $organization->id;
         $organization_note->note = $request->input('note');
@@ -339,43 +338,43 @@ class OrganizationController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $organization->id, 'attachment', $description);
         }
 
-        $url_main = \App\Models\Website::firstOrNew(['contact_id'=>$organization->id, 'website_type'=>'Main']);
+        $url_main = \App\Models\Website::firstOrNew(['contact_id' => $organization->id, 'website_type' => 'Main']);
         $url_main->contact_id = $organization->id;
         $url_main->url = $request->input('url_main');
         $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work = \App\Models\Website::firstOrNew(['contact_id'=>$organization->id, 'website_type'=>'Work']);
+        $url_work = \App\Models\Website::firstOrNew(['contact_id' => $organization->id, 'website_type' => 'Work']);
         $url_work->contact_id = $organization->id;
         $url_work->url = $request->input('url_work');
         $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook = \App\Models\Website::firstOrNew(['contact_id'=>$organization->id, 'website_type'=>'Facebook']);
+        $url_facebook = \App\Models\Website::firstOrNew(['contact_id' => $organization->id, 'website_type' => 'Facebook']);
         $url_facebook->contact_id = $organization->id;
         $url_facebook->url = $request->input('url_facebook');
         $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
-        $url_google = \App\Models\Website::firstOrNew(['contact_id'=>$organization->id, 'website_type'=>'Google']);
+        $url_google = \App\Models\Website::firstOrNew(['contact_id' => $organization->id, 'website_type' => 'Google']);
         $url_google->contact_id = $organization->id;
         $url_google->url = $request->input('url_google');
         $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram = \App\Models\Website::firstOrNew(['contact_id'=>$organization->id, 'website_type'=>'Instagram']);
+        $url_instagram = \App\Models\Website::firstOrNew(['contact_id' => $organization->id, 'website_type' => 'Instagram']);
         $url_instagram->contact_id = $organization->id;
         $url_instagram->url = $request->input('url_instagram');
         $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id'=>$organization->id, 'website_type'=>'LinkedIn']);
+        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id' => $organization->id, 'website_type' => 'LinkedIn']);
         $url_linkedin->contact_id = $organization->id;
         $url_linkedin->url = $request->input('url_linkedin');
         $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter = \App\Models\Website::firstOrNew(['contact_id'=>$organization->id, 'website_type'=>'Twitter']);
+        $url_twitter = \App\Models\Website::firstOrNew(['contact_id' => $organization->id, 'website_type' => 'Twitter']);
         $url_twitter->contact_id = $organization->id;
         $url_twitter->url = $request->input('url_twitter');
         $url_twitter->website_type = 'Twitter';

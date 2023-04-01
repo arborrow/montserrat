@@ -75,15 +75,15 @@ class DashboardControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-dashboard');
         $current_fiscal_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
-        $number_of_years = $this->faker->numberBetween(5,10);
+        $number_of_years = $this->faker->numberBetween(5, 10);
 
-        $response = $this->actingAs($user)->get(route('dashboard.agc',$number_of_years));
+        $response = $this->actingAs($user)->get(route('dashboard.agc', $number_of_years));
 
         $response->assertOk();
         $response->assertViewIs('dashboard.agc');
         $response->assertSee('AGC Dashboard');
         $response->assertSee($current_fiscal_year);
-        $response->assertSee($current_fiscal_year-$number_of_years);
+        $response->assertSee($current_fiscal_year - $number_of_years);
     }
 
     /**

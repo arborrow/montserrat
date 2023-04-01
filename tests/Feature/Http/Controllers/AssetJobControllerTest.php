@@ -137,7 +137,6 @@ class AssetJobControllerTest extends TestCase
      */
     public function store_returns_an_ok_response()
     {
-
         // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-asset-job');
 

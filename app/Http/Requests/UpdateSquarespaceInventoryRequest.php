@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateSquarespaceInventoryRequest extends FormRequest
 {
@@ -23,7 +22,7 @@ class UpdateSquarespaceInventoryRequest extends FormRequest
      * @return array
      */
 
-     //name , custom_form_id , variant_options 
+     //name , custom_form_id , variant_options
 
     public function rules()
     {

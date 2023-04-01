@@ -148,7 +148,7 @@ class DioceseController extends Controller
         $url_twitter->save();
 
         $current_user = $request->user();
-        $diocese_note = \App\Models\Note::firstOrNew(['entity_id'=>$diocese->id, 'entity_table'=>'contact', 'subject'=>'Diocese Note']);
+        $diocese_note = \App\Models\Note::firstOrNew(['entity_id' => $diocese->id, 'entity_table' => 'contact', 'subject' => 'Diocese Note']);
         if (isset($current_user->contact_id)) {
             $diocese_note->contact_id = $current_user->contact_id;
         }
@@ -189,7 +189,7 @@ class DioceseController extends Controller
         $relationship_filter_types['Priest'] = 'Priest';
         $relationship_filter_types['Primary contact'] = 'Primary contact';
         // TODO:: come back and figure out how to make volunteer for any organization or diocese atm restricted to retreat houses by definition in the database
-        // $relationship_filter_types['Volunteer'] = 'Volunteer'; 
+        // $relationship_filter_types['Volunteer'] = 'Volunteer';
 
         return view('dioceses.show', compact('diocese', 'relationship_filter_types', 'files', 'donations', 'registrations', 'touchpoints'));
     }
@@ -316,43 +316,43 @@ class DioceseController extends Controller
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
 
-        $url_main = \App\Models\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Main']);
+        $url_main = \App\Models\Website::firstOrNew(['contact_id' => $diocese->id, 'website_type' => 'Main']);
         $url_main->contact_id = $diocese->id;
         $url_main->url = $request->input('url_main');
         $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work = \App\Models\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Work']);
+        $url_work = \App\Models\Website::firstOrNew(['contact_id' => $diocese->id, 'website_type' => 'Work']);
         $url_work->contact_id = $diocese->id;
         $url_work->url = $request->input('url_work');
         $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook = \App\Models\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Facebook']);
+        $url_facebook = \App\Models\Website::firstOrNew(['contact_id' => $diocese->id, 'website_type' => 'Facebook']);
         $url_facebook->contact_id = $diocese->id;
         $url_facebook->url = $request->input('url_facebook');
         $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
-        $url_google = \App\Models\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Google']);
+        $url_google = \App\Models\Website::firstOrNew(['contact_id' => $diocese->id, 'website_type' => 'Google']);
         $url_google->contact_id = $diocese->id;
         $url_google->url = $request->input('url_google');
         $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram = \App\Models\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Instagram']);
+        $url_instagram = \App\Models\Website::firstOrNew(['contact_id' => $diocese->id, 'website_type' => 'Instagram']);
         $url_instagram->contact_id = $diocese->id;
         $url_instagram->url = $request->input('url_instagram');
         $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'LinkedIn']);
+        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id' => $diocese->id, 'website_type' => 'LinkedIn']);
         $url_linkedin->contact_id = $diocese->id;
         $url_linkedin->url = $request->input('url_linkedin');
         $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter = \App\Models\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Twitter']);
+        $url_twitter = \App\Models\Website::firstOrNew(['contact_id' => $diocese->id, 'website_type' => 'Twitter']);
         $url_twitter->contact_id = $diocese->id;
         $url_twitter->url = $request->input('url_twitter');
         $url_twitter->website_type = 'Twitter';
@@ -362,7 +362,7 @@ class DioceseController extends Controller
          * to remove a bishop delete the relationship in contacts
          */
         if ($request->input('bishop_id') > 0) {
-            $relationship_bishop = \App\Models\Relationship::firstOrNew(['contact_id_a'=>$diocese->id, 'contact_id_b'=>$bishop_id, 'relationship_type_id'=>config('polanco.relationship_type.bishop'), 'is_active'=>1]);
+            $relationship_bishop = \App\Models\Relationship::firstOrNew(['contact_id_a' => $diocese->id, 'contact_id_b' => $bishop_id, 'relationship_type_id' => config('polanco.relationship_type.bishop'), 'is_active' => 1]);
             $relationship_bishop->contact_id_a = $diocese->id;
             $relationship_bishop->contact_id_b = $bishop_id;
             $relationship_bishop->relationship_type_id = config('polanco.relationship_type.bishop');
@@ -397,7 +397,7 @@ class DioceseController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $diocese->id, 'attachment', $description);
         }
 
-        $diocese_note = \App\Models\Note::firstOrNew(['entity_id'=>$diocese->id, 'entity_table'=>'contact', 'subject'=>'Diocese Note']);
+        $diocese_note = \App\Models\Note::firstOrNew(['entity_id' => $diocese->id, 'entity_table' => 'contact', 'subject' => 'Diocese Note']);
         $current_user = $request->user();
         if (isset($current_user->contact_id)) {
             $diocese_note->contact_id = $current_user->contact_id;

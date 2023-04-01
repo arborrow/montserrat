@@ -37,7 +37,6 @@ class MailgunControllerTest extends TestCase
         }
     }
 
-
     /**
      * @test
      */
@@ -53,14 +52,13 @@ class MailgunControllerTest extends TestCase
         $response->assertViewIs('mailgun.index');
         $response->assertViewHas('messages');
         $response->assertSee('Index of Mailgun Messages');
-}
+    }
 
     /**
      * @test
      */
     public function destroy_returns_an_ok_response()
     {  // empty slug redirecting to mailgun.index
-
         $this->followingRedirects();
         $user = $this->createUserWithPermission('admin-mailgun');
         $message = Message::factory()->create();
@@ -68,7 +66,7 @@ class MailgunControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('mailgun.destroy', [$message]));
 
         $response->assertOk();
-        $response->assertViewIs('mailgun.index');        
+        $response->assertViewIs('mailgun.index');
     }
 
     /**
@@ -87,7 +85,6 @@ class MailgunControllerTest extends TestCase
         $response->assertViewIs('mailgun.index');
         $response->assertViewHas('messages');
         $response->assertSee('Index of Mailgun Messages');
-        
     }
 
     /**
@@ -136,7 +133,6 @@ class MailgunControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('mailgun.index');
-
     }
 
     /**
@@ -157,7 +153,5 @@ class MailgunControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('mailgun.index');
-
     }
-
 }

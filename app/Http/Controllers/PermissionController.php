@@ -18,49 +18,49 @@ class PermissionController extends Controller
         $this->authorize('show-permission');
         $actions = [
             '' => 'N/A',
-            'create'=>'create',
-            'delete'=>'delete',
-            'manage'=>'manage',
-            'show'=>'show',
-            'update'=>'update',
+            'create' => 'create',
+            'delete' => 'delete',
+            'manage' => 'manage',
+            'show' => 'show',
+            'update' => 'update',
         ];
         // TODO: generate this list by getting a list of all the models on the project - email, phone do not have independent controllers (yet)
         $models = [
             '' => 'N/A',
-            'address'=>'address',
-            'asset'=>'asset',
-            'asset-type'=>'asset-type',
-            'attachment'=>'attachment',
-            'contact'=>'contact',
-            'department'=>'department',
-            'donation'=>'donation',
-            'donation-type'=>'donation-type',
-            'email'=>'email',
-            'group'=>'group',
-            'location'=>'location',
-            'mailgun'=>'mailgun',
-            'note'=>'note',
-            'payment'=>'payment',
-            'permission'=>'permission',
-            'phone'=>'phone',
-            'registration'=>'registration',
-            'relationship'=>'relationship',
-            'reservation'=>'reservation',
-            'retreat'=>'retreat',
-            'role'=>'role',
-            'room'=>'room',
-            'snippet'=>'snippet',
-            'squarespace-contribution'=>'squarespace-contribution',
-            'squarespace-custom-form'=>'squarespace-custom-form',
-            'squarespace-custom-form-field'=>'squarespace-custom-form-field',
-            'squarespace-inventory'=>'squarespace-inventory',
-            'squarespace-order'=>'squarespace-order',
-            'stripe-charge'=>'stripe-charge',
-            'stripe-payout'=>'stripe-payout',
-            'touchpoint'=>'touchpoint',
-            'uom'=>'uom',
-            'user'=>'user',
-            'website'=>'website',
+            'address' => 'address',
+            'asset' => 'asset',
+            'asset-type' => 'asset-type',
+            'attachment' => 'attachment',
+            'contact' => 'contact',
+            'department' => 'department',
+            'donation' => 'donation',
+            'donation-type' => 'donation-type',
+            'email' => 'email',
+            'group' => 'group',
+            'location' => 'location',
+            'mailgun' => 'mailgun',
+            'note' => 'note',
+            'payment' => 'payment',
+            'permission' => 'permission',
+            'phone' => 'phone',
+            'registration' => 'registration',
+            'relationship' => 'relationship',
+            'reservation' => 'reservation',
+            'retreat' => 'retreat',
+            'role' => 'role',
+            'room' => 'room',
+            'snippet' => 'snippet',
+            'squarespace-contribution' => 'squarespace-contribution',
+            'squarespace-custom-form' => 'squarespace-custom-form',
+            'squarespace-custom-form-field' => 'squarespace-custom-form-field',
+            'squarespace-inventory' => 'squarespace-inventory',
+            'squarespace-order' => 'squarespace-order',
+            'stripe-charge' => 'stripe-charge',
+            'stripe-payout' => 'stripe-payout',
+            'touchpoint' => 'touchpoint',
+            'uom' => 'uom',
+            'user' => 'user',
+            'website' => 'website',
 
         ];
         if (empty($request->input('term'))) {
@@ -92,7 +92,6 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -141,7 +140,6 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

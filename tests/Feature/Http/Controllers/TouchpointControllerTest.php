@@ -2,11 +2,12 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Tests\TestCase;
-use Carbon\Carbon;
+
 /**
  * @see \App\Http\Controllers\TouchpointController
  */

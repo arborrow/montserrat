@@ -13,7 +13,6 @@ use App\Models\Payment;
 use App\Models\Registration;
 use App\Models\Retreat;
 use App\Models\SquarespaceContribution;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -105,7 +104,7 @@ class DonationController extends Controller
     {   // contact id 5847 hardcoded for anonymous user
         $this->authorize('show-donation');
         $mergeable = DB::table('Donations as d')
-         ->select(DB::raw('CONCAT(d.contact_id,"-",d.event_id,"-",d.donation_description) as unique_value, COUNT(*) as donation_count, MAX(d.donation_date) as donation_date, MIN(d.donation_id) as min_donation_id, MAX(d.donation_id) as max_donation_id, MIN(c.sort_name) as sort_name, MIN(e.idnumber) as idnumber, MIN(e.title) as event_title, MIN(d.donation_description) as donation_description, MIN(d.contact_id) as contact_id' ))
+         ->select(DB::raw('CONCAT(d.contact_id,"-",d.event_id,"-",d.donation_description) as unique_value, COUNT(*) as donation_count, MAX(d.donation_date) as donation_date, MIN(d.donation_id) as min_donation_id, MAX(d.donation_id) as max_donation_id, MIN(c.sort_name) as sort_name, MIN(e.idnumber) as idnumber, MIN(e.title) as event_title, MIN(d.donation_description) as donation_description, MIN(d.contact_id) as contact_id'))
          ->leftjoin('event as e', 'd.event_id', '=', 'e.id')
          ->leftjoin('contact as c', 'd.contact_id', '=', 'c.id')
          ->whereRaw('d.deleted_at IS NULL AND d.donation_amount>0 AND d.contact_id IS NOT NULL AND d.event_id IS NOT NULL AND d.donation_description IS NOT NULL AND d.contact_id <> 5847 AND d.donation_date>="2021-07-01"')
@@ -122,27 +121,30 @@ class DonationController extends Controller
         $first_donation = Donation::findOrFail($first_donation_id); // target or destination donation
         $second_donation = Donation::findOrFail($second_donation_id); // source or donation being merged
         $second_donation_payments = Payment::whereDonationId($second_donation_id)->get();
-        
+
         // verify mergability
-        
-        if ($first_donation->contact_id <> $second_donation->contact_id) {
+
+        if ($first_donation->contact_id != $second_donation->contact_id) {
             flash('Mismatched Contact IDs: Donation ID#: <a href="'.url('/donation/'.$first_donation->donation_id).'">'.$first_donation->donation_id.'</a> 
-            not mergeable with ID# <a href="'.url('/donation/'.$second_donation->donation_id).'">'.$second_donation->donation_id.'</a>')->warning()->important();    
-            return Redirect::action([self::class, 'mergeable']);            
+            not mergeable with ID# <a href="'.url('/donation/'.$second_donation->donation_id).'">'.$second_donation->donation_id.'</a>')->warning()->important();
+
+            return Redirect::action([self::class, 'mergeable']);
         }
-        
-        if ($first_donation->event_id <> $second_donation->event_id) {
+
+        if ($first_donation->event_id != $second_donation->event_id) {
             flash('Mismatched Event IDs: Donation ID#: <a href="'.url('/donation/'.$first_donation->donation_id).'">'.$first_donation->donation_id.'</a> 
-            not mergeable with ID# <a href="'.url('/donation/'.$second_donation->donation_id).'">'.$second_donation->donation_id.'</a>')->warning()->important();           
-            return Redirect::action([self::class, 'mergeable']);            
+            not mergeable with ID# <a href="'.url('/donation/'.$second_donation->donation_id).'">'.$second_donation->donation_id.'</a>')->warning()->important();
+
+            return Redirect::action([self::class, 'mergeable']);
         }
-                
-        if ($first_donation->donation_description <> $second_donation->donation_description) {
+
+        if ($first_donation->donation_description != $second_donation->donation_description) {
             flash('Mismatched Donation Descriptions: Donation ID#: <a href="'.url('/donation/'.$first_donation->donation_id).'">'.$first_donation->donation_id.'</a> 
             not mergeable with ID# <a href="'.url('/donation/'.$second_donation->donation_id).'">'.$second_donation->donation_id.'</a>')->warning()->important();
-            return Redirect::action([self::class, 'mergeable']);            
+
+            return Redirect::action([self::class, 'mergeable']);
         }
-        
+
         // move second donation payments to first donation
         foreach ($second_donation_payments as $second_payment) {
             $second_payment->donation_id = $first_donation_id;
@@ -151,7 +153,7 @@ class DonationController extends Controller
 
         // merge donation_amount, Notes and possibly squarespace_order
         $first_donation->donation_amount += $second_donation->donation_amount;
-        $first_donation->Notes = (isset($first_donation->Notes)) ? $first_donation->Notes . ' ' . $second_donation->Notes : $second_donation->Notes;
+        $first_donation->Notes = (isset($first_donation->Notes)) ? $first_donation->Notes.' '.$second_donation->Notes : $second_donation->Notes;
         $first_donation->squarespace_order = (isset($first_donation->squarespace_order)) ? $first_donation->squarespace_order : $second_donation->squarespace_order;
         $first_donation->save();
 
@@ -161,14 +163,13 @@ class DonationController extends Controller
             $squarespace_contribution->donation_id = $first_donation->donation_id;
             $squarespace_contribution->save();
         }
-        
+
         // delete the second donation
         $second_donation->delete();
-        
+
         flash('Donation ID #'.$second_donation_id.' has been merged with Donation ID #<a href="'.url('/donation/'.$first_donation->donation_id).'">'.$first_donation->donation_id.'</a>')->success();
 
         return Redirect::action([self::class, 'mergeable']);
-
     }
 
     public function agc($year, DonationAgcRequest $request)
@@ -489,19 +490,18 @@ class DonationController extends Controller
     {
         $this->authorize('update-donation');
         $event = Retreat::findOrFail($event_id);
-        $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription("Retreat Deposits")->get();
-        foreach($event_deposits as $event_deposit) {
+        $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription('Retreat Deposits')->get();
+        foreach ($event_deposits as $event_deposit) {
             try {
-                $event_deposit->donation_description = "Retreat Funding";
-                $event_deposit->Notes = "Automated deposit to funding transfer processed. " . $event_deposit->Notes;
+                $event_deposit->donation_description = 'Retreat Funding';
+                $event_deposit->Notes = 'Automated deposit to funding transfer processed. '.$event_deposit->Notes;
                 $event_deposit->save();
             } catch (\Exception $e) {
                 dd($e);
             }
-            
         }
-        
-        flash('Retreat Donations Processed for ID#: <a href="'.url('/retreat/'.$event_id).'">'.$event->idnumber.' - '.$event->title . '</a>')->success();
+
+        flash('Retreat Donations Processed for ID#: <a href="'.url('/retreat/'.$event_id).'">'.$event->idnumber.' - '.$event->title.'</a>')->success();
 
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
@@ -511,25 +511,23 @@ class DonationController extends Controller
         {
             $this->authorize('update-donation');
             $event = Retreat::findOrFail($event_id);
-            $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription("Retreat Funding")->get();
-            foreach($event_deposits as $event_deposit) {
+            $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription('Retreat Funding')->get();
+            foreach ($event_deposits as $event_deposit) {
                 try {
-                    if (strpos($event_deposit->Notes,"Automated deposit to funding transfer processed.") === 0) {
+                    if (strpos($event_deposit->Notes, 'Automated deposit to funding transfer processed.') === 0) {
                         // string not found; skip
                     } else {
-                        $event_deposit->donation_description = "Retreat Deposit";
-                        $event_deposit->Notes = "Automated deposit to funding transfer processed. " . $event_deposit->Notes;
+                        $event_deposit->donation_description = 'Retreat Deposit';
+                        $event_deposit->Notes = 'Automated deposit to funding transfer processed. '.$event_deposit->Notes;
 //                        $event_deposit->save();
                     }
                 } catch (\Exception $e) {
                     dd($e);
                 }
-                
             }
-            
-            flash('Retreat Donations Unprocessed for ID#: <a href="'.url('/retreat/'.$event_id).'">'.$event->idnumber.' - '.$event->title . '</a>')->success();
-    
+
+            flash('Retreat Donations Unprocessed for ID#: <a href="'.url('/retreat/'.$event_id).'">'.$event->idnumber.' - '.$event->title.'</a>')->success();
+
             return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
         }
-    
 }

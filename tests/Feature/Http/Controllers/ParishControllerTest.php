@@ -64,14 +64,14 @@ class ParishControllerTest extends TestCase
 
         $main_phone = \App\Models\Phone::factory()->create([
             'contact_id' => $parish->id,
-            'location_type_id' =>  config('polanco.location_type.main'),
+            'location_type_id' => config('polanco.location_type.main'),
             'is_primary' => 1,
             'phone_type' => 'Phone',
         ]);
 
         $main_fax = \App\Models\Phone::factory()->create([
             'contact_id' => $parish->id,
-            'location_type_id' =>  config('polanco.location_type.main'),
+            'location_type_id' => config('polanco.location_type.main'),
             'phone_type' => 'Fax',
         ]);
 
@@ -190,7 +190,7 @@ class ParishControllerTest extends TestCase
             'contact_id_b' => $parish->id,
             'relationship_type_id' => config('polanco.relationship_type.diocese'),
         ]);
-        
+
         $response = $this->actingAs($user)->get('parishes/diocese/'.$diocese->id);
         $parishes = $response->viewData('parishes');
 

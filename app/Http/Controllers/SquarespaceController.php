@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-
 
 class SquarespaceController extends Controller
 {
@@ -21,9 +19,8 @@ class SquarespaceController extends Controller
     public function index()
     {
         $this->authorize('show-squarespace');
+
         return view('squarespace.index');
-
-
     }
 
     /**
@@ -34,10 +31,10 @@ class SquarespaceController extends Controller
     public function contribution_index()
     {
         $this->authorize('show-squarespace');
+
         return view('squarespace.contribution');
-
-
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -46,9 +43,8 @@ class SquarespaceController extends Controller
     public function order_index()
     {
         $this->authorize('show-squarespace');
+
         return view('squarespace.order');
-
-
     }
 
     /**
@@ -64,7 +60,6 @@ class SquarespaceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -97,7 +92,6 @@ class SquarespaceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\Organization;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -70,14 +69,14 @@ class OrganizationControllerTest extends TestCase
 
         $main_phone = \App\Models\Phone::factory()->create([
             'contact_id' => $organization->id,
-            'location_type_id' =>  config('polanco.location_type.main'),
+            'location_type_id' => config('polanco.location_type.main'),
             'is_primary' => 1,
             'phone_type' => 'Phone',
         ]);
 
         $main_fax = \App\Models\Phone::factory()->create([
             'contact_id' => $organization->id,
-            'location_type_id' =>  config('polanco.location_type.main'),
+            'location_type_id' => config('polanco.location_type.main'),
             'phone_type' => 'Fax',
         ]);
 

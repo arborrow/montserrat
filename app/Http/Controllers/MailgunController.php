@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Traits\MailgunTrait;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Redirect;
 use Mailgun\Mailgun;
-
 
 class MailgunController extends Controller
 {
@@ -48,22 +46,24 @@ class MailgunController extends Controller
         return Redirect::action([MailgunController::class, 'index']);
     }
 
-    public function index() {
+    public function index()
+    {
         // TODO: consider adding processed/unprocessed/all drowdown selector to filter results and combine processed and index blades into one
         $this->authorize('admin-mailgun');
-        $messages = Message::whereIsProcessed(0)->orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages');
-        $messages_processed = Message::whereIsProcessed(1)->orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages_processed');
+        $messages = Message::whereIsProcessed(0)->orderBy('mailgun_timestamp', 'desc')->paginate(25, ['*'], 'messages');
+        $messages_processed = Message::whereIsProcessed(1)->orderBy('mailgun_timestamp', 'desc')->paginate(25, ['*'], 'messages_processed');
 
-        return view('mailgun.index', compact('messages','messages_processed'));
+        return view('mailgun.index', compact('messages', 'messages_processed'));
     }
 
-    public function show($id) {
-
+    public function show($id)
+    {
         $this->authorize('admin-mailgun');
 
-        $message = Message::with('contact_from','contact_to')->findOrFail($id);
-        $body = explode("\n",$message->body);
-        return view('mailgun.show', compact('message','body'));
+        $message = Message::with('contact_from', 'contact_to')->findOrFail($id);
+        $body = explode("\n", $message->body);
+
+        return view('mailgun.show', compact('message', 'body'));
     }
 
     /**
@@ -74,17 +74,16 @@ class MailgunController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function edit($id) {
+    public function edit($id)
+    {
         $this->authorize('admin-mailgun');
         // $message = Message::with('contact_from','contact_to')->findOrFail($id);
         // return view('mailgun.edit', compact('message'));
         return Redirect::action([MailgunController::class, 'index']);
-
     }
 
-    public function unprocess($id) {
-
+    public function unprocess($id)
+    {
         $this->authorize('admin-mailgun');
         $message = Message::findOrFail($id);
         $message->is_processed = 0;
@@ -92,8 +91,7 @@ class MailgunController extends Controller
 
         // $message = Message::with('contact_from','contact_to')->findOrFail($id);
         // return view('mailgun.edit', compact('message'));
-        return Redirect::action([self::class, 'show'],['mailgun'=>$id]);
-
+        return Redirect::action([self::class, 'show'], ['mailgun' => $id]);
     }
 
     /**
@@ -105,8 +103,8 @@ class MailgunController extends Controller
     public function create()
     {
         $this->authorize('admin-mailgun');
-        return Redirect::action([MailgunController::class, 'index']);
 
+        return Redirect::action([MailgunController::class, 'index']);
     }
 
     /**
@@ -114,14 +112,13 @@ class MailgunController extends Controller
      * Mailgun messages are retrieved from server and not created or stored
      * Hence, this method is an empty stub.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->authorize('admin-mailgun');
-        return Redirect::action([MailgunController::class, 'index']);
 
+        return Redirect::action([MailgunController::class, 'index']);
     }
 
     /**
@@ -130,20 +127,19 @@ class MailgunController extends Controller
      * Hence, the update method is an empty stub.
      *
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return Redirect to mailgun.index
      */
     public function update(Request $request, $id)
     {
         $this->authorize('admin-mailgun');
-        return Redirect::action([MailgunController::class, 'index']);
 
+        return Redirect::action([MailgunController::class, 'index']);
     }
 
     /**
      * Remove the specified resource from storage.
-     * Since Mailgun messages are retrieved from server and processed, 
+     * Since Mailgun messages are retrieved from server and processed,
      * deleting is not needed and soft-deleting can cause sql integrity duplicate entry error
      * Hence, the delete method is an empty stub.
      *
@@ -161,5 +157,4 @@ class MailgunController extends Controller
 
         return Redirect::action([self::class, 'index']);
     }
-
 }

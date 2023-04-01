@@ -179,5 +179,4 @@ class GroupControllerTest extends TestCase
             \App\Http\Requests\UpdateGroupRequest::class
         );
     }
-
 }

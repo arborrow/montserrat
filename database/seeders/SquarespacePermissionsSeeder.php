@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
 
 class SquarespacePermissionsSeeder extends Seeder
 {
@@ -50,7 +48,6 @@ class SquarespacePermissionsSeeder extends Seeder
                 'deleted_at' => null,
             ],
         ]);
-
 
         DB::table('permissions')->insert([
             0 => [
@@ -191,8 +188,5 @@ class SquarespacePermissionsSeeder extends Seeder
                 'deleted_at' => null,
             ],
         ]);
-
-
-
     }
 }

@@ -43,7 +43,7 @@ class EventFactory extends Factory
             'start_date' => $start_date,
             'end_date' => $end_date,
             'is_active' => 1,
-            'idnumber' =>  $idnumber,
+            'idnumber' => $idnumber,
         ];
     }
 }

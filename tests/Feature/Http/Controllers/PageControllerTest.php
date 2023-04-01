@@ -344,8 +344,8 @@ class PageControllerTest extends TestCase
 
         $donation = \App\Models\Donation::factory()->create();
         $payments = \App\Models\Payment::factory()->count(3)->create(
-                ['donation_id' => $donation->donation_id]
-            );
+            ['donation_id' => $donation->donation_id]
+        );
         // dd($donation,$payments);
         $response = $this->actingAs($user)->get('person/'.$donation->contact_id.'/eoy_acknowledgment');
 
@@ -404,7 +404,7 @@ class PageControllerTest extends TestCase
         $description = $this->faker->randomElement(['Cash', 'Check', 'Wire transfer']);
 
         $payment = \App\Models\Payment::factory()->create([
-            'payment_date' =>   $yesterday,
+            'payment_date' => $yesterday,
             'payment_description' => $description,
         ]);
 
@@ -429,7 +429,7 @@ class PageControllerTest extends TestCase
         $description = $this->faker->randomElement(['Cash', 'Check', 'Wire transfer']);
 
         $payment = \App\Models\Payment::factory()->create([
-            'payment_date' =>   $yesterday,
+            'payment_date' => $yesterday,
             'payment_description' => $description,
         ]);
 
@@ -474,7 +474,7 @@ class PageControllerTest extends TestCase
         $description = 'Credit card';
 
         $payment = \App\Models\Payment::factory()->create([
-            'payment_date' =>   $yesterday,
+            'payment_date' => $yesterday,
             'payment_description' => $description,
         ]);
 
@@ -506,7 +506,7 @@ class PageControllerTest extends TestCase
         $description = 'Credit card';
 
         $payment = \App\Models\Payment::factory()->create([
-            'payment_date' =>   $yesterday,
+            'payment_date' => $yesterday,
             'payment_description' => $description,
         ]);
 

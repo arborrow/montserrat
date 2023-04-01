@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDonationTypeRequest;
 use App\Http\Requests\UpdateDonationTypeRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class DonationTypeController extends Controller

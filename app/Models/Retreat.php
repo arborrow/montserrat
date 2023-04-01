@@ -48,10 +48,10 @@ class Retreat extends Model implements Auditable
     public function getHasDepositsAttribute()
     {
         // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
-        $deposits = $this->donations->where('donation_description','=',"Retreat Deposits");
-        return $deposits->count() > 0 ? TRUE : FALSE;
-    }
+        $deposits = $this->donations->where('donation_description', '=', 'Retreat Deposits');
 
+        return $deposits->count() > 0 ? true : false;
+    }
 
     public function getDonationsPledgedSumAttribute()
     {
@@ -109,14 +109,13 @@ class Retreat extends Model implements Auditable
 
     public function getDaysUntilStartAttribute()
     {
-        
         if ($this->start_date > now()) {
-            $today = \Carbon\Carbon::now();    
+            $today = \Carbon\Carbon::now();
+
             return $this->start_date->diffInDays($today);
         } else {
             return 0;
         }
-            
     }
 
     public function getCapacityPercentageAttribute()
@@ -242,7 +241,7 @@ class Retreat extends Model implements Auditable
     public function getRetreatScheduleLinkAttribute()
     {
         if (Storage::has('event/'.$this->id.'/schedule.pdf')) {
-            $img = Html::image('images/schedule.png', 'Schedule', ['title'=>'Schedule']);
+            $img = Html::image('images/schedule.png', 'Schedule', ['title' => 'Schedule']);
             $link = '<a href="'.url('retreat/'.$this->id.'/schedule" ').'class="btn btn-default" style="padding: 3px;">'.$img.'Schedule</a>';
 
             return $link;
@@ -254,7 +253,7 @@ class Retreat extends Model implements Auditable
     public function getRetreatContractLinkAttribute()
     {
         if (Storage::has('event/'.$this->id.'/contract.pdf')) {
-            $img = Html::image('images/contract.png', 'Contract', ['title'=>'Contract']);
+            $img = Html::image('images/contract.png', 'Contract', ['title' => 'Contract']);
             $link = '<a href="'.url('retreat/'.$this->id.'/contract" ').'class="btn btn-default" style="padding: 3px;">'.$img.'Contract</a>';
 
             return $link;
@@ -266,7 +265,7 @@ class Retreat extends Model implements Auditable
     public function getRetreatEvaluationsLinkAttribute()
     {
         if (Storage::has('event/'.$this->id.'/evaluations.pdf')) {
-            $img = Html::image('images/evaluation.png', 'Evaluations', ['title'=>'Evaluations']);
+            $img = Html::image('images/evaluation.png', 'Evaluations', ['title' => 'Evaluations']);
             $link = '<a href="'.url('retreat/'.$this->id.'/evaluations" ').'class="btn btn-default" style="padding: 3px;">'.$img.'Evaluation</a>';
 
             return $link;
@@ -318,17 +317,17 @@ class Retreat extends Model implements Auditable
         //dd($directors);
         foreach ($directors as $director) {
             if (! empty($director->email_primary->email)) {
-                array_push($attendees, ['email'=>$director->email_primary->email]);
+                array_push($attendees, ['email' => $director->email_primary->email]);
             }
         }
         $innkeeper = $this->innkeeper()->first();
         //dd($innkeeper->last_name);
         if (! empty($innkeeper->email_primary->email)) {
-            array_push($attendees, ['email'=>$innkeeper->email_primary->email]);
+            array_push($attendees, ['email' => $innkeeper->email_primary->email]);
         }
         $assistant = $this->assistant()->first();
         if (! empty($assistant->email_primary->email)) {
-            array_push($attendees, ['email'=>$assistant->email_primary->email]);
+            array_push($attendees, ['email' => $assistant->email_primary->email]);
         }
 
         return $attendees;

@@ -46,7 +46,6 @@ class RelationshipControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response()
     {   //TODO: relationship editing currently handled by person controller; this is more of a stub
-
         $user = $this->createUserWithPermission('update-relationship');
         $relationship = \App\Models\Relationship::factory()->create();
 
@@ -91,7 +90,6 @@ class RelationshipControllerTest extends TestCase
      */
     public function store_returns_an_ok_response()
     {   //TODO: relationship creation/store currently handled by person controller; this is more of a stub
-
         $user = $this->createUserWithPermission('create-relationship');
 
         $response = $this->actingAs($user)->post(route('relationship.store'), [
@@ -141,13 +139,13 @@ class RelationshipControllerTest extends TestCase
     public function rejoin_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $relationship = \App\Models\Relationship::factory()->create(['relationship_type_id'=>config('polanco.relationship_type.husband_wife')]);
-        $husband_address = \App\Models\Address::factory()->create(['contact_id'=>$relationship->contact_id_a, 'is_primary'=>1]);
-        $wife_address = \App\Models\Address::factory()->create(['contact_id'=>$relationship->contact_id_b, 'is_primary'=>1]);
+        $relationship = \App\Models\Relationship::factory()->create(['relationship_type_id' => config('polanco.relationship_type.husband_wife')]);
+        $husband_address = \App\Models\Address::factory()->create(['contact_id' => $relationship->contact_id_a, 'is_primary' => 1]);
+        $wife_address = \App\Models\Address::factory()->create(['contact_id' => $relationship->contact_id_b, 'is_primary' => 1]);
 
         $response = $this->actingAs($user)->from(URL('registration/disjoined'))->get(route('relationship.rejoin', [
-            'id'=>$relationship->id,
-            'dominant'=>$relationship->contact_id_a,
+            'id' => $relationship->id,
+            'dominant' => $relationship->contact_id_a,
         ]));
 
         $response->assertRedirect('registration/disjoined');

@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::table('participant', function (Blueprint $table) {
             $table->date('order_confirm_date')->nullable();
         });
-
     }
 
     /**
@@ -29,6 +28,5 @@ return new class extends Migration
         Schema::table('participant', function (Blueprint $table) {
             $table->dropColumn(['order_confirm_date']);
         });
-
     }
 };

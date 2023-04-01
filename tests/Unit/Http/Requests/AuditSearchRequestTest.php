@@ -2,9 +2,6 @@
 
 namespace Tests\Unit\Http\Requests;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Validation\Rule;
 use Tests\TestCase;
 
 /**
@@ -50,7 +47,7 @@ class AuditSearchRequestTest extends TestCase
             'new_values' => 'string|nullable',
             'url' => 'string|nullable',
             'tags' => 'string|nullable',
-             ], $actual);
+        ], $actual);
     }
 
     /**

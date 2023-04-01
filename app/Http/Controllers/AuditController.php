@@ -55,7 +55,6 @@ class AuditController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -102,7 +101,6 @@ class AuditController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -133,16 +131,16 @@ class AuditController extends Controller
     public function search()
     {
         $this->authorize('show-audit');
-        
+
         $users = User::whereProvider('google')->pluck('name', 'id');
         $users->prepend('N/A', '');
 
-        $models = Audit::where('auditable_type','LIKE','%Models%')->groupBy('auditable_type')->orderBy('auditable_type')->get()->pluck('model_name', 'auditable_type');
+        $models = Audit::where('auditable_type', 'LIKE', '%Models%')->groupBy('auditable_type')->orderBy('auditable_type')->get()->pluck('model_name', 'auditable_type');
         $models->prepend('N/A', '');
         //dd($models);
-        $actions = array (null => "N/A", 'created' => 'created', 'deleted'=>'deleted', 'updated' => 'updated');
+        $actions = [null => 'N/A', 'created' => 'created', 'deleted' => 'deleted', 'updated' => 'updated'];
 
-        return view('admin.audits.search', compact('users', 'models','actions'));
+        return view('admin.audits.search', compact('users', 'models', 'actions'));
     }
 
     public function results(AuditSearchRequest $request)
@@ -154,7 +152,7 @@ class AuditController extends Controller
         } else {
             $audits = Audit::orderByDesc('created_at')->paginate(25, ['*'], 'audits');
         }
+
         return view('admin.audits.results', compact('audits'));
     }
-
 }

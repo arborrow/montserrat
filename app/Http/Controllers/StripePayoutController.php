@@ -29,7 +29,6 @@ class StripePayoutController extends Controller
         $stripe = new StripeClient(config('services.stripe.secret'));
 
         $payouts = StripePayout::with('transactions')->orderByDesc('date')->paginate(25, ['*'], 'payouts');
-        
 
         // $payouts = $stripe->payouts->all(['limit' => 10]);
 
@@ -55,9 +54,7 @@ class StripePayoutController extends Controller
 
         // $report = $stripe->reporting->reportRuns->retrieve('frr_1KofWcJPvjW38HM4QXghpsEK');
 
-
-        return view('stripe.payouts.index',compact('payouts'));   //
-
+        return view('stripe.payouts.index', compact('payouts'));   //
     }
 
     /**
@@ -73,7 +70,6 @@ class StripePayoutController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -92,39 +88,38 @@ class StripePayoutController extends Controller
         $this->authorize('show-stripe-payout');
 
         $stripe = new StripeClient(config('services.stripe.secret'));
-        $stripe_payout = $stripe->payouts->retrieve($payout_id,[]);
+        $stripe_payout = $stripe->payouts->retrieve($payout_id, []);
         $stripe_balance_transactions = $stripe->balanceTransactions->all(
             ['payout' => $payout_id,
-            'type' => 'charge',
-            'limit' => 100,
+                'type' => 'charge',
+                'limit' => 100,
             ]
         );
         $refunds = $stripe->balanceTransactions->all(
             ['payout' => $payout_id,
-            'type' => 'refund',
-            'limit' => 100,
+                'type' => 'refund',
+                'limit' => 100,
             ]
         );
-        
+
         $fees = 0;
         foreach ($stripe_balance_transactions as $transaction) {
-            $fees += ($transaction->fee/100);
+            $fees += ($transaction->fee / 100);
         }
         $payout = StripePayout::wherePayoutId($payout_id)->first();
         $payout->total_fee_amount = $fees;
         $payout->save();
-        
+
         $balance_transactions = StripeBalanceTransaction::wherePayoutId($payout_id)->get();
         $unprocessed_donations = StripeBalanceTransaction::wherePayoutId($payout_id)->whereNull('reconcile_date')->whereTransactionType('Donation')->count();
         $unprocessed_squarespace_contributions = SquarespaceContribution::whereIsProcessed(0)->count();
 
-        // if there are unprocessed balance transactions, and there are 
+        // if there are unprocessed balance transactions, and there are
         if ($unprocessed_donations > 0 && $unprocessed_squarespace_contributions > 0 && $payout->unreconciled_count > 0) {
-            flash('Consider processing the <a href="' . url('/squarespace/contribution').'">' . $unprocessed_squarespace_contributions . ' unprocessed Squarespace Contributions</a> before processing the Stripe Balance Transactions.')->warning()->important();
-        }        
+            flash('Consider processing the <a href="'.url('/squarespace/contribution').'">'.$unprocessed_squarespace_contributions.' unprocessed Squarespace Contributions</a> before processing the Stripe Balance Transactions.')->warning()->important();
+        }
 
-        return view('stripe.payouts.show',compact('payout','balance_transactions','stripe_balance_transactions','stripe_payout','refunds'));   //
-
+        return view('stripe.payouts.show', compact('payout', 'balance_transactions', 'stripe_balance_transactions', 'stripe_payout', 'refunds'));   //
     }
 
     /**
@@ -143,20 +138,19 @@ class StripePayoutController extends Controller
 
         $stripe = new StripeClient(config('services.stripe.secret'));
 
-        $stripe_payout = StripePayout::where('date','=',$payout_date)->first();
+        $stripe_payout = StripePayout::where('date', '=', $payout_date)->first();
 
-        $payout = $stripe->payouts->retrieve($stripe_payout->payout_id,[]);
+        $payout = $stripe->payouts->retrieve($stripe_payout->payout_id, []);
 
         $transactions = $stripe->balanceTransactions->all(
             ['payout' => $stripe_payout->payout_id,
-            'type' => 'charge',
-            'limit' => 100,
+                'type' => 'charge',
+                'limit' => 100,
             ]
         );
 
-
         foreach ($transactions as $transaction) {
-            if (!(strpos($transaction->description, "Invoice") === false)) {
+            if (! (strpos($transaction->description, 'Invoice') === false)) {
                 $charge = $stripe->charges->retrieve($transaction->source, []);
                 $customer = $stripe->customers->retrieve($charge->customer, []);
                 $transaction->customer = $customer->description;
@@ -165,9 +159,7 @@ class StripePayoutController extends Controller
             // dd((strpos($transaction->description, "Invoice") === false) );
         }
 
-
-        return view('stripe.payouts.show',compact('payout','transactions','stripe_payout'));   //
-
+        return view('stripe.payouts.show', compact('payout', 'transactions', 'stripe_payout'));   //
     }
 
     /**
@@ -195,7 +187,7 @@ class StripePayoutController extends Controller
         $payout = StripePayout::findOrFail($id);
         $donation = new \App\Models\Donation;
         $donation->donation_date = $payout->date;
-        $donation->donation_description = "Bank & Credit Card Fees";
+        $donation->donation_description = 'Bank & Credit Card Fees';
         $donation->donation_amount = -$payout->total_fee_amount;
         $donation->contact_id = $stripe_vendor_id;
         $donation->save();
@@ -209,17 +201,13 @@ class StripePayoutController extends Controller
 
         $payout->fee_payment_id = $payment->payment_id;
         $payout->save();
-        
+
         return Redirect::action([self::class, 'index']);
-
     }
-
-
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -234,7 +222,6 @@ class StripePayoutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function destroy($id)
     {
         //
@@ -251,16 +238,15 @@ class StripePayoutController extends Controller
         // dd('Stripe Payout Import');
         $latest_payout = StripePayout::orderByDesc('date')->first();
         $stripe = new StripeClient(config('services.stripe.secret'));
-        $payouts = $stripe->payouts->all(['arrival_date'=>['gte' => $latest_payout->date->timestamp - 24*60*60]]);
+        $payouts = $stripe->payouts->all(['arrival_date' => ['gte' => $latest_payout->date->timestamp - 24 * 60 * 60]]);
         foreach ($payouts->autoPagingIterator() as $payout) {
-
             $stripe_payout = StripePayout::firstOrNew([
-                'payout_id' => $payout->id
+                'payout_id' => $payout->id,
             ]);
 
             $stripe_payout->payout_id = $payout->id;
             $stripe_payout->object = $payout->object;
-            $stripe_payout->amount = $payout->amount/100;
+            $stripe_payout->amount = $payout->amount / 100;
             $stripe_payout->arrival_date = Carbon::parse($payout->arrival_date);
             $stripe_payout->date = Carbon::parse($payout->arrival_date);
             $stripe_payout->status = $payout->status;
@@ -268,13 +254,13 @@ class StripePayoutController extends Controller
             $fees = 0; //initialize
             $transactions = $stripe->balanceTransactions->all(
                 ['payout' => $stripe_payout->payout_id,
-                'type' => 'charge',
-                'limit' => 100,
+                    'type' => 'charge',
+                    'limit' => 100,
                 ]
             );
 
             foreach ($transactions->autoPagingIterator() as $transaction) {
-                $fees += ($transaction->fee/100);
+                $fees += ($transaction->fee / 100);
             }
 
             $stripe_payout->total_fee_amount = $fees;
@@ -282,10 +268,7 @@ class StripePayoutController extends Controller
         }
 
         return Redirect::action([self::class, 'index']);
-
     }
-
-
 
     /**
      * Process Stripe Payout into stripe_charge table
@@ -299,7 +282,6 @@ class StripePayoutController extends Controller
         $stripe = new StripeClient(config('services.stripe.secret'));
         $payouts = $stripe->payouts->all([]);
         foreach ($payouts->autoPagingIterator() as $payout) {
-
             $stripe_payout = StripePayout::wherePayoutId($payout->id)->first();
 
             if (is_null($stripe_payout)) {
@@ -308,7 +290,7 @@ class StripePayoutController extends Controller
 
             $stripe_payout->payout_id = $payout->id;
             $stripe_payout->object = $payout->object;
-            $stripe_payout->amount = $payout->amount/100;
+            $stripe_payout->amount = $payout->amount / 100;
             $stripe_payout->arrival_date = Carbon::parse($payout->arrival_date);
             $stripe_payout->date = Carbon::parse($payout->arrival_date);
             $stripe_payout->status = $payout->status;
@@ -317,8 +299,7 @@ class StripePayoutController extends Controller
             $stripe_payout->save();
             //dd($stripe_payout,$payout->id);
         }
+
         return Redirect::action([self::class, 'index']);
-
     }
-
 }

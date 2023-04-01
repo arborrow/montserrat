@@ -7,7 +7,6 @@ use App\Http\Requests\StoreRetreatTouchpointRequest;
 use App\Http\Requests\StoreRetreatWaitlistTouchpointRequest;
 use App\Http\Requests\StoreTouchpointRequest;
 use App\Http\Requests\UpdateTouchpointRequest;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +38,6 @@ class TouchpointController extends Controller
      * Display a listing of touchpoints associated with a particular staff member
      *
      * @param  int  $staff_id
-     *
      * @return \Illuminate\Http\Response
      */
     public function index_type($staff_id = null)

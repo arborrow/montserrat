@@ -1,19 +1,17 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Charts;
 
 use Chartisan\PHP\Chartisan;
 use ConsoleTVs\Charts\BaseChart;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 
 class EventRevenue extends BaseChart
 {
-
     use AuthorizesRequests;
 
     /**
@@ -27,7 +25,7 @@ class EventRevenue extends BaseChart
     {
         $this->authorize('show-dashboard');
 
-        $year = (isset($request->year)) ? $request->year : NULL;
+        $year = (isset($request->year)) ? $request->year : null;
 
         // default to current fiscal year
         if (! isset($year)) {
@@ -48,7 +46,6 @@ class EventRevenue extends BaseChart
             $today->year = $current_year;
             $years[$x] = $today->subYear($x);
         }
-
 
         // TODO: using role_id = 5 as hardcoded value - explore how to use config('polanco.participant_role_id.retreatant') instead
         $board_summary = DB::select("SELECT tmp.type, tmp.type_id, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
@@ -74,6 +71,5 @@ class EventRevenue extends BaseChart
         return Chartisan::build()
             ->labels(array_column($board_summary, 'type'))
             ->dataset('FY20 Revenue by Event Type', array_column($board_summary, 'total_paid'));
-
     }
 }

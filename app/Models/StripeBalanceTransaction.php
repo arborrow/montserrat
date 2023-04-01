@@ -37,11 +37,9 @@ class StripeBalanceTransaction extends Model implements Auditable
     {
         return $this->hasOne(SquarespaceOrder::class, 'stripe_charge_id', 'charge_id');
     }
-    
+
     public function payments()
     {
         return $this->hasMany(Payment::class, 'stripe_balance_transaction_id', 'id');
     }
-
 }
-

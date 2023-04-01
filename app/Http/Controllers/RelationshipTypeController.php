@@ -6,10 +6,9 @@ use App\Http\Requests\AddmeRelationshipTypeRequest;
 use App\Http\Requests\MakeRelationshipTypeRequest;
 use App\Http\Requests\StoreRelationshipTypeRequest;
 use App\Http\Requests\UpdateRelationshipTypeRequest;
+use App\Traits\SquareSpaceTrait;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL;
-use App\Traits\SquareSpaceTrait;
 
 class RelationshipTypeController extends Controller
 {
@@ -49,7 +48,7 @@ class RelationshipTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRelationshipTypeRequest $request)
@@ -97,7 +96,7 @@ class RelationshipTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -112,21 +111,22 @@ class RelationshipTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $this->authorize('update-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::findOrFail($id);
+
         return view('relationships.types.edit', compact('relationship_type'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRelationshipTypeRequest $request, $id)
@@ -152,7 +152,7 @@ class RelationshipTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -211,7 +211,7 @@ class RelationshipTypeController extends Controller
                 break;
             case 'Sibling':
                 $relationship_type_id = config('polanco.relationship_type.sibling');
-                $a = $contact_id;                
+                $a = $contact_id;
                 break;
             case 'Volunteer':
                 $relationship_type_id = config('polanco.relationship_type.volunteer');
@@ -221,7 +221,7 @@ class RelationshipTypeController extends Controller
                 $relationship_type_id = config('polanco.relationship_type.parishioner');
                 $b = $contact_id;
                 break;
-            // TODO: Primary contact logic may be backwards contact_id may be a - does not seem to be functioning in vendor (possilbly elsewhere if at all)
+                // TODO: Primary contact logic may be backwards contact_id may be a - does not seem to be functioning in vendor (possilbly elsewhere if at all)
             case 'Primary contact':
                 $relationship_type_id = config('polanco.relationship_type.primary_contact');
                 $b = $contact_id;
@@ -230,7 +230,7 @@ class RelationshipTypeController extends Controller
                 $relationship_type_id = config('polanco.relationship_type.parish');
                 $a = $contact_id; //Diocese
                 break;
-            
+
             default:
                 abort(404); //unknown relationship type
         }
@@ -255,7 +255,7 @@ class RelationshipTypeController extends Controller
             $subtype_b_name = $relationship_type->name_b_a;
         }
 
-        $direction = ($a == $contact_id) ? 'a' : 'b' ;
+        $direction = ($a == $contact_id) ? 'a' : 'b';
 
         if ($direction == 'b') {
             $contact_list = $this->get_contact_type_list($relationship_type->contact_type_a, $subtype_a_name, $b, $request->input('relationship_filter_alternate_name'));
@@ -265,17 +265,17 @@ class RelationshipTypeController extends Controller
             $primary_contact = \App\Models\Contact::findOrFail($a);
         }
 
-        return view('relationships.types.add', compact('relationship_type', 'primary_contact', 'contact_list', 'direction')); 
+        return view('relationships.types.add', compact('relationship_type', 'primary_contact', 'contact_list', 'direction'));
     }
 
     public function make(MakeRelationshipTypeRequest $request)
-    {   
+    {
         $this->authorize('create-relationship');
         // a very hacky way to get the contact_id of the user that we are creating a relationship for
         // this allows the ability to redirect back to that user
-        $contact_id = ($request->input('direction') == 'a') ? $request->input('contact_a_id') : $request->input('contact_b_id');        
+        $contact_id = ($request->input('direction') == 'a') ? $request->input('contact_a_id') : $request->input('contact_b_id');
         $contact = \App\Models\Contact::findOrFail($contact_id);
-        
+
         $relationship = new \App\Models\Relationship;
         $relationship->contact_id_a = $request->input('contact_a_id');
         $relationship->contact_id_b = $request->input('contact_b_id');
@@ -286,7 +286,7 @@ class RelationshipTypeController extends Controller
         return redirect()->to($contact->contact_url);
     }
 
-    public function get_contact_type_list($contact_type = 'Individual', $contact_subtype = null, $contact_id=null, $relationship_filter_alternate_name=null)    
+    public function get_contact_type_list($contact_type = 'Individual', $contact_subtype = null, $contact_id = null, $relationship_filter_alternate_name = null)
     {
         $this->authorize('show-contact');
         // dd($contact_type, $contact_subtype);
@@ -302,7 +302,7 @@ class RelationshipTypeController extends Controller
                         $parish_list = [];
                         if (isset($relationship_filter_alternate_name)) {
                             $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))
-                                ->where('display_name','LIKE',"%{$relationship_filter_alternate_name}%")
+                                ->where('display_name', 'LIKE', "%{$relationship_filter_alternate_name}%")
                                 ->orderBy('display_name', 'asc')
                                 ->with('address_primary.state', 'diocese.contact_a')->get();
                         } else {
@@ -312,46 +312,55 @@ class RelationshipTypeController extends Controller
                                 ->get();
                         }
                         $parish_list = Arr::pluck($parishes->toArray(), 'full_name_with_city', 'id');
+
                         return $parish_list;
                         break;
                     case 'Diocese':
                         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+
                         return $dioceses;
                         break;
                     case 'Province':
                         $provinces = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.province'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+
                         return $provinces;
                         break;
                     case 'Community':
                         $communities = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.community'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+
                         return $communities;
                         break;
                     case 'Retreat House':
                         $retreat_houses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.retreat_house'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+
                         return $retreat_houses;
                         break;
                     case 'Vendor':
                         $vendors = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+
                         return $vendors;
                         break;
                     case 'Religious-Catholic':
                         $religious_catholic = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.religious_catholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+
                         return $religious_catholic;
                         break;
                     case 'Religious-Non-Catholic':
                         $religious_non_catholic = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.religious_noncatholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+
                         return $religious_non_catholic;
                         break;
                     case 'Foundation':
                         $foundations = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.foundation'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+
                         return $foundations;
                         break;
-                    //default NULL (generic organization)
+                        //default NULL (generic organization)
 
                     default:
                         if (isset($relationship_filter_alternate_name)) {
                             $organizations = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))
-                                ->where('organization_name','LIKE',"%{$relationship_filter_alternate_name}%")
+                                ->where('organization_name', 'LIKE', "%{$relationship_filter_alternate_name}%")
                                 ->orderBy('organization_name', 'asc')
                                 ->with('address_primary')
                                 ->get();
@@ -361,13 +370,14 @@ class RelationshipTypeController extends Controller
                                 ->with('address_primary')
                                 ->get();
                         }
-                        
+
                         $organization_list = Arr::pluck($organizations->toArray(), 'full_name_with_city', 'id');
+
                         return $organization_list;
                         break;
                 }
                 break;
-            
+
             default: // default Individual
                 switch ($contact_subtype) {
                     case 'Bishop':
@@ -447,64 +457,64 @@ class RelationshipTypeController extends Controller
 
                         return $superiors;
                         break;
-                    /* 
-                    case 'Board member':
-                        $board_members = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
-                            $query->where('group_id', '=', config('polanco.group_id.board'));
-                        })->pluck('sort_name', 'id');
+                        /*
+                        case 'Board member':
+                            $board_members = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                                $query->where('group_id', '=', config('polanco.group_id.board'));
+                            })->pluck('sort_name', 'id');
 
-                        return $board_members;
-                        break;
-                    */
+                            return $board_members;
+                            break;
+                        */
 
-                    /* commenting out as we want all employees and volunteers -  not just those for Montserrat
+                        /* commenting out as we want all employees and volunteers -  not just those for Montserrat
 
-                    case 'Employee':
-                        $staff = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
-                            $query->where('group_id', '=', config('polanco.group_id.staff'));
-                        })->pluck('sort_name', 'id');
+                        case 'Employee':
+                            $staff = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                                $query->where('group_id', '=', config('polanco.group_id.staff'));
+                            })->pluck('sort_name', 'id');
 
-                        return $staff;
-                        break;
+                            return $staff;
+                            break;
 
-                    
-                    case 'Volunteer':
-                        $volunteers = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
-                            $query->where('group_id', '=', config('polanco.group_id.volunteer'));
-                        })->pluck('sort_name', 'id');
 
-                        return $volunteers;
-                        break;
-                    */
-                    
-                    // for default - limit to matched contact by default or consider getting input for name search (use full name to search)
+                        case 'Volunteer':
+                            $volunteers = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                                $query->where('group_id', '=', config('polanco.group_id.volunteer'));
+                            })->pluck('sort_name', 'id');
+
+                            return $volunteers;
+                            break;
+                        */
+
+                        // for default - limit to matched contact by default or consider getting input for name search (use full name to search)
                     default:
-                        
+
                         if (isset($relationship_filter_alternate_name)) {
                             $alternate_names = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->whereLastName($relationship_filter_alternate_name)->orderBy('sort_name', 'asc')->pluck('display_name', 'id');
+
                             return $alternate_names;
                             break;
-                            // $alternate_names = $alternate_names->toArray();
-                            // $individuals = $individuals + $alternate_names;
+                        // $alternate_names = $alternate_names->toArray();
+                        // $individuals = $individuals + $alternate_names;
                         } else {
                             $contact = \App\Models\Contact::findOrFail($contact_id);
 
                             $item = collect([]);
-                            $item->name = $contact->first_name . ' ' . $contact->last_name;
+                            $item->name = $contact->first_name.' '.$contact->last_name;
                             $item->email = $contact->email_primary_text;
-                            $item->full_address = $contact->address_primary_street . ' ' . $contact->address_primary_supplemental_address . ' ' . $contact->address_primary_city . ' ' . $contact->address_primary_state_abbreviation . ' ' . $contact->address_primary_postal_code;
+                            $item->full_address = $contact->address_primary_street.' '.$contact->address_primary_supplemental_address.' '.$contact->address_primary_city.' '.$contact->address_primary_state_abbreviation.' '.$contact->address_primary_postal_code;
                             $item->mobile_phone = $contact->primary_phone_number;
                             $item->work_phone = $contact->primary_phone_number;
                             $item->home_phone = $contact->primary_phone_number;
-    
+
                             $individuals = $this->matched_contacts($item);
                             $individuals = collect($individuals)->forget(0);
                             $individuals = $individuals->toArray();
-                            
+
                             return $individuals;
                             break;
-    
-                        }                        
+                        }
                 }
         }
     }

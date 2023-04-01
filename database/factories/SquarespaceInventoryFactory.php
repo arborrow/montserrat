@@ -14,11 +14,11 @@ class SquarespaceInventoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word() . ' ' . $this->faker->word(),
+            'name' => $this->faker->word().' '.$this->faker->word(),
             'custom_form_id' => function () {
                 return \App\Models\SquarespaceCustomForm::factory()->create()->id;
             },
-            'variant_options' => $this->faker->numberBetween(1,5),
+            'variant_options' => $this->faker->numberBetween(1, 5),
         ];
     }
 }

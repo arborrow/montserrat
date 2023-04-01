@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
 
 class SquarespaceInventoryPermissionSeeder extends Seeder
 {
@@ -50,6 +48,5 @@ class SquarespaceInventoryPermissionSeeder extends Seeder
                 'deleted_at' => null,
             ],
         ]);
-
     }
 }

@@ -2,19 +2,7 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\AssetJobPermissionsSeeder;
-use Database\Seeders\AssetPermissionsSeeder;
-use Database\Seeders\AssetTaskPermissionsSeeder;
-use Database\Seeders\AssetTypeTableSeeder;
-use Database\Seeders\AuditPermissionsSeeder;
-use Database\Seeders\CivicrmParticipantStatusTypeTableSeeder;
-use Database\Seeders\ContactLanguagesTableSeeder;
-use Database\Seeders\ContactReferralTableSeeder;
-use Database\Seeders\ContactTableSeeder;
-use Database\Seeders\ContactTypeTableSeeder;
-use Database\Seeders\CountryTableSeeder;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -75,6 +63,5 @@ class DatabaseSeeder extends Seeder
         $this->call(MessagePermissionsSeeder::class);
         $this->call(StripePermissionsSeeder::class);
         $this->call(SquarespacePermissionsSeeder::class);
-        
     }
 }

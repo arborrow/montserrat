@@ -666,7 +666,7 @@ class PersonController extends Controller
         $relationship_types['Husband'] = 'Husband';
         $relationship_types['Parent'] = 'Parent';
         $relationship_types['Parishioner'] = 'Parishioner';
-        // $relationship_types['Primary contact'] = 'Primary contact'; // I prefer to define this only from the organization 
+        // $relationship_types['Primary contact'] = 'Primary contact'; // I prefer to define this only from the organization
         $relationship_types['Sibling'] = 'Sibling';
         $relationship_types['Wife'] = 'Wife';
 
@@ -747,29 +747,29 @@ class PersonController extends Controller
             $name = isset($request->name) ? (string) $request->name : $name;
             $person->logo = $logo;
             switch ($name) {
-             case 'full':
-                $person->addressee = $person->full_name;
-                break;
-             case 'display':
-                $person->addressee = $person->display_name;
-                break;
-             default:
-                $person->addressee = $person->agc_household_name;
-                break;
-           }
+                case 'full':
+                    $person->addressee = $person->full_name;
+                    break;
+                case 'display':
+                    $person->addressee = $person->display_name;
+                    break;
+                default:
+                    $person->addressee = $person->agc_household_name;
+                    break;
+            }
         } else {
             return Redirect::action([self::class, 'show'], $person->id);
         }
 
         switch ($size) {
-           case '10':
-               return view('persons.envelope10', compact('person'));
-               break;
-           case '9x6':
-               return view('persons.envelope9x6', compact('person'));
-               break;
-           default:
-               return Redirect::action([self::class, 'show'], $person->id);
+            case '10':
+                return view('persons.envelope10', compact('person'));
+                break;
+            case '9x6':
+                return view('persons.envelope9x6', compact('person'));
+                break;
+            default:
+                return Redirect::action([self::class, 'show'], $person->id);
         }
     }
 
@@ -1025,7 +1025,7 @@ class PersonController extends Controller
         }
 
         //emergency contact info
-        $emergency_contact = \App\Models\EmergencyContact::firstOrNew(['contact_id'=>$person->id]);
+        $emergency_contact = \App\Models\EmergencyContact::firstOrNew(['contact_id' => $person->id]);
         $emergency_contact->contact_id = $person->id;
         $emergency_contact->name = $request->input('emergency_contact_name');
         $emergency_contact->relationship = $request->input('emergency_contact_relationship');
@@ -1037,7 +1037,7 @@ class PersonController extends Controller
         // save parishioner relationship
         // TEST: does unset work?
         if ($request->input('parish_id') > 0) {
-            $relationship_parishioner = \App\Models\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.parishioner'), 'is_active'=>1]);
+            $relationship_parishioner = \App\Models\Relationship::firstOrNew(['contact_id_b' => $person->id, 'relationship_type_id' => config('polanco.relationship_type.parishioner'), 'is_active' => 1]);
             $relationship_parishioner->contact_id_a = $request->input('parish_id');
             $relationship_parishioner->contact_id_b = $person->id;
             $relationship_parishioner->relationship_type_id = config('polanco.relationship_type.parishioner');
@@ -1054,35 +1054,35 @@ class PersonController extends Controller
         // save health, dietary, general and room preference notes
         // simplifying logic - with audit log there is less risk of data loss  so no need to soft delete the notes
 
-        $person_note_health = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Health Note']);
+        $person_note_health = \App\Models\Note::firstOrNew(['entity_table' => 'contact', 'entity_id' => $person->id, 'subject' => 'Health Note']);
         $person_note_health->entity_table = 'contact';
         $person_note_health->entity_id = $person->id;
         $person_note_health->note = $request->input('note_health');
         $person_note_health->subject = 'Health Note';
         $person_note_health->save();
 
-        $person_note_dietary = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Dietary Note']);
+        $person_note_dietary = \App\Models\Note::firstOrNew(['entity_table' => 'contact', 'entity_id' => $person->id, 'subject' => 'Dietary Note']);
         $person_note_dietary->entity_table = 'contact';
         $person_note_dietary->entity_id = $person->id;
         $person_note_dietary->note = $request->input('note_dietary');
         $person_note_dietary->subject = 'Dietary Note';
         $person_note_dietary->save();
 
-        $person_note_contact = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Contact Note']);
+        $person_note_contact = \App\Models\Note::firstOrNew(['entity_table' => 'contact', 'entity_id' => $person->id, 'subject' => 'Contact Note']);
         $person_note_contact->entity_table = 'contact';
         $person_note_contact->entity_id = $person->id;
         $person_note_contact->note = $request->input('note_contact');
         $person_note_contact->subject = 'Contact Note';
         $person_note_contact->save();
 
-        $person_note_room_preference = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Room Preference']);
+        $person_note_room_preference = \App\Models\Note::firstOrNew(['entity_table' => 'contact', 'entity_id' => $person->id, 'subject' => 'Room Preference']);
         $person_note_room_preference->entity_table = 'contact';
         $person_note_room_preference->entity_id = $person->id;
         $person_note_room_preference->note = $request->input('note_room_preference');
         $person_note_room_preference->subject = 'Room Preference';
         $person_note_room_preference->save();
 
-        $home_address = \App\Models\Address::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home')]);
+        $home_address = \App\Models\Address::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.home')]);
         $home_address->contact_id = $person->id;
         $home_address->location_type_id = config('polanco.location_type.home');
         $request->input('primary_address_location_id') == config('polanco.location_type.home') ? $home_address->is_primary = 1 : $home_address->is_primary = 0;
@@ -1094,7 +1094,7 @@ class PersonController extends Controller
         $home_address->country_id = $request->input('address_home_country');
         $home_address->save();
 
-        $work_address = \App\Models\Address::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work')]);
+        $work_address = \App\Models\Address::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.work')]);
         $work_address->contact_id = $person->id;
         $work_address->location_type_id = config('polanco.location_type.work');
         $request->input('primary_address_location_id') == config('polanco.location_type.work') ? $work_address->is_primary = 1 : $work_address->is_primary = 0;
@@ -1106,7 +1106,7 @@ class PersonController extends Controller
         $work_address->country_id = $request->input('address_work_country');
         $work_address->save();
 
-        $other_address = \App\Models\Address::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other')]);
+        $other_address = \App\Models\Address::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.other')]);
         $other_address->contact_id = $person->id;
         $other_address->location_type_id = config('polanco.location_type.other');
         $request->input('primary_address_location_id') == config('polanco.location_type.other') ? $other_address->is_primary = 1 : $other_address->is_primary = 0;
@@ -1126,7 +1126,7 @@ class PersonController extends Controller
         }
 
         // because of how the phone_ext field is handled by the model, reset to null on every update to ensure it gets removed and then re-added during the update
-        $phone_home_phone = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home'), 'phone_type'=>'Phone']);
+        $phone_home_phone = \App\Models\Phone::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.home'), 'phone_type' => 'Phone']);
         $phone_home_phone->phone_ext = null;
         $phone_home_phone->contact_id = $person->id;
         (($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1] == 'Phone') || ($primary_phone_input[0] == 0)) ? $phone_home_phone->is_primary = 1 : $phone_home_phone->is_primary = 0;
@@ -1135,7 +1135,7 @@ class PersonController extends Controller
         $phone_home_phone->phone_type = 'Phone';
         $phone_home_phone->save();
 
-        $phone_home_mobile = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home'), 'phone_type'=>'Mobile']);
+        $phone_home_mobile = \App\Models\Phone::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.home'), 'phone_type' => 'Mobile']);
         $phone_home_mobile->phone_ext = null;
         $phone_home_mobile->contact_id = $person->id;
         ($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1] == 'Mobile') ? $phone_home_mobile->is_primary = 1 : $phone_home_mobile->is_primary = 0;
@@ -1144,7 +1144,7 @@ class PersonController extends Controller
         $phone_home_mobile->phone_type = 'Mobile';
         $phone_home_mobile->save();
 
-        $phone_home_fax = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home'), 'phone_type'=>'Fax']);
+        $phone_home_fax = \App\Models\Phone::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.home'), 'phone_type' => 'Fax']);
         $phone_home_fax->phone_ext = null;
         $phone_home_fax->contact_id = $person->id;
         $phone_home_fax->location_type_id = config('polanco.location_type.home');
@@ -1152,7 +1152,7 @@ class PersonController extends Controller
         $phone_home_fax->phone_type = 'Fax';
         $phone_home_fax->save();
 
-        $phone_work_phone = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work'), 'phone_type'=>'Phone']);
+        $phone_work_phone = \App\Models\Phone::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.work'), 'phone_type' => 'Phone']);
         $phone_work_phone->phone_ext = null;
         $phone_work_phone->contact_id = $person->id;
         ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1] == 'Phone') ? $phone_work_phone->is_primary = 1 : $phone_work_phone->is_primary = 0;
@@ -1161,7 +1161,7 @@ class PersonController extends Controller
         $phone_work_phone->phone_type = 'Phone';
         $phone_work_phone->save();
 
-        $phone_work_mobile = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work'), 'phone_type'=>'Mobile']);
+        $phone_work_mobile = \App\Models\Phone::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.work'), 'phone_type' => 'Mobile']);
         $phone_work_mobile->phone_ext = null;
         $phone_work_mobile->contact_id = $person->id;
         ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1] == 'Mobile') ? $phone_work_mobile->is_primary = 1 : $phone_work_mobile->is_primary = 0;
@@ -1170,7 +1170,7 @@ class PersonController extends Controller
         $phone_work_mobile->phone_type = 'Mobile';
         $phone_work_mobile->save();
 
-        $phone_work_fax = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work'), 'phone_type'=>'Fax']);
+        $phone_work_fax = \App\Models\Phone::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.work'), 'phone_type' => 'Fax']);
         $phone_work_fax->phone_ext = null;
         $phone_work_fax->contact_id = $person->id;
         $phone_work_fax->location_type_id = config('polanco.location_type.work');
@@ -1178,7 +1178,7 @@ class PersonController extends Controller
         $phone_work_fax->phone_type = 'Fax';
         $phone_work_fax->save();
 
-        $phone_other_phone = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other'), 'phone_type'=>'Phone']);
+        $phone_other_phone = \App\Models\Phone::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.other'), 'phone_type' => 'Phone']);
         $phone_other_phone->phone_ext = null;
         $phone_other_phone->contact_id = $person->id;
         ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1] == 'Phone') ? $phone_other_phone->is_primary = 1 : $phone_other_phone->is_primary = 0;
@@ -1187,7 +1187,7 @@ class PersonController extends Controller
         $phone_other_phone->phone_type = 'Phone';
         $phone_other_phone->save();
 
-        $phone_other_mobile = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other'), 'phone_type'=>'Mobile']);
+        $phone_other_mobile = \App\Models\Phone::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.other'), 'phone_type' => 'Mobile']);
         $phone_other_mobile->phone_ext = null;
         $phone_other_mobile->contact_id = $person->id;
         ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1] == 'Mobile') ? $phone_other_mobile->is_primary = 1 : $phone_other_mobile->is_primary = 0;
@@ -1196,7 +1196,7 @@ class PersonController extends Controller
         $phone_other_mobile->phone_type = 'Mobile';
         $phone_other_mobile->save();
 
-        $phone_other_fax = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other'), 'phone_type'=>'Fax']);
+        $phone_other_fax = \App\Models\Phone::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.other'), 'phone_type' => 'Fax']);
         $phone_other_fax->phone_ext = null;
         $phone_other_fax->contact_id = $person->id;
         $phone_other_fax->location_type_id = config('polanco.location_type.other');
@@ -1204,71 +1204,71 @@ class PersonController extends Controller
         $phone_other_fax->phone_type = 'Fax';
         $phone_other_fax->save();
 
-        $email_home = \App\Models\Email::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home')]);
+        $email_home = \App\Models\Email::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.home')]);
         $email_home->contact_id = $person->id;
         $request->input('primary_email_location_id') == config('polanco.location_type.home') ? $email_home->is_primary = 1 : $email_home->is_primary = 0;
         $email_home->location_type_id = config('polanco.location_type.home');
         $email_home->email = $request->input('email_home');
         $email_home->save();
 
-        $email_work = \App\Models\Email::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work')]);
+        $email_work = \App\Models\Email::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.work')]);
         $email_work->contact_id = $person->id;
         $request->input('primary_email_location_id') == config('polanco.location_type.work') ? $email_work->is_primary = 1 : $email_work->is_primary = 0;
         $email_work->location_type_id = config('polanco.location_type.work');
         $email_work->email = $request->input('email_work');
         $email_work->save();
 
-        $email_other = \App\Models\Email::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other')]);
+        $email_other = \App\Models\Email::firstOrNew(['contact_id' => $person->id, 'location_type_id' => config('polanco.location_type.other')]);
         $email_other->contact_id = $person->id;
         $request->input('primary_email_location_id') == config('polanco.location_type.other') ? $email_other->is_primary = 1 : $email_other->is_primary = 0;
         $email_other->location_type_id = config('polanco.location_type.other');
         $email_other->email = $request->input('email_other');
         $email_other->save();
 
-        $url_main = \App\Models\Website::firstOrNew(['contact_id'=>$person->id, 'website_type'=>'Main']);
+        $url_main = \App\Models\Website::firstOrNew(['contact_id' => $person->id, 'website_type' => 'Main']);
         $url_main->contact_id = $person->id;
         $url_main->url = $request->input('url_main');
         $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work = \App\Models\Website::firstOrNew(['contact_id'=>$person->id, 'website_type'=>'Work']);
+        $url_work = \App\Models\Website::firstOrNew(['contact_id' => $person->id, 'website_type' => 'Work']);
         $url_work->contact_id = $person->id;
         $url_work->url = $request->input('url_work');
         $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook = \App\Models\Website::firstOrNew(['contact_id'=>$person->id, 'website_type'=>'Facebook']);
+        $url_facebook = \App\Models\Website::firstOrNew(['contact_id' => $person->id, 'website_type' => 'Facebook']);
         $url_facebook->contact_id = $person->id;
         $url_facebook->url = $request->input('url_facebook');
         $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
-        $url_google = \App\Models\Website::firstOrNew(['contact_id'=>$person->id, 'website_type'=>'Google']);
+        $url_google = \App\Models\Website::firstOrNew(['contact_id' => $person->id, 'website_type' => 'Google']);
         $url_google->contact_id = $person->id;
         $url_google->url = $request->input('url_google');
         $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram = \App\Models\Website::firstOrNew(['contact_id'=>$person->id, 'website_type'=>'Instagram']);
+        $url_instagram = \App\Models\Website::firstOrNew(['contact_id' => $person->id, 'website_type' => 'Instagram']);
         $url_instagram->contact_id = $person->id;
         $url_instagram->url = $request->input('url_instagram');
         $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id'=>$person->id, 'website_type'=>'LinkedIn']);
+        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id' => $person->id, 'website_type' => 'LinkedIn']);
         $url_linkedin->contact_id = $person->id;
         $url_linkedin->url = $request->input('url_linkedin');
         $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter = \App\Models\Website::firstOrNew(['contact_id'=>$person->id, 'website_type'=>'Twitter']);
+        $url_twitter = \App\Models\Website::firstOrNew(['contact_id' => $person->id, 'website_type' => 'Twitter']);
         $url_twitter->contact_id = $person->id;
         $url_twitter->url = $request->input('url_twitter');
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
         // relationships: donor, retreatant, volunteer, ambassador, director, innkeeper, assistant, staff, board
-        $relationship_donor = \App\Models\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.donor'), 'is_active'=>1]);
+        $relationship_donor = \App\Models\Relationship::firstOrNew(['contact_id_b' => $person->id, 'relationship_type_id' => config('polanco.relationship_type.donor'), 'is_active' => 1]);
         if ($request->input('is_donor') == 0) {
             $relationship_donor->delete();
         } else {
@@ -1278,7 +1278,7 @@ class PersonController extends Controller
             $relationship_donor->is_active = 1;
             $relationship_donor->save();
         }
-        $relationship_retreatant = \App\Models\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.retreatant'), 'is_active'=>1]);
+        $relationship_retreatant = \App\Models\Relationship::firstOrNew(['contact_id_b' => $person->id, 'relationship_type_id' => config('polanco.relationship_type.retreatant'), 'is_active' => 1]);
 
         if ($request->input('is_retreatant') == 0) {
             $relationship_retreatant->delete();
@@ -1290,7 +1290,7 @@ class PersonController extends Controller
             $relationship_retreatant->save();
         }
 
-        $relationship_volunteer = \App\Models\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.volunteer'), 'is_active'=>1]);
+        $relationship_volunteer = \App\Models\Relationship::firstOrNew(['contact_id_b' => $person->id, 'relationship_type_id' => config('polanco.relationship_type.volunteer'), 'is_active' => 1]);
         if ($request->input('is_volunteer') == 0) {
             $relationship_volunteer->delete();
         } else {
@@ -1301,7 +1301,7 @@ class PersonController extends Controller
             $relationship_volunteer->save();
         }
 
-        $relationship_ambassador = \App\Models\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.ambassador'), 'is_active'=>1]);
+        $relationship_ambassador = \App\Models\Relationship::firstOrNew(['contact_id_b' => $person->id, 'relationship_type_id' => config('polanco.relationship_type.ambassador'), 'is_active' => 1]);
         if ($request->input('is_ambassador') == 0) {
             $relationship_ambassador->delete();
         } else {
@@ -1312,7 +1312,7 @@ class PersonController extends Controller
             $relationship_ambassador->save();
         }
 
-        $relationship_director = \App\Models\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.retreat_director'), 'is_active'=>1]);
+        $relationship_director = \App\Models\Relationship::firstOrNew(['contact_id_b' => $person->id, 'relationship_type_id' => config('polanco.relationship_type.retreat_director'), 'is_active' => 1]);
         if ($request->input('is_director') == 0) {
             $relationship_director->delete();
         } else {
@@ -1323,7 +1323,7 @@ class PersonController extends Controller
             $relationship_director->save();
         }
 
-        $relationship_innkeeper = \App\Models\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.retreat_innkeeper'), 'is_active'=>1]);
+        $relationship_innkeeper = \App\Models\Relationship::firstOrNew(['contact_id_b' => $person->id, 'relationship_type_id' => config('polanco.relationship_type.retreat_innkeeper'), 'is_active' => 1]);
         if ($request->input('is_innkeeper') == 0) {
             $relationship_innkeeper->delete();
         } else {
@@ -1334,7 +1334,7 @@ class PersonController extends Controller
             $relationship_innkeeper->save();
         }
 
-        $relationship_assistant = \App\Models\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.retreat_assistant'), 'is_active'=>1]);
+        $relationship_assistant = \App\Models\Relationship::firstOrNew(['contact_id_b' => $person->id, 'relationship_type_id' => config('polanco.relationship_type.retreat_assistant'), 'is_active' => 1]);
         if ($request->input('is_assistant') == 0) {
             $relationship_assistant->delete();
         } else {
@@ -1345,7 +1345,7 @@ class PersonController extends Controller
             $relationship_assistant->save();
         }
 
-        $relationship_staff = \App\Models\Relationship::firstOrNew(['contact_id_a'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.staff'), 'is_active'=>1]);
+        $relationship_staff = \App\Models\Relationship::firstOrNew(['contact_id_a' => $person->id, 'relationship_type_id' => config('polanco.relationship_type.staff'), 'is_active' => 1]);
         if ($request->input('is_staff') == 0) {
             $relationship_staff->delete();
         } else {
@@ -1358,7 +1358,7 @@ class PersonController extends Controller
 
         // for Board Members we are not deleting the relationship but ending it and making it inactive
         // if it is turned back on it will presume a new relationship is being created
-        $relationship_board = \App\Models\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.board_member'), 'end_date'=>null]);
+        $relationship_board = \App\Models\Relationship::firstOrNew(['contact_id_b' => $person->id, 'relationship_type_id' => config('polanco.relationship_type.board_member'), 'end_date' => null]);
         if ($request->input('is_board') == 0) {
             if (isset($relationship_board->id)) {
                 $relationship_board->end_date = \Carbon\Carbon::now()->toDateString();
@@ -1378,7 +1378,7 @@ class PersonController extends Controller
         }
 
         //groups:
-        $group_ambassador = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.ambassador'), 'status'=>'Added']);
+        $group_ambassador = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.ambassador'), 'status' => 'Added']);
         if ($request->input('is_ambassador') == 0) {
             $group_ambassador->delete();
         } else {
@@ -1389,7 +1389,7 @@ class PersonController extends Controller
             $group_ambassador->save();
         }
 
-        $group_hlm2017 = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.hlm2017'), 'status'=>'Added']);
+        $group_hlm2017 = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.hlm2017'), 'status' => 'Added']);
         if ($request->input('is_hlm2017') == 0) {
             $group_hlm2017->delete();
         } else {
@@ -1400,7 +1400,7 @@ class PersonController extends Controller
             $group_hlm2017->save();
         }
 
-        $group_volunteer = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.volunteer'), 'status'=>'Added']);
+        $group_volunteer = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.volunteer'), 'status' => 'Added']);
         if ($request->input('is_volunteer') == 0) {
             $group_volunteer->delete();
         } else {
@@ -1411,7 +1411,7 @@ class PersonController extends Controller
             $group_volunteer->save();
         }
 
-        $group_bishop = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.bishop'), 'status'=>'Added']);
+        $group_bishop = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.bishop'), 'status' => 'Added']);
         if ($request->input('is_bishop') == 0) {
             $group_bishop->delete();
         } else {
@@ -1422,7 +1422,7 @@ class PersonController extends Controller
             $group_bishop->save();
         }
 
-        $group_priest = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.priest'), 'status'=>'Added']);
+        $group_priest = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.priest'), 'status' => 'Added']);
         if ($request->input('is_priest') == 0) {
             $group_priest->delete();
         } else {
@@ -1433,7 +1433,7 @@ class PersonController extends Controller
             $group_priest->save();
         }
 
-        $group_deacon = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.deacon'), 'status'=>'Added']);
+        $group_deacon = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.deacon'), 'status' => 'Added']);
         if ($request->input('is_deacon') == 0) {
             $group_deacon->delete();
         } else {
@@ -1444,7 +1444,7 @@ class PersonController extends Controller
             $group_deacon->save();
         }
 
-        $group_pastor = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.pastor'), 'status'=>'Added']);
+        $group_pastor = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.pastor'), 'status' => 'Added']);
         if ($request->input('is_pastor') == 0) {
             $group_pastor->delete();
         } else {
@@ -1455,7 +1455,7 @@ class PersonController extends Controller
             $group_pastor->save();
         }
 
-        $group_jesuit = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.jesuit'), 'status'=>'Added']);
+        $group_jesuit = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.jesuit'), 'status' => 'Added']);
         if ($request->input('is_jesuit') == 0) {
             $group_jesuit->delete();
         } else {
@@ -1466,7 +1466,7 @@ class PersonController extends Controller
             $group_jesuit->save();
         }
 
-        $group_provincial = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.provincial'), 'status'=>'Added']);
+        $group_provincial = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.provincial'), 'status' => 'Added']);
         if ($request->input('is_provincial') == 0) {
             $group_provincial->delete();
         } else {
@@ -1477,7 +1477,7 @@ class PersonController extends Controller
             $group_provincial->save();
         }
 
-        $group_superior = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.superior'), 'status'=>'Added']);
+        $group_superior = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.superior'), 'status' => 'Added']);
         if ($request->input('is_superior') == 0) {
             $group_superior->delete();
         } else {
@@ -1488,7 +1488,7 @@ class PersonController extends Controller
             $group_superior->save();
         }
 
-        $group_board = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.board')]);
+        $group_board = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.board')]);
         if ($request->input('is_board') == 0) {
             if (isset($group_board->id)) {
                 $group_board->status = 'Removed';
@@ -1502,7 +1502,7 @@ class PersonController extends Controller
             $group_board->save();
         }
 
-        $group_staff = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.staff'), 'status'=>'Added']);
+        $group_staff = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.staff'), 'status' => 'Added']);
         if ($request->input('is_staff') == 0) {
             $group_staff->delete();
         } else {
@@ -1513,7 +1513,7 @@ class PersonController extends Controller
             $group_staff->save();
         }
 
-        $group_steward = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.steward'), 'status'=>'Added']);
+        $group_steward = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.steward'), 'status' => 'Added']);
         if ($request->input('is_steward') == 0) {
             $group_steward->delete();
         } else {
@@ -1524,7 +1524,7 @@ class PersonController extends Controller
             $group_steward->save();
         }
 
-        $group_director = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.director'), 'status'=>'Added']);
+        $group_director = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.director'), 'status' => 'Added']);
         if ($request->input('is_director') == 0) {
             $group_director->delete();
         } else {
@@ -1535,7 +1535,7 @@ class PersonController extends Controller
             $group_director->save();
         }
 
-        $group_innkeeper = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.innkeeper'), 'status'=>'Added']);
+        $group_innkeeper = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.innkeeper'), 'status' => 'Added']);
         if ($request->input('is_innkeeper') == 0) {
             $group_innkeeper->delete();
         } else {
@@ -1546,7 +1546,7 @@ class PersonController extends Controller
             $group_innkeeper->save();
         }
 
-        $group_assistant = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.assistant'), 'status'=>'Added']);
+        $group_assistant = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.assistant'), 'status' => 'Added']);
         if ($request->input('is_assistant') == 0) {
             $group_assistant->delete();
         } else {
@@ -1829,7 +1829,6 @@ class PersonController extends Controller
                 // show error flash if failing because of staff member merge attempt
                 flash('Contact ID#: '.$merge_id.' cannot be merged with Contact ID#: '.$contact_id.'. Staff members with touchpoints or assigned jobs cannot be merged.')->error()->important();
             } else { // not a staff member with existing touchpoints or assigned jobs; safe to merge
-
                 //attachments - including avatar
                 foreach ($merge->attachments as $attachment) {
                     $attachment_controller = new AttachmentController;
