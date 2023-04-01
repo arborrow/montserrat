@@ -90,10 +90,10 @@
                                 @else
                                     @switch ($balance_transaction->transaction_type)
                                         @case('Charge')
-                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Payment for Order #'.optional($balance_transaction->squarespace_order)->order_number,array('class' => 'btn btn-primary')) }}
+                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Payment for Order #'.$balance_transaction->squarespace_order?->order_number,array('class' => 'btn btn-primary')) }}
                                             @break
                                         @case('Donation')
-                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Payment for Donation'.optional($balance_transaction->squarespace_order)->order_number,array('class' => 'btn btn-primary')) }}
+                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Payment for Donation'.$balance_transaction->squarespace_order?->order_number,array('class' => 'btn btn-primary')) }}
                                             @break                                    
                                         @case('Invoice')
                                             {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Payment for '.$balance_transaction->description,array('class' => 'btn btn-primary')) }}

@@ -269,7 +269,7 @@ class GetMailgunMessages extends Command
                     $ss_donation->comments = str_replace('View My Donations', '', $ss_donation->comments);
 
                     $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
-                    $ss_donation->event_id = optional($event)->id;
+                    $ss_donation->event_id = $event?->id;
 
                     if (isset($ss_donation->idnumber) && isset($ss_donation->event_id)) { // if a particular event then based on end date of event if passed retreat funding, if upcoming then deposit
                         $ss_donation->offering_type = ($event->end_date > now()) ? 'Pre-Retreat offering' : 'Post-Retreat offering';
@@ -385,9 +385,9 @@ class GetMailgunMessages extends Command
 
                         $order->retreat_dates = substr($order->retreat_description, strpos($order->retreat_description, '(') + 1, strpos($order->retreat_description, ')') - (strpos($order->retreat_description, '(') + 1));
                         $order->message_id = $message->id;
-                        $order->retreat_start_date = optional($event)->start_date;
+                        $order->retreat_start_date = $event?->start_date;
                         $order->retreat_registration_type = 'Gift Certificate Registration';
-                        $order->event_id = optional($event)->id;
+                        $order->event_id = $event?->id;
 
                         $order->save();
                     } else {
@@ -467,8 +467,8 @@ class GetMailgunMessages extends Command
                             $order->retreat_idnumber = $idnumber;
                             $event = Retreat::whereIdnumber($idnumber)->first();
 
-                            $order->retreat_start_date = optional($event)->start_date;
-                            $order->event_id = optional($event)->id;
+                            $order->retreat_start_date = $event?->start_date;
+                            $order->event_id = $event?->id;
 
                             //$order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
                             // a bit hacky but TOTAL was being flakey possibly because of SUBTOTAL so Tax was more unique
@@ -509,8 +509,8 @@ class GetMailgunMessages extends Command
                                     $order->retreat_idnumber = '20220618'; // hardcoded
                                     $order->retreat_dates = 'June 18, 2022';
                                     $event = Retreat::whereIdnumber($idnumber)->first();
-                                    $order->retreat_start_date = optional($event)->start_date;
-                                    $order->event_id = optional($event)->id;
+                                    $order->retreat_start_date = $event?->start_date;
+                                    $order->event_id = $event?->id;
                                     $order->retreat_registration_type = 'Registration and Deposit';
                                     $order->retreat_description = $order->retreat_category;
                                     break;

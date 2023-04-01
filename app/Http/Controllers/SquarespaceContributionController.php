@@ -129,7 +129,7 @@ class SquarespaceContributionController extends Controller
         // ensure contact_id is part of matching_contacts but if not then add it
         $matching_contacts = $this->matched_contacts($ss_contribution);
         if (! array_key_exists($ss_contribution->contact_id, $matching_contacts) && isset($ss_contribution->contact_id)) {
-            $matching_contacts[$ss_contribution->contact_id] = optional($ss_contribution->donor)->full_name_with_city;
+            $matching_contacts[$ss_contribution->contact_id] = $ss_contribution->donor?->full_name_with_city;
         }
 
         return view('squarespace.contribution.edit', compact('ss_contribution', 'matching_contacts', 'retreats', 'states', 'countries', 'ids'));
@@ -157,10 +157,10 @@ class SquarespaceContributionController extends Controller
         $ss_contribution->address_supplemental = $request->input('address_supplemental');
         $ss_contribution->address_city = $request->input('address_city');
         $state = ($request->filled('address_state_id')) ? StateProvince::findOrFail(($request->input('address_state_id'))) : null;
-        $ss_contribution->address_state = (null !== optional($state)->abbreviation) ? optional($state)->abbreviation : $ss_contribution->address_state;
+        $ss_contribution->address_state = (null !== $state?->abbreviation) ? $state?->abbreviation : $ss_contribution->address_state;
         $ss_contribution->address_zip = $request->input('address_zip');
         $country = ($request->filled('address_country_id')) ? Country::findOrFail(($request->input('address_country_id'))) : null;
-        $ss_contribution->address_country = (null !== optional($country)->iso_code) ? optional($country)->iso_code : $ss_contribution->address_country;
+        $ss_contribution->address_country = (null !== $country?->iso_code) ? $country?->iso_code : $ss_contribution->address_country;
 
         $ss_contribution->comments = $request->input('comments');
         $ss_contribution->amount = $request->input('amount');
@@ -260,7 +260,7 @@ class SquarespaceContributionController extends Controller
             $donation->donation_date = (isset($ss_contribution->event->start_date)) ? $ss_contribution->event->start_date : $ss_contribution->created_at;
             $donation->donation_amount = $ss_contribution->amount;
             // TODO: check if for retreat or fund; consider creating designated or purpose attribute (or consolidating the two fields into the fund field)
-            $retreat_note = (isset($event_id)) ? ' for Retreat #'.optional($ss_contribution->event)->idnumber : null;
+            $retreat_note = (isset($event_id)) ? ' for Retreat #'.$ss_contribution->event?->idnumber : null;
             $donation->Notes = 'SS Contribution #'.$ss_contribution->id.$retreat_note.'. '.$ss_contribution->comments;
             $donation->save();
             $ss_contribution->donation_id = $donation->donation_id;

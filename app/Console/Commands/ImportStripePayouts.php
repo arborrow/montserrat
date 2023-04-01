@@ -105,7 +105,7 @@ class ImportStripePayouts extends Command
                 }
 
                 $balance_transaction->payout_id = $stripe_payout->payout_id;
-                $balance_transaction->customer_id = optional($stripe_customer)->id;
+                $balance_transaction->customer_id = $stripe_customer?->id;
                 $balance_transaction->charge_id = $stripe_balance_transaction->source;
                 $balance_transaction->payout_date = $stripe_payout->arrival_date;
                 $balance_transaction->description = $stripe_balance_transaction->description;

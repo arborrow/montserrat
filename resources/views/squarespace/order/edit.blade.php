@@ -68,7 +68,7 @@
                         {!! Form::select('event_id', $retreats, (isset($order->event_id)) ? $order->event_id : $ids['retreat_id'], ['class' => 'form-control']) !!}
                         <strong>Retreat:</strong> {{ $order->retreat_description  }}<br />
                         <strong>Dates:</strong> {{ $order->retreat_dates}}<br />
-                        <strong>Category:</strong> {{ !empty($order->retreat_category) ? $order->retreat_category : optional($order->event)->retreat_type  }}<br />
+                        <strong>Category:</strong> {{ !empty($order->retreat_category) ? $order->retreat_category : $order->event?->retreat_type  }}<br />
                         <strong>Type:</strong> {{ $order->retreat_registration_type }}<br />
                     @endIf
                 </div>
@@ -80,8 +80,8 @@
                         </a>
                     </h3>
                     @if (!empty($gift_certificate))
-                        <strong>Purchased by</strong>: {!!optional($gift_certificate->purchaser)->contact_link!!}<br />
-                        <strong>Recipient</strong>: {!!optional($gift_certificate->recipient)->contact_link!!}<br />
+                        <strong>Purchased by</strong>: {!!$gift_certificate->purchaser?->contact_link!!}<br />
+                        <strong>Recipient</strong>: {!!$gift_certificate->recipient?->contact_link!!}<br />
                         @if ($gift_certificate->expiration_date < now())
                             <div class="bg-danger">
                                 <strong>Expiration date</strong>: {{$gift_certificate->expiration_date->format('m-d-Y')}}<br />
@@ -169,7 +169,7 @@
                             <h3>
                                 {!! Form::text('name', ucwords(strtolower($order->name)), ['class' => 'form-control']) !!}
                             </h3>
-                            @if (isset(optional($order->retreatant)->id))
+                            @if (isset($order->retreatant?->id))
                             {!! $order->retreatant->contact_link_full_name !!}
                             @endIf
                             <div class="row">
@@ -197,7 +197,7 @@
                             <h3>
                                 {!! Form::text('couple_name', ucwords(strtolower($order->couple_name)), ['class' => 'form-control']) !!}
                             </h3><br>
-                            @if (isset(optional($order->couple)->id))
+                            @if (isset($order->couple?->id))
                             {!! $order->couple->contact_link_full_name !!}
                             @endIf
                         </td>
@@ -205,43 +205,43 @@
                     </tr>
                     <tr>
                         <td><strong>Title</strong></td>
-                        @if ($ids['title'] == optional($order->retreatant)->prefix_id)
+                        @if ($ids['title'] == $order->retreatant?->prefix_id)
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::select('title_id', $prefixes, $ids['title'], ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->prefix_name }}
+                            {{ $order->retreatant?->prefix_name }}
                         </td>
                         @if ($order->is_couple)
-                        @if ($ids['couple_title'] == optional($order->couple)->prefix_id)
+                        @if ($ids['couple_title'] == $order->couple?->prefix_id)
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::select('couple_title_id', $prefixes, $ids['couple_title'], ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->prefix_name }}
+                            {{ $order->couple?->prefix_name }}
                         </td>
                         @endIf
                     </tr>
                     <tr>
                         <td><strong>First Name</strong></td>
-                        @if (strtolower(trim(substr($order->name,0,strpos($order->name,' ')))) == strtolower(optional($order->retreatant)->first_name))
+                        @if (strtolower(trim(substr($order->name,0,strpos($order->name,' ')))) == strtolower($order->retreatant?->first_name))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endif
                             {!! Form::text('first_name', ucwords(strtolower(trim(substr($order->name,0,strpos($order->name,' '))))), ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->first_name }}
+                            {{ $order->retreatant?->first_name }}
                         </td>
                         @if ($order->is_couple)
-                        @if (strtolower(trim(substr($order->couple_name,0,strpos($order->couple_name,' ')))) == strtolower(optional($order->couple)->first_name))
+                        @if (strtolower(trim(substr($order->couple_name,0,strpos($order->couple_name,' ')))) == strtolower($order->couple?->first_name))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endif
                             {!! Form::text('couple_first_name', ucwords(strtolower(trim(substr($order->couple_name,0,strpos($order->couple_name,' '))))), ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->first_name }}
+                            {{ $order->couple?->first_name }}
                         </td>
                         @endIf
                     </tr>
@@ -252,34 +252,34 @@
                         </td>
                         <td class='table-info'>
                             {!! Form::text('middle_name', null, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->middle_name }}
+                            {{ $order->retreatant?->middle_name }}
                         </td>
                         @if ($order->is_couple)
                         <td>
                             {!! Form::text('couple_middle_name', null, ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->middle_name }}
+                            {{ $order->couple?->middle_name }}
                         </td>
                         @endIf
                     </tr>
 
                     <tr>
                         <td><strong>Last Name</strong></td>
-                        @if (strtolower(trim(substr($order->name,strrpos($order->name,' ')))) == strtolower(optional($order->retreatant)->last_name))
+                        @if (strtolower(trim(substr($order->name,strrpos($order->name,' ')))) == strtolower($order->retreatant?->last_name))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endif
                             {!! Form::text('last_name', ucwords(strtolower(trim(substr($order->name,strrpos($order->name,' '))))), ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->last_name }}
+                            {{ $order->retreatant?->last_name }}
                         </td>
                         @if ($order->is_couple)
-                        @if (strtolower(trim(substr($order->couple_name,strrpos($order->couple_name,' ')))) == strtolower(optional($order->couple)->last_name))
+                        @if (strtolower(trim(substr($order->couple_name,strrpos($order->couple_name,' ')))) == strtolower($order->couple?->last_name))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endif
                             {!! Form::text('couple_last_name', ucwords(strtolower(trim(substr($order->couple_name,strpos($order->couple_name,' '))))), ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->last_name }}
+                            {{ $order->couple?->last_name }}
                         </td>
                         @endIf
                     </tr>
@@ -290,34 +290,34 @@
                         </td>
                         <td class='table-info'>
                             {!! Form::text('nick_name', null, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->nick_name }}<br>
+                            {{ $order->retreatant?->nick_name }}<br>
                         </td>
                         @if ($order->is_couple)
                         <td>
                             {!! Form::text('couple_nick_name', null, ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->nick_name }}<br>
+                            {{ $order->couple?->nick_name }}<br>
                         </td>
                         @endIf
                     </tr>
 
                     <tr>
                         <td><strong>Email</strong></td>
-                        @if (strtolower(trim($order->email)) == strtolower(optional($order->retreatant)->email_primary_text))
+                        @if (strtolower(trim($order->email)) == strtolower($order->retreatant?->email_primary_text))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endif
                             {!! Form::text('email', trim($order->email), ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->email_primary_text }}
+                            {{ $order->retreatant?->email_primary_text }}
                         </td>
                         @if ($order->is_couple)
-                        @if (strtolower(trim($order->couple_email)) == strtolower(optional($order->couple)->email_primary_text))
+                        @if (strtolower(trim($order->couple_email)) == strtolower($order->couple?->email_primary_text))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endif
                             {!! Form::text('couple_email', $order->couple_email, ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->email_primary_text }}
+                            {{ $order->couple?->email_primary_text }}
                         </td>
                         @endIf
                     </tr>
@@ -325,22 +325,22 @@
                     @if (isset($order->mobile_phone))
                     <tr>
                         <td><strong>Mobile Phone</strong></td>
-                        @if ($order->mobile_phone_formatted == optional($order->retreatant)->phone_home_mobile_number )
+                        @if ($order->mobile_phone_formatted == $order->retreatant?->phone_home_mobile_number )
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endif
                             {!! Form::text('mobile_phone', $order->mobile_phone, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->phone_home_mobile_number }}
+                            {{ $order->retreatant?->phone_home_mobile_number }}
                         </td>
                         @if ($order->is_couple)
-                        @if ($order->couple_mobile_phone_formatted == optional($order->couple)->phone_home_mobile_number )
+                        @if ($order->couple_mobile_phone_formatted == $order->couple?->phone_home_mobile_number )
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endif
                             {!! Form::text('couple_mobile_phone', $order->couple_mobile_phone, ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->phone_home_mobile_number }}
+                            {{ $order->couple?->phone_home_mobile_number }}
                         </td>
                         @endIf
                     </tr>
@@ -349,13 +349,13 @@
                     @if (isset($order->home_phone))
                     <tr>
                         <td><strong>Home Phone</strong></td>
-                        @if ($order->home_phone_formatted == optional($order->retreatant)->phone_home_phone_number )
+                        @if ($order->home_phone_formatted == $order->retreatant?->phone_home_phone_number )
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endif
                             {!! Form::text('home_phone', $order->home_phone, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->phone_home_phone_number }}
+                            {{ $order->retreatant?->phone_home_phone_number }}
                         </td>
                         @if ($order->is_couple)
                         <td></td>
@@ -366,13 +366,13 @@
                     @if (isset($order->work_phone))
                     <tr>
                         <td><strong>Work Phone</strong></td>
-                        @if ($order->work_phone_formatted == optional($order->retreatant)->phone_work_phone_number )
+                        @if ($order->work_phone_formatted == $order->retreatant?->phone_work_phone_number )
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endif
                             {!! Form::text('work_phone', $order->work_phone, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->phone_work_phone_number }}
+                            {{ $order->retreatant?->phone_work_phone_number }}
                         </td>
                         @if ($order->is_couple)
                         <td></td>
@@ -397,13 +397,13 @@
                     @if (isset($order->full_address))
                     <tr>
                         <td><strong>Address Street</strong></td>
-                        @if (ucwords(strtolower(trim($order->address_street))) == ucwords(strtolower(optional($order->retreatant)->address_primary_street)))
+                        @if (ucwords(strtolower(trim($order->address_street))) == ucwords(strtolower($order->retreatant?->address_primary_street)))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('address_street', ucwords(strtolower($order->address_street)), ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->address_primary_street }}
+                            {{ $order->retreatant?->address_primary_street }}
                         </td>
                         @if ($order->is_couple)
                         <td></td>
@@ -414,13 +414,13 @@
                     @if (isset($order->full_address))
                     <tr>
                         <td><strong>Address Supplemental</strong></td>
-                        @if (trim($order->address_supplemental) == optional($order->retreatant)->address_primary_supplemental )
+                        @if (trim($order->address_supplemental) == $order->retreatant?->address_primary_supplemental )
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('address_supplemental', $order->address_supplemental, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->address_primary_supplemental }}
+                            {{ $order->retreatant?->address_primary_supplemental }}
                             @if ($order->is_couple)
                         <td></td>
                         @endIf
@@ -430,13 +430,13 @@
                     @if (isset($order->full_address))
                     <tr>
                         <td><strong>Address City</strong></td>
-                        @if (trim(strtolower($order->address_city)) == strtolower(optional($order->retreatant)->address_primary_city))
+                        @if (trim(strtolower($order->address_city)) == strtolower($order->retreatant?->address_primary_city))
                         <td class="table-success">
                             @else
                         <td class="table-warning">
                             @endif
                             {!! Form::text('address_city', ucwords(strtolower($order->address_city)), ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->address_primary_city }}
+                            {{ $order->retreatant?->address_primary_city }}
                         </td>
                         @if ($order->is_couple)
                         <td></td>
@@ -447,7 +447,7 @@
                     @if (isset($order->full_address))
                     <tr>
                         <td><strong>Address State</strong></td>
-                        @if ($ids['address_state'] == optional($order->retreatant)->address_primary_state_id && isset($ids['address_state']))
+                        @if ($ids['address_state'] == $order->retreatant?->address_primary_state_id && isset($ids['address_state']))
                         <td class="table-success">
                             @else
                         <td class="table-warning">
@@ -456,7 +456,7 @@
                             {{ strtoupper($order->address_state)}}
                             @endIf
                             {!! Form::select('address_state_id', $states, $ids['address_state'], ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->address_primary_state }}
+                            {{ $order->retreatant?->address_primary_state }}
                         </td>
                         @if ($order->is_couple)
                         <td></td>
@@ -467,13 +467,13 @@
                     @if (isset($order->full_address))
                     <tr>
                         <td><strong>Address Zip</strong></td>
-                        @if (trim($order->address_zip == optional($order->retreatant)->address_primary_postal_code))
+                        @if (trim($order->address_zip == $order->retreatant?->address_primary_postal_code))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('address_zip', $order->address_zip, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->address_primary_postal_code }}
+                            {{ $order->retreatant?->address_primary_postal_code }}
                         </td>
                         @if ($order->is_couple)
                         <td></td>
@@ -484,14 +484,14 @@
                     @if (isset($order->full_address))
                     <tr>
                         <td data-toggle="tooltip" data-placement="top" title="Address Country defaults to US"><strong>Address Country * </strong></td>
-                        @if ($ids['address_country'] == optional($order->retreatant)->address_primary_country_id)
+                        @if ($ids['address_country'] == $order->retreatant?->address_primary_country_id)
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endif
                             {!! Form::label('address_country_id', $order->address_country) !!}
                             {!! Form::select('address_country_id', $countries, $ids['address_country'], ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->address_primary_country_abbreviation }}
+                            {{ $order->retreatant?->address_primary_country_abbreviation }}
                         </td>
                         @if ($order->is_couple)
                         <td></td>
@@ -502,22 +502,22 @@
                     @if (isset($order->dietary))
                     <tr>
                         <td><strong>Dietary</strong></td>
-                        @if (strtolower($order->dietary) == strtolower(optional($order->retreatant)->note_dietary_text))
+                        @if (strtolower($order->dietary) == strtolower($order->retreatant?->note_dietary_text))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('dietary', $order->dietary, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->note_dietary_text }}
+                            {{ $order->retreatant?->note_dietary_text }}
                         </td>
                         @if ($order->is_couple)
-                        @if (strtolower($order->couple_dietary) == strtolower(optional($order->couple)->note_dietary_text))
+                        @if (strtolower($order->couple_dietary) == strtolower($order->couple?->note_dietary_text))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('couple_dietary', $order->couple_dietary, ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->note_dietary_text }}
+                            {{ $order->couple?->note_dietary_text }}
                         </td>
                         @endIf
                     </tr>
@@ -527,12 +527,12 @@
                         <td><strong>Health Note</strong></td>
                         <td class='table-warning'>
                             {!! Form::text('health', null, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->note_health_text }}
+                            {{ $order->retreatant?->note_health_text }}
                         </td>
                         @if ($order->is_couple)
                         <td class='table-warning'>
                             {!! Form::text('couple_health', null, ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->note_health_text }}
+                            {{ $order->couple?->note_health_text }}
                         </td>
                         @endIf
                     </tr>
@@ -552,22 +552,22 @@
                     @if (isset($order->date_of_birth) || isset($order->couple_date_of_birth))
                     <tr>
                         <td><strong>Date of Birth</strong></td>
-                        @if (\Carbon\Carbon::parse($order->date_of_birth) == \Carbon\Carbon::parse(optional($order->retreatant)->birth_date))
+                        @if (\Carbon\Carbon::parse($order->date_of_birth) == \Carbon\Carbon::parse($order->retreatant?->birth_date))
                             <td class='table-success'>
                         @else
                             <td class='table-warning'>
                         @endIf
                             {!! Form::text('date_of_birth', $order->date_of_birth, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
-                            {{ (isset(optional($order->retreatant)->birth_date)) ? date('F d, Y', strtotime(optional($order->retreatant)->birth_date)) : null }}
+                            {{ (isset($order->retreatant?->birth_date)) ? date('F d, Y', strtotime($order->retreatant?->birth_date)) : null }}
                         </td>
                         @if ($order->is_couple)
-                        @if (\Carbon\Carbon::parse($order->couple_date_of_birth) == \Carbon\Carbon::parse(optional($order->couple)->birth_date))
+                        @if (\Carbon\Carbon::parse($order->couple_date_of_birth) == \Carbon\Carbon::parse($order->couple?->birth_date))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('couple_date_of birth', $order->couple_date_of_birth, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
-                            {{ (isset(optional($order->couple)->birth_date)) ? date('F d, Y', strtotime(optional($order->couple)->birth_date)) : null }}
+                            {{ (isset($order->couple?->birth_date)) ? date('F d, Y', strtotime($order->couple?->birth_date)) : null }}
                         </td>
                         @endIf
                     </tr>
@@ -590,13 +590,13 @@
                     @if (!($order->room_preference == 'Ninguna' || $order->room_preference == 'No preference' || null == $order->room_preference))
                     <tr>
                         <td><strong>Room Preference</strong></td>
-                        @if (strtolower($order->room_preference) == strtolower(optional($order->retreatant)->note_room_preference_text))
+                        @if (strtolower($order->room_preference) == strtolower($order->retreatant?->note_room_preference_text))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('room_preference', ($order->room_preference == 'Ninguna' || $order->room_preference == 'None') ? null : $order->room_preference, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->note_room_preference_text }}
+                            {{ $order->retreatant?->note_room_preference_text }}
                         </td>
                         @if ($order->is_couple)
                         <td></td>
@@ -610,7 +610,7 @@
                         <td>
                             {!! Form::label('preferred_language_id', isset($order->preferred_language) ? $order->preferred_language : 'N/A' ) !!}
                             {!! Form::select('preferred_language_id', $languages, $ids['preferred_language'], ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->preferred_language_label }}
+                            {{ $order->retreatant?->preferred_language_label }}
                         </td>
                         @if ($order->is_couple)
                         <td></td>
@@ -626,8 +626,8 @@
                         <td>
                             {!! Form::label('parish', ucwords(strtolower($order->parish))) !!}
                             {!! Form::hidden('parish', ucwords(strtolower($order->parish))) !!}
-                            {!! Form::select('parish_id', $parish_list, (null !== optional($order->retreatant)->parish_id) ? optional($order->retreatant)->parish_id : null, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->parish_name }}
+                            {!! Form::select('parish_id', $parish_list, (null !== $order->retreatant?->parish_id) ? $order->retreatant?->parish_id : null, ['class' => 'form-control']) !!}
+                            {{ $order->retreatant?->parish_name }}
                         </td>
                         @if ($order->is_couple)
                         <td></td>
@@ -638,22 +638,22 @@
                     @if (isset($order->emergency_contact) || isset($order->couple_emergency_contact))
                     <tr>
                         <td><strong>Emergency Contact</strong></td>
-                        @if (strtolower($order->emergency_contact) == strtolower(optional($order->retreatant)->emergency_contact_name))
+                        @if (strtolower($order->emergency_contact) == strtolower($order->retreatant?->emergency_contact_name))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('emergency_contact', $order->emergency_contact, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->emergency_contact_name }}
+                            {{ $order->retreatant?->emergency_contact_name }}
                         </td>
                         @if ($order->is_couple)
-                        @if (strtolower($order->couple_emergency_contact) == strtolower(optional($order->couple)->emergency_contact_name))
+                        @if (strtolower($order->couple_emergency_contact) == strtolower($order->couple?->emergency_contact_name))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('couple_emergency_contact', $order->couple_emergency_contact, ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->emergency_contact_name }}
+                            {{ $order->couple?->emergency_contact_name }}
                         </td>
                         @endIf
                     </tr>
@@ -664,22 +664,22 @@
                         <td>
                             <strong>Emergency Contact Relationship</strong>
                         </td>
-                        @if (strtolower($order->emergency_contact_relationship) == strtolower(optional($order->retreatant)->emergency_contact_relationship))
+                        @if (strtolower($order->emergency_contact_relationship) == strtolower($order->retreatant?->emergency_contact_relationship))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('emergency_contact_relationship', $order->emergency_contact_relationship, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->emergency_contact_relationship }}
+                            {{ $order->retreatant?->emergency_contact_relationship }}
                         </td>
                         @if ($order->is_couple)
-                        @if (strtolower($order->couple_emergency_contact_relationship) == strtolower(optional($order->couple)->emergency_contact_relationship))
+                        @if (strtolower($order->couple_emergency_contact_relationship) == strtolower($order->couple?->emergency_contact_relationship))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('couple_emergency_contact_relationship', $order->couple_emergency_contact_relationship, ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->emergency_contact_relationship }}
+                            {{ $order->couple?->emergency_contact_relationship }}
                         </td>
                         @endIf
                     </tr>
@@ -688,22 +688,22 @@
                     @if (isset($order->emergency_contact_phone) || isset($order->couple_emergency_contact_phone))
                     <tr>
                         <td><strong>Emergency Contact Phone</strong></td>
-                        @if (strtolower($order->emergency_contact_phone) == strtolower(optional($order->retreatant)->emergency_contact_phone))
+                        @if (strtolower($order->emergency_contact_phone) == strtolower($order->retreatant?->emergency_contact_phone))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('emergency_contact_phone', $order->emergency_contact_phone, ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->emergency_contact_phone }}
+                            {{ $order->retreatant?->emergency_contact_phone }}
                         </td>
                         @if ($order->is_couple)
-                        @if (strtolower($order->couple_emergency_contact_phone) == strtolower(optional($order->couple)->emergency_contact_phone))
+                        @if (strtolower($order->couple_emergency_contact_phone) == strtolower($order->couple?->emergency_contact_phone))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
                             @endIf
                             {!! Form::text('couple_emergency_contact_phone', $order->couple_emergency_contact_phone, ['class' => 'form-control']) !!}
-                            {{ optional($order->couple)->emergency_contact_phone }}
+                            {{ $order->couple?->emergency_contact_phone }}
                         </td>
                         @endIf
                     </tr>
@@ -719,12 +719,12 @@
                             <td class='table-secondary'>
                         @endIf
                         {!! Form::number('deposit_amount', $order->deposit_amount, ['class' => 'form-control','step'=>'0.01']) !!}
-                        @if (optional($order->registration)->deposit == ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount )
+                        @if ($order->registration?->deposit == ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount )
                             <div class='table-success'>
                         @else
                             <div class='table-danger'>
                         @endIf
-                            {{ optional($order->registration)->deposit }}
+                            {{ $order->registration?->deposit }}
                             @if ($order->is_couple)
                                 (Couple - Deposit split)
                             @endIf

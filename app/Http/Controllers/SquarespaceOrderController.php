@@ -225,10 +225,10 @@ class SquarespaceOrderController extends Controller
         $order->address_supplemental = $request->input('address_supplemental');
         $order->address_city = $request->input('address_city');
         $state = ($request->filled('address_state_id')) ? StateProvince::findOrFail(($request->input('address_state_id'))) : null;
-        $order->address_state = (null !== optional($state)->abbreviation) ? optional($state)->abbreviation : $order->address_state;
+        $order->address_state = (null !== $state?->abbreviation) ? $state?->abbreviation : $order->address_state;
         $order->address_zip = $request->input('address_zip');
         $country = ($request->filled('address_country_id')) ? Country::findOrFail(($request->input('address_country_id'))) : null;
-        $order->address_country = (null !== optional($country)->iso_code) ? optional($country)->iso_code : $order->address_country;
+        $order->address_country = (null !== $country?->iso_code) ? $country?->iso_code : $order->address_country;
         $order->dietary = $request->input('dietary');
         $order->couple_dietary = $request->input('couple_dietary');
         $order->date_of_birth = $request->input('date_of_birth');
@@ -236,7 +236,7 @@ class SquarespaceOrderController extends Controller
         $order->room_preference = $request->input('room_preference');
 
         $preferred_language = ($request->filled('preferred_language_id')) ? Language::findOrFail($request->input('preferred_language_id')) : null;
-        $order->preferred_language = (null !== optional($preferred_language)->label) ? optional($preferred_language)->label : $order->preferred_language;
+        $order->preferred_language = (null !== $preferred_language?->label) ? $preferred_language?->label : $order->preferred_language;
         $english_language = Language::whereName('en_US')->first();
 
         if (isset($preferred_language)) {
@@ -327,7 +327,7 @@ class SquarespaceOrderController extends Controller
             $contact->birth_date = ($request->filled('date_of_birth')) ? $request->input('date_of_birth') : $contact->birth_date;
             $contact->gender_id = $request->input('gender_id');
             $contact->religion_id = $request->input('religion_id');
-            $contact->preferred_language = (isset(optional($preferred_language)->name)) ? $preferred_language->name : null;
+            $contact->preferred_language = (isset($preferred_language?->name)) ? $preferred_language->name : null;
             $contact->save();
             // save room_preference
             $room_preference = Note::firstOrNew([
@@ -658,7 +658,7 @@ class SquarespaceOrderController extends Controller
             } else {
                 if (! empty($order->gift_certificate_id)) { //gift certificate redemption
                     $gift_certificate = GiftCertificate::find($order->gift_certificate_id);
-                    if (! empty(optional($gift_certificate)->donation_id)) {
+                    if (! empty($gift_certificate?->donation_id)) {
                         $gift_certificate_donation = Donation::find($gift_certificate->donation_id);
                         $amount_reallocated = $gift_certificate_donation->donation_amount;
                         // create reallocation payments and adjust purchaser donation_amount to zero
@@ -666,7 +666,7 @@ class SquarespaceOrderController extends Controller
                         $negative_reallocation_payment->donation_id = $gift_certificate_donation->donation_id;
                         $negative_reallocation_payment->payment_amount = -($gift_certificate_donation->donation_amount);
                         $negative_reallocation_payment->payment_description = 'Reallocation';
-                        $negative_reallocation_payment->note = 'Gift certificate #'.$gift_certificate->certificate_number.' redeemed by '.optional($gift_certificate->recipient)->display_name.' applied to Retreat #'.$gift_certificate->registration->event_id_number;
+                        $negative_reallocation_payment->note = 'Gift certificate #'.$gift_certificate->certificate_number.' redeemed by '.$gift_certificate->recipient?->display_name.' applied to Retreat #'.$gift_certificate->registration->event_id_number;
                         $negative_reallocation_payment->payment_date = now();
                         $negative_reallocation_payment->save();
                         $gift_certificate_donation->donation_amount = $gift_certificate_donation->donation_amount + $negative_reallocation_payment->payment_amount;
@@ -684,7 +684,7 @@ class SquarespaceOrderController extends Controller
                         $reallocation_payment->donation_id = $donation->donation_id;
                         $reallocation_payment->payment_amount = $donation->donation_amount;
                         $reallocation_payment->payment_description = 'Reallocation';
-                        $reallocation_payment->note = 'Gift certificate #'.$gift_certificate->certificate_number.' purchased by '.optional($gift_certificate->purchaser)->display_name.' applied to Retreat #'.$gift_certificate->registration->event_id_number;
+                        $reallocation_payment->note = 'Gift certificate #'.$gift_certificate->certificate_number.' purchased by '.$gift_certificate->purchaser?->display_name.' applied to Retreat #'.$gift_certificate->registration->event_id_number;
                         $reallocation_payment->payment_date = $negative_reallocation_payment->payment_date;
                         $reallocation_payment->save();
                         flash('Donation/Payment Reallocations processed for Gift Certificate #<a href="'.url('/gift_certificate/'.$gift_certificate->id).'">'.$gift_certificate->certificate_number.'</a>')->success();

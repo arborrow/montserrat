@@ -33,8 +33,8 @@
                         @foreach($messages as $message)
                         <tr>
                             <td><a href="{{ url('mailgun/'.$message->id) }}">{{ $message->mailgun_timestamp }}</a></td>
-                            <td>{!! optional($message->contact_from)->contact_link_full_name !!} <br /> {{ $message->from }} </td>
-                            <td>{!! optional($message->contact_to)->contact_link_full_name !!} <br /> {{ $message->to }} </td>
+                            <td>{!! $message->contact_from?->contact_link_full_name !!} <br /> {{ $message->from }} </td>
+                            <td>{!! $message->contact_to?->contact_link_full_name !!} <br /> {{ $message->to }} </td>
                             <td>{{ $message->subject }}</td>
                             <td>{{ $message->recipients }}</td>
                             <td>{{ $message->is_processed ? 'Yes':'No' }}</td>
@@ -67,8 +67,8 @@
                         @foreach($messages_processed as $message)
                         <tr>
                             <td><a href="{{ url('mailgun/'.$message->id) }}">{{ $message->mailgun_timestamp }}</a></td>
-                            <td>{!! optional($message->contact_from)->contact_link_full_name !!} <br /> {{ $message->from }} </td>
-                            <td>{!! optional($message->contact_to)->contact_link_full_name !!} <br /> {{ $message->to }} </td>
+                            <td>{!! $message->contact_from?->contact_link_full_name !!} <br /> {{ $message->from }} </td>
+                            <td>{!! $message->contact_to?->contact_link_full_name !!} <br /> {{ $message->to }} </td>
                             <td>{{ $message->subject }}</td>
                             <td>{{ $message->recipients }}</td>
                             <td>{{ $message->is_processed ? 'Yes':'No' }}</td>

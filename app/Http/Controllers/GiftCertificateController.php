@@ -119,8 +119,8 @@ class GiftCertificateController extends Controller
         if ($request->purchaser_id > 0 && $request->recipient_id > 0) {
             // dd('gc', $purchaser, $request->input('purchaser_id'), $recipient, $request->input('recipient_id'));
             $gift_certificate = new \App\Models\GiftCertificate;
-            $gift_certificate->purchaser_id = (isset(optional($new_purchaser)->id)) ? $new_purchaser->id : $request->input('purchaser_id');
-            $gift_certificate->recipient_id = (isset(optional($new_recipient)->id)) ? $new_recipient->id : $request->input('recipient_id');
+            $gift_certificate->purchaser_id = (isset($new_purchaser?->id)) ? $new_purchaser->id : $request->input('purchaser_id');
+            $gift_certificate->recipient_id = (isset($new_recipient?->id)) ? $new_recipient->id : $request->input('recipient_id');
             $gift_certificate->participant_id = $request->input('participant_id');
             $gift_certificate->donation_id = $request->input('donation_id');
             $gift_certificate->sequential_number = $request->input('sequential_number');
