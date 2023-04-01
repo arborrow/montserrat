@@ -11,7 +11,7 @@ class DonationSearchRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class DonationSearchRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'donation_date_operator' => 'in:'.implode(',', config('polanco.operators')).'|nullable',
@@ -48,7 +48,7 @@ class DonationSearchRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

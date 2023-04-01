@@ -14,7 +14,7 @@ class ContactFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $first_name = $this->faker->firstName();
         $last_name = $this->faker->lastName();

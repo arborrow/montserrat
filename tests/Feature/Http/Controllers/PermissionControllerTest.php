@@ -17,7 +17,7 @@ class PermissionControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-permission');
 
@@ -31,7 +31,7 @@ class PermissionControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-permission');
         $permission = \App\Models\Permission::factory()->create();
@@ -45,7 +45,7 @@ class PermissionControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-permission');
         $permission = \App\Models\Permission::factory()->create();
@@ -65,7 +65,7 @@ class PermissionControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-permission');
 
@@ -82,7 +82,7 @@ class PermissionControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-permission');
         $permission = \App\Models\Permission::factory()->create();
@@ -99,7 +99,7 @@ class PermissionControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-permission');
         $permission_name = 'New '.$this->faker->words(3, true);
@@ -124,7 +124,7 @@ class PermissionControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-permission');
         $permission = \App\Models\Permission::factory()->create();
@@ -148,7 +148,7 @@ class PermissionControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_roles_returns_an_ok_response()
+    public function update_roles_returns_an_ok_response(): void
     {
         $user = \App\Models\User::factory()->create();
         $user->assignRole('test-role:update_roles');

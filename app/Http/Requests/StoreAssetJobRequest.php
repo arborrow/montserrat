@@ -11,7 +11,7 @@ class StoreAssetJobRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class StoreAssetJobRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'asset_task_id' => 'integer|min:0|exists:asset_task,id|required',
@@ -44,7 +44,7 @@ class StoreAssetJobRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

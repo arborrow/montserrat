@@ -17,7 +17,7 @@ class SquarespaceContributionControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         // emtpy slug redirects to squarespace.contribution.index
         $this->followingRedirects();
@@ -32,7 +32,7 @@ class SquarespaceContributionControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         // emtpy slug redirects to squarespace.contribution.index
         $this->followingRedirects();
@@ -50,7 +50,7 @@ class SquarespaceContributionControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-contribution');
         $donor = \App\Models\Contact::factory()->create();
@@ -115,7 +115,7 @@ class SquarespaceContributionControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-contribution');
 
@@ -131,7 +131,7 @@ class SquarespaceContributionControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-contribution');
         $contribution = \App\Models\SquarespaceContribution::factory()->create();
@@ -147,7 +147,7 @@ class SquarespaceContributionControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         // emtpy slug redirects to squarespace.contribution.index
         $this->followingRedirects();
@@ -190,7 +190,7 @@ class SquarespaceContributionControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\SquarespaceContributionController::class,

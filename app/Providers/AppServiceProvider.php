@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Charts $charts)
+    public function boot(Charts $charts): void
     {
         \Illuminate\Pagination\Paginator::useBootstrap();
         $charts->register([

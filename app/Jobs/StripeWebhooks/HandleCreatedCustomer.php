@@ -30,7 +30,7 @@ class HandleCreatedCustomer implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         /*        $touchpoint = new \App\Models\Touchpoint;
                 $touchpoint->notes = $this->webhookCall->payload['data']['object']['name'];

@@ -11,7 +11,7 @@ class UpdateDonationTypeRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class UpdateDonationTypeRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'id' => 'integer|min:1|required',
@@ -41,7 +41,7 @@ class UpdateDonationTypeRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

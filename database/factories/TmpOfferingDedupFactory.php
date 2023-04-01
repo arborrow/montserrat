@@ -11,7 +11,7 @@ class TmpOfferingDedupFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $contact = \App\Models\Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.individual'),

@@ -34,7 +34,7 @@ class AddressControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $address = \App\Models\Address::factory()->create();
         $contact_id = $address->contact_id;
@@ -49,7 +49,7 @@ class AddressControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $address = \App\Models\Address::factory()->create([
             'is_primary' => false,
@@ -81,7 +81,7 @@ class AddressControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-address');
 
@@ -96,7 +96,7 @@ class AddressControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $address = \App\Models\Address::factory()->create();
         $user = $this->createUserWithPermission('show-address');
@@ -113,7 +113,7 @@ class AddressControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-address');
@@ -145,7 +145,7 @@ class AddressControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AddressController::class,
@@ -157,7 +157,7 @@ class AddressControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-address');
         $address = \App\Models\Address::factory()->create();
@@ -181,7 +181,7 @@ class AddressControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AddressController::class,

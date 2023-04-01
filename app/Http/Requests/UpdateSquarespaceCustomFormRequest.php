@@ -11,7 +11,7 @@ class UpdateSquarespaceCustomFormRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,7 +24,7 @@ class UpdateSquarespaceCustomFormRequest extends FormRequest
 
      //name , custom_form_id , variant_options
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'id' => 'integer|min:0|required',
@@ -37,7 +37,7 @@ class UpdateSquarespaceCustomFormRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

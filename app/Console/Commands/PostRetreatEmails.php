@@ -39,7 +39,7 @@ class PostRetreatEmails extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
         $endDate = Carbon::today()->subDays(1);
         $retreats = Retreat::where('event_type_id', 7)

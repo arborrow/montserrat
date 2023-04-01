@@ -10,7 +10,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('occupation_list', function (Blueprint $table) {
             $table->string('OCC_CODE', 15)->nullable();
@@ -34,7 +34,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('occupation_list');
     }

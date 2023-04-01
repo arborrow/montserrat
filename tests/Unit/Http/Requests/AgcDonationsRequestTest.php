@@ -22,7 +22,7 @@ class AgcDonationsRequestTest extends TestCase
     /**
      * @test
      */
-    public function authorize()
+    public function authorize(): void
     {
         $actual = $this->subject->authorize();
 
@@ -32,7 +32,7 @@ class AgcDonationsRequestTest extends TestCase
     /**
      * @test
      */
-    public function rules()
+    public function rules(): void
     {
         $actual = $this->subject->rules();
         $valid_agc_donation_type = \App\Models\DonationType::active()
@@ -49,7 +49,7 @@ class AgcDonationsRequestTest extends TestCase
     /**
      * @test
      */
-    public function messages()
+    public function messages(): void
     {
         $actual = $this->subject->messages();
 

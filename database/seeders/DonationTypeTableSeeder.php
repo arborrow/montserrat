@@ -12,7 +12,7 @@ class DonationTypeTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('donation_type')->delete();
 

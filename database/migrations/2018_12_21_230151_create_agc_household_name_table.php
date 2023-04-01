@@ -10,7 +10,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('agc_household_name', function (Blueprint $table) {
             $table->integer('contact_id')->primary();
@@ -35,7 +35,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('agc_household_name');
     }

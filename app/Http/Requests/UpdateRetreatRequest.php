@@ -12,7 +12,7 @@ class UpdateRetreatRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class UpdateRetreatRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {   // dd($this);
         return [
             'idnumber' => ['alpha_dash', 'required', Rule::unique('event')->ignore($this->id)->whereNull('deleted_at')],
@@ -52,7 +52,7 @@ class UpdateRetreatRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

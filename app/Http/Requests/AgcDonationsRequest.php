@@ -11,7 +11,7 @@ class AgcDonationsRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class AgcDonationsRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $valid_agc_donation_type = \App\Models\DonationType::active()
                 ->whereIn('name', config('polanco.agc_donation_descriptions'))
@@ -39,7 +39,7 @@ class AgcDonationsRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

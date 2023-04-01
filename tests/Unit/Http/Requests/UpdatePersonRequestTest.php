@@ -22,7 +22,7 @@ class UpdatePersonRequestTest extends TestCase
     /**
      * @test
      */
-    public function authorize()
+    public function authorize(): void
     {
         $actual = $this->subject->authorize();
 
@@ -32,7 +32,7 @@ class UpdatePersonRequestTest extends TestCase
     /**
      * @test
      */
-    public function rules()
+    public function rules(): void
     {   // TODO: languages and referrals
         $actual = $this->subject->rules();
 
@@ -235,7 +235,7 @@ class UpdatePersonRequestTest extends TestCase
     /**
      * @test
      */
-    public function messages()
+    public function messages(): void
     {
         $actual = $this->subject->messages();
 

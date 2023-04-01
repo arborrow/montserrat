@@ -11,7 +11,7 @@ class SquarespaceCustomFormFieldFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $name = ucwords(implode(' ', $this->faker->words(3)));
         $variable = strtolower(str_replace(' ', '_', $name));

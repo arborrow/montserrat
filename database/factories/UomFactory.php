@@ -13,7 +13,7 @@ class UomFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $label = $this->faker->word();
         $type = $this->faker->randomElement(config('polanco.uom_types'));

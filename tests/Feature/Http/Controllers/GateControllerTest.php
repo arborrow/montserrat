@@ -20,7 +20,7 @@ class GateControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-gate');
 
@@ -35,7 +35,7 @@ class GateControllerTest extends TestCase
     /**
      * @test
      */
-    public function close_returns_an_ok_response()
+    public function close_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-gate');
         $email = \App\Models\Email::factory()->create([
@@ -52,7 +52,7 @@ class GateControllerTest extends TestCase
     /**
      * @test
      */
-    public function open_returns_an_ok_response()
+    public function open_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-gate');
         $email = \App\Models\Email::factory()->create([
@@ -70,7 +70,7 @@ class GateControllerTest extends TestCase
     /**
      * @test
      */
-    public function open_with_hours_returns_an_ok_response()
+    public function open_with_hours_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-gate');
         $hours = $this->faker->numberBetween(2, 5);

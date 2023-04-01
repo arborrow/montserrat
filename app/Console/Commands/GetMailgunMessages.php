@@ -87,7 +87,7 @@ class GetMailgunMessages extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $message = new \Illuminate\Support\Collection;
         $username = 'Polanco';

@@ -14,7 +14,7 @@ class ExportListFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $label = $this->faker->word();
         $type = $this->faker->randomElement(config('polanco.export_list_types'));

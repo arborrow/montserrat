@@ -21,7 +21,7 @@ class SquarespaceContributionFactory extends Factory
      *
      * // TODO: create factory based on whether it is a retreat or regular donation
      */
-    public function definition()
+    public function definition(): array
     {
         $inventory = SquarespaceInventory::where('id', '<', 10)->first();
         $address_street = $this->faker->streetAddress();

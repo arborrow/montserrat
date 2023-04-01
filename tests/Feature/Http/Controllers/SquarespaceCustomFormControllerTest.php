@@ -17,7 +17,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-squarespace-custom-form');
 
@@ -31,7 +31,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_field_returns_an_ok_response()
+    public function create_field_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-squarespace-custom-form');
         $custom_form = \App\Models\SquarespaceCustomForm::factory()->create();
@@ -47,7 +47,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-squarespace-custom-form');
         $custom_form = \App\Models\SquarespaceCustomForm::factory()->create();
@@ -62,7 +62,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-custom-form');
         $custom_form = \App\Models\SquarespaceCustomForm::factory()->create();
@@ -80,7 +80,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_field_returns_an_ok_response()
+    public function edit_field_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-custom-form');
         $custom_form_field = \App\Models\SquarespaceCustomFormField::factory()->create();
@@ -101,7 +101,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-custom-form');
 
@@ -116,7 +116,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-custom-form');
         $custom_form = \App\Models\SquarespaceCustomForm::factory()->create();
@@ -132,7 +132,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {   //$this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-squarespace-custom-form');
 
@@ -153,7 +153,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_field_returns_an_ok_response()
+    public function store_field_returns_an_ok_response(): void
     {
         $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-squarespace-custom-form');
@@ -185,7 +185,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\SquarespaceCustomFormController::class,
@@ -197,7 +197,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_field_validates_with_a_form_request()
+    public function store_field_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\SquarespaceCustomFormController::class,
@@ -209,7 +209,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-custom-form');
 
@@ -235,7 +235,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_field_returns_an_ok_response()
+    public function update_field_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-custom-form');
 
@@ -262,7 +262,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\SquarespaceCustomFormController::class,
@@ -274,7 +274,7 @@ class SquarespaceCustomFormControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_field_validates_with_a_form_request()
+    public function update_field_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\SquarespaceCustomFormController::class,

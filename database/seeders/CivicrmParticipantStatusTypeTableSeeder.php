@@ -12,7 +12,7 @@ class CivicrmParticipantStatusTypeTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('civicrm_participant_status_type')->delete();
 

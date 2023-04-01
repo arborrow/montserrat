@@ -12,7 +12,7 @@ class RoleUserTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('role_user')->delete();
 

@@ -14,7 +14,7 @@ class AttachmentFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'file_type_id' => null,

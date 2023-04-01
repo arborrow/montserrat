@@ -17,7 +17,7 @@ class AuditControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {   // no creating of audit records - redirect to index page
         $user = $this->createUserWithPermission('create-audit');
 
@@ -30,7 +30,7 @@ class AuditControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-audit');
         $audit = \App\Models\Audit::factory()->create();
@@ -44,7 +44,7 @@ class AuditControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {   // no editing of audit records - redirect to index
         $user = $this->createUserWithPermission('update-audit');
         $audit = \App\Models\Audit::factory()->create();
@@ -58,7 +58,7 @@ class AuditControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-audit');
 
@@ -74,7 +74,7 @@ class AuditControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_type_returns_an_ok_response()
+    public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-audit');
         $audit = \App\Models\Audit::factory()->create([
@@ -94,7 +94,7 @@ class AuditControllerTest extends TestCase
     /**
      * @test
      */
-    public function results_returns_an_ok_response()
+    public function results_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-audit');
@@ -112,7 +112,7 @@ class AuditControllerTest extends TestCase
     /**
      * @test
      */
-    public function search_returns_an_ok_response()
+    public function search_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-audit');
 
@@ -129,7 +129,7 @@ class AuditControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-audit');
         $audit = \App\Models\Audit::factory()->create();
@@ -145,7 +145,7 @@ class AuditControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {   // no storing of audit records - redirect to audit.index
         // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-audit');
@@ -161,7 +161,7 @@ class AuditControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {   // no updating of audit records - redirect to audit.index
         $user = $this->createUserWithPermission('update-audit');
         $audit = \App\Models\Audit::factory()->create();

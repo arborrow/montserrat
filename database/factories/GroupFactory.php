@@ -14,7 +14,7 @@ class GroupFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $group_name = ucfirst(implode(' ', $this->faker->words()));
 
