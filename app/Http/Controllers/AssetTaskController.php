@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreAssetTaskRequest;
 use App\Http\Requests\UpdateAssetTaskRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -13,7 +15,7 @@ class AssetTaskController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-asset-task');
 
@@ -27,7 +29,7 @@ class AssetTaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($asset_id = 0)
+    public function create($asset_id = 0): View
     {
         $this->authorize('create-asset-task');
 
@@ -55,7 +57,7 @@ class AssetTaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAssetTaskRequest $request)
+    public function store(StoreAssetTaskRequest $request): RedirectResponse
     {
         $this->authorize('create-asset-task');
 
@@ -93,7 +95,7 @@ class AssetTaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-asset-task');
 
@@ -110,7 +112,7 @@ class AssetTaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-asset-task');
 
@@ -135,7 +137,7 @@ class AssetTaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAssetTaskRequest $request, $id)
+    public function update(UpdateAssetTaskRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-asset-task');
 
@@ -173,7 +175,7 @@ class AssetTaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-asset-task');
         $asset_task = \App\Models\AssetTask::findOrFail($id);
@@ -198,7 +200,7 @@ class AssetTaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function schedule_jobs($id)
+    public function schedule_jobs(int $id): RedirectResponse
     {
         $this->authorize('update-asset-task');
         $asset_task = \App\Models\AssetTask::findOrFail($id);

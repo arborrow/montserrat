@@ -27,7 +27,7 @@ class SquarespaceOrderFulfillment extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): static
     {
         if ($this->order->retreatant->preferred_language == 'es_ES') {
             $subject = \App\Models\Snippet::whereTitle('squarespace_order_fulfillment')->whereLocale('es_ES')->whereLabel('subject')->firstOrFail();

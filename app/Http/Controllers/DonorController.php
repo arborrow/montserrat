@@ -4,6 +4,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class DonorController extends Controller
@@ -18,7 +20,7 @@ class DonorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-donor');
         //only show donors that do not have a contact_id
@@ -57,7 +59,7 @@ class DonorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-donor');
         $donor = \App\Models\Donor::whereDonorId($id)->first();
@@ -74,7 +76,7 @@ class DonorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $this->authorize('update-donor');
 
@@ -87,7 +89,7 @@ class DonorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         $this->authorize('update-donor');
     }
@@ -98,12 +100,12 @@ class DonorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $this->authorize('delete-donor');
     }
 
-    public function assign($donor_id, $contact_id)
+    public function assign($donor_id, $contact_id): RedirectResponse
     {
         // dd($donor_id, $contact_id);
         $this->authorize('update-donor');
@@ -116,7 +118,7 @@ class DonorController extends Controller
         return redirect()->action([self::class, 'index']);
     }
 
-    public function add($donor_id)
+    public function add($donor_id): RedirectResponse
     {
         $this->authorize('create-contact');
         $person = new \App\Models\Contact;

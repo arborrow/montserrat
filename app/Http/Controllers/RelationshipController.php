@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Relationship;
 use DB;
 use Illuminate\Http\Request;
@@ -19,7 +21,7 @@ class RelationshipController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-relationship');
         $relationships = \App\Models\Relationship::paginate(25, ['*'], 'relationships');
@@ -32,7 +34,7 @@ class RelationshipController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('create-relationship');
         flash('Relationships cannot be directly created as they are managed via contacts')->error();
@@ -45,7 +47,7 @@ class RelationshipController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {   // relationships are not created directly here; they are created through the person controller
         // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('create-relationship');
@@ -60,7 +62,7 @@ class RelationshipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-relationship');
         $relationship = \App\Models\Relationship::findOrFail($id);
@@ -74,7 +76,7 @@ class RelationshipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('update-relationship');
         flash('Relationships cannot be directly edited as they are managed via contacts')->error();
@@ -88,7 +90,7 @@ class RelationshipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('update-relationship');
         flash('Relationships cannot be directly updated as they are managed via contacts')->error();
@@ -102,7 +104,7 @@ class RelationshipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-relationship');
 
@@ -113,7 +115,7 @@ class RelationshipController extends Controller
         return redirect()->back();
     }
 
-    public function disjoined()
+    public function disjoined(): View
     {
         $this->authorize('update-contact');
         $couples = DB::table('relationship as r')
@@ -137,7 +139,7 @@ class RelationshipController extends Controller
         return view('relationships.disjoined', compact('couples'));
     }
 
-    public function rejoin($id, $dominant)
+    public function rejoin($id, $dominant): RedirectResponse
     {
         $this->authorize('update-contact');
         $relationship = \App\Models\Relationship::with('contact_a.address_primary', 'contact_b.address_primary')->findOrFail($id);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use App\Http\Requests\SnippetTestRequest;
 use App\Http\Requests\StoreSnippetRequest;
 use App\Http\Requests\UpdateSnippetRequest;
@@ -22,7 +24,7 @@ class SnippetController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-snippet');
 
@@ -32,7 +34,7 @@ class SnippetController extends Controller
         return view('admin.snippets.index', compact('snippets', 'titles'));
     }
 
-    public function index_type($title = null)
+    public function index_type($title = null): View
     {
         $this->authorize('show-snippet');
 
@@ -47,7 +49,7 @@ class SnippetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-snippet');
         $locales = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
@@ -61,7 +63,7 @@ class SnippetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSnippetRequest $request)
+    public function store(StoreSnippetRequest $request): RedirectResponse
     {
         $this->authorize('create-snippet');
 
@@ -84,7 +86,7 @@ class SnippetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-snippet');
 
@@ -99,7 +101,7 @@ class SnippetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-snippet');
 
@@ -116,7 +118,7 @@ class SnippetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSnippetRequest $request, $id)
+    public function update(UpdateSnippetRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-snippet');
 
@@ -140,7 +142,7 @@ class SnippetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-snippet');
         $snippet = \App\Models\Snippet::findOrFail($id);
@@ -152,7 +154,7 @@ class SnippetController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function snippet_test(SnippetTestRequest $request)
+    public function snippet_test(SnippetTestRequest $request): RedirectResponse
     {
         $this->authorize('show-snippet');
 
@@ -289,7 +291,7 @@ class SnippetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function test($title = null, $email = null, $language = 'en_US')
+    public function test($title = null, $email = null, $language = 'en_US'): View
     {
         $this->authorize('show-snippet');
         $titles = \App\Models\Snippet::groupBy('title')->orderBy('title')->pluck('title', 'title');

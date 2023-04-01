@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\DonationAgcRequest;
 use App\Http\Requests\DonationSearchRequest;
 use App\Http\Requests\StoreDonationRequest;
@@ -29,7 +31,7 @@ class DonationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-donation');
 
@@ -41,7 +43,7 @@ class DonationController extends Controller
         return view('donations.index', compact('donations', 'donation_descriptions'));
     }
 
-    public function index_type($donation_id = null)
+    public function index_type($donation_id = null): View
     {
         $this->authorize('show-donation');
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
@@ -56,7 +58,7 @@ class DonationController extends Controller
         return view('donations.index', compact('donations', 'donation_descriptions', 'defaults'));   //
     }
 
-    public function search()
+    public function search(): View
     {
         $this->authorize('show-donation');
 
@@ -69,7 +71,7 @@ class DonationController extends Controller
         return view('donations.search', compact('retreats', 'descriptions'));
     }
 
-    public function results(DonationSearchRequest $request)
+    public function results(DonationSearchRequest $request): View
     {
         $this->authorize('show-donation');
         if (! empty($request)) {
@@ -84,7 +86,7 @@ class DonationController extends Controller
         return view('donations.results', compact('donations', 'all_donations'));
     }
 
-    public function overpaid()
+    public function overpaid(): View
     {
         $this->authorize('show-donation');
         $overpaid = DB::table('Donations_payment as p')
@@ -100,7 +102,7 @@ class DonationController extends Controller
     }
 
     //TODO: add docs code here and create unit tests
-    public function mergeable()
+    public function mergeable(): View
     {   // contact id 5847 hardcoded for anonymous user
         $this->authorize('show-donation');
         $mergeable = DB::table('Donations as d')
@@ -115,7 +117,7 @@ class DonationController extends Controller
     }
 
     //TODO: add docs code here and create unit tests
-    public function merge($first_donation_id = 0, $second_donation_id = 0)
+    public function merge($first_donation_id = 0, $second_donation_id = 0): RedirectResponse
     {
         $this->authorize('update-donation');
         $first_donation = Donation::findOrFail($first_donation_id); // target or destination donation
@@ -172,7 +174,7 @@ class DonationController extends Controller
         return Redirect::action([self::class, 'mergeable']);
     }
 
-    public function agc($year, DonationAgcRequest $request)
+    public function agc($year, DonationAgcRequest $request): View
     {
         $this->authorize('show-donation');
 
@@ -219,7 +221,7 @@ class DonationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id = null, $event_id = null, $type = null)
+    public function create($id = null, $event_id = null, $type = null): View
     {
         $this->authorize('create-donation');
 
@@ -265,7 +267,7 @@ class DonationController extends Controller
      * create and save new donation record
      * redirect to donation.index
      */
-    public function store(StoreDonationRequest $request)
+    public function store(StoreDonationRequest $request): RedirectResponse
     {
         $this->authorize('create-donation');
 
@@ -309,7 +311,7 @@ class DonationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-donation');
         $donation = Donation::with('payments', 'contact')->findOrFail($id);
@@ -323,7 +325,7 @@ class DonationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-donation');
         //get this retreat's information
@@ -359,7 +361,7 @@ class DonationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDonationRequest $request, $id)
+    public function update(UpdateDonationRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-donation');
 
@@ -396,7 +398,7 @@ class DonationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-donation');
         $donation = Donation::findOrFail($id);
@@ -424,7 +426,7 @@ class DonationController extends Controller
      * primary use is for creating retreat offering donations but will have ability to edit existing retreat offerings
      * @return \Illuminate\Http\Response
      */
-    public function retreat_payments_update(Request $request)
+    public function retreat_payments_update(Request $request): RedirectResponse
     {   // I removed the permission check for update-payment as it seemed redundant to update-donation and it makes testing a little easier
         $this->authorize('update-donation');
         if ($request->input('event_id')) {
@@ -486,7 +488,7 @@ class DonationController extends Controller
     }
 
     // TODO:: add unit test for this method
-    public function process_deposits($event_id)
+    public function process_deposits($event_id): RedirectResponse
     {
         $this->authorize('update-donation');
         $event = Retreat::findOrFail($event_id);
@@ -507,7 +509,7 @@ class DonationController extends Controller
     }
 
         // TODO:: add unit test for this method; creating method as proof of concept - need to come back and test
-        public function unprocess_deposits($event_id)
+        public function unprocess_deposits($event_id): RedirectResponse
         {
             $this->authorize('update-donation');
             $event = Retreat::findOrFail($event_id);

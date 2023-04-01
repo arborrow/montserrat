@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreDonationTypeRequest;
 use App\Http\Requests\UpdateDonationTypeRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -14,7 +16,7 @@ class DonationTypeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-donation-type');
         $donation_types = \App\Models\DonationType::orderBy('label')->get();
@@ -27,7 +29,7 @@ class DonationTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-donation-type');
 
@@ -40,7 +42,7 @@ class DonationTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDonationTypeRequest $request)
+    public function store(StoreDonationTypeRequest $request): RedirectResponse
     {
         $this->authorize('create-donation-type');
 
@@ -64,7 +66,7 @@ class DonationTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-donation-type');
 
@@ -79,7 +81,7 @@ class DonationTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-donation-type');
 
@@ -95,7 +97,7 @@ class DonationTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDonationTypeRequest $request, $id)
+    public function update(UpdateDonationTypeRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-donation-type');
 
@@ -118,7 +120,7 @@ class DonationTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-donation-type');
 

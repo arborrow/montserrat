@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreGroupRegistrationRequest;
 use App\Http\Requests\StoreRegistrationRequest;
 use App\Http\Requests\UpdateRegistrationRequest;
@@ -32,7 +34,7 @@ class RegistrationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-registration');
 
@@ -51,7 +53,7 @@ class RegistrationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-registration');
 
@@ -72,7 +74,7 @@ class RegistrationController extends Controller
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
-    public function add($id = null)
+    public function add($id = null): View
     {
         $this->authorize('create-registration');
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
@@ -101,7 +103,7 @@ class RegistrationController extends Controller
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
-    public function add_group($id)
+    public function add_group($id): View
     {
         $this->authorize('create-registration');
 
@@ -126,7 +128,7 @@ class RegistrationController extends Controller
         //dd($retreatants);
     }
 
-    public function register($retreat_id = 0, $contact_id = 0)
+    public function register($retreat_id = 0, $contact_id = 0): View
     {
         $this->authorize('create-registration');
 
@@ -176,7 +178,7 @@ class RegistrationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRegistrationRequest $request)
+    public function store(StoreRegistrationRequest $request): RedirectResponse
     {
         $this->authorize('create-registration');
         $rooms = $request->input('rooms');
@@ -252,7 +254,7 @@ class RegistrationController extends Controller
         // return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
     }
 
-    public function store_group(StoreGroupRegistrationRequest $request)
+    public function store_group(StoreGroupRegistrationRequest $request): RedirectResponse
     {
         $this->authorize('create-registration');
 
@@ -295,7 +297,7 @@ class RegistrationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-registration');
         $registration = \App\Models\Registration::with('retreat', 'retreatant', 'room')->findOrFail($id);
@@ -309,7 +311,7 @@ class RegistrationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-registration');
 
@@ -356,7 +358,7 @@ class RegistrationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRegistrationRequest $request, $id)
+    public function update(UpdateRegistrationRequest $request, int $id)
     {
         $this->authorize('update-registration');
 
@@ -428,7 +430,7 @@ class RegistrationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-registration');
 
@@ -445,7 +447,7 @@ class RegistrationController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function confirm($id)
+    public function confirm($id): RedirectResponse
     {
         $this->authorize('update-registration');
 
@@ -456,7 +458,7 @@ class RegistrationController extends Controller
         return redirect()->back();
     }
 
-    public function attend($id)
+    public function attend($id): RedirectResponse
     {
         $this->authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
@@ -466,7 +468,7 @@ class RegistrationController extends Controller
         return redirect()->back();
     }
 
-    public function arrive($id)
+    public function arrive($id): RedirectResponse
     {
         $this->authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
@@ -476,7 +478,7 @@ class RegistrationController extends Controller
         return redirect()->back();
     }
 
-    public function depart($id)
+    public function depart($id): RedirectResponse
     {
         $this->authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
@@ -486,7 +488,7 @@ class RegistrationController extends Controller
         return redirect()->back();
     }
 
-    public function cancel($id)
+    public function cancel($id): RedirectResponse
     {
         $this->authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
@@ -496,7 +498,7 @@ class RegistrationController extends Controller
         return redirect()->back();
     }
 
-    public function waitlist($id)
+    public function waitlist($id): RedirectResponse
     {
         $this->authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
@@ -506,7 +508,7 @@ class RegistrationController extends Controller
         return redirect()->back();
     }
 
-    public function offwaitlist($id)
+    public function offwaitlist($id): RedirectResponse
     {
         $this->authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
@@ -516,7 +518,7 @@ class RegistrationController extends Controller
         return redirect()->back();
     }
 
-    public function registrationEmail(Registration $participant)
+    public function registrationEmail(Registration $participant): RedirectResponse
     {
         $this->authorize('show-registration');
 
@@ -548,7 +550,7 @@ class RegistrationController extends Controller
         return redirect('person/'.$participant->contact->id);
     }
 
-    public function send_confirmation_email($id)
+    public function send_confirmation_email($id): RedirectResponse
     {
         $this->authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
@@ -593,7 +595,7 @@ class RegistrationController extends Controller
         return redirect('registration/'.$registration->id);
     }
 
-    public function confirmAttendance($token)
+    public function confirmAttendance($token): RedirectResponse
     {
         $registration = \App\Models\Registration::where('remember_token', $token)->first();
 

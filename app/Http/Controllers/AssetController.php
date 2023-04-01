@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\AssetSearchRequest;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
@@ -14,7 +16,7 @@ class AssetController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-asset');
 
@@ -26,7 +28,7 @@ class AssetController extends Controller
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
-    public function index_type($type = null)
+    public function index_type($type = null): View
     {
         $this->authorize('show-asset');
 
@@ -38,7 +40,7 @@ class AssetController extends Controller
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
-    public function index_location($location_id = null)
+    public function index_location($location_id = null): View
     {
         $this->authorize('show-asset');
 
@@ -50,7 +52,7 @@ class AssetController extends Controller
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
-    public function search()
+    public function search(): View
     {
         $this->authorize('show-asset');
 
@@ -90,7 +92,7 @@ class AssetController extends Controller
         return view('assets.search', compact('asset_types', 'departments', 'depreciation_types', 'locations', 'parents', 'uoms_capacity', 'uoms_electric', 'uoms_length', 'uoms_time', 'uoms_weight', 'vendors'));
     }
 
-    public function results(AssetSearchRequest $request)
+    public function results(AssetSearchRequest $request): View
     {
         $this->authorize('show-asset');
         if (! empty($request)) {
@@ -108,7 +110,7 @@ class AssetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-asset');
 
@@ -149,7 +151,7 @@ class AssetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAssetRequest $request)
+    public function store(StoreAssetRequest $request): RedirectResponse
     {
         $this->authorize('create-asset');
 
@@ -237,7 +239,7 @@ class AssetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-asset');
 
@@ -253,7 +255,7 @@ class AssetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-asset');
 
@@ -297,7 +299,7 @@ class AssetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAssetRequest $request, $id)
+    public function update(UpdateAssetRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-asset');
 
@@ -392,7 +394,7 @@ class AssetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-asset');
         $asset = \App\Models\Asset::findOrFail($id);

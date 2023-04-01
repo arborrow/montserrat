@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+
 class SystemController extends Controller
 {
     public function __construct()
@@ -24,7 +26,7 @@ class SystemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function phpinfo()
+    public function phpinfo(): View
     {
         $this->authorize('show-admin-menu');
 
@@ -58,7 +60,7 @@ class SystemController extends Controller
         }
     }
 
-    public function offeringdedup_index()
+    public function offeringdedup_index(): View
     {
         $this->authorize('show-offeringdedup');
 
@@ -67,7 +69,7 @@ class SystemController extends Controller
         return view('offeringdedup.index', compact('offeringdedup'));
     }
 
-    public function offeringdedup_show($contact_id = null, $event_id = null)
+    public function offeringdedup_show($contact_id = null, $event_id = null): View
     {
         $this->authorize('show-offeringdedup');
         $donations = \App\Models\Donation::whereEventId($event_id)->whereContactId($contact_id)->whereDonationDescription('Retreat Funding')->get();

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -13,7 +15,7 @@ class RoleController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-role');
         $roles = \App\Models\Role::orderBy('name')->get();
@@ -26,7 +28,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-role');
 
@@ -38,7 +40,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->authorize('create-role');
 
@@ -60,7 +62,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-role');
 
@@ -77,7 +79,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-role');
 
@@ -92,7 +94,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         $this->authorize('update-role');
 
@@ -113,7 +115,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-role');
 
@@ -125,7 +127,7 @@ class RoleController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function update_permissions(Request $request)
+    public function update_permissions(Request $request): RedirectResponse
     {
         $this->authorize('update-role');
         $role = \App\Models\Role::findOrFail($request->input('id'));
@@ -137,7 +139,7 @@ class RoleController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function update_users(Request $request)
+    public function update_users(Request $request): RedirectResponse
     {
         $this->authorize('update-role');
         $role = \App\Models\Role::findOrFail($request->input('id'));

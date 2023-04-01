@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use Exception;
 use Illuminate\Support\Facades\Http;
 
@@ -22,7 +23,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         try {
             $result = Http::timeout(1)->get('http://labs.bible.org/api/?passage=random')->getBody();
@@ -34,7 +35,7 @@ class HomeController extends Controller
         return view('home', compact('quote'));
     }
 
-    public function goodbye()
+    public function goodbye(): View
     {
         return view('pages.goodbye');
     }

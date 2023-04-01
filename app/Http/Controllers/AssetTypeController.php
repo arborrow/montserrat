@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreAssetTypeRequest;
 use App\Http\Requests\UpdateAssetTypeRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -14,7 +16,7 @@ class AssetTypeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-asset-type');
         $asset_types = \App\Models\AssetType::orderBy('label')->get();
@@ -27,7 +29,7 @@ class AssetTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-asset-type');
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
@@ -42,7 +44,7 @@ class AssetTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAssetTypeRequest $request)
+    public function store(StoreAssetTypeRequest $request): RedirectResponse
     {
         $this->authorize('create-asset-type');
 
@@ -66,7 +68,7 @@ class AssetTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-asset-type');
 
@@ -81,7 +83,7 @@ class AssetTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-asset-type');
 
@@ -99,7 +101,7 @@ class AssetTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAssetTypeRequest $request, $id)
+    public function update(UpdateAssetTypeRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-asset-type');
 
@@ -122,7 +124,7 @@ class AssetTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-asset-type');
         $asset_type = \App\Models\AssetType::findOrFail($id);

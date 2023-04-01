@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -13,7 +15,7 @@ class PermissionController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $this->authorize('show-permission');
         $actions = [
@@ -82,7 +84,7 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-permission');
 
@@ -94,7 +96,7 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->authorize('create-permission');
         $permission = new \App\Models\Permission;
@@ -114,7 +116,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-permission');
         $permission = \App\Models\Permission::with('roles.users')->findOrFail($id);
@@ -129,7 +131,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-permission');
         $permission = \App\Models\Permission::findOrFail($id);
@@ -143,7 +145,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         $this->authorize('update-permission');
         $permission = \App\Models\Permission::findOrFail($request->input('id'));
@@ -163,7 +165,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-permission');
 
@@ -176,7 +178,7 @@ class PermissionController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function update_roles(Request $request)
+    public function update_roles(Request $request): RedirectResponse
     {
         $this->authorize('update-permission');
         $this->authorize('update-role');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Contact;
 use App\Traits\SquareSpaceTrait;
 use Illuminate\Http\Request;
@@ -23,7 +25,7 @@ class GiftCertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-gift-certificate');
         $gift_certificates = \App\Models\GiftCertificate::active()->orderBy('issue_date')->with(['purchaser', 'recipient'])->get();
@@ -38,7 +40,7 @@ class GiftCertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request): View
     {
         $this->authorize('create-gift-certificate');
         //dd($request);
@@ -64,7 +66,7 @@ class GiftCertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->authorize('create-gift-certificate');
 
@@ -149,7 +151,7 @@ class GiftCertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show_pdf($id)
+    public function show_pdf(int $id)
     {
         $this->authorize('show-gift-certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
@@ -174,7 +176,7 @@ class GiftCertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-gift-certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
@@ -188,7 +190,7 @@ class GiftCertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-gift-certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
@@ -202,7 +204,7 @@ class GiftCertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         $this->authorize('update-gift-certificate');
 
@@ -233,7 +235,7 @@ class GiftCertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-gift_certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);

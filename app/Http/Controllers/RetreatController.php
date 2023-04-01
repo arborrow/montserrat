@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use App\Http\Requests\EventSearchRequest;
 use App\Http\Requests\RoomUpdateRetreatRequest;
 use App\Http\Requests\StoreRetreatRequest;
@@ -25,7 +27,7 @@ class RetreatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-retreat');
         // do once in controller to reduce excessive number of checks on blade
@@ -44,7 +46,7 @@ class RetreatController extends Controller
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types', 'results'));   //
     }
 
-    public function index_type($event_type_id)
+    public function index_type($event_type_id): View
     {
         $this->authorize('show-retreat');
         $permission_checks = ['show-retreat', 'show-event-contract', 'show-event-schedule', 'show-event-evaluation'];
@@ -67,7 +69,7 @@ class RetreatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-retreat');
 
@@ -123,7 +125,7 @@ class RetreatController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRetreatRequest $request)
+    public function store(StoreRetreatRequest $request): RedirectResponse
     {
         $this->authorize('create-retreat');
 
@@ -219,7 +221,7 @@ class RetreatController extends Controller
      * @param  int  $participant_role_id
      * @return bool
      */
-    public function add_participant($contact_id, $event_id, $participant_role_id)
+    public function add_participant(int $contact_id, int $event_id, int $participant_role_id)
     {
         if ($contact_id > 0 && $event_id > 0) { //avoid inserting bad data
             $participant = \App\Models\Registration::updateOrCreate([
@@ -248,7 +250,7 @@ class RetreatController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $status = null)
+    public function show(int $id, $status = null): View
     {
         $this->authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
@@ -351,7 +353,7 @@ class RetreatController extends Controller
         return view('retreats.show', compact('retreat', 'registrations', 'status', 'attachments')); //
     }
 
-    public function show_waitlist($id)
+    public function show_waitlist($id): View
     {
         $this->authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
@@ -379,7 +381,7 @@ class RetreatController extends Controller
     //   $retreats = \App\Models\Retreat::();
     //   return view('retreats.edit',compact('retreats'));
     //  }
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-retreat');
         //get this retreat's information
@@ -472,7 +474,7 @@ class RetreatController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRetreatRequest $request, $id)
+    public function update(UpdateRetreatRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-retreat');
 
@@ -642,7 +644,7 @@ class RetreatController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-retreat');
         $retreat = \App\Models\Retreat::findOrFail($id);
@@ -665,7 +667,7 @@ class RetreatController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function assign_rooms($id)
+    public function assign_rooms($id): View
     {
         $this->authorize('update-registration');
         //get this retreat's information
@@ -677,7 +679,7 @@ class RetreatController extends Controller
         return view('retreats.assign_rooms', compact('retreat', 'registrations', 'rooms'));
     }
 
-    public function edit_payments($id)
+    public function edit_payments($id): View
     {
         $this->authorize('update-payment');
         //get this retreat's information
@@ -690,7 +692,7 @@ class RetreatController extends Controller
         return view('retreats.payments.edit', compact('retreat', 'registrations', 'donation_description', 'payment_description'));
     }
 
-    public function show_payments($id)
+    public function show_payments($id): View
     {
         $this->authorize('show-payment');
         $retreat = \App\Models\Retreat::findOrFail($id);
@@ -699,7 +701,7 @@ class RetreatController extends Controller
         return view('retreats.payments.show', compact('retreat', 'registrations'));
     }
 
-    public function checkout($id)
+    public function checkout($id): RedirectResponse
     {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
         // TODO: consider also checking to see if the arrived_at time is empty and if it is put in the retreat start time
@@ -716,7 +718,7 @@ class RetreatController extends Controller
         return Redirect::action([self::class, 'show'], $retreat->id);
     }
 
-    public function checkin($id)
+    public function checkin($id): RedirectResponse
     {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
         $this->authorize('update-registration');
@@ -732,7 +734,7 @@ class RetreatController extends Controller
         return Redirect::action([self::class, 'show'], $retreat->id);
     }
 
-    public function room_update(RoomUpdateRetreatRequest $request)
+    public function room_update(RoomUpdateRetreatRequest $request): RedirectResponse
     {
         $this->authorize('update-registration');
 
@@ -766,7 +768,7 @@ class RetreatController extends Controller
         }
     }
 
-    public function calendar()
+    public function calendar(): View
     {
         $this->authorize('show-retreat');
         if ($this->is_google_calendar_enabled()) {
@@ -778,7 +780,7 @@ class RetreatController extends Controller
         return view('calendar.index', compact('calendar_events'));
     }
 
-    public function event_room_list($event_id)
+    public function event_room_list($event_id): View
     {
         // get buildings for which there are assigned rooms
         // for each building initialize array of all rooms in that building
@@ -826,7 +828,7 @@ class RetreatController extends Controller
         return view('retreats.roomlist', compact('results', 'event'));
     }
 
-    public function event_namebadges($event_id, $role = null)
+    public function event_namebadges($event_id, $role = null): View
     {
         // for each registration add contact sort_name to namebadge
         // TODO: write unit tests for this method
@@ -879,7 +881,7 @@ class RetreatController extends Controller
         return view('retreats.namebadges', compact('cresults', 'event'));
     }
 
-    public function event_tableplacards($event_id)
+    public function event_tableplacards($event_id): View
     {
         // for each registration add contact sort_name to namebadge
         // TODO: write unit tests for this method
@@ -911,7 +913,7 @@ class RetreatController extends Controller
         return view('retreats.tableplacards', compact('cresults', 'event'));
     }
 
-    public function search()
+    public function search(): View
     {
         $this->authorize('show-retreat');
         $event_types = \App\Models\EventType::whereIsActive(true)->orderBy('label')->pluck('label', 'id');
@@ -920,7 +922,7 @@ class RetreatController extends Controller
         return view('retreats.search', compact('event_types'));
     }
 
-    public function results(EventSearchRequest $request)
+    public function results(EventSearchRequest $request): View
     {
         $this->authorize('show-retreat');
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -20,7 +22,7 @@ class OrganizationController extends Controller
      *
      * //TODO: subcontact_type dependent on order in database which is less than ideal really looking for where not a parish or diocese organization
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-contact');
         $organizations = \App\Models\Contact::with('addresses', 'phone_main_phone', 'email_primary', 'websites', 'subcontacttype')->organizations_generic()->orderBy('organization_name', 'asc')->paginate(25, ['*'], 'organizations');
@@ -29,7 +31,7 @@ class OrganizationController extends Controller
         return view('organizations.index', compact('organizations', 'subcontact_types'));   //
     }
 
-    public function index_type($subcontact_type_id)
+    public function index_type($subcontact_type_id): View
     {
         $this->authorize('show-contact');
         $subcontact_types = \App\Models\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
@@ -46,7 +48,7 @@ class OrganizationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-contact');
         $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
@@ -70,7 +72,7 @@ class OrganizationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreOrganizationRequest $request)
+    public function store(StoreOrganizationRequest $request): RedirectResponse
     {
         $this->authorize('create-contact');
 
@@ -180,7 +182,7 @@ class OrganizationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-contact');
         $organization = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'phone_main_phone.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
@@ -209,7 +211,7 @@ class OrganizationController extends Controller
      * // TODO: make create and edit bishop id multi-select with all bishops defaulting to selected on edit
      * // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship)
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-contact');
         $organization = \App\Models\Contact::with('address_primary.state', 'address_primary.location', 'phone_main_phone.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
@@ -250,7 +252,7 @@ class OrganizationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrganizationRequest $request, $id)
+    public function update(UpdateOrganizationRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-contact');
 
@@ -393,7 +395,7 @@ class OrganizationController extends Controller
      *
      * // TODO: delete addresses, emails, webpages, and phone numbers for persons, parishes, dioceses and organizations
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-contact');
         $organization = \App\Models\Organization::findOrFail($id);

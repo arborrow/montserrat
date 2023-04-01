@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use App\Http\Requests\AgcDonationsRequest;
 use Illuminate\Support\Facades\DB;
 
@@ -12,14 +13,14 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-dashboard');
 
         return view('dashboard.index');
     }
 
-    public function agc($number_of_years = 5)
+    public function agc($number_of_years = 5): View
     {
         $this->authorize('show-dashboard');
 
@@ -83,7 +84,7 @@ class DashboardController extends Controller
         return view('dashboard.agc', compact('number_of_years', 'donors', 'agc_descriptions'));
     }
 
-    public function agc_donations(AgcDonationsRequest $request)
+    public function agc_donations(AgcDonationsRequest $request): View
     {
         $this->authorize('show-donation');
 
@@ -124,7 +125,7 @@ class DashboardController extends Controller
         return view('donations.results', compact('donations', 'all_donations'));
     }
 
-    public function donation_description_chart(int $category_id = null)
+    public function donation_description_chart(int $category_id = null): View
     {
         $this->authorize('show-dashboard');
         $descriptions = \App\Models\DonationType::active()->orderBy('name')->pluck('id', 'name');
@@ -137,7 +138,7 @@ class DashboardController extends Controller
         return view('dashboard.description', compact('donation_type', 'descriptions'));
     }
 
-    public function events($year = null)
+    public function events($year = null): View
     {
         // TODO: Create donut chart for average number of retreatants per event (get count of event_type_id) partipants/count(event_type_id) //useful for Ambassador goal of 40 (draw goal line)
         $this->authorize('show-dashboard');
@@ -191,7 +192,7 @@ class DashboardController extends Controller
         return view('dashboard.events', compact('years', 'year', 'event_summary', 'total_revenue', 'total_participants', 'total_peoplenights'));
     }
 
-    public function drilldown($event_type_id = null, $year = null)
+    public function drilldown($event_type_id = null, $year = null): View
     {
         // default to current fiscal year
         if (! isset($year)) {

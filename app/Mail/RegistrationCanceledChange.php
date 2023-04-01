@@ -30,7 +30,7 @@ class RegistrationCanceledChange extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): static
     {   //TODO: consider looking up the preferred language of the contact with the finance email address and send message in preferred language - English is OK for now
         return $this->subject('Notification of Registration Update: Canceled (with deposit)')
                     ->replyTo('registration@montserratretreat.org')

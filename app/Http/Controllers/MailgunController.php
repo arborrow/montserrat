@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Message;
 use App\Traits\MailgunTrait;
 use Illuminate\Http\Request;
@@ -46,7 +48,7 @@ class MailgunController extends Controller
         return Redirect::action([MailgunController::class, 'index']);
     }
 
-    public function index()
+    public function index(): View
     {
         // TODO: consider adding processed/unprocessed/all drowdown selector to filter results and combine processed and index blades into one
         $this->authorize('admin-mailgun');
@@ -56,7 +58,7 @@ class MailgunController extends Controller
         return view('mailgun.index', compact('messages', 'messages_processed'));
     }
 
-    public function show($id)
+    public function show($id): View
     {
         $this->authorize('admin-mailgun');
 
@@ -74,7 +76,7 @@ class MailgunController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $this->authorize('admin-mailgun');
         // $message = Message::with('contact_from','contact_to')->findOrFail($id);
@@ -100,7 +102,7 @@ class MailgunController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): RedirectResponse
     {
         $this->authorize('admin-mailgun');
 
@@ -114,7 +116,7 @@ class MailgunController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->authorize('admin-mailgun');
 
@@ -130,7 +132,7 @@ class MailgunController extends Controller
      * @param  int  $id
      * @return Redirect to mailgun.index
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         $this->authorize('admin-mailgun');
 
@@ -147,7 +149,7 @@ class MailgunController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('admin-mailgun');
 

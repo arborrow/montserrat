@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreDioceseRequest;
 use App\Http\Requests\UpdateDioceseRequest;
 use Illuminate\Support\Arr;
@@ -19,7 +21,7 @@ class DioceseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-contact');
 
@@ -33,7 +35,7 @@ class DioceseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-contact');
         $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
@@ -59,7 +61,7 @@ class DioceseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDioceseRequest $request)
+    public function store(StoreDioceseRequest $request): RedirectResponse
     {
         $this->authorize('create-contact');
 
@@ -174,7 +176,7 @@ class DioceseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-contact');
         $diocese = \App\Models\Contact::with('bishops.contact_b', 'parishes.contact_b', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'note_diocese', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a')->findOrFail($id);
@@ -203,7 +205,7 @@ class DioceseController extends Controller
      *  // TODO: make create and edit bishop id multi-select with all bishops defaulting to selected on edit
         // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship)
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-contact');
         $diocese = \App\Models\Contact::with('primary_bishop.contact_b', 'bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'note_diocese')->findOrFail($id);
@@ -263,7 +265,7 @@ class DioceseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDioceseRequest $request, $id)
+    public function update(UpdateDioceseRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-contact');
 
@@ -416,7 +418,7 @@ class DioceseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-contact');
 

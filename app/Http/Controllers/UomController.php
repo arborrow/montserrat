@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUomRequest;
 use App\Http\Requests\UpdateUomRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -14,7 +16,7 @@ class UomController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-uom');
         $uoms = \App\Models\Uom::orderBy('unit_name')->get();
@@ -27,7 +29,7 @@ class UomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-uom');
         $uom_types = config('polanco.uom_types');
@@ -41,7 +43,7 @@ class UomController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUomRequest $request)
+    public function store(StoreUomRequest $request): RedirectResponse
     {
         $this->authorize('create-uom');
 
@@ -65,7 +67,7 @@ class UomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-uom');
 
@@ -80,7 +82,7 @@ class UomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-uom');
 
@@ -97,7 +99,7 @@ class UomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUomRequest $request, $id)
+    public function update(UpdateUomRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-uom');
 
@@ -122,7 +124,7 @@ class UomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-uom');
         $uom = \App\Models\Uom::findOrFail($id);

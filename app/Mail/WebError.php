@@ -27,7 +27,7 @@ class WebError extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): static
     {
         $web_error = $this->web_error['body'];
 
