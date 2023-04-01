@@ -23,8 +23,6 @@ class SystemController extends Controller
 
     /**
      * Displays phpinfo.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function phpinfo(): View
     {

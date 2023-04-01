@@ -73,7 +73,6 @@ class MailgunController extends Controller
      * Mailgun messages are retrieved and processed from mailgun server
      * Hence, the edit method is an empty stub
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit(int $id)
@@ -99,8 +98,6 @@ class MailgunController extends Controller
     /**
      * Mailgun messages are retrieved from server and not created
      * Hence, this method is an empty stub.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create(): RedirectResponse
     {
@@ -113,8 +110,6 @@ class MailgunController extends Controller
      * Store a newly created resource in storage.
      * Mailgun messages are retrieved from server and not created or stored
      * Hence, this method is an empty stub.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request): RedirectResponse
     {
@@ -129,7 +124,6 @@ class MailgunController extends Controller
      * Hence, the update method is an empty stub.
      *
      *
-     * @param  int  $id
      * @return Redirect to mailgun.index
      */
     public function update(Request $request, int $id): RedirectResponse
@@ -144,10 +138,6 @@ class MailgunController extends Controller
      * Since Mailgun messages are retrieved from server and processed,
      * deleting is not needed and soft-deleting can cause sql integrity duplicate entry error
      * Hence, the delete method is an empty stub.
-     *
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(int $id): RedirectResponse
     {

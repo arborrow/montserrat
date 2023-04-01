@@ -21,8 +21,6 @@ class StripePayoutController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
@@ -83,7 +81,6 @@ class StripePayoutController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($payout_id): View
     {
@@ -128,7 +125,6 @@ class StripePayoutController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show_date($date = null)
     {
@@ -167,7 +163,6 @@ class StripePayoutController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit(int $id)
@@ -177,9 +172,6 @@ class StripePayoutController extends Controller
 
     /**
      * Create Stripe Fee donation/payment for a payout.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function process_fees(int $id = null): RedirectResponse
     {
@@ -210,7 +202,6 @@ class StripePayoutController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, int $id)
@@ -221,7 +212,6 @@ class StripePayoutController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(int $id)
@@ -231,8 +221,6 @@ class StripePayoutController extends Controller
 
     /**
      * Import Stripe Payouts into stripe_payout table
-     *
-     * @return \Illuminate\Http\Response
      */
     public function import(): RedirectResponse
     {
@@ -274,8 +262,6 @@ class StripePayoutController extends Controller
 
     /**
      * Process Stripe Payout into stripe_charge table
-     *
-     * @return \Illuminate\Http\Response
      */
     public function process($id): RedirectResponse
     {

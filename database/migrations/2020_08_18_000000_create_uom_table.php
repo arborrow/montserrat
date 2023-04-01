@@ -8,8 +8,6 @@ return new class extends Migration
     /**
      * Run the migrations.
      * Because asset_type.label will be used in drop down boxes they should be unique unless they have been deleted.
-     *
-     * @return void
      */
     public function up(): void
     {
@@ -27,8 +25,6 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

@@ -44,8 +44,6 @@ class SquarespaceOrderController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
@@ -59,8 +57,6 @@ class SquarespaceOrderController extends Controller
     /**
      * Squarespace orders are created from parsed Mailgun messages
      * Hence, the create method is an empty slug
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create(): RedirectResponse
     {
@@ -73,8 +69,6 @@ class SquarespaceOrderController extends Controller
     /**
      * Squarespace orders are created from parsed Mailgun messages
      * Hence, the store method is an empty slug
-     *
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request): RedirectResponse
     {
@@ -88,7 +82,6 @@ class SquarespaceOrderController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show(int $id): View
     {
@@ -102,7 +95,6 @@ class SquarespaceOrderController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show_order_number($order_number): View
     {
@@ -114,9 +106,6 @@ class SquarespaceOrderController extends Controller
 
     /**
      * Show an order to confirm the retreatant for a SquareSpace order.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(int $id): View
     {
@@ -194,10 +183,6 @@ class SquarespaceOrderController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UpdateSquarespaceOrderRequest $request, int $id): RedirectResponse
     {
@@ -740,9 +725,6 @@ class SquarespaceOrderController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(int $id): RedirectResponse
     {
@@ -754,9 +736,6 @@ class SquarespaceOrderController extends Controller
 
     /**
      * Reset to re-select the retreatant for a SquareSpace order.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function reset(int $id): RedirectResponse
     {

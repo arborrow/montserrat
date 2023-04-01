@@ -11,8 +11,6 @@ class AssetJobFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {   // start and end dates are NULL for the factory so assuming that no job has been completed

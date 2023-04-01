@@ -9,8 +9,6 @@ class MessagePermissionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
 
     // admin-mailgun, show-mailgun, update-mailgun

@@ -23,8 +23,6 @@ class TouchpointController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
@@ -38,9 +36,6 @@ class TouchpointController extends Controller
 
     /**
      * Display a listing of touchpoints associated with a particular staff member
-     *
-     * @param  int  $staff_id
-     * @return \Illuminate\Http\Response
      */
     public function index_type(int $staff_id = null): View
     {
@@ -54,8 +49,6 @@ class TouchpointController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create(Request $request): View
     {
@@ -194,9 +187,6 @@ class TouchpointController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(StoreTouchpointRequest $request): RedirectResponse
     {
@@ -280,9 +270,6 @@ class TouchpointController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show(int $id): View
     {
@@ -294,9 +281,6 @@ class TouchpointController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(int $id): View
     {
@@ -329,10 +313,6 @@ class TouchpointController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UpdateTouchpointRequest $request, int $id): RedirectResponse
     {
@@ -352,9 +332,6 @@ class TouchpointController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(int $id): RedirectResponse
     {

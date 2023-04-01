@@ -24,8 +24,6 @@ class RetreatController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
@@ -66,8 +64,6 @@ class RetreatController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create(): View
     {
@@ -121,9 +117,6 @@ class RetreatController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(StoreRetreatRequest $request): RedirectResponse
     {
@@ -216,9 +209,6 @@ class RetreatController extends Controller
     /**
      * Add a participant to an event with a given participant role.
      *
-     * @param  int  $contact_id
-     * @param  int  $event_id
-     * @param  int  $participant_role_id
      * @return bool
      */
     public function add_participant(int $contact_id, int $event_id, int $participant_role_id)
@@ -246,9 +236,6 @@ class RetreatController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show(int $id, $status = null): View
     {
@@ -372,9 +359,6 @@ class RetreatController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     //public function edit($id)
     //{
@@ -469,10 +453,6 @@ class RetreatController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UpdateRetreatRequest $request, int $id): RedirectResponse
     {
@@ -640,9 +620,6 @@ class RetreatController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(int $id): RedirectResponse
     {

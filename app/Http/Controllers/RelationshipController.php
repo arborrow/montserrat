@@ -18,8 +18,6 @@ class RelationshipController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
@@ -31,8 +29,6 @@ class RelationshipController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create(): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
@@ -44,8 +40,6 @@ class RelationshipController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request): RedirectResponse
     {   // relationships are not created directly here; they are created through the person controller
@@ -58,9 +52,6 @@ class RelationshipController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show(int $id): View
     {
@@ -72,9 +63,6 @@ class RelationshipController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(int $id): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
@@ -86,9 +74,6 @@ class RelationshipController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, int $id): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
@@ -100,9 +85,6 @@ class RelationshipController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(int $id): RedirectResponse
     {

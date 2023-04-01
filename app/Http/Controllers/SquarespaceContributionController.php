@@ -34,8 +34,6 @@ class SquarespaceContributionController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
@@ -48,8 +46,6 @@ class SquarespaceContributionController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create(): RedirectResponse
     {
@@ -61,8 +57,6 @@ class SquarespaceContributionController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request): RedirectResponse
     {
@@ -74,9 +68,6 @@ class SquarespaceContributionController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show(int $id): View
     {
@@ -88,9 +79,6 @@ class SquarespaceContributionController extends Controller
 
     /**
      * Show a contribution to confirm the retreatant for a SquareSpace order.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(int $id): View
     {
@@ -139,10 +127,6 @@ class SquarespaceContributionController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UpdateSquarespaceContributionRequest $request, int $id): RedirectResponse
     {
@@ -295,9 +279,6 @@ class SquarespaceContributionController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(int $id): RedirectResponse
     {
@@ -309,9 +290,6 @@ class SquarespaceContributionController extends Controller
 
     /**
      * Reset to re-select the retreatant for a SquareSpace contribution.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function reset(int $id): RedirectResponse
     {

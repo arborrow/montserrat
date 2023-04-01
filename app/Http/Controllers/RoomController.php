@@ -36,8 +36,6 @@ class RoomController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create(): View
     {
@@ -50,9 +48,6 @@ class RoomController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(StoreRoomRequest $request): RedirectResponse
     {
@@ -77,9 +72,6 @@ class RoomController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show(int $id): View
     {
@@ -93,9 +85,6 @@ class RoomController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(int $id): View
     {
@@ -109,10 +98,6 @@ class RoomController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UpdateRoomRequest $request, int $id): RedirectResponse
     {
@@ -137,9 +122,6 @@ class RoomController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(int $id): RedirectResponse
     {
@@ -173,7 +155,6 @@ class RoomController extends Controller
     /**
      * Display the room schedules for a particular month/year - default this month.
      *
-     * @param  int  $ymd
      * @return \Illuminate\Http\Response
      */
     public function schedule(int $ymd = null)
@@ -294,7 +275,6 @@ class RoomController extends Controller
      * If already hyphenated and valid format of yyyy-mm-dd returns hyphanated string
      * Helps address issue #448
      *
-     * @param  int  $unhyphenated_date
      * @return string $hyphenated_date
      */
     public function hyphenate_date(int $unhyphenated_date)

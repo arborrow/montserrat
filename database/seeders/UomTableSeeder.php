@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class UomTableSeeder extends Seeder
 {
-    /**
-     * @return void
-     */
     public function run(): void
     {
         DB::table('uom')->delete();
