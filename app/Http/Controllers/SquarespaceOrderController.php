@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\UpdateSquarespaceOrderRequest;
 use App\Mail\GiftCertificateRedemption;
 use App\Mail\SquarespaceOrderFulfillment;
@@ -28,10 +26,12 @@ use App\Models\StateProvince;
 use App\Models\Touchpoint;
 use App\Traits\SquareSpaceTrait;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class SquarespaceOrderController extends Controller
 {
@@ -80,8 +80,6 @@ class SquarespaceOrderController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
      */
     public function show(int $id): View
     {

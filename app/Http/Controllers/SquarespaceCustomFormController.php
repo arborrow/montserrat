@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreSquarespaceCustomFormFieldRequest;
 use App\Http\Requests\StoreSquarespaceCustomFormRequest;
 use App\Http\Requests\UpdateSquarespaceCustomFormFieldRequest;
 use App\Http\Requests\UpdateSquarespaceCustomFormRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class SquarespaceCustomFormController extends Controller
 {
