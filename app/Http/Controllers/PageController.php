@@ -482,7 +482,7 @@ class PageController extends Controller
      *
      * @return string $hyphenated_date
      */
-    public function hyphenate_date(int $unhyphenated_date)
+    public function hyphenate_date(int|string $unhyphenated_date)
     {
         if ((strpos($unhyphenated_date, '-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date)) {
             $hyphenated_date = substr($unhyphenated_date, 0, 4).'-'.substr($unhyphenated_date, 4, 2).'-'.substr($unhyphenated_date, 6, 2);

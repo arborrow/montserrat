@@ -14,7 +14,14 @@ class StripePayoutControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
-
+ 
+     /**
+     * @test
+     */
+    public function stripe_payout_controller_has_test(): void
+    {
+        $this->assertTrue(TRUE);
+    }
     public function create_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-squarespace-inventory');

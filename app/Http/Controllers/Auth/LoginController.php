@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\Request;
 
+
 //use Illuminate\Support\Facades\Session;
 
 // use Illuminate\Support\Facades\Redirect;
@@ -49,7 +50,7 @@ class LoginController extends Controller
     /**
      * Redirect the user to the GitHub authentication page.
      */
-    public function redirectToProvider(): Response
+    public function redirectToProvider(): RedirectResponse
     {
         return Socialite::driver('google')->redirect();
     }

@@ -157,7 +157,7 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function schedule(int $ymd = null)
+    public function schedule(int|string $ymd = null)
     {
         $this->authorize('show-room');
         if ((! isset($ymd)) or ($ymd == 0)) {
@@ -277,7 +277,7 @@ class RoomController extends Controller
      *
      * @return string $hyphenated_date
      */
-    public function hyphenate_date(int $unhyphenated_date)
+    public function hyphenate_date(int|string $unhyphenated_date)
     {
         if ((strpos($unhyphenated_date, '-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date)) {
             $hyphenated_date = substr($unhyphenated_date, 0, 4).'-'.substr($unhyphenated_date, 4, 2).'-'.substr($unhyphenated_date, 6, 2);

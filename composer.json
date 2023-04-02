@@ -10,7 +10,7 @@
     "require": {
         "php": "^8.1",
         "barryvdh/laravel-snappy": "^1.0",
-        "consoletvs/charts": "^6.6",
+        "consoletvs/charts": "@dev",
         "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.2",
         "h4cc/wkhtmltoimage-amd64": "0.12.x",
@@ -40,7 +40,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
         "barryvdh/laravel-ide-helper": "^2.13",
-        "brianium/paratest": "^6.6",
+        "brianium/paratest": "^7.0",
         "fakerphp/faker": "^1.9.1",
         "jasonmccreary/laravel-test-assertions": "^2.1",
         "laravel/homestead": "^13.2",
@@ -48,7 +48,7 @@
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
         "orangehill/iseed": "^3.0.1",
-        "phpunit/phpunit": "^9.5.10",
+        "phpunit/phpunit": "^10.0",
         "spatie/laravel-ignition": "^2.0",
         "symfony/css-selector": "^6.2",
         "symfony/dom-crawler": "^6.2"
@@ -106,6 +106,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

@@ -156,7 +156,7 @@ class Contact extends Model implements Auditable
 
     public function diocese()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parish'));
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
     }
 
     public function donations()
@@ -1635,30 +1635,18 @@ AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="R
 
     public function birthdayEmailReceivers()
     {
-        $sql = "SELECT
-            contact.id,
-            contact.display_name,
-            contact.birth_date,
-            email.email,
-            contact.nick_name,
-            contact.first_name,
-            contact.preferred_language
-        FROM
-            contact
-                INNER JOIN
-            email ON email.contact_id = contact.id
-                AND email.email != ''
-                AND email.is_primary
-        WHERE
-            MONTH(contact.birth_date) = MONTH(NOW())
-                AND DAY(contact.birth_date) = DAY(NOW())
-                AND contact.do_not_email <> 1
-                AND contact.is_deceased = 0
-                AND contact.deceased_date IS NULL
-                AND contact.deleted_at IS NULL";
-
-        $data = DB::select(DB::raw($sql));
-
-        return $data;
+        $birthdays = Contact::whereRaw("DAY(birth_date) = DAY(now())")
+            ->whereRaw("MONTH(birth_date) = MONTH(now())")
+            ->where('do_not_email','<>',1)
+            ->whereIsDeceased(0)
+            ->whereNull('deceased_date')
+            ->with('email_primary')
+            ->select('id', 'display_name','birth_date','nick_name','first_name','preferred_language')
+            ->whereHas('email_primary', function ($query) {
+                return $query->whereNotNull('email')->select('email');
+            })
+            ->get();
+        
+        return $birthdays;
     }
 }
