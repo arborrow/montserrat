@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Support\Facades\Http;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
@@ -19,10 +20,8 @@ class HomeController extends Controller
 
     /**
      * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         try {
             $result = Http::timeout(1)->get('http://labs.bible.org/api/?passage=random')->getBody();
@@ -34,7 +33,7 @@ class HomeController extends Controller
         return view('home', compact('quote'));
     }
 
-    public function goodbye()
+    public function goodbye(): View
     {
         return view('pages.goodbye');
     }

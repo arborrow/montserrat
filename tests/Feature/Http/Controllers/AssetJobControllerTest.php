@@ -18,7 +18,7 @@ class AssetJobControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-asset-job');
@@ -36,7 +36,7 @@ class AssetJobControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_with_asset_task_returns_an_ok_response()
+    public function create_with_asset_task_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-asset-job');
         $asset_task = \App\Models\AssetTask::factory()->create();
@@ -55,7 +55,7 @@ class AssetJobControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-asset-job');
         $asset_job = \App\Models\AssetJob::factory()->create();
@@ -69,7 +69,7 @@ class AssetJobControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('update-asset-job');
@@ -103,7 +103,7 @@ class AssetJobControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-asset-job');
@@ -119,7 +119,7 @@ class AssetJobControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset-job');
         $asset_job = \App\Models\AssetJob::factory()->create();
@@ -135,9 +135,8 @@ class AssetJobControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
-
         // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-asset-job');
 
@@ -185,7 +184,7 @@ class AssetJobControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('update-asset-job');

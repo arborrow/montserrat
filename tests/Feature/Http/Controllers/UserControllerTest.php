@@ -65,7 +65,7 @@ class UserControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-role');
 
@@ -80,7 +80,7 @@ class UserControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-role');
         $new_user = \App\Models\User::factory()->create();
@@ -136,7 +136,7 @@ class UserControllerTest extends TestCase
         $new_description = $this->faker->sentence();
 
         $response = $this->actingAs($user)->put(route('user.update', [$user]), [
-            'id'  => $user->id,
+            'id' => $user->id,
             'name' => $new_name,
             'display_name' => $new_name,
             'description' => $new_description,

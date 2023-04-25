@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use OwenIt\Auditing\Contracts\Auditable;
 use Laravel\Cashier\Billable;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Contact extends Model implements Auditable
 {
@@ -31,7 +31,7 @@ class Contact extends Model implements Auditable
 
     protected $appends = ['full_name_with_city', 'agc_household_name'];
 
-    protected $with = array('prefix', 'suffix');
+    protected $with = ['prefix', 'suffix'];
 
     public function generateTags(): array
     {
@@ -156,7 +156,7 @@ class Contact extends Model implements Auditable
 
     public function diocese()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parish'));
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
     }
 
     public function donations()
@@ -572,8 +572,8 @@ class Contact extends Model implements Auditable
             if (isset($this->suffix->name)) {
                 $full_name .= ', '.$this->suffix->name;
             }
-            if (trim($full_name) == "") {
-                $full_name = (isset($this->display_name)) ? $this->display_name : "N/A";
+            if (trim($full_name) == '') {
+                $full_name = (isset($this->display_name)) ? $this->display_name : 'N/A';
             }
         }
         if ($this->contact_type == config('polanco.contact_type.organization')) {
@@ -624,32 +624,30 @@ LEFT JOIN Donations as d ON (d.contact_id = p.contact_id AND p.event_id = d.even
 LEFT JOIN contact as c ON (p.contact_id = c.id)
 WHERE p.deleted_at IS NULL AND p.status_id=1 AND p.role_id = 5 AND p.canceled_at IS NULL
 AND e.deleted_at IS NULL AND e.event_type_id = 7 AND e.end_date < NOW() AND YEAR(e.start_date)>=2019
-AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="Retreat Funding";  
+AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="Retreat Funding";
 */
     public function getIsFreeLoaderAttribute()
-    {   
+    {
         $is_free_loader = 0;
 
         if ($this->contact_type == 1) { // only individuals
             $registrations = $this->event_registrations()->whereStatusId(1)->whereRoleId(5)->whereNull('canceled_at')->get();
             foreach ($registrations as $registration) {
-                if ($registration->event->retreat_type == "Ignatian"  && isset($registration->event->start_date) && isset($registration->event->end_date)) {
-                    if ($registration->event->end_date < now() && $registration->event->start_date->year >= date('Y')-3) {
+                if ($registration->event->retreat_type == 'Ignatian' && isset($registration->event->start_date) && isset($registration->event->end_date)) {
+                    if ($registration->event->end_date < now() && $registration->event->start_date->year >= date('Y') - 3) {
                         if ($registration->event->nights == 2 && $registration->retreat_offering <= 130) {
-                                $is_free_loader = 1;
+                            $is_free_loader = 1;
                         }
                         if ($registration->event->nights == 3 && $registration->retreat_offering <= 195) {
                             $is_free_loader = 1;
-                        }                    
+                        }
                     }
-    
                 }
             }
-            
         } else { // if vendor, organization, etc. they cannot be a free loader. Helps to avoid JCP or Diocese of Fort Worth where there may be many registrations.
             $is_free_loader = 0;
         }
-       
+
         return $is_free_loader;
     }
 
@@ -881,12 +879,12 @@ AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="R
     public function getAgcHouseholdNameAttribute()
     {
         if ($this->contact_type == 1) {
-            return (isset($this->agc2019->household_name)) ? $this->agc2019->household_name : $this->full_name;    
+            return (isset($this->agc2019->household_name)) ? $this->agc2019->household_name : $this->full_name;
         } else {
             return $this->full_name;
         }
     }
-    
+
     public function getNoteRoomPreferenceTextAttribute()
     {
         if (isset($this->note_room_preference->note)) {
@@ -1578,7 +1576,7 @@ AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="R
                 });
             }
             if ($filter == 'has_attachment' && ! empty($value)) {
-                $query->whereHas('attachments', function ($q) use ($value) {
+                $query->whereHas('attachments', function ($q) {
                     $q->where('uri', '!=', 'avatar.png');
                 });
             }
@@ -1637,30 +1635,18 @@ AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="R
 
     public function birthdayEmailReceivers()
     {
-        $sql = "SELECT
-            contact.id,
-            contact.display_name,
-            contact.birth_date,
-            email.email,
-            contact.nick_name,
-            contact.first_name,
-            contact.preferred_language
-        FROM
-            contact
-                INNER JOIN
-            email ON email.contact_id = contact.id
-                AND email.email != ''
-                AND email.is_primary
-        WHERE
-            MONTH(contact.birth_date) = MONTH(NOW())
-                AND DAY(contact.birth_date) = DAY(NOW())
-                AND contact.do_not_email <> 1
-                AND contact.is_deceased = 0
-                AND contact.deceased_date IS NULL
-                AND contact.deleted_at IS NULL";
-
-        $data = DB::select(DB::raw($sql));
-
-        return $data;
+        $birthdays = Contact::whereRaw("DAY(birth_date) = DAY(now())")
+            ->whereRaw("MONTH(birth_date) = MONTH(now())")
+            ->where('do_not_email','<>',1)
+            ->whereIsDeceased(0)
+            ->whereNull('deceased_date')
+            ->with('email_primary')
+            ->select('id', 'display_name','birth_date','nick_name','first_name','preferred_language')
+            ->whereHas('email_primary', function ($query) {
+                return $query->whereNotNull('email')->select('email');
+            })
+            ->get();
+        
+        return $birthdays;
     }
 }

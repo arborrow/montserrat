@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Http\Requests;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Validation\Rule;
 use Tests\TestCase;
 
@@ -25,7 +23,7 @@ class UpdateDonationRequestTest extends TestCase
     /**
      * @test
      */
-    public function authorize()
+    public function authorize(): void
     {
         $actual = $this->subject->authorize();
 
@@ -35,7 +33,7 @@ class UpdateDonationRequestTest extends TestCase
     /**
      * @test
      */
-    public function rules()
+    public function rules(): void
     {
         $actual = $this->subject->rules();
 
@@ -55,7 +53,7 @@ class UpdateDonationRequestTest extends TestCase
     /**
      * @test
      */
-    public function messages()
+    public function messages(): void
     {
         $actual = $this->subject->messages();
 

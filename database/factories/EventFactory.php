@@ -24,10 +24,8 @@ class EventFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());
         $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $start_date)->addDays($this->faker->numberBetween(1, 5));
@@ -43,7 +41,7 @@ class EventFactory extends Factory
             'start_date' => $start_date,
             'end_date' => $end_date,
             'is_active' => 1,
-            'idnumber' =>  $idnumber,
+            'idnumber' => $idnumber,
         ];
     }
 }

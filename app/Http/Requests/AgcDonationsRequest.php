@@ -8,23 +8,20 @@ class AgcDonationsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
-    public function rules()
-    {   $valid_agc_donation_type = \App\Models\DonationType::active()
-            ->whereIn('name', config('polanco.agc_donation_descriptions'))
-            ->get();
+    public function rules(): array
+    {
+        $valid_agc_donation_type = \App\Models\DonationType::active()
+                ->whereIn('name', config('polanco.agc_donation_descriptions'))
+                ->get();
         $valid_agc_donation_type_ids = $valid_agc_donation_type->modelKeys();
         // dd($valid_agc_donation_type, $valid_agc_donation_type_ids);
         return [
@@ -35,10 +32,8 @@ class AgcDonationsRequest extends FormRequest
 
     /**
      * Get the error messages for the defined validation rules.
-     *
-     * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

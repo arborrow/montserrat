@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 // $this->withoutExceptionHandling();
@@ -20,7 +19,7 @@ class DonationTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation-type');
 
@@ -34,7 +33,7 @@ class DonationTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-donation-type');
         $donation_type = \App\Models\DonationType::factory()->create();
@@ -49,7 +48,7 @@ class DonationTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-donation-type');
         $donation_type = \App\Models\DonationType::factory()->create();
@@ -71,7 +70,7 @@ class DonationTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation-type');
 
@@ -86,7 +85,7 @@ class DonationTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation-type');
         $donation_type = \App\Models\DonationType::factory()->create();
@@ -102,7 +101,7 @@ class DonationTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $this->withoutExceptionHandling();
 
@@ -134,7 +133,7 @@ class DonationTypeControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-donation-type');
         $donation_type = \App\Models\DonationType::factory()->create();

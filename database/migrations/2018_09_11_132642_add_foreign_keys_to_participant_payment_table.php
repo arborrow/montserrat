@@ -3,13 +3,12 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('participant_payment', function (Blueprint $table) {
             $table->foreign('contribution_id')->references('id')->on('contribution')->onUpdate('RESTRICT')->onDelete('RESTRICT');
@@ -19,10 +18,8 @@ return new class extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('participant_payment', function (Blueprint $table) {
             $table->dropForeign('participant_payment_contribution_id_foreign');

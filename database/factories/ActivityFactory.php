@@ -11,10 +11,8 @@ class ActivityFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'source_record_id' => $this->faker->randomNumber(),

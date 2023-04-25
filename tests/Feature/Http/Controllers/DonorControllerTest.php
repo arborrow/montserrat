@@ -5,7 +5,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -18,7 +17,7 @@ class DonorControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donor');
 
@@ -32,7 +31,7 @@ class DonorControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donor');
         $contact = \App\Models\Contact::factory()->create([

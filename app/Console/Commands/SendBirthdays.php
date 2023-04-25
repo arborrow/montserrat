@@ -9,6 +9,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
+
 class SendBirthdays extends Command
 {
     /**
@@ -37,13 +38,12 @@ class SendBirthdays extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {   // get list of contacts whose birthday is today - they are the birthday email recipients or receivers
-        $receivers = new Contact;
-        $receivers = $receivers->birthdayEmailReceivers();
+        $status = 0;
+        $contact = new Contact;
+        $receivers = $contact->birthdayEmailReceivers();
         // get and store birthday snippets
         $snippets = \App\Models\Snippet::whereTitle('birthday')->get();
         foreach ($snippets as $snippet) {
@@ -65,13 +65,15 @@ class SendBirthdays extends Command
             $touchpoint->type = 'Email';
 
             try {
-                Mail::to($receiver->email)->queue(new RetreatantBirthday($receiver));
+                Mail::to($receiver->email_primary->email)->queue(new RetreatantBirthday($receiver));
                 $touchpoint->notes = 'Automatic birthday email has been sent.';
                 $touchpoint->save();
             } catch (\Exception $e) {
                 $touchpoint->notes = 'Automatic birthday email failed to send: '.$e->getMessage();
                 $touchpoint->save();
+                $status = 1;
             }
         }
+        return $status;
     }
 }

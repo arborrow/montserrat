@@ -13,11 +13,11 @@
                 <h3 class="text-secondary">Info</h3>
                 <div class="row">
                     <div class="col-lg-3">
-                        {!! Form::label('purchaser_id', 'Purchaser ID:') !!} {!!optional($gift_certificate->purchaser)->contact_link_full_name !!}
+                        {!! Form::label('purchaser_id', 'Purchaser ID:') !!} {!!$gift_certificate->purchaser?->contact_link_full_name !!}
                         {!! Form::number('purchaser_id', $gift_certificate->purchaser_id, ['class' => 'form-control']) !!}
                     </div>
                     <div class="col-lg-3">
-                        {!! Form::label('recipient_id', 'Recipient ID:') !!} {!!optional($gift_certificate->recipient)->contact_link_full_name !!}
+                        {!! Form::label('recipient_id', 'Recipient ID:') !!} {!!$gift_certificate->recipient?->contact_link_full_name !!}
                         {!! Form::number('recipient_id', $gift_certificate->recipient_id, ['class' => 'form-control']) !!}
                     </div>
                 </div>

@@ -29,5 +29,4 @@ class Message extends Model implements Auditable
     {
         return $this->belongsTo(Contact::class, 'to_id', 'id');
     }
-
 }

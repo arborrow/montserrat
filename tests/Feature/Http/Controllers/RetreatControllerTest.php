@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Carbon\Carbon;
 
 /**
  * @see \App\Http\Controllers\RetreatController
@@ -18,7 +18,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function assign_rooms_returns_an_ok_response()
+    public function assign_rooms_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         // create a retreat, then create a number of registrations for the retreat
@@ -48,7 +48,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function calendar_returns_an_ok_response()
+    public function calendar_returns_an_ok_response(): void
     {   //TODO: atm this is a pretty weak test assuming Google calendar is not implemented, could be stronger if we simulate creating such events
         $user = $this->createUserWithPermission('show-retreat');
 
@@ -63,7 +63,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function checkin_returns_an_ok_response()
+    public function checkin_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
 
@@ -89,7 +89,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function checkout_returns_an_ok_response()
+    public function checkout_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
 
@@ -122,7 +122,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-retreat');
 
@@ -141,7 +141,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-retreat');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -156,7 +156,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-retreat');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -204,7 +204,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_payments_returns_an_ok_response()
+    public function edit_payments_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-payment');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -227,7 +227,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function get_event_by_id_number_returns_an_ok_response()
+    public function get_event_by_id_number_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -245,7 +245,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -263,7 +263,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_type_returns_an_ok_response()
+    public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
         // create a new event type, add a random number of retreats (2-10) to that event type ensuring they are all future events
@@ -291,7 +291,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function room_update_returns_an_ok_response()
+    public function room_update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -324,7 +324,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function room_update_validates_with_a_form_request()
+    public function room_update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RetreatController::class,
@@ -336,7 +336,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -354,7 +354,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_with_status_returns_an_ok_response()
+    public function show_with_status_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -372,7 +372,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_payments_returns_an_ok_response()
+    public function show_payments_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');
 
@@ -391,7 +391,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_waitlist_returns_an_ok_response()
+    public function show_waitlist_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
         $registration = \App\Models\Registration::factory()->create([
@@ -411,7 +411,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-retreat');
         $idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName();
@@ -437,7 +437,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RetreatController::class,
@@ -449,7 +449,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-retreat');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -484,7 +484,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\RetreatController::class,
@@ -496,7 +496,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function event_room_list_returns_an_ok_response()
+    public function event_room_list_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -523,7 +523,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function event_namebadges_returns_an_ok_response()
+    public function event_namebadges_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -550,7 +550,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function event_namebadges_with_role_returns_an_ok_response()
+    public function event_namebadges_with_role_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -584,7 +584,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function event_tableplacards_returns_an_ok_response()
+    public function event_tableplacards_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
         $retreat = \App\Models\Retreat::factory()->create();
@@ -608,7 +608,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function results_returns_an_ok_response()
+    public function results_returns_an_ok_response(): void
     {   // create a new user and then search for that user's last name and ensure that a result appears
         $user = $this->createUserWithPermission('show-retreat');
 
@@ -626,7 +626,7 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function search_returns_an_ok_response()
+    public function search_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
 

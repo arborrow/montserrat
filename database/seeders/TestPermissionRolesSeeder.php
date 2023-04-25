@@ -8,10 +8,8 @@ class TestPermissionRolesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $permissions = \App\Models\Permission::all();
 

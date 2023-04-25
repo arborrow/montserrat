@@ -36,15 +36,14 @@ class PostRetreatEmails extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
         $endDate = Carbon::today()->subDays(1);
         $retreats = Retreat::where('event_type_id', 7)
             ->whereDate('end_date', $endDate)
             ->get();
+        $status = 0; // initialize return status 
 
         if ($retreats->count() >= 1) {
             foreach ($retreats as $retreat) {
@@ -60,15 +59,17 @@ class PostRetreatEmails extends Command
                         if (null !== $registration->retreatant->primaryEmail()->first()) {
                             $primaryEmail = $registration->retreatant->primaryEmail()->first()->email;
                             try {
-                                Mail::to($primaryEmail)->queue(new PostRetreat($retreatant));
+                                Mail::to($primaryEmail)->queue(new PostRetreat($registration));
                             } catch (\Exception $e) {
+                                $status = 1;
                             }
                         }
                     }
                 }
                 // TODO: explore why behavior in test changed during upgrade to Laravel 7
-                return 0;
+                return $status;
             }
         }
+        return $status;
     }
 }

@@ -17,7 +17,7 @@ class ParishControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
 
@@ -36,7 +36,7 @@ class ParishControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-contact');
         $parish = \App\Models\Parish::factory()->create();
@@ -51,7 +51,7 @@ class ParishControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
         $parish = \App\Models\Parish::factory()->create();
@@ -64,14 +64,14 @@ class ParishControllerTest extends TestCase
 
         $main_phone = \App\Models\Phone::factory()->create([
             'contact_id' => $parish->id,
-            'location_type_id' =>  config('polanco.location_type.main'),
+            'location_type_id' => config('polanco.location_type.main'),
             'is_primary' => 1,
             'phone_type' => 'Phone',
         ]);
 
         $main_fax = \App\Models\Phone::factory()->create([
             'contact_id' => $parish->id,
-            'location_type_id' =>  config('polanco.location_type.main'),
+            'location_type_id' => config('polanco.location_type.main'),
             'phone_type' => 'Fax',
         ]);
 
@@ -155,7 +155,7 @@ class ParishControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $parish = \App\Models\Parish::factory()->create();
@@ -175,7 +175,7 @@ class ParishControllerTest extends TestCase
     /**
      * @test
      */
-    public function parish_index_by_diocese_returns_an_ok_response()
+    public function parish_index_by_diocese_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -190,7 +190,7 @@ class ParishControllerTest extends TestCase
             'contact_id_b' => $parish->id,
             'relationship_type_id' => config('polanco.relationship_type.diocese'),
         ]);
-        
+
         $response = $this->actingAs($user)->get('parishes/diocese/'.$diocese->id);
         $parishes = $response->viewData('parishes');
 
@@ -205,7 +205,7 @@ class ParishControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $parish = \App\Models\Parish::factory()->create();
@@ -223,7 +223,7 @@ class ParishControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
         $parish_name = 'St. '.$this->faker->firstName().' Parish';
@@ -249,7 +249,7 @@ class ParishControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\ParishController::class,
@@ -261,7 +261,7 @@ class ParishControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
         $parish = \App\Models\Parish::factory()->create();
@@ -286,7 +286,7 @@ class ParishControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\ParishController::class,

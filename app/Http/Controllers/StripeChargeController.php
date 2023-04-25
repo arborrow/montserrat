@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class StripeChargeController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-stripe-charge');
 
@@ -19,8 +18,7 @@ class StripeChargeController extends Controller
 
         $charges = $stripe->charges->all([]);
 
-        return view('stripe.charges.index',compact('charges'));   //
-
+        return view('stripe.charges.index', compact('charges'));   //
     }
 
     /**
@@ -36,7 +34,6 @@ class StripeChargeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,28 +45,25 @@ class StripeChargeController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($charge_id)
+    public function show($charge_id): View
     {
         $this->authorize('show-stripe-charge');
 
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
-        $charge = $stripe->charges->retrieve($charge_id,[]);
+        $charge = $stripe->charges->retrieve($charge_id, []);
         // $invoice = $stripe->invoices->retrieve($charge->invoice,[]);
-        $customer = !is_null($charge->customer) ? $stripe->customers->retrieve($charge->customer) : NULL;
+        $customer = ! is_null($charge->customer) ? $stripe->customers->retrieve($charge->customer) : null;
 
-        return view('stripe.charges.show',compact('charge','customer'));
-
+        return view('stripe.charges.show', compact('charge', 'customer'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         //
     }
@@ -77,11 +71,9 @@ class StripeChargeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         //
     }
@@ -89,11 +81,9 @@ class StripeChargeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function destroy($id)
+    public function destroy(int $id)
     {
         //
     }
@@ -101,10 +91,9 @@ class StripeChargeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function import($id)
+    public function import(int $id)
     {
         $this->authorize('import-stripe-charge');
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
@@ -112,8 +101,5 @@ class StripeChargeController extends Controller
         foreach ($charges->autoPagingIterator() as $charge) {
             // TODO: create stripe_charge model, check if charge->id exists, if not insert/import it
         }
-
-
     }
-
 }

@@ -11,10 +11,8 @@ class ParishFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $name = $this->faker->firstName();
         $parish_name = 'St. '.$name.' of '.$this->faker->city().' Parish';

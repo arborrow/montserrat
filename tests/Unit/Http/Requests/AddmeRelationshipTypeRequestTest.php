@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Http\Requests;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -24,7 +22,7 @@ class AddmeRelationshipTypeRequestTest extends TestCase
     /**
      * @test
      */
-    public function authorize()
+    public function authorize(): void
     {
         $actual = $this->subject->authorize();
 
@@ -34,21 +32,21 @@ class AddmeRelationshipTypeRequestTest extends TestCase
     /**
      * @test
      */
-    public function rules()
+    public function rules(): void
     {
         $actual = $this->subject->rules();
 
         $this->assertEquals([
             'relationship_type_name' => 'required|in:Child,Parent,Husband,Wife,Sibling,Employee,Volunteer,Parishioner,Primary contact,Employer,Diocese,Parish,Deacon,Priest,Board member',
             'contact_id' => 'integer|min:1|required',
-            'relationship_filter_alternate_name' => 'string|nullable'
+            'relationship_filter_alternate_name' => 'string|nullable',
         ], $actual);
     }
 
     /**
      * @test
      */
-    public function messages()
+    public function messages(): void
     {
         $actual = $this->subject->messages();
 

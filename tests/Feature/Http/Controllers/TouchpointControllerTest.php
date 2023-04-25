@@ -2,11 +2,12 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Tests\TestCase;
-use Carbon\Carbon;
+
 /**
  * @see \App\Http\Controllers\TouchpointController
  */
@@ -18,7 +19,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function add_returns_an_ok_response()
+    public function add_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
         // Create a fake contact to have an interaction with
@@ -55,7 +56,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function add_group_returns_an_ok_response()
+    public function add_group_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
         // Create a fake contact to have an interaction with
@@ -102,7 +103,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function add_retreat_returns_an_ok_response()
+    public function add_retreat_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
 
@@ -144,7 +145,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function add_retreat_waitlist_returns_an_ok_response()
+    public function add_retreat_waitlist_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
 
@@ -180,7 +181,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
 
@@ -197,7 +198,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-touchpoint');
         $touchpoint = \App\Models\Touchpoint::factory()->create();
@@ -211,7 +212,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-touchpoint');
         $touchpoint = \App\Models\Touchpoint::factory()->create();
@@ -242,7 +243,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-touchpoint');
 
@@ -257,7 +258,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_type_returns_an_ok_response()
+    public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-touchpoint');
 
@@ -276,7 +277,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-touchpoint');
         $touchpoint = \App\Models\Touchpoint::factory()->create();
@@ -293,7 +294,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
         $person = \App\Models\Contact::factory()->create();
@@ -331,7 +332,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\TouchpointController::class,
@@ -343,7 +344,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_group_returns_an_ok_response()
+    public function store_group_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
         // Create a fake contact to have an interaction with
@@ -395,7 +396,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_group_validates_with_a_form_request()
+    public function store_group_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\TouchpointController::class,
@@ -407,7 +408,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_retreat_returns_an_ok_response()
+    public function store_retreat_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
 
@@ -467,7 +468,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_retreat_validates_with_a_form_request()
+    public function store_retreat_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\TouchpointController::class,
@@ -479,7 +480,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_retreat_waitlist_returns_an_ok_response()
+    public function store_retreat_waitlist_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
 
@@ -538,7 +539,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_retreat_waitlist_validates_with_a_form_request()
+    public function store_retreat_waitlist_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\TouchpointController::class,
@@ -550,7 +551,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-touchpoint');
         $person = \App\Models\Contact::factory()->create();
@@ -589,7 +590,7 @@ class TouchpointControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\TouchpointController::class,

@@ -32,7 +32,7 @@ return [
         3 => '244,67,54',
         4 => '211,159,153',
         5 => '205,211,153',
-        6 =>'229,229,201',
+        6 => '229,229,201',
         7 => '90,174,174',
         8 => '147,131,107',
     ],
@@ -82,7 +82,7 @@ return [
 
     'contact' => [
         'montserrat' => '620',
-        'stripe' => env('STRIPE_VENDOR_ID', 2)
+        'stripe' => env('STRIPE_VENDOR_ID', 2),
     ],
 
     'donation_descriptions' => [
@@ -102,7 +102,7 @@ return [
     'stripe_balance_transaction_types' => [
         'Annual Giving Fund' => 'AGC - General',
         'Bookstore' => 'Bookstore Revenue',
-        'Bookstore + Tips' => ['Bookstore Revenue','Tips'],
+        'Bookstore + Tips' => ['Bookstore Revenue', 'Tips'],
         'Bookstore + Tips + Flowers' => ['Bookstore Revenue', 'Flowers and Landscaping', 'Tips'],
         'Building and Maintenance Fund' => 'AGC - Buildings & Maintenance',
         'Donacion de Retiro' => 'Retreat Funding',
@@ -118,7 +118,7 @@ return [
         'Retreat Offering + Bookstore + Tips + Flowers' => ['Bookstore Revenue', 'Flowers and Landscaping', 'Retreat Funding', 'Tips'],
         'Saturday of Reflection' => 'Retreat Funding',
         'Tiendita' => 'Bookstore Revenue',
-        'Tips' => 'Tips',          
+        'Tips' => 'Tips',
     ],
 
     // when creating database with the seeder, the first event created is the open deposit event

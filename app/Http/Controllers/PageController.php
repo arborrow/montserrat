@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use PDF;
 
 class PageController extends Controller
@@ -18,75 +19,75 @@ class PageController extends Controller
         $this->middleware('auth');
     }
 
-    public function about()
+    public function about(): View
     {
         return view('pages.about');
     }
 
-    public function retreat()
+    public function retreat(): View
     {
         return view('pages.retreat');
     }
 
-    public function reservation()
+    public function reservation(): View
     {
         return view('pages.reservation');
     }
 
     // TODO: no action
-    public function room()
+    public function room(): View
     {
         return view('pages.room');
     }
 
-    public function housekeeping()
+    public function housekeeping(): View
     {
         return view('pages.housekeeping');
     }
 
-    public function maintenance()
+    public function maintenance(): View
     {
         return view('pages.maintenance');
     }
 
-    public function grounds()
+    public function grounds(): View
     {
         return view('pages.grounds');
     }
 
-    public function kitchen()
+    public function kitchen(): View
     {
         return view('pages.kitchen');
     }
 
-    public function finance()
+    public function finance(): View
     {
         $this->authorize('show-donation');
 
         return view('pages.finance');
     }
 
-    public function bookstore()
+    public function bookstore(): View
     {
         return view('pages.bookstore');
     }
 
-    public function user()
+    public function user(): View
     {
         return view('pages.user');
     }
 
-    public function restricted()
+    public function restricted(): View
     {
         return view('pages.restricted');
     }
 
-    public function support()
+    public function support(): View
     {
         return view('pages.support');
     }
 
-    public function welcome()
+    public function welcome(): View
     {
         try {
             $result = Http::timeout(1)->get('http://labs.bible.org/api/?passage=random')->getBody();
@@ -98,7 +99,7 @@ class PageController extends Controller
         return view('welcome', compact('quote'));   //
     }
 
-    public function retreatantinforeport($idnumber)
+    public function retreatantinforeport($idnumber): View
     {
         $this->authorize('show-contact');
         $this->authorize('show-registration');
@@ -117,7 +118,7 @@ class PageController extends Controller
         return view('reports.retreatantinfo2', compact('registrations'));   //
     }
 
-    public function contact_info_report($id)
+    public function contact_info_report($id): View
     {
         $this->authorize('show-contact');
 
@@ -169,7 +170,7 @@ class PageController extends Controller
     }
 
     // TODO: why allow an empty donation id?
-    public function finance_invoice($donation_id = null)
+    public function finance_invoice($donation_id = null): View
     {
         $this->authorize('show-donation');
 
@@ -289,7 +290,7 @@ class PageController extends Controller
         return view('reports.finance.reconcile_deposits', compact('diffpg', 'diffrg'));
     }
 
-    public function retreatlistingreport($idnumber)
+    public function retreatlistingreport($idnumber): View
     {
         $this->authorize('show-contact');
 
@@ -313,7 +314,7 @@ class PageController extends Controller
         return view('reports.retreatlisting', compact('registrations'));   //
     }
 
-    public function retreatrosterreport($idnumber)
+    public function retreatrosterreport($idnumber): View
     {
         $this->authorize('show-contact');
 
@@ -336,7 +337,7 @@ class PageController extends Controller
         return view('reports.retreatroster', compact('registrations'));   //
     }
 
-    public function retreatregistrations($idnumber)
+    public function retreatregistrations($idnumber): View
     {
         $this->authorize('show-registration');
 
@@ -417,56 +418,56 @@ class PageController extends Controller
         // return view('reports.finance.acknowledgment', compact('payments','contact', 'montserrat','start_date','end_date'));
     }
 
-    public function config_index()
+    public function config_index(): View
     {
         $this->authorize('show-admin-menu');
 
         return view('admin.config.index');
     }
 
-    public function config_application()
+    public function config_application(): View
     {
         $this->authorize('show-admin-menu');
 
         return view('admin.config.application');
     }
 
-    public function config_mail()
+    public function config_mail(): View
     {
         $this->authorize('show-admin-menu');
 
         return view('admin.config.mail');
     }
 
-    public function config_gate()
+    public function config_gate(): View
     {
         $this->authorize('show-admin-menu');
 
         return view('admin.config.gate');
     }
 
-    public function config_google_calendar()
+    public function config_google_calendar(): View
     {
         $this->authorize('show-admin-menu');
 
         return view('admin.config.google_calendar');
     }
 
-    public function config_google_client()
+    public function config_google_client(): View
     {
         $this->authorize('show-admin-menu');
 
         return view('admin.config.google_client');
     }
 
-    public function config_mailgun()
+    public function config_mailgun(): View
     {
         $this->authorize('show-admin-menu');
 
         return view('admin.config.mailgun');
     }
 
-    public function config_twilio()
+    public function config_twilio(): View
     {
         $this->authorize('show-admin-menu');
 
@@ -479,10 +480,9 @@ class PageController extends Controller
      * If already hyphenated and valid format of yyyy-mm-dd returns hyphanated string
      * Helps address issue #448
      *
-     * @param  int  $unhyphenated_date
      * @return string $hyphenated_date
      */
-    public function hyphenate_date($unhyphenated_date)
+    public function hyphenate_date(int|string $unhyphenated_date)
     {
         if ((strpos($unhyphenated_date, '-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date)) {
             $hyphenated_date = substr($unhyphenated_date, 0, 4).'-'.substr($unhyphenated_date, 4, 2).'-'.substr($unhyphenated_date, 6, 2);

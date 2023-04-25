@@ -10,10 +10,8 @@ class RelationshipTypeFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name_a_b' => $this->faker->company(),

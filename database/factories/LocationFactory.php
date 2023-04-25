@@ -8,10 +8,8 @@ class LocationFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $name = $this->faker->lastName().' of '.$this->faker->city();
 
@@ -23,7 +21,7 @@ class LocationFactory extends Factory
             'label' => $name,
             'longitude' => $this->faker->longitude(-93, -103),
             'latitude' => $this->faker->latitude(30, 40),
-            'type' =>  $this->faker->randomElement(config('polanco.locations_type')),
+            'type' => $this->faker->randomElement(config('polanco.locations_type')),
         ];
     }
 }

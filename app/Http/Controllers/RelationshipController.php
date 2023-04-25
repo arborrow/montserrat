@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Relationship;
 use DB;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class RelationshipController extends Controller
 {
@@ -16,10 +18,8 @@ class RelationshipController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-relationship');
         $relationships = \App\Models\Relationship::paginate(25, ['*'], 'relationships');
@@ -29,10 +29,8 @@ class RelationshipController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('create-relationship');
         flash('Relationships cannot be directly created as they are managed via contacts')->error();
@@ -42,11 +40,8 @@ class RelationshipController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {   // relationships are not created directly here; they are created through the person controller
         // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('create-relationship');
@@ -57,11 +52,8 @@ class RelationshipController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-relationship');
         $relationship = \App\Models\Relationship::findOrFail($id);
@@ -71,11 +63,8 @@ class RelationshipController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('update-relationship');
         flash('Relationships cannot be directly edited as they are managed via contacts')->error();
@@ -85,12 +74,8 @@ class RelationshipController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('update-relationship');
         flash('Relationships cannot be directly updated as they are managed via contacts')->error();
@@ -100,11 +85,8 @@ class RelationshipController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-relationship');
 
@@ -115,7 +97,7 @@ class RelationshipController extends Controller
         return redirect()->back();
     }
 
-    public function disjoined()
+    public function disjoined(): View
     {
         $this->authorize('update-contact');
         $couples = DB::table('relationship as r')
@@ -139,29 +121,29 @@ class RelationshipController extends Controller
         return view('relationships.disjoined', compact('couples'));
     }
 
-    public function rejoin($id, $dominant)
+    public function rejoin($id, $dominant): RedirectResponse
     {
         $this->authorize('update-contact');
         $relationship = \App\Models\Relationship::with('contact_a.address_primary', 'contact_b.address_primary')->findOrFail($id);
         switch ($dominant) {
-        case $relationship->contact_id_a:
-          $relationship->contact_b->address_primary->street_address = $relationship->contact_a->address_primary->street_address;
-          $relationship->contact_b->address_primary->city = $relationship->contact_a->address_primary->city;
-          $relationship->contact_b->address_primary->state_province_id = $relationship->contact_a->address_primary->state_province_id;
-          $relationship->contact_b->address_primary->postal_code = $relationship->contact_a->address_primary->postal_code;
-          $relationship->contact_b->address_primary->country_id = $relationship->contact_a->address_primary->country_id;
-          $relationship->contact_b->address_primary->save();
-        break;
-        case $relationship->contact_id_b:
-          $relationship->contact_a->address_primary->street_address = $relationship->contact_b->address_primary->street_address;
-          $relationship->contact_a->address_primary->city = $relationship->contact_b->address_primary->city;
-          $relationship->contact_a->address_primary->state_province_id = $relationship->contact_b->address_primary->state_province_id;
-          $relationship->contact_a->address_primary->postal_code = $relationship->contact_b->address_primary->postal_code;
-          $relationship->contact_a->address_primary->country_id = $relationship->contact_b->address_primary->country_id;
-          $relationship->contact_a->address_primary->save();
-        break;
-        default: // do not do anything as there is a relationship mismatch error
-      }
+            case $relationship->contact_id_a:
+                $relationship->contact_b->address_primary->street_address = $relationship->contact_a->address_primary->street_address;
+                $relationship->contact_b->address_primary->city = $relationship->contact_a->address_primary->city;
+                $relationship->contact_b->address_primary->state_province_id = $relationship->contact_a->address_primary->state_province_id;
+                $relationship->contact_b->address_primary->postal_code = $relationship->contact_a->address_primary->postal_code;
+                $relationship->contact_b->address_primary->country_id = $relationship->contact_a->address_primary->country_id;
+                $relationship->contact_b->address_primary->save();
+                break;
+            case $relationship->contact_id_b:
+                $relationship->contact_a->address_primary->street_address = $relationship->contact_b->address_primary->street_address;
+                $relationship->contact_a->address_primary->city = $relationship->contact_b->address_primary->city;
+                $relationship->contact_a->address_primary->state_province_id = $relationship->contact_b->address_primary->state_province_id;
+                $relationship->contact_a->address_primary->postal_code = $relationship->contact_b->address_primary->postal_code;
+                $relationship->contact_a->address_primary->country_id = $relationship->contact_b->address_primary->country_id;
+                $relationship->contact_a->address_primary->save();
+                break;
+            default: // do not do anything as there is a relationship mismatch error
+        }
 
         return Redirect::back();
     }

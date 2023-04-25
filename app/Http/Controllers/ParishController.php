@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreParishRequest;
 use App\Http\Requests\UpdateParishRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class ParishController extends Controller
 {
@@ -34,10 +36,8 @@ class ParishController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-contact');
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
@@ -57,11 +57,8 @@ class ParishController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreParishRequest $request)
+    public function store(StoreParishRequest $request): RedirectResponse
     {
         $this->authorize('create-contact');
         $parish = new \App\Models\Contact;
@@ -149,7 +146,7 @@ class ParishController extends Controller
         $url_twitter->save();
 
         $current_user = $request->user();
-        $parish_note = \App\Models\Note::firstOrNew(['entity_id'=>$parish->id, 'entity_table'=>'contact', 'subject'=>'Parish Note']);
+        $parish_note = \App\Models\Note::firstOrNew(['entity_id' => $parish->id, 'entity_table' => 'contact', 'subject' => 'Parish Note']);
         if (isset($current_user->contact_id)) {
             $parish_note->contact_id = $current_user->contact_id;
         }
@@ -180,11 +177,8 @@ class ParishController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-contact');
         $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'note_parish', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a')->findOrFail($id);
@@ -196,17 +190,14 @@ class ParishController extends Controller
         $relationship_filter_types = [];
         $relationship_filter_types['Parishioner'] = 'Parishioner';
         $relationship_filter_types['Primary contact'] = 'Primary contact';
-    
+
         return view('parishes.show', compact('parish', 'files', 'relationship_filter_types', 'donations', 'touchpoints', 'registrations')); //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-contact');
 
@@ -262,12 +253,8 @@ class ParishController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateParishRequest $request, $id)
+    public function update(UpdateParishRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-contact');
 
@@ -365,43 +352,43 @@ class ParishController extends Controller
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
 
-        $url_main = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Main']);
+        $url_main = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Main']);
         $url_main->contact_id = $parish->id;
         $url_main->url = $request->input('url_main');
         $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Work']);
+        $url_work = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Work']);
         $url_work->contact_id = $parish->id;
         $url_work->url = $request->input('url_work');
         $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Facebook']);
+        $url_facebook = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Facebook']);
         $url_facebook->contact_id = $parish->id;
         $url_facebook->url = $request->input('url_facebook');
         $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
-        $url_google = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Google']);
+        $url_google = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Google']);
         $url_google->contact_id = $parish->id;
         $url_google->url = $request->input('url_google');
         $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Instagram']);
+        $url_instagram = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Instagram']);
         $url_instagram->contact_id = $parish->id;
         $url_instagram->url = $request->input('url_instagram');
         $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'LinkedIn']);
+        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'LinkedIn']);
         $url_linkedin->contact_id = $parish->id;
         $url_linkedin->url = $request->input('url_linkedin');
         $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Twitter']);
+        $url_twitter = \App\Models\Website::firstOrNew(['contact_id' => $parish->id, 'website_type' => 'Twitter']);
         $url_twitter->contact_id = $parish->id;
         $url_twitter->url = $request->input('url_twitter');
         $url_twitter->website_type = 'Twitter';
@@ -419,7 +406,7 @@ class ParishController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $parish->id, 'attachment', $description);
         }
 
-        $parish_note = \App\Models\Note::firstOrNew(['entity_id'=>$parish->id, 'entity_table'=>'contact', 'subject'=>'Parish Note']);
+        $parish_note = \App\Models\Note::firstOrNew(['entity_id' => $parish->id, 'entity_table' => 'contact', 'subject' => 'Parish Note']);
         $current_user = $request->user();
         if (isset($current_user->contact_id)) {
             $parish_note->contact_id = $current_user->contact_id;
@@ -434,11 +421,8 @@ class ParishController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-contact');
         $parish = \App\Models\Parish::findOrFail($id);
@@ -465,7 +449,7 @@ class ParishController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function parish_index_by_diocese($diocese_id)
+    public function parish_index_by_diocese($diocese_id): View
     {
         $this->authorize('show-contact');
         $diocese = \App\Models\Contact::findOrFail($diocese_id);

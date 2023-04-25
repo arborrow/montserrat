@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAssetJobRequest;
 use App\Http\Requests\UpdateAssetJobRequest;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class AssetJobController extends Controller
 {
@@ -15,7 +16,7 @@ class AssetJobController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-asset-job');
 
@@ -26,10 +27,8 @@ class AssetJobController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create($asset_task_id = 0)
+    public function create($asset_task_id = 0): View
     {
         $this->authorize('create-asset-job');
 
@@ -53,11 +52,8 @@ class AssetJobController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreAssetJobRequest $request)
+    public function store(StoreAssetJobRequest $request): RedirectResponse
     {
         $this->authorize('create-asset-job');
 
@@ -93,11 +89,8 @@ class AssetJobController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-asset-job');
 
@@ -108,11 +101,8 @@ class AssetJobController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-asset-job');
 
@@ -138,12 +128,8 @@ class AssetJobController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAssetJobRequest $request, $id)
+    public function update(UpdateAssetJobRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-asset-job');
 
@@ -185,11 +171,8 @@ class AssetJobController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-asset-job');
         $asset_job = \App\Models\AssetJob::findOrFail($id);

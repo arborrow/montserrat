@@ -17,7 +17,7 @@ class RelationshipControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {   //TODO: relationship creation currently handled by person controller; this is more of a stub
         $user = $this->createUserWithPermission('create-relationship');
 
@@ -29,7 +29,7 @@ class RelationshipControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-relationship');
         $relationship = \App\Models\Relationship::factory()->create();
@@ -44,9 +44,8 @@ class RelationshipControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {   //TODO: relationship editing currently handled by person controller; this is more of a stub
-
         $user = $this->createUserWithPermission('update-relationship');
         $relationship = \App\Models\Relationship::factory()->create();
 
@@ -58,7 +57,7 @@ class RelationshipControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-relationship');
 
@@ -73,7 +72,7 @@ class RelationshipControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-relationship');
         $relationship = \App\Models\Relationship::factory()->create();
@@ -89,9 +88,8 @@ class RelationshipControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {   //TODO: relationship creation/store currently handled by person controller; this is more of a stub
-
         $user = $this->createUserWithPermission('create-relationship');
 
         $response = $this->actingAs($user)->post(route('relationship.store'), [
@@ -106,7 +104,7 @@ class RelationshipControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {   //TODO: relationship creation currently handled by person controller; this is more of a stub
         $user = $this->createUserWithPermission('update-relationship');
         $relationship = \App\Models\Relationship::factory()->create();
@@ -123,7 +121,7 @@ class RelationshipControllerTest extends TestCase
     /**
      * @test
      */
-    public function disjoined_returns_an_ok_response()
+    public function disjoined_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
 
@@ -138,16 +136,16 @@ class RelationshipControllerTest extends TestCase
     /**
      * @test
      */
-    public function rejoin_returns_an_ok_response()
+    public function rejoin_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
-        $relationship = \App\Models\Relationship::factory()->create(['relationship_type_id'=>config('polanco.relationship_type.husband_wife')]);
-        $husband_address = \App\Models\Address::factory()->create(['contact_id'=>$relationship->contact_id_a, 'is_primary'=>1]);
-        $wife_address = \App\Models\Address::factory()->create(['contact_id'=>$relationship->contact_id_b, 'is_primary'=>1]);
+        $relationship = \App\Models\Relationship::factory()->create(['relationship_type_id' => config('polanco.relationship_type.husband_wife')]);
+        $husband_address = \App\Models\Address::factory()->create(['contact_id' => $relationship->contact_id_a, 'is_primary' => 1]);
+        $wife_address = \App\Models\Address::factory()->create(['contact_id' => $relationship->contact_id_b, 'is_primary' => 1]);
 
         $response = $this->actingAs($user)->from(URL('registration/disjoined'))->get(route('relationship.rejoin', [
-            'id'=>$relationship->id,
-            'dominant'=>$relationship->contact_id_a,
+            'id' => $relationship->id,
+            'dominant' => $relationship->contact_id_a,
         ]));
 
         $response->assertRedirect('registration/disjoined');

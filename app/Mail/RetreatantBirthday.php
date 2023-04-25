@@ -24,10 +24,8 @@ class RetreatantBirthday extends Mailable
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
-    public function build()
+    public function build(): static
     {
         $nameToUse = $this->retreatant->nick_name != null ? $this->retreatant->nick_name : $this->retreatant->first_name;
 

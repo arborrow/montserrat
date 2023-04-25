@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAssetTaskRequest;
 use App\Http\Requests\UpdateAssetTaskRequest;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class AssetTaskController extends Controller
 {
@@ -14,7 +15,7 @@ class AssetTaskController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-asset-task');
 
@@ -25,10 +26,8 @@ class AssetTaskController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create($asset_id = 0)
+    public function create($asset_id = 0): View
     {
         $this->authorize('create-asset-task');
 
@@ -52,11 +51,8 @@ class AssetTaskController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreAssetTaskRequest $request)
+    public function store(StoreAssetTaskRequest $request): RedirectResponse
     {
         $this->authorize('create-asset-task');
 
@@ -90,11 +86,8 @@ class AssetTaskController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-asset-task');
 
@@ -107,11 +100,8 @@ class AssetTaskController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-asset-task');
 
@@ -131,12 +121,8 @@ class AssetTaskController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAssetTaskRequest $request, $id)
+    public function update(UpdateAssetTaskRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-asset-task');
 
@@ -170,11 +156,8 @@ class AssetTaskController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-asset-task');
         $asset_task = \App\Models\AssetTask::findOrFail($id);
@@ -195,11 +178,8 @@ class AssetTaskController extends Controller
      * Finally, create the job if it is in the future and increment jobs_created variable
      * This approach ensures job history is maintained by not deleting previously scheduled jobs
      * It also allows for Nonscheduled - not automated PM - to remain as only future, scheduled jobs are deleted
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function schedule_jobs($id)
+    public function schedule_jobs(int $id): RedirectResponse
     {
         $this->authorize('update-asset-task');
         $asset_task = \App\Models\AssetTask::findOrFail($id);
@@ -210,118 +190,118 @@ class AssetTaskController extends Controller
             $asset_jobs = \App\Models\AssetJob::whereAssetTaskId($id)->whereStatus('Scheduled')->where('scheduled_date', '>', now())->delete();
 
             switch ($asset_task->frequency) {
-                    case 'daily':
-                        $jobs_to_create = $asset_task->start_date->diffInDays($asset_task->scheduled_until_date);
-                        for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
-                            if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
-                                $job_date = $asset_task->start_date->addDay($job_number);
-                                if (isset($asset_task->scheduled_time)) {
-                                    $time = explode(':', $asset_task->scheduled_time);
-                                    $job_date->hour = $time[0];
-                                    $job_date->minute = $time[1];
-                                    $job_date->second = $time[2];
-                                }
-                                $new_job = new \App\Models\AssetJob;
-                                $new_job->asset_task_id = $asset_task->id;
-                                // TODO: refine to use frequency time, for now simply create some jobs
-                                $new_job->scheduled_date = $job_date;
-                                $new_job->status = 'Scheduled';
-                                // only save future jobs
-                                if ($new_job->scheduled_date > now()) {
-                                    $new_job->save();
-                                    $jobs_created++;
-                                }
+                case 'daily':
+                    $jobs_to_create = $asset_task->start_date->diffInDays($asset_task->scheduled_until_date);
+                    for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
+                        if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
+                            $job_date = $asset_task->start_date->addDay($job_number);
+                            if (isset($asset_task->scheduled_time)) {
+                                $time = explode(':', $asset_task->scheduled_time);
+                                $job_date->hour = $time[0];
+                                $job_date->minute = $time[1];
+                                $job_date->second = $time[2];
+                            }
+                            $new_job = new \App\Models\AssetJob;
+                            $new_job->asset_task_id = $asset_task->id;
+                            // TODO: refine to use frequency time, for now simply create some jobs
+                            $new_job->scheduled_date = $job_date;
+                            $new_job->status = 'Scheduled';
+                            // only save future jobs
+                            if ($new_job->scheduled_date > now()) {
+                                $new_job->save();
+                                $jobs_created++;
                             }
                         }
+                    }
 
-                        break;
-                    case 'weekly':
-                        $jobs_to_create = $asset_task->start_date->diffInWeeks($asset_task->scheduled_until_date);
-                        for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
-                            if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
-                                $job_date = $asset_task->start_date->addWeek($job_number);
-                                if (isset($asset_task->scheduled_dow)) {
-                                    $dow_diff = $asset_task->scheduled_dow - $asset_task->start_date->dayOfWeek;
-                                    $job_date->addDays($dow_diff);
-                                }
-                                if (isset($asset_task->scheduled_time)) {
-                                    $time = explode(':', $asset_task->scheduled_time);
-                                    $job_date->hour = $time[0];
-                                    $job_date->minute = $time[1];
-                                    $job_date->second = $time[2];
-                                }
-                                $new_job = new \App\Models\AssetJob;
-                                $new_job->asset_task_id = $asset_task->id;
-                                // TODO: refine to use frequency time, for now simply create some jobs
-                                $new_job->scheduled_date = $job_date;
-                                $new_job->status = 'Scheduled';
-                                // only save future jobs
-                                if ($new_job->scheduled_date > now()) {
-                                    $new_job->save();
-                                    $jobs_created++;
-                                }
+                    break;
+                case 'weekly':
+                    $jobs_to_create = $asset_task->start_date->diffInWeeks($asset_task->scheduled_until_date);
+                    for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
+                        if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
+                            $job_date = $asset_task->start_date->addWeek($job_number);
+                            if (isset($asset_task->scheduled_dow)) {
+                                $dow_diff = $asset_task->scheduled_dow - $asset_task->start_date->dayOfWeek;
+                                $job_date->addDays($dow_diff);
+                            }
+                            if (isset($asset_task->scheduled_time)) {
+                                $time = explode(':', $asset_task->scheduled_time);
+                                $job_date->hour = $time[0];
+                                $job_date->minute = $time[1];
+                                $job_date->second = $time[2];
+                            }
+                            $new_job = new \App\Models\AssetJob;
+                            $new_job->asset_task_id = $asset_task->id;
+                            // TODO: refine to use frequency time, for now simply create some jobs
+                            $new_job->scheduled_date = $job_date;
+                            $new_job->status = 'Scheduled';
+                            // only save future jobs
+                            if ($new_job->scheduled_date > now()) {
+                                $new_job->save();
+                                $jobs_created++;
                             }
                         }
-                        break;
-                    case 'monthly':
-                        $jobs_to_create = $asset_task->start_date->diffInMonths($asset_task->scheduled_until_date);
-                        for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
-                            if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
-                                $job_date = $asset_task->start_date->addMonth($job_number);
-                                if (isset($asset_task->scheduled_day)) {
-                                    $job_date->day = $asset_task->scheduled_day;
-                                }
-                                if (isset($asset_task->scheduled_time)) {
-                                    $time = explode(':', $asset_task->scheduled_time);
-                                    $job_date->hour = $time[0];
-                                    $job_date->minute = $time[1];
-                                    $job_date->second = $time[2];
-                                }
-                                $new_job = new \App\Models\AssetJob;
-                                $new_job->asset_task_id = $asset_task->id;
-                                // TODO: refine to use frequency time, for now simply create some jobs
-                                $new_job->scheduled_date = $job_date;
-                                $new_job->status = 'Scheduled';
-                                // only save future jobs
-                                if ($new_job->scheduled_date > now()) {
-                                    $new_job->save();
-                                    $jobs_created++;
-                                }
+                    }
+                    break;
+                case 'monthly':
+                    $jobs_to_create = $asset_task->start_date->diffInMonths($asset_task->scheduled_until_date);
+                    for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
+                        if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
+                            $job_date = $asset_task->start_date->addMonth($job_number);
+                            if (isset($asset_task->scheduled_day)) {
+                                $job_date->day = $asset_task->scheduled_day;
+                            }
+                            if (isset($asset_task->scheduled_time)) {
+                                $time = explode(':', $asset_task->scheduled_time);
+                                $job_date->hour = $time[0];
+                                $job_date->minute = $time[1];
+                                $job_date->second = $time[2];
+                            }
+                            $new_job = new \App\Models\AssetJob;
+                            $new_job->asset_task_id = $asset_task->id;
+                            // TODO: refine to use frequency time, for now simply create some jobs
+                            $new_job->scheduled_date = $job_date;
+                            $new_job->status = 'Scheduled';
+                            // only save future jobs
+                            if ($new_job->scheduled_date > now()) {
+                                $new_job->save();
+                                $jobs_created++;
                             }
                         }
-                        break;
-                    case 'yearly':
-                        $jobs_to_create = $asset_task->start_date->diffInYears($asset_task->scheduled_until_date);
-                        for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
-                            if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
-                                $job_date = $asset_task->start_date->addYear($job_number);
-                                if (isset($asset_task->scheduled_month)) {
-                                    $job_date->month = $asset_task->scheduled_month;
-                                }
-                                if (isset($asset_task->scheduled_day)) {
-                                    $job_date->day = $asset_task->scheduled_day;
-                                }
-                                if (isset($asset_task->scheduled_time)) {
-                                    $time = explode(':', $asset_task->scheduled_time);
-                                    $job_date->hour = $time[0];
-                                    $job_date->minute = $time[1];
-                                    $job_date->second = $time[2];
-                                }
+                    }
+                    break;
+                case 'yearly':
+                    $jobs_to_create = $asset_task->start_date->diffInYears($asset_task->scheduled_until_date);
+                    for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
+                        if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
+                            $job_date = $asset_task->start_date->addYear($job_number);
+                            if (isset($asset_task->scheduled_month)) {
+                                $job_date->month = $asset_task->scheduled_month;
+                            }
+                            if (isset($asset_task->scheduled_day)) {
+                                $job_date->day = $asset_task->scheduled_day;
+                            }
+                            if (isset($asset_task->scheduled_time)) {
+                                $time = explode(':', $asset_task->scheduled_time);
+                                $job_date->hour = $time[0];
+                                $job_date->minute = $time[1];
+                                $job_date->second = $time[2];
+                            }
 
-                                $new_job = new \App\Models\AssetJob;
-                                $new_job->asset_task_id = $asset_task->id;
-                                // TODO: refine to use frequency time, for now simply create some jobs
-                                $new_job->scheduled_date = $job_date;
-                                $new_job->status = 'Scheduled';
-                                // only save future jobs
-                                if ($new_job->scheduled_date > now()) {
-                                    $new_job->save();
-                                    $jobs_created++;
-                                }
+                            $new_job = new \App\Models\AssetJob;
+                            $new_job->asset_task_id = $asset_task->id;
+                            // TODO: refine to use frequency time, for now simply create some jobs
+                            $new_job->scheduled_date = $job_date;
+                            $new_job->status = 'Scheduled';
+                            // only save future jobs
+                            if ($new_job->scheduled_date > now()) {
+                                $new_job->save();
+                                $jobs_created++;
                             }
                         }
-                        break;
-                }
+                    }
+                    break;
+            }
         }
 
         flash('Asset Task: '.$asset_task->asset_name.': '.$asset_task->title.' '.$jobs_created.' upcoming jobs scheduled')->warning()->important();

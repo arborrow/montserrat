@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AuditSearchRequest;
 use App\Models\Audit;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class AuditController extends Controller
 {
@@ -17,10 +19,8 @@ class AuditController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
@@ -29,7 +29,7 @@ class AuditController extends Controller
         return view('admin.audits.index', compact('audits', 'users'));
     }
 
-    public function index_type($user_id = null)
+    public function index_type($user_id = null): View
     {
         $this->authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
@@ -40,10 +40,8 @@ class AuditController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): RedirectResponse
     {
         // cannot manually create audits
         $this->authorize('create-audit');
@@ -54,11 +52,8 @@ class AuditController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         // cannot manually create audits
         $this->authorize('create-audit');
@@ -69,11 +64,8 @@ class AuditController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-audit');
 
@@ -86,11 +78,8 @@ class AuditController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): RedirectResponse
     {
         // cannot manually edit audits
         $this->authorize('update-audit');
@@ -101,12 +90,8 @@ class AuditController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         // cannot manually edit audits
         $this->authorize('update-audit');
@@ -117,11 +102,8 @@ class AuditController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         // cannot manually destroy audits
         $this->authorize('delete-audit');
@@ -130,22 +112,22 @@ class AuditController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function search()
+    public function search(): View
     {
         $this->authorize('show-audit');
-        
+
         $users = User::whereProvider('google')->pluck('name', 'id');
         $users->prepend('N/A', '');
 
-        $models = Audit::where('auditable_type','LIKE','%Models%')->groupBy('auditable_type')->orderBy('auditable_type')->get()->pluck('model_name', 'auditable_type');
+        $models = Audit::where('auditable_type', 'LIKE', '%Models%')->groupBy('auditable_type')->orderBy('auditable_type')->get()->pluck('model_name', 'auditable_type');
         $models->prepend('N/A', '');
         //dd($models);
-        $actions = array (null => "N/A", 'created' => 'created', 'deleted'=>'deleted', 'updated' => 'updated');
+        $actions = [null => 'N/A', 'created' => 'created', 'deleted' => 'deleted', 'updated' => 'updated'];
 
-        return view('admin.audits.search', compact('users', 'models','actions'));
+        return view('admin.audits.search', compact('users', 'models', 'actions'));
     }
 
-    public function results(AuditSearchRequest $request)
+    public function results(AuditSearchRequest $request): View
     {
         $this->authorize('show-audit');
         if (! empty($request)) {
@@ -154,7 +136,7 @@ class AuditController extends Controller
         } else {
             $audits = Audit::orderByDesc('created_at')->paginate(25, ['*'], 'audits');
         }
+
         return view('admin.audits.results', compact('audits'));
     }
-
 }

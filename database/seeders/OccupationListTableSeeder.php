@@ -9,10 +9,8 @@ class OccupationListTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('occupation_list')->delete();
 

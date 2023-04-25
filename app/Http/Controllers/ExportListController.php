@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreExportListRequest;
 use App\Http\Requests\UpdateExportListRequest;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class ExportListController extends Controller
 {
@@ -17,7 +18,7 @@ class ExportListController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-export-list');
         $export_lists = \App\Models\ExportList::orderBy('label')->get();
@@ -27,10 +28,8 @@ class ExportListController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-export-list');
         $export_list_types = config('polanco.export_list_types');
@@ -40,11 +39,8 @@ class ExportListController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreExportListRequest $request)
+    public function store(StoreExportListRequest $request): RedirectResponse
     {
         $this->authorize('create-export-list');
 
@@ -68,11 +64,8 @@ class ExportListController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-export-list');
 
@@ -83,11 +76,8 @@ class ExportListController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-export-list');
 
@@ -99,12 +89,8 @@ class ExportListController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateExportListRequest $request, $id)
+    public function update(UpdateExportListRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-export-list');
 
@@ -129,11 +115,8 @@ class ExportListController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-export-list');
         $export_list = \App\Models\ExportList::findOrFail($id);
@@ -149,10 +132,9 @@ class ExportListController extends Controller
      * Setup and export to CSV the Annual Giving Campaign (AGC) export/mailing list.
      *
      * @param  ExportListAGCRequest  $request
-     * @return \Illuminate\Http\Response
      */
 //    public function agc(ExportListAGCRequest $request)
-    public function agc()
+    public function agc(): RedirectResponse
     {
         $this->authorize('show-export-list');
         // $id = $request->input('id');

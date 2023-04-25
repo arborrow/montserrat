@@ -9,13 +9,12 @@ use App\Mail\RetreatantBirthday;
 use App\Mail\RetreatConfirmation;
 use App\Mail\SquarespaceOrderFulfillment;
 use Auth;
-use Carbon\Carbon;
 use Faker;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class SnippetController extends Controller
 {
@@ -25,7 +24,7 @@ class SnippetController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-snippet');
 
@@ -35,7 +34,7 @@ class SnippetController extends Controller
         return view('admin.snippets.index', compact('snippets', 'titles'));
     }
 
-    public function index_type($title = null)
+    public function index_type($title = null): View
     {
         $this->authorize('show-snippet');
 
@@ -47,10 +46,8 @@ class SnippetController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-snippet');
         $locales = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
@@ -60,11 +57,8 @@ class SnippetController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreSnippetRequest $request)
+    public function store(StoreSnippetRequest $request): RedirectResponse
     {
         $this->authorize('create-snippet');
 
@@ -83,11 +77,8 @@ class SnippetController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-snippet');
 
@@ -98,11 +89,8 @@ class SnippetController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-snippet');
 
@@ -114,12 +102,8 @@ class SnippetController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSnippetRequest $request, $id)
+    public function update(UpdateSnippetRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-snippet');
 
@@ -139,11 +123,8 @@ class SnippetController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-snippet');
         $snippet = \App\Models\Snippet::findOrFail($id);
@@ -155,7 +136,7 @@ class SnippetController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function snippet_test(SnippetTestRequest $request)
+    public function snippet_test(SnippetTestRequest $request): RedirectResponse
     {
         $this->authorize('show-snippet');
 
@@ -204,10 +185,10 @@ class SnippetController extends Controller
                 break;
             case 'event-confirmation':
                 $snippets = \App\Models\Snippet::whereTitle('event-confirmation')->get();
-                    foreach ($snippets as $snippet) {
-                        $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
-                        Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
-                    }
+                foreach ($snippets as $snippet) {
+                    $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
+                    Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
+                }
                 switch ($language) {
                     case 'es_ES':
                         $registration = \App\Models\Registration::with('event.event_type', 'contact')
@@ -228,7 +209,6 @@ class SnippetController extends Controller
                                 $q->wherePreferredLanguage('en_US');
                             })
                             ->first();
-
                 }
                 if (! empty($email)) {
                     try {
@@ -240,47 +220,46 @@ class SnippetController extends Controller
                     }
                 }
                 break;
-                case 'squarespace_order_fulfillment':
-                    $snippets = \App\Models\Snippet::whereTitle($title)->get();
-                        foreach ($snippets as $snippet) {
-                            $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
-                            Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
-                        }
-                                        
-                        // TODO:: actually select an order for a Spanish speaker
-                    switch ($language) {
-                        case 'es_ES':
-                            $order = \App\Models\SquarespaceOrder::whereIsProcessed(1)
-                                ->whereNotNull('event_id')
-                                ->whereNotNull('contact_id')
-                                ->with('retreatant','event')->first();
-                            $order = \App\Models\SquarespaceOrder::whereIsProcessed(1)
-                                ->whereNotNull('event_id')
-                                ->whereNotNull('contact_id')
-                                ->whereHas('retreatant', function ($q) {
-                                    $q->wherePreferredLanguage('es_ES');
-                                })
-                                ->with('retreatant','event')
-                                ->first();
-                            break;
-                        default: // en_US              
-                            $order = \App\Models\SquarespaceOrder::whereIsProcessed(1)
-                                ->whereNotNull('event_id')
-                                ->whereNotNull('contact_id')
-                                ->with('retreatant','event')->first();
+            case 'squarespace_order_fulfillment':
+                $snippets = \App\Models\Snippet::whereTitle($title)->get();
+                foreach ($snippets as $snippet) {
+                    $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
+                    Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
+                }
 
+                // TODO:: actually select an order for a Spanish speaker
+                switch ($language) {
+                    case 'es_ES':
+                        $order = \App\Models\SquarespaceOrder::whereIsProcessed(1)
+                            ->whereNotNull('event_id')
+                            ->whereNotNull('contact_id')
+                            ->with('retreatant', 'event')->first();
+                        $order = \App\Models\SquarespaceOrder::whereIsProcessed(1)
+                            ->whereNotNull('event_id')
+                            ->whereNotNull('contact_id')
+                            ->whereHas('retreatant', function ($q) {
+                                $q->wherePreferredLanguage('es_ES');
+                            })
+                            ->with('retreatant', 'event')
+                            ->first();
+                        break;
+                    default: // en_US
+                        $order = \App\Models\SquarespaceOrder::whereIsProcessed(1)
+                            ->whereNotNull('event_id')
+                            ->whereNotNull('contact_id')
+                            ->with('retreatant', 'event')->first();
+                }
+                // dd($order->event_start_date->locale('es_ES')->translatedFormat("l d \de F \de\l Y"));
+                if (! empty($email)) {
+                    try {
+                        Mail::to($email)->queue(new SquarespaceOrderFulfillment($order));
+                        flash('Retreat confirmation test email successfully sent to: '.$email)->success();
+                    } catch (\Exception $e) {
+                        // dd($e, $order);
+                        flash('Sending of retreat confirmation test email to: '.$email.' failed')->error();
                     }
-                    // dd($order->event_start_date->locale('es_ES')->translatedFormat("l d \de F \de\l Y"));
-                    if (! empty($email)) {
-                        try {
-                            Mail::to($email)->queue(new SquarespaceOrderFulfillment($order));
-                            flash('Retreat confirmation test email successfully sent to: '.$email)->success();
-                        } catch (\Exception $e) {
-                            // dd($e, $order);
-                            flash('Sending of retreat confirmation test email to: '.$email.' failed')->error();
-                        }
-                    }
-                    break;    
+                }
+                break;
             default:
                 flash('Unknown snippet test: '.$title)->error();
                 break;
@@ -291,10 +270,8 @@ class SnippetController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function test($title = null, $email = null, $language = 'en_US')
+    public function test($title = null, $email = null, $language = 'en_US'): View
     {
         $this->authorize('show-snippet');
         $titles = \App\Models\Snippet::groupBy('title')->orderBy('title')->pluck('title', 'title');

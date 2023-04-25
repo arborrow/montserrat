@@ -2,19 +2,15 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
 
 class SquarespaceInventoryPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('permissions')->insert([
             0 => [
@@ -50,6 +46,5 @@ class SquarespaceInventoryPermissionSeeder extends Seeder
                 'deleted_at' => null,
             ],
         ]);
-
     }
 }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class GroupController extends Controller
 {
@@ -15,10 +17,8 @@ class GroupController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-group');
         $groups = \App\Models\Group::whereIsActive(1)->orderBy('name')->with('members')->get();
@@ -31,10 +31,8 @@ class GroupController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-group');
 
@@ -43,11 +41,8 @@ class GroupController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreGroupRequest $request)
+    public function store(StoreGroupRequest $request): RedirectResponse
     {
         $this->authorize('create-group');
 
@@ -68,11 +63,8 @@ class GroupController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-group');
         $group = \App\Models\Group::findOrFail($id);
@@ -85,11 +77,8 @@ class GroupController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-group');
         $group = \App\Models\Group::findOrFail($id);
@@ -99,12 +88,8 @@ class GroupController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGroupRequest $request, $id)
+    public function update(UpdateGroupRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-group');
 
@@ -127,11 +112,8 @@ class GroupController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-group');
 

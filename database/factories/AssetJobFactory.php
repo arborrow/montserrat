@@ -11,10 +11,8 @@ class AssetJobFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {   // start and end dates are NULL for the factory so assuming that no job has been completed
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '+30 days', $endDate = '+90 days')->getTimeStamp());
         $staff = \App\Models\Contact::factory()->create();

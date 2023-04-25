@@ -10,10 +10,8 @@ class PermissionFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $actions = ['show', 'create', 'update', 'delete', 'manage'];
         $action = $actions[array_rand($actions)];

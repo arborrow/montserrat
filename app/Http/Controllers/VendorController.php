@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVendorRequest;
 use App\Http\Requests\UpdateVendorRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class VendorController extends Controller
 {
@@ -15,10 +17,8 @@ class VendorController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-contact');
         $vendors = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->paginate(25, ['*'], 'vendors');
@@ -28,10 +28,8 @@ class VendorController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-contact');
 
@@ -47,11 +45,8 @@ class VendorController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreVendorRequest $request)
+    public function store(StoreVendorRequest $request): RedirectResponse
     {
         $this->authorize('create-contact');
 
@@ -156,11 +151,8 @@ class VendorController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-contact');
         $vendor = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes')->findOrFail($id);
@@ -174,17 +166,14 @@ class VendorController extends Controller
         // $relationship_filter_types['Board member'] = 'Board member';
         $relationship_filter_types['Employee'] = 'Employee';
         $relationship_filter_types['Primary contact'] = 'Primary contact';
-        
+
         return view('vendors.show', compact('vendor', 'relationship_filter_types', 'files', 'donations', 'touchpoints', 'registrations')); //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-contact');
 
@@ -214,12 +203,8 @@ class VendorController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateVendorRequest $request, $id)
+    public function update(UpdateVendorRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-contact');
 
@@ -282,7 +267,7 @@ class VendorController extends Controller
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
 
-        $vendor_note = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$vendor->id, 'subject'=>'Vendor note']);
+        $vendor_note = \App\Models\Note::firstOrNew(['entity_table' => 'contact', 'entity_id' => $vendor->id, 'subject' => 'Vendor note']);
         $vendor_note->entity_table = 'contact';
         $vendor_note->entity_id = $vendor->id;
         $vendor_note->note = $request->input('note_vendor');
@@ -301,43 +286,43 @@ class VendorController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $vendor->id, 'attachment', $description);
         }
 
-        $url_main = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Main']);
+        $url_main = \App\Models\Website::firstOrNew(['contact_id' => $vendor->id, 'website_type' => 'Main']);
         $url_main->contact_id = $vendor->id;
         $url_main->url = $request->input('url_main');
         $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Work']);
+        $url_work = \App\Models\Website::firstOrNew(['contact_id' => $vendor->id, 'website_type' => 'Work']);
         $url_work->contact_id = $vendor->id;
         $url_work->url = $request->input('url_work');
         $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Facebook']);
+        $url_facebook = \App\Models\Website::firstOrNew(['contact_id' => $vendor->id, 'website_type' => 'Facebook']);
         $url_facebook->contact_id = $vendor->id;
         $url_facebook->url = $request->input('url_facebook');
         $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
-        $url_google = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Google']);
+        $url_google = \App\Models\Website::firstOrNew(['contact_id' => $vendor->id, 'website_type' => 'Google']);
         $url_google->contact_id = $vendor->id;
         $url_google->url = $request->input('url_google');
         $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Instagram']);
+        $url_instagram = \App\Models\Website::firstOrNew(['contact_id' => $vendor->id, 'website_type' => 'Instagram']);
         $url_instagram->contact_id = $vendor->id;
         $url_instagram->url = $request->input('url_instagram');
         $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'LinkedIn']);
+        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id' => $vendor->id, 'website_type' => 'LinkedIn']);
         $url_linkedin->contact_id = $vendor->id;
         $url_linkedin->url = $request->input('url_linkedin');
         $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Twitter']);
+        $url_twitter = \App\Models\Website::firstOrNew(['contact_id' => $vendor->id, 'website_type' => 'Twitter']);
         $url_twitter->contact_id = $vendor->id;
         $url_twitter->url = $request->input('url_twitter');
         $url_twitter->website_type = 'Twitter';
@@ -350,11 +335,8 @@ class VendorController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-contact');
 

@@ -8,17 +8,15 @@ class SquarespaceInventoryFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'name' => $this->faker->word() . ' ' . $this->faker->word(),
+            'name' => $this->faker->word().' '.$this->faker->word(),
             'custom_form_id' => function () {
                 return \App\Models\SquarespaceCustomForm::factory()->create()->id;
             },
-            'variant_options' => $this->faker->numberBetween(1,5),
+            'variant_options' => $this->faker->numberBetween(1, 5),
         ];
     }
 }

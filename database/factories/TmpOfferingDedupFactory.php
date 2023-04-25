@@ -8,10 +8,8 @@ class TmpOfferingDedupFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $contact = \App\Models\Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.individual'),

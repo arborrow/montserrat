@@ -15,11 +15,8 @@ class SquarespaceCustomForm extends Model implements Auditable
 
     protected $table = 'squarespace_custom_form';
 
-
     public function fields()
     {
         return $this->hasMany(SquarespaceCustomFormField::class, 'form_id', 'id');
     }
-
-
 }

@@ -8,10 +8,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('squarespace_custom_form', function (Blueprint $table) {
             $table->id();
@@ -19,15 +17,12 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('squarespace_custom_form');
     }

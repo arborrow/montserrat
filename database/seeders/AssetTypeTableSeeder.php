@@ -7,10 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class AssetTypeTableSeeder extends Seeder
 {
-    /**
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         DB::table('asset_type')->delete();
 

@@ -9,14 +9,11 @@ class Kernel extends ConsoleKernel
 {
     /**
      * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
      */
-    protected function schedule(Schedule $schedule)
-    { 
+    protected function schedule(Schedule $schedule): void
+    {
         $schedule->command('mailgun:get')->hourlyAt(55)
-            ->between('05:30','18:30')
+            ->between('05:30', '18:30')
             ->emailOutputOnFailure(config('polanco.admin_email'));
         $schedule->command('import:stripe_payouts')->dailyAt('08:00')->emailOutputOnFailure(config('polanco.admin_email'));
         $schedule->command('email:birthdays')->dailyAt('06:00')->emailOutputOnFailure(config('polanco.admin_email'));
@@ -25,10 +22,8 @@ class Kernel extends ConsoleKernel
 
     /**
      * Register the commands for the application.
-     *
-     * @return void
      */
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
 

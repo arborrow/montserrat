@@ -17,7 +17,7 @@ class UomControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-uom');
 
@@ -31,7 +31,7 @@ class UomControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-uom');
         $uom = \App\Models\Uom::factory()->create();
@@ -46,7 +46,7 @@ class UomControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-uom');
         $uom = \App\Models\Uom::factory()->create();
@@ -68,7 +68,7 @@ class UomControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-uom');
 
@@ -83,7 +83,7 @@ class UomControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-uom');
         $uom = \App\Models\Uom::factory()->create();
@@ -99,7 +99,7 @@ class UomControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $this->withoutExceptionHandling();
 
@@ -132,7 +132,7 @@ class UomControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-uom');
 

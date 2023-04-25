@@ -1,15 +1,14 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Charts;
 
 use Chartisan\PHP\Chartisan;
 use ConsoleTVs\Charts\BaseChart;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 
 class EventPeoplenights extends BaseChart
 {
@@ -27,7 +26,7 @@ class EventPeoplenights extends BaseChart
         // TODO: Create donut chart for average number of retreatants per event (get count of event_type_id) partipants/count(event_type_id) //useful for Ambassador goal of 40 (draw goal line)
         $this->authorize('show-dashboard');
 
-        $year = (isset($request->year)) ? $request->year : NULL;
+        $year = (isset($request->year)) ? $request->year : null;
 
         // default to current fiscal year
         if (! isset($year)) {
@@ -48,7 +47,6 @@ class EventPeoplenights extends BaseChart
             $today->year = $current_year;
             $years[$x] = $today->subYear($x);
         }
-
 
         // TODO: using role_id = 5 as hardcoded value - explore how to use config('polanco.participant_role_id.retreatant') instead
         $board_summary = DB::select("SELECT tmp.type, tmp.type_id, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights

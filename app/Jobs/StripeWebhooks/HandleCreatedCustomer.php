@@ -3,7 +3,6 @@
 namespace App\Jobs\StripeWebhooks;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -28,14 +27,12 @@ class HandleCreatedCustomer implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
-/*        $touchpoint = new \App\Models\Touchpoint;
-        $touchpoint->notes = $this->webhookCall->payload['data']['object']['name'];
-        $touchpoint->save();
-*/
+        /*        $touchpoint = new \App\Models\Touchpoint;
+                $touchpoint->notes = $this->webhookCall->payload['data']['object']['name'];
+                $touchpoint->save();
+        */
     }
 }

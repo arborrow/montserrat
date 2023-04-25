@@ -11,10 +11,8 @@ class DioceseFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $city_name = $this->faker->city();
         $diocese_name = 'Diocese of '.$city_name;

@@ -3,14 +3,13 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      * Because asset_type.label will be used in drop down boxes they should be unique unless they have been deleted.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('uom', function (Blueprint $table) {
             $table->increments('id');
@@ -26,10 +25,8 @@ return new class extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('uom');
     }

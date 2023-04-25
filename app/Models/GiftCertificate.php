@@ -7,20 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use PDF;
-use App\Models\AttachmentController;
 
 class GiftCertificate extends Model implements Auditable
 {
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
-    
+
     protected $table = 'gift_certificate';
+
     protected $casts = [
         'purchase_date' => 'datetime',
         'issue_date' => 'datetime',
         'expiration_date' => 'datetime',
-    ];  
+    ];
+
     protected $appends = ['certificate_number'];
 
     public function purchaser()
@@ -50,41 +51,39 @@ class GiftCertificate extends Model implements Auditable
 
     public function getFormattedFundedAmountAttribute()
     {
-        return (isset($this->funded_amount)) ? number_format($this->funded_amount,2) : number_format(0,2);        
+        return (isset($this->funded_amount)) ? number_format($this->funded_amount, 2) : number_format(0, 2);
     }
 
     public function getCertificateNumberAttribute()
     {
-        return (isset($this->squarespace_order_number)) ? $this->issue_date->year . '-' . $this->squarespace_order_number : $this->issue_date->year . '-' . $this->sequential_number;        
+        return (isset($this->squarespace_order_number)) ? $this->issue_date->year.'-'.$this->squarespace_order_number : $this->issue_date->year.'-'.$this->sequential_number;
     }
 
-    public function update_pdf() {
+    public function update_pdf()
+    {
         $gift_certificate = $this;
         $pdf = PDF::loadView('gift_certificates.certificate', compact('gift_certificate'));
         $pdf->setOptions([]);
-        
+
         $attachment = new \App\Http\Controllers\AttachmentController;
         $attachment->update_attachment($pdf->inline($gift_certificate->certificate_number.'.pdf'), 'contact', $gift_certificate->purchaser_id, 'gift_certificate', $gift_certificate->certificate_number);
-
-
     }
 
     // active gift certificates are those that have not been applied to a particular registration that have not yet expired
     public function scopeActive($query)
     {
-        $query->whereNull('participant_id')->where('expiration_date','>=',now());
+        $query->whereNull('participant_id')->where('expiration_date', '>=', now());
     }
 
     // applied gift certificates have been applied to be used as a credit for a particular registration
-    public function scopeApplied($query) 
+    public function scopeApplied($query)
     {
         $query->whereNotNull('participant_id');
     }
 
     // applied gift certificates have been applied to be used as a credit for a particular registration
-    public function scopeExpired($query) 
+    public function scopeExpired($query)
     {
-        $query->whereNull('participant_id')->where('expiration_date','<',now());
+        $query->whereNull('participant_id')->where('expiration_date', '<', now());
     }
-    
 }

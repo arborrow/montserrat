@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
-use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class ActivityController extends Controller
 {
@@ -17,10 +18,8 @@ class ActivityController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-activity');
         $activities = \App\Models\Activity::orderBy('activity_date_time', 'desc')->paginate(25, ['*'], 'activities');
@@ -30,10 +29,8 @@ class ActivityController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request): View
     {
         $this->authorize('create-activity');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -62,11 +59,8 @@ class ActivityController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreActivityRequest $request)
+    public function store(StoreActivityRequest $request): RedirectResponse
     {
         $this->authorize('create-activity');
         $activity_type = \App\Models\ActivityType::findOrFail($request->input('activity_type_id'));
@@ -106,11 +100,8 @@ class ActivityController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-activity');
         $activity = \App\Models\Activity::with('assignees', 'creators', 'targets')->findOrFail($id);
@@ -120,11 +111,8 @@ class ActivityController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-activity');
         $activity = \App\Models\Activity::findOrFail($id);
@@ -158,12 +146,8 @@ class ActivityController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateActivityRequest $request, $id)
+    public function update(UpdateActivityRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-activity');
         $activity_type = \App\Models\ActivityType::findOrFail($request->input('activity_type_id'));
@@ -198,11 +182,8 @@ class ActivityController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         // delete activity contacts and then the activity (could be handled in model with cascading deletes)
 

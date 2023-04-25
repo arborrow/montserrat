@@ -11,8 +11,11 @@ class GiftCertificateRedemption extends Mailable
     use Queueable, SerializesModels;
 
     public $gift_certificate;
+
     public $order;
+
     public $reallocation_payment;
+
     public $negative_reallocation_payment;
 
     /**
@@ -30,10 +33,8 @@ class GiftCertificateRedemption extends Mailable
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
-    public function build()
+    public function build(): static
     {   //TODO: consider looking up the preferred language of the contact with the finance email address and send message in preferred language - English is OK for now
         return $this->subject('Redemption Notification for Gift Certificate #'.$this->gift_certificate->certificate_number)
                     ->replyTo('registration@montserratretreat.org')

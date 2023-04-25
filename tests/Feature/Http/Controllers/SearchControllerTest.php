@@ -17,7 +17,7 @@ class SearchControllerTest extends TestCase
     /**
      * @test
      */
-    public function autocomplete_returns_an_ok_response()
+    public function autocomplete_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $lastname = $this->faker->lastName();
@@ -45,7 +45,7 @@ class SearchControllerTest extends TestCase
     /**
      * @test
      */
-    public function getuser_returns_an_ok_response()
+    public function getuser_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $contact = \App\Models\Contact::factory()->create();
@@ -57,7 +57,7 @@ class SearchControllerTest extends TestCase
     /**
      * @test
      */
-    public function getuser_with_no_response_returns_create_response()
+    public function getuser_with_no_response_returns_create_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $response = $this->actingAs($user)->get('search/getuser?response=0');
@@ -68,7 +68,7 @@ class SearchControllerTest extends TestCase
     /**
      * @test
      */
-    public function results_returns_an_ok_response()
+    public function results_returns_an_ok_response(): void
     {   // create a new user and then search for that user's last name and ensure that a result appears
         $user = $this->createUserWithPermission('show-contact');
 
@@ -86,7 +86,7 @@ class SearchControllerTest extends TestCase
     /**
      * @test
      */
-    public function search_returns_an_ok_response()
+    public function search_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 

@@ -17,7 +17,7 @@ class SquarespaceContributionControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         // emtpy slug redirects to squarespace.contribution.index
         $this->followingRedirects();
@@ -32,7 +32,7 @@ class SquarespaceContributionControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         // emtpy slug redirects to squarespace.contribution.index
         $this->followingRedirects();
@@ -45,14 +45,12 @@ class SquarespaceContributionControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('squarespace.contribution.index');
-
-        
     }
 
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-contribution');
         $donor = \App\Models\Contact::factory()->create();
@@ -77,7 +75,7 @@ class SquarespaceContributionControllerTest extends TestCase
         {!! Form::select('event_id', $retreats, (isset($ss_contribution->event_id)) ? $ss_contribution->event_id : $ids['retreat_id'], ['class' => 'form-control']) !!}
         {!! Form::select('address_country_id', $countries, $ids['address_country'], ['class' => 'form-control']) !!}
         {!! Form::select('address_state_id', $states, $ids['address_state'], ['class' => 'form-control']) !!}
-        
+
         {!! Form::select('donation_description', config('polanco.donation_descriptions'), (isset($ss_contribution->fund)) ? $ss_contribution->fund : $ss_contribution->offering_type, ['class' => 'form-control']) !!}
         {!! Form::text('name', ucwords(strtolower($ss_contribution->name)), ['class' => 'form-control']) !!}
         {!! Form::text('first_name', ucwords(strtolower(trim(substr($ss_contribution->name,0,strpos($ss_contribution->name,' '))))), ['class' => 'form-control']) !!}
@@ -100,26 +98,24 @@ class SquarespaceContributionControllerTest extends TestCase
         // $this->assertTrue($this->findFieldValueInResponseContent('donation_description', (isset($contribution->fund)) ? $contribution->fund : $contribution->offering_type, 'select', $response->getContent()));
 
         $this->assertTrue($this->findFieldValueInResponseContent('name', ucwords(strtolower($contribution->name)), 'text', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('first_name', ucwords(strtolower(trim(substr($contribution->name,0,strpos($contribution->name,' '))))), 'text', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('last_name', ucwords(strtolower(trim(substr($contribution->name,strrpos($contribution->name,' '))))), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('first_name', ucwords(strtolower(trim(substr($contribution->name, 0, strpos($contribution->name, ' '))))), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('last_name', ucwords(strtolower(trim(substr($contribution->name, strrpos($contribution->name, ' '))))), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('email', trim($contribution->email), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('phone', $contribution->phone, 'text', $response->getContent()));
-        
+
         $this->assertTrue($this->findFieldValueInResponseContent('address_street', $contribution->address_street, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('address_supplemental', $contribution->address_supplemental, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('address_city', $contribution->address_city, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('address_zip', $contribution->address_zip, 'text', $response->getContent()));
- 
-        $this->assertTrue($this->findFieldValueInResponseContent('amount', number_format($contribution->amount,2), 'number', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('comments', $contribution->comments, 'text', $response->getContent()));
-        
 
+        $this->assertTrue($this->findFieldValueInResponseContent('amount', number_format($contribution->amount, 2), 'number', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('comments', $contribution->comments, 'text', $response->getContent()));
     }
 
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-contribution');
 
@@ -132,11 +128,10 @@ class SquarespaceContributionControllerTest extends TestCase
         $response->assertSeeText('Index of Squarespace Contributions');
     }
 
-
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-contribution');
         $contribution = \App\Models\SquarespaceContribution::factory()->create();
@@ -152,25 +147,21 @@ class SquarespaceContributionControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
-    {  
+    public function store_returns_an_ok_response(): void
+    {
         // emtpy slug redirects to squarespace.contribution.index
         $this->followingRedirects();
 
         $user = $this->createUserWithPermission('show-squarespace-contribution');
 
         $response = $this->actingAs($user)->post(route('squarespace.contribution.store'), [
-            'amount' => $this->faker->numberBetween(100,600),
+            'amount' => $this->faker->numberBetween(100, 600),
         ]);
 
         $response->assertOk();
         $response->assertViewIs('squarespace.contribution.index');
-        
     }
 
-    /**
-     * 
-     */
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-squarespace-inventory');
@@ -184,7 +175,7 @@ class SquarespaceContributionControllerTest extends TestCase
             'id' => $inventory->id,
             'name' => $new_name,
             'custom_form_id' => $inventory->custom_form_id,
-            'variant_options' => $this->faker->numberBetween(6,8),
+            'variant_options' => $this->faker->numberBetween(6, 8),
         ]);
 
         $response->assertSessionHas('flash_notification');
@@ -199,7 +190,7 @@ class SquarespaceContributionControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\SquarespaceContributionController::class,
@@ -207,5 +198,4 @@ class SquarespaceContributionControllerTest extends TestCase
             \App\Http\Requests\UpdateSquarespaceContributionRequest::class
         );
     }
-
 }

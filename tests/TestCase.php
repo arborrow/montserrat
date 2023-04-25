@@ -46,10 +46,8 @@ abstract class TestCase extends BaseTestCase
     /**
      * checks the response content to ensure that a field's default value for a particular form object is found.
      *
-     * @param string $field_name
-     * @param string $field_value
-     * @param string $form_type
-     * @param string $contents
+     * @param  string  $field_value
+     * @param  string  $contents
      * @return bool
      */
     protected function findFieldValueInResponseContent(string $field_name, $field_value, string $form_type, $contents)
@@ -100,7 +98,7 @@ abstract class TestCase extends BaseTestCase
                 break;
         }
 
-        foreach ($contents_array as $content_key=>$content_value) {
+        foreach ($contents_array as $content_key => $content_value) {
             if (strpos($content_value, $field_name_string) !== false) {
                 $line_number = $content_key;
             }
@@ -115,7 +113,7 @@ abstract class TestCase extends BaseTestCase
                         $value_found = ! (strpos($contents_array[$line_number], 'checked="checked"'));
                     }
                     break;
-                // deal with cases where selected value is 0 or not yet defined by checking for 0
+                    // deal with cases where selected value is 0 or not yet defined by checking for 0
                 case 'select':
                     if (is_null($field_value)) {
                         $value_found = (! (strpos($contents_array[$line_number], 'selected="selected"')) || strpos($contents_array[$line_number], $field_zero_value_string) || strpos($contents_array[$line_number], $field_no_value_string));
@@ -162,6 +160,7 @@ abstract class TestCase extends BaseTestCase
             return true;
         } else {
             dd($value_found, $line_number, $field_value, $field_name_string, $field_value_string, gettype($field_value_string), $contents_array[$line_number]);
+
             return false;
         }
     }

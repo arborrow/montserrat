@@ -25,10 +25,8 @@ class PostRetreat extends Mailable
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
-    public function build()
+    public function build(): static
     {
         return $this->subject('Post Retreat Group Picture '.$this->participant->contact->display_name)
                     ->replyTo('registration@montserratretreat.org')

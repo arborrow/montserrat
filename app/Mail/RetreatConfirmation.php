@@ -27,10 +27,8 @@ class RetreatConfirmation extends Mailable
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
-    public function build()
+    public function build(): static
     {
         if ($this->participant->contact->preferred_language == 'es_ES') {
             return $this->subject('Preparando para su retiro #'

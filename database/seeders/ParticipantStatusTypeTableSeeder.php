@@ -9,10 +9,8 @@ class ParticipantStatusTypeTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('participant_status_type')->delete();
 

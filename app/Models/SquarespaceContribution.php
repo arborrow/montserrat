@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
+use App\Traits\PhoneTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
-use App\Traits\PhoneTrait;
-
 
 class SquarespaceContribution extends Model implements Auditable
 {
@@ -38,20 +37,21 @@ class SquarespaceContribution extends Model implements Auditable
     public function donation()
     {
         return $this->hasOne(Donation::class, 'donation_id', 'donation_id');
-
     }
 
-    public function getPhoneFormattedAttribute() {
+    public function getPhoneFormattedAttribute()
+    {
         $clean_phone = $this->format_phone($this->phone);
+
         return $clean_phone['phone_formatted'];
     }
 
-    public function getFullDescriptionAttribute() {
-        $retreat = (isset($this->idnumber) && $this->idnumber <> "") ? ('#' . $this->idnumber . ':' . $this->retreat_description) : null;
+    public function getFullDescriptionAttribute()
+    {
+        $retreat = (isset($this->idnumber) && $this->idnumber != '') ? ('#'.$this->idnumber.':'.$this->retreat_description) : null;
         $fund = (isset($this->fund)) ? $this->fund : null;
         $description = (isset($retreat)) ? $retreat : $fund;
 
-        return $this->name . ' - ' . '$'.number_format($this->amount,2) . ' - ' . $description . ' (' . $this->created_at->format('m-d-Y') . ')';
+        return $this->name.' - '.'$'.number_format($this->amount, 2).' - '.$description.' ('.$this->created_at->format('m-d-Y').')';
     }
-
 }

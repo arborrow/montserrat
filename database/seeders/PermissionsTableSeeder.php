@@ -9,10 +9,8 @@ class PermissionsTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('permissions')->delete();
         DB::table('permissions')->insert([

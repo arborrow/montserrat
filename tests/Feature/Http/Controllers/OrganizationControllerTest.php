@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\Organization;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -18,7 +17,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
 
@@ -36,7 +35,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-contact');
         $organization = \App\Models\Organization::factory()->create();
@@ -50,7 +49,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
         $organization = \App\Models\Organization::factory()->create();
@@ -70,14 +69,14 @@ class OrganizationControllerTest extends TestCase
 
         $main_phone = \App\Models\Phone::factory()->create([
             'contact_id' => $organization->id,
-            'location_type_id' =>  config('polanco.location_type.main'),
+            'location_type_id' => config('polanco.location_type.main'),
             'is_primary' => 1,
             'phone_type' => 'Phone',
         ]);
 
         $main_fax = \App\Models\Phone::factory()->create([
             'contact_id' => $organization->id,
-            'location_type_id' =>  config('polanco.location_type.main'),
+            'location_type_id' => config('polanco.location_type.main'),
             'phone_type' => 'Fax',
         ]);
 
@@ -154,7 +153,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
 
@@ -170,7 +169,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_type_returns_an_ok_response()
+    public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $subcontact_type_id = rand(7, 13);
@@ -187,7 +186,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
         $organization = \App\Models\Organization::factory()->create();
@@ -205,7 +204,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
         $organization_name = $this->faker->company();
@@ -230,7 +229,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\OrganizationController::class,
@@ -242,7 +241,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         //create original data
         $user = $this->createUserWithPermission('update-contact');
@@ -267,7 +266,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\OrganizationController::class,

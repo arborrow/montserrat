@@ -17,7 +17,7 @@ class SquarespaceInventoryControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-squarespace-inventory');
 
@@ -32,7 +32,7 @@ class SquarespaceInventoryControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-squarespace-inventory');
         $inventory = \App\Models\SquarespaceInventory::factory()->create();
@@ -47,7 +47,7 @@ class SquarespaceInventoryControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-inventory');
         $inventory = \App\Models\SquarespaceInventory::factory()->create();
@@ -59,17 +59,16 @@ class SquarespaceInventoryControllerTest extends TestCase
         $response->assertViewHas('inventory');
         $response->assertViewHas('custom_forms');
         $response->assertSeeText('Edit');
-        
+
         $this->assertTrue($this->findFieldValueInResponseContent('name', $inventory->name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('custom_form_id', $inventory->custom_form_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('variant_options', $inventory->variant_options, 'number', $response->getContent()));
-        
     }
 
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-inventory');
 
@@ -81,11 +80,10 @@ class SquarespaceInventoryControllerTest extends TestCase
         $response->assertSeeText('Squarespace Inventory Index');
     }
 
-
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-inventory');
         $inventory = \App\Models\SquarespaceInventory::factory()->create();
@@ -101,13 +99,13 @@ class SquarespaceInventoryControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {   //$this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-squarespace-inventory');
 
         $name = $this->faker->word();
         $custom_form = \App\Models\SquarespaceCustomForm::factory()->create();
-        $variant_options = $this->faker->numberBetween(2,5);
+        $variant_options = $this->faker->numberBetween(2, 5);
         $response = $this->actingAs($user)->post(route('inventory.store'), [
             'name' => $name,
             'custom_form_id' => $custom_form->id,
@@ -116,7 +114,7 @@ class SquarespaceInventoryControllerTest extends TestCase
 
         $response->assertRedirect(action([\App\Http\Controllers\SquarespaceInventoryController::class, 'index']));
         $response->assertSessionHas('flash_notification');
-        
+
         $this->assertDatabaseHas('squarespace_inventory', [
             'name' => $name,
             'custom_form_id' => $custom_form->id,
@@ -127,7 +125,7 @@ class SquarespaceInventoryControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\SquarespaceInventoryController::class,
@@ -136,11 +134,10 @@ class SquarespaceInventoryControllerTest extends TestCase
         );
     }
 
-
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-inventory');
 
@@ -153,7 +150,7 @@ class SquarespaceInventoryControllerTest extends TestCase
             'id' => $inventory->id,
             'name' => $new_name,
             'custom_form_id' => $inventory->custom_form_id,
-            'variant_options' => $this->faker->numberBetween(6,8),
+            'variant_options' => $this->faker->numberBetween(6, 8),
         ]);
 
         $response->assertSessionHas('flash_notification');
@@ -168,7 +165,7 @@ class SquarespaceInventoryControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\SquarespaceInventoryController::class,
@@ -176,5 +173,4 @@ class SquarespaceInventoryControllerTest extends TestCase
             \App\Http\Requests\UpdateSquarespaceInventoryRequest::class
         );
     }
-
 }

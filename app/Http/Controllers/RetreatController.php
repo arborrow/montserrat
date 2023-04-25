@@ -8,10 +8,10 @@ use App\Http\Requests\StoreRetreatRequest;
 use App\Http\Requests\UpdateRetreatRequest;
 use App\Models\Registration;
 use Auth;
-use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 use Spatie\GoogleCalendar\Event;
 use Storage;
 
@@ -24,10 +24,8 @@ class RetreatController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-retreat');
         // do once in controller to reduce excessive number of checks on blade
@@ -46,7 +44,7 @@ class RetreatController extends Controller
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types', 'results'));   //
     }
 
-    public function index_type($event_type_id)
+    public function index_type($event_type_id): View
     {
         $this->authorize('show-retreat');
         $permission_checks = ['show-retreat', 'show-event-contract', 'show-event-schedule', 'show-event-evaluation'];
@@ -66,10 +64,8 @@ class RetreatController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-retreat');
 
@@ -89,7 +85,7 @@ class RetreatController extends Controller
         }
         if (! null == $i) {
             asort($i);
-            $i = [0=>'N/A'] + $i;
+            $i = [0 => 'N/A'] + $i;
         }
 
         foreach ($retreat_house->retreat_directors as $director) {
@@ -97,7 +93,7 @@ class RetreatController extends Controller
         }
         if (! null == $d) {
             asort($d);
-            $d = [0=>'N/A'] + $d;
+            $d = [0 => 'N/A'] + $d;
         }
 
         foreach ($retreat_house->retreat_assistants as $assistant) {
@@ -105,7 +101,7 @@ class RetreatController extends Controller
         }
         if (! null == $a) {
             asort($a);
-            $a = [0=>'N/A'] + $a;
+            $a = [0 => 'N/A'] + $a;
         }
 
         foreach ($retreat_house->retreat_ambassadors as $ambassador) {
@@ -113,7 +109,7 @@ class RetreatController extends Controller
         }
         if (! null == $c) {
             asort($c);
-            $c = [0=>'N/A'] + $c;
+            $c = [0 => 'N/A'] + $c;
         }
 
         return view('retreats.create', compact('d', 'i', 'a', 'c', 'event_types', 'is_active'));
@@ -121,11 +117,8 @@ class RetreatController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreRetreatRequest $request)
+    public function store(StoreRetreatRequest $request): RedirectResponse
     {
         $this->authorize('create-retreat');
 
@@ -215,12 +208,10 @@ class RetreatController extends Controller
 
     /**
      * Add a participant to an event with a given participant role.
-     * @param int $contact_id
-     * @param int $event_id
-     * @param int $participant_role_id
+     *
      * @return bool
      */
-    public function add_participant($contact_id, $event_id, $participant_role_id)
+    public function add_participant(int $contact_id, int $event_id, int $participant_role_id)
     {
         if ($contact_id > 0 && $event_id > 0) { //avoid inserting bad data
             $participant = \App\Models\Registration::updateOrCreate([
@@ -245,11 +236,8 @@ class RetreatController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id, $status = null)
+    public function show(int $id, $status = null): View
     {
         $this->authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
@@ -291,24 +279,24 @@ class RetreatController extends Controller
                   paginate(50);
                 break;
             case 'arrived':
-            $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
-              leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
-              orderBy('contact.sort_name')->
-              whereEventId($id)->
-              whereNotNull('arrived_at')->
-              withCount('retreatant_events')->
-              paginate(50);
-            break;
+                $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
+                  leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
+                  orderBy('contact.sort_name')->
+                  whereEventId($id)->
+                  whereNotNull('arrived_at')->
+                  withCount('retreatant_events')->
+                  paginate(50);
+                break;
             case 'dawdler':
-            $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
-              leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
-              orderBy('contact.sort_name')->
-              whereEventId($id)->
-              whereNull('arrived_at')->
-              whereNull('canceled_at')->
-              withCount('retreatant_events')->
-              paginate(50);
-            break;
+                $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
+                  leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
+                  orderBy('contact.sort_name')->
+                  whereEventId($id)->
+                  whereNull('arrived_at')->
+                  whereNull('canceled_at')->
+                  withCount('retreatant_events')->
+                  paginate(50);
+                break;
             case 'departed':
                 $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
                   leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
@@ -352,7 +340,7 @@ class RetreatController extends Controller
         return view('retreats.show', compact('retreat', 'registrations', 'status', 'attachments')); //
     }
 
-    public function show_waitlist($id)
+    public function show_waitlist($id): View
     {
         $this->authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
@@ -371,16 +359,13 @@ class RetreatController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     //public function edit($id)
     //{
     //   $retreats = \App\Models\Retreat::();
     //   return view('retreats.edit',compact('retreats'));
     //  }
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-retreat');
         //get this retreat's information
@@ -394,14 +379,14 @@ class RetreatController extends Controller
 
         // initialize null arrays for innkeeper, assistant, director and ambassador dropdowns
 
-        $options = ['innkeepers'=>[], 'directors'=>[], 'assistants'=>[], 'ambassadors'=>[]];
+        $options = ['innkeepers' => [], 'directors' => [], 'assistants' => [], 'ambassadors' => []];
 
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $options['innkeepers'][$innkeeper->contact_id_b] = $innkeeper->contact_b->sort_name;
         }
         if (! null == $options['innkeepers']) {
             asort($options['innkeepers']);
-            $options['innkeepers'] = [0=>'N/A'] + $options['innkeepers'];
+            $options['innkeepers'] = [0 => 'N/A'] + $options['innkeepers'];
         }
 
         foreach ($retreat_house->retreat_directors as $director) {
@@ -409,7 +394,7 @@ class RetreatController extends Controller
         }
         if (! null == $options['directors']) {
             asort($options['directors']);
-            $options['directors'] = [0=>'N/A'] + $options['directors'];
+            $options['directors'] = [0 => 'N/A'] + $options['directors'];
         }
 
         foreach ($retreat_house->retreat_assistants as $assistant) {
@@ -417,7 +402,7 @@ class RetreatController extends Controller
         }
         if (! null == $options['assistants']) {
             asort($options['assistants']);
-            $options['assistants'] = [0=>'N/A'] + $options['assistants'];
+            $options['assistants'] = [0 => 'N/A'] + $options['assistants'];
         }
 
         foreach ($retreat_house->retreat_ambassadors as $ambassador) {
@@ -425,7 +410,7 @@ class RetreatController extends Controller
         }
         if (! null == $options['ambassadors']) {
             asort($options['ambassadors']);
-            $options['ambassadors'] = [0=>'N/A'] + $options['ambassadors'];
+            $options['ambassadors'] = [0 => 'N/A'] + $options['ambassadors'];
         }
 
         /* prevent losing former retreatmasters, innkeeper, assistant, or ambassador when editing retreat
@@ -468,12 +453,8 @@ class RetreatController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRetreatRequest $request, $id)
+    public function update(UpdateRetreatRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-retreat');
 
@@ -639,11 +620,8 @@ class RetreatController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-retreat');
         $retreat = \App\Models\Retreat::findOrFail($id);
@@ -666,7 +644,7 @@ class RetreatController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function assign_rooms($id)
+    public function assign_rooms($id): View
     {
         $this->authorize('update-registration');
         //get this retreat's information
@@ -678,7 +656,7 @@ class RetreatController extends Controller
         return view('retreats.assign_rooms', compact('retreat', 'registrations', 'rooms'));
     }
 
-    public function edit_payments($id)
+    public function edit_payments($id): View
     {
         $this->authorize('update-payment');
         //get this retreat's information
@@ -691,7 +669,7 @@ class RetreatController extends Controller
         return view('retreats.payments.edit', compact('retreat', 'registrations', 'donation_description', 'payment_description'));
     }
 
-    public function show_payments($id)
+    public function show_payments($id): View
     {
         $this->authorize('show-payment');
         $retreat = \App\Models\Retreat::findOrFail($id);
@@ -700,7 +678,7 @@ class RetreatController extends Controller
         return view('retreats.payments.show', compact('retreat', 'registrations'));
     }
 
-    public function checkout($id)
+    public function checkout($id): RedirectResponse
     {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
         // TODO: consider also checking to see if the arrived_at time is empty and if it is put in the retreat start time
@@ -717,7 +695,7 @@ class RetreatController extends Controller
         return Redirect::action([self::class, 'show'], $retreat->id);
     }
 
-    public function checkin($id)
+    public function checkin($id): RedirectResponse
     {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
         $this->authorize('update-registration');
@@ -733,7 +711,7 @@ class RetreatController extends Controller
         return Redirect::action([self::class, 'show'], $retreat->id);
     }
 
-    public function room_update(RoomUpdateRetreatRequest $request)
+    public function room_update(RoomUpdateRetreatRequest $request): RedirectResponse
     {
         $this->authorize('update-registration');
 
@@ -767,7 +745,7 @@ class RetreatController extends Controller
         }
     }
 
-    public function calendar()
+    public function calendar(): View
     {
         $this->authorize('show-retreat');
         if ($this->is_google_calendar_enabled()) {
@@ -779,7 +757,7 @@ class RetreatController extends Controller
         return view('calendar.index', compact('calendar_events'));
     }
 
-    public function event_room_list($event_id)
+    public function event_room_list($event_id): View
     {
         // get buildings for which there are assigned rooms
         // for each building initialize array of all rooms in that building
@@ -827,7 +805,7 @@ class RetreatController extends Controller
         return view('retreats.roomlist', compact('results', 'event'));
     }
 
-    public function event_namebadges($event_id, $role = null)
+    public function event_namebadges($event_id, $role = null): View
     {
         // for each registration add contact sort_name to namebadge
         // TODO: write unit tests for this method
@@ -837,16 +815,16 @@ class RetreatController extends Controller
             case  'retreatant': $role = config('polanco.participant_role_id.retreatant');
                 break;
             case  'director': $role = config('polanco.participant_role_id.director');
-                    break;
+                break;
             case  'innkeeper': $role = config('polanco.participant_role_id.innkeeper');
-                    break;
+                break;
             case  'assistant': $role = config('polanco.participant_role_id.assistant');
-                    break;
+                break;
             case 'ambassador':
                 $role = config('polanco.participant_role_id.ambassador');
                 break;
             case  'all': $role = null;
-                    break;
+                break;
             default: $role = config('polanco.participant_role_id.retreatant');
         }
         if (is_null($role)) {
@@ -860,7 +838,7 @@ class RetreatController extends Controller
             // if the registered retreatant is not an individual person - for example a contract group organization then use the registration note for the name of the retreatant
             if ($registration->retreatant->contact_type == config('polanco.contact_type.individual')) {
                 $name = isset($registration->retreatant->nick_name) ? $registration->retreatant->nick_name : $registration->retreatant->first_name;
-                $results[$registration->id] = $name . ' ' . $registration->retreatant->last_name;
+                $results[$registration->id] = $name.' '.$registration->retreatant->last_name;
                 $registration->badgename = $registration->retreatant->sort_name;
             } else {
                 // if there is no note; default back to the sort_name of the contact
@@ -880,7 +858,7 @@ class RetreatController extends Controller
         return view('retreats.namebadges', compact('cresults', 'event'));
     }
 
-    public function event_tableplacards($event_id)
+    public function event_tableplacards($event_id): View
     {
         // for each registration add contact sort_name to namebadge
         // TODO: write unit tests for this method
@@ -912,7 +890,7 @@ class RetreatController extends Controller
         return view('retreats.tableplacards', compact('cresults', 'event'));
     }
 
-    public function search()
+    public function search(): View
     {
         $this->authorize('show-retreat');
         $event_types = \App\Models\EventType::whereIsActive(true)->orderBy('label')->pluck('label', 'id');
@@ -921,7 +899,7 @@ class RetreatController extends Controller
         return view('retreats.search', compact('event_types'));
     }
 
-    public function results(EventSearchRequest $request)
+    public function results(EventSearchRequest $request): View
     {
         $this->authorize('show-retreat');
 

@@ -4,12 +4,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Contact;
+use App\Models\Retreat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Contact;
-use App\Models\DonationType;
-use App\Models\Donation;
-use App\Models\Retreat;
 
 // TODO: to avoid confusion with agc letters in Spanish I'm limiting testing for now to $current_user
 
@@ -17,10 +15,8 @@ class DonationFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $description = \App\Models\DonationType::whereIsActive(1)->get()->random();
 

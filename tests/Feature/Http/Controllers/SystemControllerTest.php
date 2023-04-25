@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\TmpOfferingDedup;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -18,7 +17,7 @@ class SystemControllerTest extends TestCase
     /**
      * @test
      */
-    public function offeringdedup_index_returns_an_ok_response()
+    public function offeringdedup_index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-offeringdedup');
 
@@ -33,7 +32,7 @@ class SystemControllerTest extends TestCase
     /**
      * @test
      */
-    public function offeringdedup_show_returns_an_ok_response()
+    public function offeringdedup_show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-offeringdedup');
 
@@ -64,7 +63,7 @@ class SystemControllerTest extends TestCase
     /**
      * @test
      */
-    public function phpinfo_returns_an_ok_response()
+    public function phpinfo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
 

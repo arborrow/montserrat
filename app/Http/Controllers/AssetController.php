@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AssetSearchRequest;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class AssetController extends Controller
 {
@@ -15,7 +16,7 @@ class AssetController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-asset');
 
@@ -27,7 +28,7 @@ class AssetController extends Controller
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
-    public function index_type($type = null)
+    public function index_type($type = null): View
     {
         $this->authorize('show-asset');
 
@@ -39,7 +40,7 @@ class AssetController extends Controller
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
-    public function index_location($location_id = null)
+    public function index_location($location_id = null): View
     {
         $this->authorize('show-asset');
 
@@ -51,7 +52,7 @@ class AssetController extends Controller
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
-    public function search()
+    public function search(): View
     {
         $this->authorize('show-asset');
 
@@ -62,7 +63,7 @@ class AssetController extends Controller
         $departments->prepend('N/A', '');
 
         // TODO: determine and set up various depreciation types
-        $depreciation_types = [''=>'N/A'];
+        $depreciation_types = ['' => 'N/A'];
 
         $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
         $locations->prepend('N/A', '');
@@ -91,7 +92,7 @@ class AssetController extends Controller
         return view('assets.search', compact('asset_types', 'departments', 'depreciation_types', 'locations', 'parents', 'uoms_capacity', 'uoms_electric', 'uoms_length', 'uoms_time', 'uoms_weight', 'vendors'));
     }
 
-    public function results(AssetSearchRequest $request)
+    public function results(AssetSearchRequest $request): View
     {
         $this->authorize('show-asset');
         if (! empty($request)) {
@@ -106,10 +107,8 @@ class AssetController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create-asset');
 
@@ -139,18 +138,15 @@ class AssetController extends Controller
         $uoms_capacity = \App\Models\Uom::orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_capacity->prepend('N/A', '');
         // TODO: determine and set up various depreciation types
-        $depreciation_types = [''=>'N/A'];
+        $depreciation_types = ['' => 'N/A'];
 
         return view('assets.create', compact('asset_types', 'departments', 'parents', 'locations', 'vendors', 'uoms_electric', 'uoms_length', 'uoms_weight', 'uoms_capacity', 'uoms_time', 'depreciation_types'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreAssetRequest $request)
+    public function store(StoreAssetRequest $request): RedirectResponse
     {
         $this->authorize('create-asset');
 
@@ -234,11 +230,8 @@ class AssetController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $this->authorize('show-asset');
 
@@ -250,11 +243,8 @@ class AssetController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $this->authorize('update-asset');
 
@@ -286,19 +276,15 @@ class AssetController extends Controller
         $uoms_capacity = \App\Models\Uom::orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_capacity->prepend('N/A', '');
         // TODO: determine and set up various depreciation types
-        $depreciation_types = [0=>'N/A'];
+        $depreciation_types = [0 => 'N/A'];
 
         return view('assets.edit', compact('asset', 'asset_types', 'departments', 'parents', 'locations', 'vendors', 'uoms_electric', 'uoms_length', 'uoms_weight', 'uoms_time', 'uoms_capacity', 'depreciation_types')); //
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAssetRequest $request, $id)
+    public function update(UpdateAssetRequest $request, int $id): RedirectResponse
     {
         $this->authorize('update-asset');
 
@@ -389,11 +375,8 @@ class AssetController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('delete-asset');
         $asset = \App\Models\Asset::findOrFail($id);

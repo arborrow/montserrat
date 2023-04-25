@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Http\Requests;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -24,7 +22,7 @@ class UpdatePersonRequestTest extends TestCase
     /**
      * @test
      */
-    public function authorize()
+    public function authorize(): void
     {
         $actual = $this->subject->authorize();
 
@@ -34,9 +32,8 @@ class UpdatePersonRequestTest extends TestCase
     /**
      * @test
      */
-    public function rules()
+    public function rules(): void
     {   // TODO: languages and referrals
-
         $actual = $this->subject->rules();
 
         // if Twilio is enabled then validate phone numbers otherwise allow strings
@@ -238,7 +235,7 @@ class UpdatePersonRequestTest extends TestCase
     /**
      * @test
      */
-    public function messages()
+    public function messages(): void
     {
         $actual = $this->subject->messages();
 

@@ -4,7 +4,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Language;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -12,10 +11,8 @@ class ContactFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $first_name = $this->faker->firstName();
         $last_name = $this->faker->lastName();

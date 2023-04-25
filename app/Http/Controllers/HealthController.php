@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use DB;
-use Illuminate\Http\Request;
+// use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
 
 class HealthController extends Controller
 {
@@ -14,10 +16,8 @@ class HealthController extends Controller
 
     /**
      * Run all database health checks and display list of results
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -38,10 +38,8 @@ class HealthController extends Controller
 
     /**
      * Run the primary address check to ensure there is one and only one primary email address for each contact_id
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_primary_address()
+    public function check_primary_address(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -52,10 +50,8 @@ class HealthController extends Controller
 
     /**
      * Run the primary email check to ensure there is one and only one primary email address for each contact_id
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_primary_email()
+    public function check_primary_email(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -66,10 +62,8 @@ class HealthController extends Controller
 
     /**
      * Run the primary address check to ensure there is one and only one primary email address for each contact_id
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_primary_phone()
+    public function check_primary_phone(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -80,10 +74,8 @@ class HealthController extends Controller
 
     /**
      * Run the abandoned payments check to ensure there are no payments with a deleted donation
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_abandoned_donations()
+    public function check_abandoned_donations(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -101,10 +93,8 @@ class HealthController extends Controller
 
     /**
      * Run the abandoned payments check to ensure there are no payments with a deleted donation
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_donations_with_zero_event_id()
+    public function check_donations_with_zero_event_id(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -122,10 +112,8 @@ class HealthController extends Controller
 
     /**
      * Run the abandoned payments check to ensure there are no payments with a deleted donation
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_abandoned_payments()
+    public function check_abandoned_payments(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -143,10 +131,8 @@ class HealthController extends Controller
 
     /**
      * Run the abandoned registrations check to ensure there are no registrations (participant) with a deleted contact
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_abandoned_registrations()
+    public function check_abandoned_registrations(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -164,9 +150,8 @@ class HealthController extends Controller
     /**
      * Run the duplicate relationships check to ensure there are no duplicated relationships
      * // SELECT CONCAT(contact_id_a,":",contact_id_b,":",relationship_type_id) , COUNT(*) FROM relationship WHERE deleted_at IS NULL GROUP BY (CONCAT(contact_id_a,":",contact_id_b,":",relationship_type_id)) HAVING COUNT(*)>1
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_duplicate_relationships()
+    public function check_duplicate_relationships(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -185,9 +170,8 @@ class HealthController extends Controller
     /**
      * Check for primary addresses with no country
      * // SELECT * FROM address WHERE country_id = 0 AND deleted_at IS NULL AND street_address IS NOT NULL AND is_primary = 1;
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_address_with_no_country()
+    public function check_address_with_no_country(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -206,9 +190,8 @@ class HealthController extends Controller
     /**
      * Check for husbands with more than one wife and wives with more than one husband
      *     // SELECT contact_id_b FROM relationship WHERE deleted_at IS NULL AND relationship_type_id=2 GROUP BY contact_id_b HAVING COUNT(contact_id_b)>1;
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_polygamy()
+    public function check_polygamy(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -239,9 +222,8 @@ class HealthController extends Controller
     /**
      * Check for primary addresses with no country
      * // SELECT * FROM address WHERE country_id = 0 AND deleted_at IS NULL AND street_address IS NOT NULL AND is_primary = 1;
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function check_anonymous_balance_transactions()
+    public function check_anonymous_balance_transactions(): Collection
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
@@ -254,7 +236,6 @@ class HealthController extends Controller
 
         return $anonymous_balance_transactions;
     }
-
 
     // SELECT contact_id_b FROM relationship WHERE deleted_at IS NULL AND relationship_type_id=2 GROUP BY contact_id_b HAVING COUNT(contact_id_b)>1;
 }

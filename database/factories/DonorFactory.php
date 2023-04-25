@@ -10,10 +10,8 @@ class DonorFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'donor_id' => $this->faker->randomNumber(5),

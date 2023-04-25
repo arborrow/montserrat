@@ -11,10 +11,8 @@ class AssetTaskFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '-10 days')->getTimeStamp());
         $scheduled_until_date = Carbon::now()->addYear();

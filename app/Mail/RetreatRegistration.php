@@ -24,10 +24,8 @@ class RetreatRegistration extends Mailable
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
-    public function build()
+    public function build(): static
     {
         return $this->subject('Registration email')
                     ->replyTo('registration@montserratretreat.org')

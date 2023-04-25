@@ -8,20 +8,16 @@ class StoreRetreatTouchpointRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'event_id' => 'required|integer|min:0',
@@ -33,10 +29,8 @@ class StoreRetreatTouchpointRequest extends FormRequest
 
     /**
      * Get the error messages for the defined validation rules.
-     *
-     * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

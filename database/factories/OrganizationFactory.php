@@ -4,7 +4,6 @@
 
 namespace Database\Factories;
 
-use App\Models\ContactType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -12,10 +11,8 @@ class OrganizationFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $subcontact_type = $this->faker->numberBetween(9, 11);
         $organizaton_name = $this->faker->company();

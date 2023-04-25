@@ -2,29 +2,25 @@
 
 namespace App\Providers;
 
+use App\Models\Contact;
 use ConsoleTVs\Charts\Registrar as Charts;
 use Illuminate\Support\ServiceProvider;
-use App\Models\Contact;
 use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot(Charts $charts)
+    public function boot(Charts $charts): void
     {
         \Illuminate\Pagination\Paginator::useBootstrap();
         $charts->register([

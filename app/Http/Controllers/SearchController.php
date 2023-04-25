@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SearchController extends Controller
 {
@@ -12,7 +15,7 @@ class SearchController extends Controller
         $this->middleware('auth');
     }
 
-    public function autocomplete(Request $request)
+    public function autocomplete(Request $request): JsonResponse
     {
         $this->authorize('show-contact');
         $term = $request->get('term');
@@ -28,7 +31,7 @@ class SearchController extends Controller
         return response()->json($results);
     }
 
-    public function getuser(Request $request)
+    public function getuser(Request $request): RedirectResponse
     {   //dd($request);
         $this->authorize('show-contact');
         if (empty($request->get('response'))) {
@@ -47,7 +50,7 @@ class SearchController extends Controller
         }
     }
 
-    public function results(SearchRequest $request)
+    public function results(SearchRequest $request): View
     {
         $this->authorize('show-contact');
         if (! empty($request)) {
@@ -57,10 +60,11 @@ class SearchController extends Controller
         } else {
             $persons = \App\Models\Contact::orderBy('sort_name')->with('attachments')->paginate(25, ['*'], 'persons');
         }
+
         return view('search.results', compact('persons'));
     }
 
-    public function search()
+    public function search(): View
     {
         $this->authorize('show-contact');
 

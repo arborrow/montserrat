@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\AuthenticateUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\Request;
+
 
 //use Illuminate\Support\Facades\Session;
 
@@ -47,20 +49,16 @@ class LoginController extends Controller
 
     /**
      * Redirect the user to the GitHub authentication page.
-     *
-     * @return Response
      */
-    public function redirectToProvider()
+    public function redirectToProvider(): RedirectResponse
     {
         return Socialite::driver('google')->redirect();
     }
 
     /**
      * Obtain the user information from GitHub.
-     *
-     * @return Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback(): RedirectResponse
     {
         $user = Socialite::driver('google')->stateless()->user();
         $socialite_restrict_domain = config('settings.socialite_restrict_domain');
@@ -89,7 +87,7 @@ class LoginController extends Controller
         }
     }
 
-    public function logout(AuthenticateUser $authenticateUser, Request $request, $provider = 'google')
+    public function logout(AuthenticateUser $authenticateUser, Request $request, $provider = 'google'): RedirectResponse
     {
         Auth::logout();
 

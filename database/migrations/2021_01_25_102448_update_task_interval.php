@@ -4,13 +4,12 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('asset_task', function (Blueprint $table) {
             $table->integer('frequency_interval')->nullable(false)->default(1)->change();
@@ -19,10 +18,8 @@ return new class extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('asset_task', function (Blueprint $table) {
             $table->integer('frequency_interval')->nullable(true)->default(null)->change();

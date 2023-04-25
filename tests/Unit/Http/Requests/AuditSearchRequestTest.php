@@ -2,9 +2,6 @@
 
 namespace Tests\Unit\Http\Requests;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Validation\Rule;
 use Tests\TestCase;
 
 /**
@@ -25,7 +22,7 @@ class AuditSearchRequestTest extends TestCase
     /**
      * @test
      */
-    public function authorize()
+    public function authorize(): void
     {
         $actual = $this->subject->authorize();
 
@@ -35,7 +32,7 @@ class AuditSearchRequestTest extends TestCase
     /**
      * @test
      */
-    public function rules()
+    public function rules(): void
     {
         $actual = $this->subject->rules();
 
@@ -50,13 +47,13 @@ class AuditSearchRequestTest extends TestCase
             'new_values' => 'string|nullable',
             'url' => 'string|nullable',
             'tags' => 'string|nullable',
-             ], $actual);
+        ], $actual);
     }
 
     /**
      * @test
      */
-    public function messages()
+    public function messages(): void
     {
         $actual = $this->subject->messages();
 

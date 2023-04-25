@@ -15,7 +15,7 @@ return [
      * https://stripe.com/docs/api#event_types.
      */
     'jobs' => [
-         'customer_created' => \App\Jobs\StripeWebhooks\HandleCreatedCustomer::class,
+        'customer_created' => \App\Jobs\StripeWebhooks\HandleCreatedCustomer::class,
         // 'source_chargeable' => \App\Jobs\StripeWebhooks\HandleChargeableSource::class,
         // 'charge_failed' => \App\Jobs\StripeWebhooks\HandleFailedCharge::class,
     ],
