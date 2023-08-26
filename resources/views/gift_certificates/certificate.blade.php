@@ -24,8 +24,10 @@
             
         <h3>From: {{ $gift_certificate->purchaser->display_name }}</h3>
 
-        <p>Gift Certificate must be presented at your retreat.
-            Kindly call to confirm your reservation.</p>
+        <p>
+            Use your gift certificate number to register on our website, montserratretreat.org
+            The gift certificate must be presented upon arrival at your retreat.
+        </p>
     
         <h3>Certificate #{{$gift_certificate->certificate_number}} (Expires: {{$gift_certificate->expiration_date->format('m-d-Y')}})</h3>
         
