@@ -57,7 +57,7 @@ return new class extends Migration
             $table->string('couple_name')->nullable();
             $table->string('couple_mobile_phone')->nullable();
             $table->string('gift_certificate_number')->nullable();
-            $table->string('gift_certificate_retreat')->nullable();
+            $table->integer('gift_certificate_year_issued')->nullable();
             $table->text('additional_names_and_phone_numbers', 65535)->nullable();
             $table->integer('message_id')->index('idx_message_id');
             $table->integer('event_id')->nullable()->index('idx_event_id');
