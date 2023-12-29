@@ -24,7 +24,7 @@
                 <table class="table table-bordered table-striped table-hover">
                     <caption>
                         <h2>
-                            {!! Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'import'],$payout->id),'Import ' . $stripe_balance_transactions->count() . ' Stripe Balance Transactions',array('class' => 'btn btn-secondary'))!!}
+                            {{ html()->a(url(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'import'], $payout->id)), 'Import ' . $stripe_balance_transactions->count() . ' Stripe Balance Transactions')->class('btn btn-secondary') }}
                         </h2>
                     </caption>
                     <thead>
@@ -90,19 +90,19 @@
                                 @else
                                     @switch ($balance_transaction->transaction_type)
                                         @case('Charge')
-                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Payment for Order #'.$balance_transaction->squarespace_order?->order_number,array('class' => 'btn btn-primary')) }}
+                                            {{ html()->a(url(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'], $balance_transaction->id)), 'Create Payment for Order #' . $balance_transaction->squarespace_order?->order_number)->class('btn btn-primary') }}
                                             @break
                                         @case('Donation')
-                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Payment for Donation'.$balance_transaction->squarespace_order?->order_number,array('class' => 'btn btn-primary')) }}
+                                            {{ html()->a(url(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'], $balance_transaction->id)), 'Create Payment for Donation' . $balance_transaction->squarespace_order?->order_number)->class('btn btn-primary') }}
                                             @break                                    
                                         @case('Invoice')
-                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Payment for '.$balance_transaction->description,array('class' => 'btn btn-primary')) }}
+                                            {{ html()->a(url(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'], $balance_transaction->id)), 'Create Payment for ' . $balance_transaction->description)->class('btn btn-primary') }}
                                             @break                                    
                                         @case('Refund')
-                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Refund Credit Payment',array('class' => 'btn btn-primary')) }}
+                                            {{ html()->a(url(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'], $balance_transaction->id)), 'Create Refund Credit Payment')->class('btn btn-primary') }}
                                             @break                                    
                                         @default
-                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Process Balance Transaction',array('class' => 'btn btn-primary')) }}
+                                            {{ html()->a(url(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'], $balance_transaction->id)), 'Process Balance Transaction')->class('btn btn-primary') }}
                                             @break
                                     @endswitch
                                 @endif
