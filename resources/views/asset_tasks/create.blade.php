@@ -6,107 +6,107 @@
         <h1>Create asset task</h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url'=>'asset_task', 'method'=>'post', 'enctype'=>'multipart/form-data']) !!}
+        {{ html()->form('POST', 'asset_task')->acceptsFiles()->open() }}
         <div class="form-group">
             <div class="row">
                 <div class="col-lg-3">
-                    {!! Form::label('asset_id', 'Asset') !!}
-                    {!! Form::select('asset_id', $assets, NULL, ['class' => 'form-control']) !!}
+                    {{ html()->label('Asset', 'asset_id') }}
+                    {{ html()->select('asset_id', $assets)->class('form-control') }}
                 </div>
                 <div class="col-lg-3">
-                    {!! Form::label('title', 'Task') !!}
-                    {!! Form::text('title', NULL , ['class' => 'form-control']) !!}
+                    {{ html()->label('Task', 'title') }}
+                    {{ html()->text('title')->class('form-control') }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3">
-                    {!! Form::label('start_date', 'Start date') !!}
-                    {!! Form::date('start_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
+                    {{ html()->label('Start date', 'start_date') }}
+                    {{ html()->date('start_date')->class('form-control flatpickr-date')->attribute('autocomplete', 'off') }}
                 </div>
                 <div class="col-lg-3">
-                    {!! Form::label('scheduled_until_date', 'Scheduled until date') !!}
-                    {!! Form::date('scheduled_until_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
+                    {{ html()->label('Scheduled until date', 'scheduled_until_date') }}
+                    {{ html()->date('scheduled_until_date')->class('form-control flatpickr-date')->attribute('autocomplete', 'off') }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3">
-                    {!! Form::label('frequency_interval', 'Every') !!}
-                    {!! Form::text('frequency_interval', 1, ['class' => 'form-control']) !!}
+                    {{ html()->label('Every', 'frequency_interval') }}
+                    {{ html()->text('frequency_interval', 1)->class('form-control') }}
                 </div>
                 <div class="col-lg-3">
-                    {!! Form::label('frequency', 'Frequency') !!}
-                    {!! Form::select('frequency', $frequencies, NULL, ['class' => 'form-control']) !!}
+                    {{ html()->label('Frequency', 'frequency') }}
+                    {{ html()->select('frequency', $frequencies)->class('form-control') }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3">
-                    {!! Form::label('frequency_month', 'Month') !!}
-                    {!! Form::text('frequency_month', NULL , ['class' => 'form-control']) !!}
+                    {{ html()->label('Month', 'frequency_month') }}
+                    {{ html()->text('frequency_month')->class('form-control') }}
                 </div>
                 <div class="col-lg-3">
-                    {!! Form::label('frequency_day', 'Day') !!}
-                    {!! Form::text('frequency_day', NULL , ['class' => 'form-control']) !!}
+                    {{ html()->label('Day', 'frequency_day') }}
+                    {{ html()->text('frequency_day')->class('form-control') }}
                 </div>
                 <div class="col-lg-3">
-                    {!! Form::label('frequency_time', 'Time') !!}
-                    {!! Form::text('frequency_time', null, ['class'=>'form-control flatpickr-time', 'autocomplete'=> 'off']) !!}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    {!! Form::label('description', 'Detailed description') !!}
-                    {!! Form::textarea('description', NULL, ['class' => 'form-control', 'rows' => 3]) !!}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3">
-                    {!! Form::label('priority_id', 'Priority') !!}
-                    {!! Form::select('priority_id', $priorities, 3, ['class' => 'form-control']) !!}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3">
-                    {!! Form::label('needed_labor_minutes', 'Estimated labor (minutes)') !!}
-                    {!! Form::text('needed_labor_minutes', NULL , ['class' => 'form-control']) !!}
-                </div>
-                <div class="col-lg-3">
-                    {!! Form::label('estimated_labor_cost', 'Estimated labor cost') !!}
-                    {!! Form::text('estimated_labor_cost', NULL , ['class' => 'form-control']) !!}
+                    {{ html()->label('Time', 'frequency_time') }}
+                    {{ html()->text('frequency_time')->class('form-control flatpickr-time')->attribute('autocomplete', 'off') }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    {!! Form::label('needed_material', 'Needed materials') !!}
-                    {!! Form::textarea('needed_material', NULL, ['class' => 'form-control', 'rows' => 3]) !!}
-                </div>
-                <div class="col-lg-3">
-                    {!! Form::label('estimated_material_cost', 'Estimated material cost') !!}
-                    {!! Form::text('estimated_material_cost', NULL , ['class' => 'form-control']) !!}
+                    {{ html()->label('Detailed description', 'description') }}
+                    {{ html()->textarea('description')->class('form-control')->rows(3) }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3">
-                    {!! Form::label('vendor_id', 'Vendor') !!}
-                    {!! Form::select('vendor_id', $vendors, NULL, ['class' => 'form-control']) !!}
+                    {{ html()->label('Priority', 'priority_id') }}
+                    {{ html()->select('priority_id', $priorities, 3)->class('form-control') }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3">
-                    {!! Form::label('category', 'Category') !!}
-                    {!! Form::text('category', NULL , ['class' => 'form-control']) !!}
+                    {{ html()->label('Estimated labor (minutes)', 'needed_labor_minutes') }}
+                    {{ html()->text('needed_labor_minutes')->class('form-control') }}
                 </div>
                 <div class="col-lg-3">
-                    {!! Form::label('tag', 'Tag') !!}
-                    {!! Form::text('tag', NULL , ['class' => 'form-control']) !!}
+                    {{ html()->label('Estimated labor cost', 'estimated_labor_cost') }}
+                    {{ html()->text('estimated_labor_cost')->class('form-control') }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    {{ html()->label('Needed materials', 'needed_material') }}
+                    {{ html()->textarea('needed_material')->class('form-control')->rows(3) }}
+                </div>
+                <div class="col-lg-3">
+                    {{ html()->label('Estimated material cost', 'estimated_material_cost') }}
+                    {{ html()->text('estimated_material_cost')->class('form-control') }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    {{ html()->label('Vendor', 'vendor_id') }}
+                    {{ html()->select('vendor_id', $vendors)->class('form-control') }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    {{ html()->label('Category', 'category') }}
+                    {{ html()->text('category')->class('form-control') }}
+                </div>
+                <div class="col-lg-3">
+                    {{ html()->label('Tag', 'tag') }}
+                    {{ html()->text('tag')->class('form-control') }}
                 </div>
             </div>
         </div>
         <div class="row text-center">
             <div class="col-lg-12">
-                {!! Form::submit('Add asset task', ['class'=>'btn btn-outline-dark']) !!}
+                {{ html()->submit('Add asset task')->class('btn btn-outline-dark') }}
             </div>
         </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

@@ -71,9 +71,9 @@
             </div>
             <div class="col-lg-6 text-left">
                 @can('delete-location')
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['location.destroy', $location->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                    {!! Form::close() !!}
+                    {{ html()->form('DELETE', route('location.destroy', [$location->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                    {{ html()->image('images/delete.png', 'btnDelete', ['class' => 'btn btn-danger', 'title' => 'Delete']) }}
+                    {{ html()->form()->close() }}
                 @endCan
             </div>
         </div>

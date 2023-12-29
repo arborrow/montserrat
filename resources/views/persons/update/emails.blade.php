@@ -1,11 +1,11 @@
 <div class="form-group">
     <div class="row">
         <div class="col-lg-3 col-md-4">
-            {!! Form::label('primary_email_location_id', 'Primary email:') !!}
+            {{ html()->label('Primary email:', 'primary_email_location_id') }}
             @if ($person->primary_email_location_type_id == 0)
-                {!! Form::select('primary_email_location_id', $primary_email_locations, config('polanco.location_type.home'), ['class' => 'form-control']) !!}
+                {{ html()->select('primary_email_location_id', $primary_email_locations, config('polanco.location_type.home'))->class('form-control') }}
             @else
-                {!! Form::select('primary_email_location_id', $primary_email_locations, $person->primary_email_location_type_id, ['class' => 'form-control']) !!}
+                {{ html()->select('primary_email_location_id', $primary_email_locations, $person->primary_email_location_type_id)->class('form-control') }}
             @endIf
         </div>
     </div>
@@ -52,8 +52,8 @@
             <h4>Home email</h4>
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('email_home', 'Email:') !!}
-                    {!! Form::text('email_home', $defaults['Home']['email'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Email:', 'email_home') }}
+                    {{ html()->text('email_home', $defaults['Home']['email'])->class('form-control') }}
                 </div>
             </div>
         </div>
@@ -65,8 +65,8 @@
             <h4>Work email</h4>
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('email_work', 'Email:') !!}
-                    {!! Form::text('email_work', $defaults['Work']['email'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Email:', 'email_work') }}
+                    {{ html()->text('email_work', $defaults['Work']['email'])->class('form-control') }}
                 </div>
             </div>
         </div>
@@ -78,14 +78,14 @@
             <h4>Other email</h4>
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('email_other', 'Email:') !!}
-                    {!! Form::text('email_other', $defaults['Other']['email'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Email:', 'email_other') }}
+                    {{ html()->text('email_other', $defaults['Other']['email'])->class('form-control') }}
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div class="form-group form-check">
-    {!! Form::checkbox('do_not_email', 1, $person->do_not_email,['class' => 'form-check-input', 'id' => 'do_not_email']) !!}
-    {!! Form::label('do_not_email', 'Do not email', ['class' => 'form-check-label', 'id' => 'do_not_email']) !!}
+    {{ html()->checkbox('do_not_email', $person->do_not_email, 1)->class('form-check-input')->id('do_not_email') }}
+    {{ html()->label('Do not email', 'do_not_email')->class('form-check-label')->id('do_not_email') }}
 </div>

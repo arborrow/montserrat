@@ -131,9 +131,9 @@
                     </div>
                 @endCan
                 @can('delete-retreat')
-                    <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                        {!! Form::close() !!}
+                    <div class='col-md-1'>{{ html()->form('DELETE', route('retreat.destroy', [$retreat->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                        {{ html()->image('images/delete.png', 'btnDelete', ['class' => 'btn btn-danger', 'title' => 'Delete']) }}
+                        {{ html()->form()->close() }}
                     </div>
                 @endCan
                 <div class="clearfix"> </div>

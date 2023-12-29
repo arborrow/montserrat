@@ -6,65 +6,65 @@
         <h1>Create location</h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url'=>'admin/location', 'method'=>'post']) !!}
+        {{ html()->form('POST', 'admin/location')->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('name', 'Name') !!}
-                        {!! Form::text('name', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('Name', 'name') }}
+                        {{ html()->text('name')->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('label', 'Label') !!}
-                        {!! Form::text('label', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('Label', 'label') }}
+                        {{ html()->text('label')->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('type', 'Type') !!}
-                        {!! Form::select('type', $location_types, NULL, ['class' => 'form-control']) !!}
+                        {{ html()->label('Type', 'type') }}
+                        {{ html()->select('type', $location_types)->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        {!! Form::label('description', 'Description') !!}
-                        {!! Form::textarea('description', NULL, ['class' => 'form-control', 'rows' => 3]) !!}
+                        {{ html()->label('Description', 'description') }}
+                        {{ html()->textarea('description')->class('form-control')->rows(3) }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('latitude', 'Latitude') !!}
-                        {!! Form::text('latitude', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('Latitude', 'latitude') }}
+                        {{ html()->text('latitude')->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('longitude', 'Longitude') !!}
-                        {!! Form::text('longitude', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('Longitude', 'longitude') }}
+                        {{ html()->text('longitude')->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('occupancy', 'Occupancy') !!}
-                        {!! Form::text('occupancy', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->label('Occupancy', 'occupancy') }}
+                        {{ html()->text('occupancy')->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('room_id', 'Room') !!}
-                        {!! Form::select('room_id', $rooms, NULL, ['class' => 'form-control']) !!}
+                        {{ html()->label('Room', 'room_id') }}
+                        {{ html()->select('room_id', $rooms)->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('parent_id', 'Parent') !!}
-                        {!! Form::select('parent_id', $parents, NULL, ['class' => 'form-control']) !!}
+                        {{ html()->label('Parent', 'parent_id') }}
+                        {{ html()->select('parent_id', $parents)->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        {!! Form::label('notes', 'Notes') !!}
-                        {!! Form::textarea('notes', NULL, ['class' => 'form-control', 'rows' => 3]) !!}
+                        {{ html()->label('Notes', 'notes') }}
+                        {{ html()->textarea('notes')->class('form-control')->rows(3) }}
                     </div>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-lg-12">
-                    {!! Form::submit('Add location', ['class'=>'btn btn-outline-dark']) !!}
+                    {{ html()->submit('Add location')->class('btn btn-outline-dark') }}
                 </div>
             </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

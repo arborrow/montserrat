@@ -39,9 +39,9 @@
     </div>
 
     <div class="col-lg-12">
-        {!! Form::open(['method' => 'PUT', 'route' => ['stripe.balance_transaction.update', $balance_transaction->id]]) !!}
-        {!! Form::hidden('id', $balance_transaction->id) !!}
-        {!! Form::hidden('payout_id', $balance_transaction->payout_id) !!}
+        {{ html()->form('PUT', route('stripe.balance_transaction.update', [$balance_transaction->id]))->open() }}
+        {{ html()->hidden('id', $balance_transaction->id) }}
+        {{ html()->hidden('payout_id', $balance_transaction->payout_id) }}
         
         <hr>
         <div class="form-group">
@@ -53,15 +53,15 @@
                                 @if (isset($balance_transaction->contact_id))
                                     Donor: <a href="{{url('person/'.$balance_transaction->contact_id)}}">{{$balance_transaction->name}}</a>
                                 @else
-                                    {!! Form::label('contact_id', 'Donor: ' .$balance_transaction->name) !!}
+                                    {{ html()->label('Donor: ' . $balance_transaction->name, 'contact_id') }}
                                 @endIf
                             </h3>
-                            {!! Form::select('contact_id', $matching_contacts, (isset($balance_transaction->contact_id)) ? $balance_transaction->contact_id : 0, ['class' => 'form-control']) !!}
+                            {{ html()->select('contact_id', $matching_contacts, isset($balance_transaction->contact_id) ? $balance_transaction->contact_id : 0)->class('form-control') }}
                             
                             <h3>
-                                {!! Form::label('event_id', 'Retreat:') !!}
+                                {{ html()->label('Retreat:', 'event_id') }}
                             </h3>
-                            {!! Form::select('event_id', $retreats, (isset($balance_transaction->event_id) ? $balance_transaction->event_id : '' ), ['class' => 'form-control']) !!}
+                            {{ html()->select('event_id', $retreats, isset($balance_transaction->event_id) ? $balance_transaction->event_id : '')->class('form-control') }}
                             
                             <hr />
                             <br /><strong>Email: </strong><a href="mailto:{{ $balance_transaction->email }}">{{ $balance_transaction->email }}</a>
@@ -74,16 +74,16 @@
                             </h3>                    
                             @if (is_array($transaction_types))
                                 @foreach ($transaction_types as $type)
-                                    {!! Form::label(str_replace(" ", "_",strtolower($type)), $type) !!}</h3>
+                                    {{ html()->label($type, str_replace(" ", "_", strtolower($type))) }}</h3>
                                     @if (count($transaction_types) == 1)
-                                        {!! Form::number(str_replace(" ", "_",strtolower($type)), $balance_transaction->total_amount, ['class' => 'form-control','step'=>'0.01']) !!}
+                                        {{ html()->number(str_replace(" ", "_", strtolower($type)), $balance_transaction->total_amount)->class('form-control')->attribute('step', '0.01') }}
                                     @else
-                                        {!! Form::number(str_replace(" ", "_",strtolower($type)), null, ['class' => 'form-control','step'=>'0.01']) !!}
+                                        {{ html()->number(str_replace(" ", "_", strtolower($type)))->class('form-control')->attribute('step', '0.01') }}
                                     @endIf
                                 @endForeach
                             @else
-                                {!! Form::label(str_replace(" ","_", strtolower($transaction_types)), $transaction_types) !!}</h3>
-                                {!! Form::number(str_replace(" ","_", strtolower($transaction_types)), $balance_transaction->total_amount, ['class' => 'form-control','step'=>'0.01']) !!}
+                                {{ html()->label($transaction_types, str_replace(" ", "_", strtolower($transaction_types))) }}</h3>
+                                {{ html()->number(str_replace(" ", "_", strtolower($transaction_types)), $balance_transaction->total_amount)->class('form-control')->attribute('step', '0.01') }}
                             @endIf
                             <hr />
                             <strong>Fee: </strong> ${{ number_format($balance_transaction->fee_amount,2) }}
@@ -99,8 +99,8 @@
                 @case ('Donation')
                     <div class="col-lg-4 col-md-6">
                         <h3>
-                            {!! Form::label('contribution_id', 'Contribution for: ' .$balance_transaction->name) . ' - $' . number_format($balance_transaction->total_amount,2) . ' - ' . $balance_transaction->payout_date->format('m-d-Y') !!}</h3>
-                            {!! Form::select('contribution_id', $unprocessed_squarespace_contributions, null, ['class' => 'form-control']) !!}
+                            {{ html()->label('Contribution for: ' . $balance_transaction->name, 'contribution_id') }}</h3>
+                            {{ html()->select('contribution_id', $unprocessed_squarespace_contributions)->class('form-control') }}
                         </h3>
                     </div>
                     @break
@@ -110,10 +110,10 @@
                             @if (isset($balance_transaction->contact_id) && $balance_transaction->contact_id > 0)
                                 Donor: <a href="{{url('person/'.$balance_transaction->contact_id)}}">{{$balance_transaction->name}}</a>
                             @else
-                                {!! Form::label('contact_id', 'Donor: ' .$balance_transaction->name) !!}
+                                {{ html()->label('Donor: ' . $balance_transaction->name, 'contact_id') }}
                             @endIf
                         </h3>
-                        {!! Form::select('contact_id', $matching_contacts, (isset($balance_transaction->contact_id)) ? $balance_transaction->contact_id : 0, ['class' => 'form-control']) !!}
+                        {{ html()->select('contact_id', $matching_contacts, isset($balance_transaction->contact_id) ? $balance_transaction->contact_id : 0)->class('form-control') }}
                         <hr />
                         <strong>Email: </strong><a href="mailto:{{ $balance_transaction->email }}">{{ $balance_transaction->email }}</a>
                         <br /><strong>Zip: </strong>{{ $balance_transaction->zip }}
@@ -122,9 +122,9 @@
 
                     <div class="col-lg-5 col-md-6">           
                         <h3>
-                            {!! Form::label('donation_id', 'Donation:') !!}
+                            {{ html()->label('Donation:', 'donation_id') }}
                         </h3>
-                        {!! Form::select('donation_id', $donations, null, ['class' => 'form-control']) !!}
+                        {{ html()->select('donation_id', $donations)->class('form-control') }}
                         
                     </div>
 
@@ -151,20 +151,20 @@
                         @switch ($balance_transaction->transaction_type)
                             @case ('Manual')
                                 @if ($balance_transaction->contact_id > 0)
-                                    {!! Form::submit('Process Balance Transaction',['class' => 'btn btn-dark']) !!}
+                                    {{ html()->submit('Process Balance Transaction')->class('btn btn-dark') }}
                                 @else
-                                    {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
+                                    {{ html()->submit('Retrieve Contact Info')->class('btn btn-info') }}
                                 @endif
                                 @break
                             @case('Donation')
-                                {!! Form::submit('Process Balance Transaction: Contribution',['class' => 'btn btn-dark']) !!}
+                                {{ html()->submit('Process Balance Transaction: Contribution')->class('btn btn-dark') }}
                                 @break
                             @case ('Invoice')
                                 @if ($balance_transaction->contact_id > 0)
-                                    {!! Form::submit('Process Balance Transaction',['class' => 'btn btn-dark']) !!}
+                                    {{ html()->submit('Process Balance Transaction')->class('btn btn-dark') }}
                                     <a class="btn btn-info" href="{{ action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'reset'],['id'=>$balance_transaction->id]) }}">Reset Contact for Stripe Balance Transaction #{{ $balance_transaction->id }}</a>
                                 @else
-                                    {!! Form::submit('Retrieve Donor Information',['class' => 'btn btn-info']) !!}
+                                    {{ html()->submit('Retrieve Donor Information')->class('btn btn-info') }}
                                 @endif
                                 @break
                         @endswitch
@@ -186,7 +186,7 @@
             </div>
             
         </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop
