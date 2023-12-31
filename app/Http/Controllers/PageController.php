@@ -63,8 +63,8 @@ class PageController extends Controller
     public function finance(): View
     {
         $this->authorize('show-donation');
-
-        return view('pages.finance');
+        $current_fiscal_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+        return view('pages.finance',compact('current_fiscal_year'));
     }
 
     public function bookstore(): View
