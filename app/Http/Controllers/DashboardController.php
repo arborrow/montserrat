@@ -135,7 +135,50 @@ class DashboardController extends Controller
             $donation_type = \App\Models\DonationType::findOrFail($category_id);
         }
 
-        return view('dashboard.description', compact('donation_type', 'descriptions'));
+        if (isset($donation_type)) { //validate donation_description
+            $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+            $number_of_years = 5;
+            $years = [];
+            for ($x = -$number_of_years; $x <= 0; $x++) {
+                $today = \Carbon\Carbon::now();
+                $today->day = 1;
+                $today->month = 1;
+                $today->year = $current_year;
+                $years[$x] = $today->addYear($x);
+            }
+
+            foreach ($years as $year) {
+                $label = $year->year;
+                $prev_year = $year->copy()->subYear();
+                $donations = \App\Models\Donation::whereDonationDescription($donation_type->name)
+                    ->where('donation_date', '>=', $prev_year->year.'-07-01')
+                    ->where('donation_date', '<', $year->year.'-07-01')
+                    ->get();
+                $donors[$label]['count'] = $donations->count();
+                $donors[$label]['sum'] = $donations->sum('donation_amount');
+            }
+            $average_amount = ((((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / ($number_of_years)));
+
+            foreach ($years as $year) {
+                $label = $year->year;
+                $prev_year = $year->copy()->subYear();
+                $donors[$label]['average_amount'] = $average_amount;
+            }
+
+        }
+
+        $labels = array_values(array_keys($donors));
+        $sums = array_column($donors, 'sum');
+        $avgs = array_column($donors, 'average_amount');
+
+
+        $data = [
+            'labels' => array_values(array_keys($donors)),
+            'dataset1' => $sums,
+            'dataset2' => $avgs,
+        ];
+        
+        return view('dashboard.description', compact('donation_type', 'descriptions','data'));
     }
 
     public function events($year = null): View
