@@ -1,4 +1,5 @@
 @extends('template')
+<script src="https://cdn.jsdeliver.net/npm/chart.js"></script>
 @section('content')
 
     <section class="section-padding">
@@ -22,11 +23,14 @@
                     </select>
                 </div>
 
+                <div class="container">
+                    <canvas id="AGCAmountsChart"></canvas>
+                </div>
 
-                <div id="agc_donor" style="height:400px"> </div>
+                <div class="container">
+                    <canvas id="AGCDonorsChart"></canvas>
+                </div>
 
-                <hr />
-                <div id="agc_amount" style="height:400px"> </div>
                 <hr />
 
                 <div>
@@ -55,36 +59,167 @@
             </div>
         </div>
     </section>
-    <script src="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <script src="https://unpkg.com/@chartisan/chartjs@^2.0.6/dist/chartisan_chartjs.umd.js"></script>
+
     <script>
+        var data = @json($data);
+        var title = @json("Number of AGC Donors per Fiscal Year");
+        var donors = @json($donors);
 
-        const chart = new Chartisan({
-            el: '#agc_donor',
-            url: "@chart('agc_donor')" + "?number_of_years={{ $number_of_years }}",
-            hooks: new ChartisanHooks()
-              .title('AGC Donors per Fiscal Year')
-              .responsive()
-              .beginAtZero()
-              .legend({ position: 'bottom' })
-              .datasets(['line', 'line'])
-              .colors(["","rgba(22,160,133, 0.3)","rgba(51,105,232, 0.3)","rgba(255, 205, 86, 0.3)","rgba(255, 99, 132, 0.3)","rgba(244,67,54, 0.3)"])
-              .borderColors(["","rgba(22,160,133, 0.6)","rgba(51,105,232, 0.6)","rgba(255, 205, 86, 0.6)","rgba(255, 99, 132, 0.6)","rgba(244,67,54, 0.6)"])
-          });
+        var ctx = document.getElementById('AGCDonorsChart').getContext('2d');
 
-          const amount_chart = new Chartisan({
-              el: '#agc_amount',
-              url: "@chart('agc_amount')" + "?number_of_years={{ $number_of_years }}",
-              hooks: new ChartisanHooks()
-                .title('AGC Donations per Fiscal Year')
-                .responsive()
-                .beginAtZero()
-                .legend({ position: 'bottom' })
-                .datasets(['line', 'line'])
-                .colors(["","rgba(22,160,133, 0.3)","rgba(51,105,232, 0.3)","rgba(255, 205, 86, 0.3)","rgba(255, 99, 132, 0.3)","rgba(244,67,54, 0.3)"])
-                .borderColors(["","rgba(22,160,133, 0.6)","rgba(51,105,232, 0.6)","rgba(255, 205, 86, 0.6)","rgba(255, 99, 132, 0.6)","rgba(244,67,54, 0.6)"])
-            });
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            options: {
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    }
+                },
+                title: {
+                    display: true,
+                    text: title,
+                },
+                legend: {
+                    position: 'bottom',
+                }
+            }, 
+            data: {
+                labels: data.labels,
+                datasets: [
+                {
+                    label: 'AGC - General',
+                    data: data["AGC - General Donors"],
+                    backgroundColor: 'rgba(51,105,232, 0.3)',
+                    borderColor: 'rgba(51,105,232,0.7)',
+                    borderWidth: 2,
+                    tension: 0.5,
+                },
+                {
+                    label: 'AGC - Endowment',
+                    data: data["AGC - Endowment Donors"],
+                    backgroundColor: 'rgba(255, 205, 86, 0.3)',
+                    borderColor: 'rgba(255, 205, 86,0.7)',
+                    borderWidth: 2,
+                    tension: 0.5,
+                },
+                {
+                    label: 'AGC - Scholarships',
+                    data: data["AGC - Scholarships Donors"],
+                    backgroundColor: 'rgba(255, 99, 132, 0.3)',
+                    borderColor: 'rgba(255, 99, 132,0.7)',
+                    borderWidth: 2,
+                    tension: 0.5,
+                },                
+                {
+                    label: 'AGC - Buildings & Maintenance',
+                    data: data["AGC - Buildings & Maintenance Donors"],
+                    backgroundColor: 'rgba(128, 0, 0, 0.3)',
+                    borderColor: 'rgba(128, 0, 0, 0.7)',
+                    borderWidth: 2,
+                    tension: 0.5,
+                },                
+                {
+                    label: 'Total Number of AGC Donors',
+                    data: data.donor_count,
+                    backgroundColor: 'rgba(22,160,133, 0.3)',
+                    borderColor: 'rgba(22,160,133, 1.0)',
+                    borderWidth: 2,
+                    tension: 0.5,
+                },
+                {
+                    label: 'Average Number of AGC Donors',
+                    data: data.donor_count_average,
+                    backgroundColor: 'rgba(110, 115, 111, 0.2)',
+                    borderColor: 'rgba(110, 115, 111, 1.0)',
+                    borderWidth: 2,
+                    tension: 0.5,                
+                },
+            ]
+            },
+        });
 
     </script>
+
+    <script>
+        var data = @json($data);
+        var title = @json("AGC Donations per Fiscal Year");
+        var donors = @json($donors);
+
+        var ctx = document.getElementById('AGCAmountsChart').getContext('2d');
+
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            options: {
+                scales: {
+                    y: {
+                       beginAtZero: true
+                    }
+                },
+                title: {
+                    display: true,
+                    text: title,
+                },
+                legend: {
+                    position: 'bottom',
+                }
+            }, 
+            data: {
+                labels: data.labels,
+                datasets: [
+                {
+                    label: 'AGC - General',
+                    data: data["AGC - General"],
+                    backgroundColor: 'rgba(51,105,232, 0.3)',
+                    borderColor: 'rgba(51,105,232,0.7)',
+                    borderWidth: 2,
+                    tension: 0.5,
+                },
+                {
+                    label: 'AGC - Endowment',
+                    data: data["AGC - Endowment"],
+                    backgroundColor: 'rgba(255, 205, 86, 0.3)',
+                    borderColor: 'rgba(255, 205, 86,0.7)',
+                    borderWidth: 2,
+                    tension: 0.5,
+                },
+                {
+                    label: 'AGC - Scholarships',
+                    data: data["AGC - Scholarships"],
+                    backgroundColor: 'rgba(255, 99, 132, 0.3)',
+                    borderColor: 'rgba(255, 99, 132,0.7)',
+                    borderWidth: 2,
+                    tension: 0.5,
+                },                
+                {
+                    label: 'AGC - Buildings & Maintenance',
+                    data: data["AGC - Buildings & Maintenance"],
+                    backgroundColor: 'rgba(128, 0, 0, 0.3)',
+                    borderColor: 'rgba(128, 0, 0, 0.7)',
+                    borderWidth: 2,
+                    tension: 0.5,
+                },                
+                {
+                    label: 'Total AGC Donations',
+                    data: data.sums,
+                    backgroundColor: 'rgba(22,160,133, 0.3)',
+                    borderColor: 'rgba(22,160,133, 1.0)',
+                    borderWidth: 2,
+                    tension: 0.5,
+                },
+                {
+                    label: 'Average AGC Donations',
+                    data: data.avgs,
+                    backgroundColor: 'rgba(110, 115, 111, 0.2)',
+                    borderColor: 'rgba(110, 115, 111, 1.0)',
+                    borderWidth: 2,
+                    tension: 0.5,                
+                },
+            ]
+            },
+        });
+
+    </script>
+
+    
 
 @stop

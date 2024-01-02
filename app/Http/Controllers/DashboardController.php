@@ -80,8 +80,32 @@ class DashboardController extends Controller
             $donors[$label]['average_count'] = $average_donor_count;
             $donors[$label]['average_amount'] = $average_agc_amount;
         }
-        // dd($donors);
-        return view('dashboard.agc', compact('number_of_years', 'donors', 'agc_descriptions'));
+        
+        $labels = array_values(array_keys($donors));
+        $avgs = array_column($donors, 'average_amount');
+        $sums = array_column($donors, 'sum');
+        $donor_count = array_column($donors, 'count');
+        $donor_count_average = array_column($donors, 'average_count');
+
+
+
+        $data = [
+            'labels' => array_values(array_keys($donors)),
+            'avgs' => $avgs,
+            'sums' => $sums,
+            'donor_count' => $donor_count,
+            'donor_count_average' => $donor_count_average,
+        ];
+
+
+        foreach (config('polanco.agc_donation_descriptions') as $key => $description) {
+            $data[$description] = array_column($donors, 'sum_'.$description);
+            $data[$description . " Donors"] = array_column($donors, 'count_'.$description);
+        }
+
+
+        // dd($donors, $data);
+        return view('dashboard.agc', compact('number_of_years', 'donors', 'agc_descriptions', 'data'));
     }
 
     public function agc_donations(AgcDonationsRequest $request): View
