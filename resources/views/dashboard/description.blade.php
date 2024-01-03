@@ -1,4 +1,6 @@
 @extends('template')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js" integrity="sha512-d6nObkPJgV791iTGuBoVC9Aa2iecqzJRE0Jiqvk85BhLHAPhWqkuBiQb1xz2jvuHNqHLYoN3ymPfpiB1o+Zgpw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 @section('content')
 
     <section class="section-padding">
@@ -19,27 +21,62 @@
                             </select>
                         </div>
                     </div>
-
-                <div id="description_chart" style="height:400px">  </div>
+                <div class="container">
+                    <canvas id="DonationDescriptionChart"></canvas>
+                </div>
             </div>
         </div>
     </section>
-    <script src="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <!-- Chartisan -->
-    <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
+
     <script>
 
-        const chart = new Chartisan({
-            el: '#description_chart',
-            url: "@chart('donation_description')" + "?category_id={{ $donation_type->id }}",
-            hooks: new ChartisanHooks()
-              .title('{!! $donation_type->name !!} Donations')
-              .responsive()
-              .beginAtZero()
-              .legend({ position: 'bottom' })
-              .datasets(['line', 'line'])
-              .colors(["","rgba(22,160,133, 0.3)"])
-              .borderColors(["","rgba(22,160,133, 0.6)"])
-          });
+        var data = @json($data);
+        var title = @json($donation_type->name . " Donations");
+
+        var ctx = document.getElementById('DonationDescriptionChart').getContext('2d');
+
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: title
+                    },
+                    legend: {
+                        position: 'bottom',
+                    },
+
+                },
+                fill: true,
+                scales: {
+                    y: {
+                       beginAtZero: true
+                    }
+                },
+            },
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Donations',
+                    data: data.dataset1,
+                    backgroundColor: 'rgba(22, 160, 133, 0.3)',
+                    borderColor: 'rgba(22,160,133,0.7)',
+
+                    borderWidth: 2,
+                    tension: 0.33, // Set tension for a smoother curve                
+                }, 
+                {
+                    label: 'Average',
+                    data: data.dataset2,
+                    backgroundColor: 'rgba(110, 115, 111, 0.2)',
+                    borderColor: 'rgba(110, 115, 111, 1.0)',
+                    borderWidth: 2,
+                    tension: 0.5,
+                }]
+            },
+        });
+
     </script>
+
 @stop

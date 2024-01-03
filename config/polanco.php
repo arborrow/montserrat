@@ -37,6 +37,29 @@ return [
         8 => '147,131,107',
     ],
 
+    'chart_colors' => [
+        0 => '230, 25, 75', // red
+        1 => '245, 130, 48', // orange
+        2 => '255, 225, 25', // yellow
+        3 => '60, 180, 75', // green
+        4 => '0, 130, 200', // blue
+        5 => '145,30,180', // purple
+        6 => '250,190,212', // pink (light red)
+        7 => '255,215,180', // apricot (light orange)
+        8 => '170,255,195',  // beige (light yellow)
+        9 => '170,255,195', //mint (light green)
+        10 => '70, 240, 240',  // cyan (light blue)
+        11 => '220,190,255', // lavender (light purple)
+        12 => '128,0,0', //maroon (dark red)
+        13 => '170,110,40', // brown (dark orange)
+        14 => '128, 128, 0', // olive (dark yellow)
+        15 => '0,128,128', // teal (dark green)
+        16 => '0,0,128', // navy (dark blue)
+        17 => '240, 50, 230', // magenta (dark purple)
+        18 => '210, 245, 60', // lime  
+        19 => '128, 128, 128', // gray
+    ],
+
     'agc_donation_descriptions' => [
         'AGC - General',
         'AGC - Endowment',

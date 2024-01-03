@@ -80,8 +80,32 @@ class DashboardController extends Controller
             $donors[$label]['average_count'] = $average_donor_count;
             $donors[$label]['average_amount'] = $average_agc_amount;
         }
-        // dd($donors);
-        return view('dashboard.agc', compact('number_of_years', 'donors', 'agc_descriptions'));
+        
+        $labels = array_values(array_keys($donors));
+        $avgs = array_column($donors, 'average_amount');
+        $sums = array_column($donors, 'sum');
+        $donor_count = array_column($donors, 'count');
+        $donor_count_average = array_column($donors, 'average_count');
+
+
+
+        $data = [
+            'labels' => array_values(array_keys($donors)),
+            'avgs' => $avgs,
+            'sums' => $sums,
+            'donor_count' => $donor_count,
+            'donor_count_average' => $donor_count_average,
+        ];
+
+
+        foreach (config('polanco.agc_donation_descriptions') as $key => $description) {
+            $data[$description] = array_column($donors, 'sum_'.$description);
+            $data[$description . " Donors"] = array_column($donors, 'count_'.$description);
+        }
+
+
+        // dd($donors, $data);
+        return view('dashboard.agc', compact('number_of_years', 'donors', 'agc_descriptions', 'data'));
     }
 
     public function agc_donations(AgcDonationsRequest $request): View
@@ -135,7 +159,50 @@ class DashboardController extends Controller
             $donation_type = \App\Models\DonationType::findOrFail($category_id);
         }
 
-        return view('dashboard.description', compact('donation_type', 'descriptions'));
+        if (isset($donation_type)) { //validate donation_description
+            $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+            $number_of_years = 5;
+            $years = [];
+            for ($x = -$number_of_years; $x <= 0; $x++) {
+                $today = \Carbon\Carbon::now();
+                $today->day = 1;
+                $today->month = 1;
+                $today->year = $current_year;
+                $years[$x] = $today->addYear($x);
+            }
+
+            foreach ($years as $year) {
+                $label = $year->year;
+                $prev_year = $year->copy()->subYear();
+                $donations = \App\Models\Donation::whereDonationDescription($donation_type->name)
+                    ->where('donation_date', '>=', $prev_year->year.'-07-01')
+                    ->where('donation_date', '<', $year->year.'-07-01')
+                    ->get();
+                $donors[$label]['count'] = $donations->count();
+                $donors[$label]['sum'] = $donations->sum('donation_amount');
+            }
+            $average_amount = ((((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / ($number_of_years)));
+
+            foreach ($years as $year) {
+                $label = $year->year;
+                $prev_year = $year->copy()->subYear();
+                $donors[$label]['average_amount'] = $average_amount;
+            }
+
+        }
+
+        $labels = array_values(array_keys($donors));
+        $sums = array_column($donors, 'sum');
+        $avgs = array_column($donors, 'average_amount');
+
+
+        $data = [
+            'labels' => array_values(array_keys($donors)),
+            'dataset1' => $sums,
+            'dataset2' => $avgs,
+        ];
+        
+        return view('dashboard.description', compact('donation_type', 'descriptions','data'));
     }
 
     public function events($year = null): View
@@ -188,8 +255,23 @@ class DashboardController extends Controller
         $total_revenue = array_sum(array_column($event_summary, 'total_paid'));
         $total_participants = array_sum(array_column($event_summary, 'total_participants'));
         $total_peoplenights = array_sum(array_column($event_summary, 'total_pn'));
-
-        return view('dashboard.events', compact('years', 'year', 'event_summary', 'total_revenue', 'total_participants', 'total_peoplenights'));
+        $labels = array_column($event_summary, 'type');
+        $revenue_data = array_column($event_summary, 'total_paid');
+        $participants_data = array_column($event_summary, 'total_participants');
+        $people_nights_data = array_column($event_summary, 'total_pn');
+        $chart_colors = config('polanco.chart_colors');
+        // dd($event_summary, $participants_data);
+        for ($x = 0; $x < count($labels); $x++) {
+            $mod = $x % count($chart_colors);
+            $quotient = intdiv($x, count($chart_colors));
+            $inital_color_percentage = 0.80;
+            $color_percentage = $inital_color_percentage - ($quotient * 0.2);
+            $event_colors[$x] = "rgba(" . $chart_colors[$mod]. ", ". $color_percentage . ")";
+        }
+        // dd($colors, $event_colors, $revenue_data);
+        // dd(count($labels), $labels, $chart_colors);
+        // dd($total_revenue, $event_summary, $labels, $revenue_data);
+        return view('dashboard.events', compact('years', 'year', 'event_summary', 'total_revenue', 'total_participants', 'total_peoplenights','labels','revenue_data', 'participants_data','people_nights_data','event_colors'));
     }
 
     public function drilldown($event_type_id = null, $year = null): View
