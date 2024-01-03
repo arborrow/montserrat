@@ -46,7 +46,7 @@ return [
         5 => '145,30,180', // purple
         6 => '250,190,212', // pink (light red)
         7 => '255,215,180', // apricot (light orange)
-        8 => '170,255,195',  // beige (light yellow)
+        8 => '255,250,200',  // beige (light yellow)
         9 => '170,255,195', //mint (light green)
         10 => '70, 240, 240',  // cyan (light blue)
         11 => '220,190,255', // lavender (light purple)
