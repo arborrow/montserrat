@@ -1,5 +1,5 @@
 @extends('template')
-<script src="https://cdn.jsdeliver.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js" integrity="sha512-d6nObkPJgV791iTGuBoVC9Aa2iecqzJRE0Jiqvk85BhLHAPhWqkuBiQb1xz2jvuHNqHLYoN3ymPfpiB1o+Zgpw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @section('content')
 
     <section class="section-padding">
@@ -75,13 +75,16 @@
                     beginAtZero: true
                     }
                 },
-                title: {
-                    display: true,
-                    text: title,
+                fill: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: title,
+                    },
+                    legend: {
+                        position: 'bottom',
+                    },
                 },
-                legend: {
-                    position: 'bottom',
-                }
             }, 
             data: {
                 labels: data.labels,
@@ -155,13 +158,16 @@
                        beginAtZero: true
                     }
                 },
-                title: {
-                    display: true,
-                    text: title,
+                fill: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: title,
+                    },
+                    legend: {
+                        position: 'bottom',
+                    },
                 },
-                legend: {
-                    position: 'bottom',
-                }
             }, 
             data: {
                 labels: data.labels,

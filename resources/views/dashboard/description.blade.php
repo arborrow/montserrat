@@ -1,5 +1,6 @@
 @extends('template')
-<script src="https://cdn.jsdeliver.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js" integrity="sha512-d6nObkPJgV791iTGuBoVC9Aa2iecqzJRE0Jiqvk85BhLHAPhWqkuBiQb1xz2jvuHNqHLYoN3ymPfpiB1o+Zgpw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 @section('content')
 
     <section class="section-padding">
@@ -28,6 +29,7 @@
     </section>
 
     <script>
+
         var data = @json($data);
         var title = @json($donation_type->name . " Donations");
 
@@ -36,19 +38,23 @@
         var myChart = new Chart(ctx, {
             type: 'line',
             options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: title
+                    },
+                    legend: {
+                        position: 'bottom',
+                    },
+
+                },
+                fill: true,
                 scales: {
                     y: {
                        beginAtZero: true
                     }
                 },
-                title: {
-                    display: true,
-                    text: title,
-                },
-                legend: {
-                    position: 'bottom',
-                }
-            }, 
+            },
             data: {
                 labels: data.labels,
                 datasets: [{

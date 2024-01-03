@@ -1,4 +1,5 @@
 @extends('template')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js" integrity="sha512-d6nObkPJgV791iTGuBoVC9Aa2iecqzJRE0Jiqvk85BhLHAPhWqkuBiQb1xz2jvuHNqHLYoN3ymPfpiB1o+Zgpw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @section('content')
 
     <section class="section-padding">
@@ -22,7 +23,7 @@
 
                 <div>FY{{ $year }} Revenue by Event Type</div>
 
-                <div class="container">
+                <div class="container" style="width: 50%">
                     <canvas id="event_revenue_chart"></canvas>
                 </div>
 
@@ -31,7 +32,7 @@
 
                 <div>FY{{ $year }} Participants by Event Type</div>
                 
-                <div class="container">
+                <div class="container" style="width: 50%">
                     <canvas id="event_participants_chart"></canvas>
                 </div>
 
@@ -40,7 +41,7 @@
 
                 <div>FY{{ $year }} People Nights by Event Type</div>
                 
-                <div class="container">
+                <div class="container" style="width: 50%">
                     <canvas id="event_pn_chart"></canvas>
                 </div>
 
@@ -133,13 +134,15 @@
         const event_colors = @json($event_colors);
         var options = {
                 responsive: true,
-                legend: {
-                    display: true,
-                    position: 'bottom',
-                },
-                title: {
-                    display: true,
-                    text: event_revenue_title,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: event_revenue_title,
+                    },
                 },
             };
 
@@ -177,7 +180,7 @@
             options: options       
         });
 
-        options.title.text = "Event Participants";
+        options.plugins.title.text = "Event Participants";
         var ctx = document.getElementById('event_participants_chart').getContext('2d');
 
         var EventParticipantsChart = new Chart(ctx, {
@@ -186,7 +189,7 @@
             options: options       
         });
 
-        options.title.text = "Event People Nights";
+        options.plugins.title.text = "Event People Nights";
         var ctx = document.getElementById('event_pn_chart').getContext('2d');
         var EventPeopleNightsChart = new Chart(ctx, {
             type: 'doughnut',
