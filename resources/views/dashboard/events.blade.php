@@ -22,28 +22,40 @@
 
 
                 <div>FY{{ $year }} Revenue by Event Type</div>
-
+                @if (count($revenue_data) > 0)
                 <div class="container" style="width: 50%">
                     <canvas id="event_revenue_chart"></canvas>
                 </div>
+                @else
+                    <div><h3>No Event Revenue Data for FY {{$year}}</h3></div>
+                @endIf
 
                 <div>Total Revenue: ${{ number_format($total_revenue,2) }} </div>
                 <hr />
 
                 <div>FY{{ $year }} Participants by Event Type</div>
                 
-                <div class="container" style="width: 50%">
-                    <canvas id="event_participants_chart"></canvas>
-                </div>
+                @if (count($participants_data) > 0)
+                    <div class="container" style="width: 50%">
+                        <canvas id="event_participants_chart"></canvas>
+                    </div>
+                @else
+                    <div><h3>No Event Participants Data for FY {{$year}}</h3></div>
+                @endIf
 
                 <div>Total Participants: {{ number_format($total_participants,0) }} </div>
                 <hr />
 
                 <div>FY{{ $year }} People Nights by Event Type</div>
                 
-                <div class="container" style="width: 50%">
-                    <canvas id="event_pn_chart"></canvas>
-                </div>
+                @if (count($people_nights_data) > 0)
+                    <div class="container" style="width: 50%">
+                        <canvas id="event_pn_chart"></canvas>
+                    </div>
+                @else
+                    <div><h3>No Event People Nights Data for FY {{$year}}</h3></div>
+                @endIf
+
 
                 <div>Total People Nights: {{ number_format($total_peoplenights,0) }} </div>
                 <hr />

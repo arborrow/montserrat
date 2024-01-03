@@ -22,7 +22,7 @@
                         <option value="{{url('dashboard/agc/25')}}">25</option>
                     </select>
                 </div>
-
+                @if (count($donors) > 0 )
                 <div class="container">
                     <canvas id="AGCAmountsChart"></canvas>
                 </div>
@@ -30,6 +30,7 @@
                 <div class="container">
                     <canvas id="AGCDonorsChart"></canvas>
                 </div>
+                @endIf
 
                 <hr />
 

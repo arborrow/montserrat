@@ -261,6 +261,7 @@ class DashboardController extends Controller
         $people_nights_data = array_column($event_summary, 'total_pn');
         $chart_colors = config('polanco.chart_colors');
         // dd($event_summary, $participants_data);
+        $event_colors = [];
         for ($x = 0; $x < count($labels); $x++) {
             $mod = $x % count($chart_colors);
             $quotient = intdiv($x, count($chart_colors));
