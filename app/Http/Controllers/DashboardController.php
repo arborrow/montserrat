@@ -255,8 +255,23 @@ class DashboardController extends Controller
         $total_revenue = array_sum(array_column($event_summary, 'total_paid'));
         $total_participants = array_sum(array_column($event_summary, 'total_participants'));
         $total_peoplenights = array_sum(array_column($event_summary, 'total_pn'));
-
-        return view('dashboard.events', compact('years', 'year', 'event_summary', 'total_revenue', 'total_participants', 'total_peoplenights'));
+        $labels = array_column($event_summary, 'type');
+        $revenue_data = array_column($event_summary, 'total_paid');
+        $participants_data = array_column($event_summary, 'total_participants');
+        $people_nights_data = array_column($event_summary, 'total_pn');
+        $chart_colors = config('polanco.chart_colors');
+        // dd($event_summary, $participants_data);
+        for ($x = 0; $x < count($labels); $x++) {
+            $mod = $x % count($chart_colors);
+            $quotient = intdiv($x, count($chart_colors));
+            $inital_color_percentage = 0.80;
+            $color_percentage = $inital_color_percentage - ($quotient * 0.2);
+            $event_colors[$x] = "rgba(" . $chart_colors[$mod]. ", ". $color_percentage . ")";
+        }
+        // dd($colors, $event_colors, $revenue_data);
+        // dd(count($labels), $labels, $chart_colors);
+        // dd($total_revenue, $event_summary, $labels, $revenue_data);
+        return view('dashboard.events', compact('years', 'year', 'event_summary', 'total_revenue', 'total_participants', 'total_peoplenights','labels','revenue_data', 'participants_data','people_nights_data','event_colors'));
     }
 
     public function drilldown($event_type_id = null, $year = null): View

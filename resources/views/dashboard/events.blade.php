@@ -21,17 +21,29 @@
 
 
                 <div>FY{{ $year }} Revenue by Event Type</div>
-                <div id="event_revenue" style="height:400px;"></div>
+
+                <div class="container">
+                    <canvas id="event_revenue_chart"></canvas>
+                </div>
+
                 <div>Total Revenue: ${{ number_format($total_revenue,2) }} </div>
                 <hr />
 
                 <div>FY{{ $year }} Participants by Event Type</div>
-                <div id="event_participants" style="height:400px;"></div>
+                
+                <div class="container">
+                    <canvas id="event_participants_chart"></canvas>
+                </div>
+
                 <div>Total Participants: {{ number_format($total_participants,0) }} </div>
                 <hr />
 
                 <div>FY{{ $year }} People Nights by Event Type</div>
-                <div id="event_peoplenights" style="height:400px;"></div>
+                
+                <div class="container">
+                    <canvas id="event_pn_chart"></canvas>
+                </div>
+
                 <div>Total People Nights: {{ number_format($total_peoplenights,0) }} </div>
                 <hr />
 
@@ -110,47 +122,78 @@
         </div>
     </section>
 
-    <script src="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
-
     <script>
+        var revenue_data = @json($revenue_data);
+        var participants_data = @json($participants_data);
+        var pn_data = @json($people_nights_data);
+        const event_revenue_title = @json("Event Revenue");
+        const event_participant_title = @json("Event Participants");
+        const event_pn_title = @json("Event People Nights");
+        const labels = @json($labels);
+        const event_colors = @json($event_colors);
+        var options = {
+                responsive: true,
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                },
+                title: {
+                    display: true,
+                    text: event_revenue_title,
+                },
+            };
 
-        const event_revenue_chart = new Chartisan({
-            el: '#event_revenue',
-            url: "@chart('event_revenue')" + "?year={{ $year }}",
-            hooks: new ChartisanHooks()
-              .title('Event Revenue')
-              .responsive()
-              .legend({ position: 'bottom' })
-              .datasets('doughnut')
-              .pieColors(["rgba(22,160,133, 0.3)","rgba(51,105,232, 0.3)","rgba(255, 205, 86, 0.3)","rgba(255, 99, 132, 0.3)","rgba(244,67,54, 0.3)"])
-              .pieBorderColors(["rgba(22,160,133, 0.6)","rgba(51,105,232, 0.6)","rgba(255, 205, 86, 0.6)","rgba(255, 99, 132, 0.6)","rgba(244,67,54, 0.6)"])
-          });
+        var data = {
+            labels: labels,
+            datasets: [{
+                data: revenue_data,
+                backgroundColor: event_colors,
+                hoverOffset: 4
+            }],
+        };
+        var part_data = {
+            labels: labels,
+            datasets: [{
+                data: participants_data,
+                backgroundColor: event_colors,
+                hoverOffset: 4
+            }],
+        };
+        var pn_data = {
+            labels: labels,
+            datasets: [{
+                data: pn_data,
+                backgroundColor: event_colors,
+                hoverOffset: 4
+            }],
+        };
 
-          const event_participants_chart = new Chartisan({
-              el: '#event_participants',
-              url: "@chart('event_participants')" + "?year={{ $year }}",
-              hooks: new ChartisanHooks()
-                .title('Event Participants')
-                .responsive()
-                .legend({ position: 'bottom' })
-                .datasets('doughnut')
-                .pieColors(["rgba(22,160,133, 0.3)","rgba(51,105,232, 0.3)","rgba(255, 205, 86, 0.3)","rgba(255, 99, 132, 0.3)","rgba(244,67,54, 0.3)"])
-                .pieBorderColors(["rgba(22,160,133, 0.6)","rgba(51,105,232, 0.6)","rgba(255, 205, 86, 0.6)","rgba(255, 99, 132, 0.6)","rgba(244,67,54, 0.6)"])
-            });
 
-            const event_peoplenights_chart = new Chartisan({
-                el: '#event_peoplenights',
-                url: "@chart('event_peoplenights')" + "?year={{ $year }}",
-                hooks: new ChartisanHooks()
-                  .title('Event People Nights')
-                  .responsive()
-                  .legend({ position: 'bottom' })
-                  .datasets('doughnut')
-                  .pieColors(["rgba(22,160,133, 0.3)","rgba(51,105,232, 0.3)","rgba(255, 205, 86, 0.3)","rgba(255, 99, 132, 0.3)","rgba(244,67,54, 0.3)"])
-                  .pieBorderColors(["rgba(22,160,133, 0.6)","rgba(51,105,232, 0.6)","rgba(255, 205, 86, 0.6)","rgba(255, 99, 132, 0.6)","rgba(244,67,54, 0.6)"])
-              });
+        var ctx = document.getElementById('event_revenue_chart').getContext('2d');
+        
+        var EventRevenueChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data, 
+            options: options       
+        });
 
+        options.title.text = "Event Participants";
+        var ctx = document.getElementById('event_participants_chart').getContext('2d');
+
+        var EventParticipantsChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: part_data, 
+            options: options       
+        });
+
+        options.title.text = "Event People Nights";
+        var ctx = document.getElementById('event_pn_chart').getContext('2d');
+        var EventPeopleNightsChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: pn_data, 
+            options: options       
+        });
+    
     </script>
 
 @stop
