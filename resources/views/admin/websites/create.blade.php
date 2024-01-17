@@ -6,41 +6,41 @@
         <h1>Create website (URL)</h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url'=>'admin/website', 'method'=>'post']) !!}
+        {{ html()->form('POST', 'admin/website')->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('url', 'URL')  !!}
-                        {!! Form::text('url', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('URL', 'url') }}
+                        {{ html()->text('url')->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('website_type', 'Type') !!}
-                        {!! Form::select('website_type', config('polanco.website_types'), NULL, ['class' => 'form-control']) !!}
+                        {{ html()->label('Type', 'website_type') }}
+                        {{ html()->select('website_type', config('polanco.website_types'))->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        {!! Form::label('description', 'Description') !!}
-                        {!! Form::textarea('description', NULL, ['class' => 'form-control', 'rows' => 3]) !!}
+                        {{ html()->label('Description', 'description') }}
+                        {{ html()->textarea('description')->class('form-control')->rows(3) }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('asset_id', 'Asset ID') !!}
-                        {!! Form::text('asset_id', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('Asset ID', 'asset_id') }}
+                        {{ html()->text('asset_id')->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('contact_id', 'Contact ID') !!}
-                        {!! Form::text('contact_id', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('Contact ID', 'contact_id') }}
+                        {{ html()->text('contact_id')->class('form-control') }}
                     </div>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-lg-12">
-                    {!! Form::submit('Add website (URL)', ['class'=>'btn btn-outline-dark']) !!}
+                    {{ html()->submit('Add website (URL)')->class('btn btn-outline-dark') }}
                 </div>
             </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

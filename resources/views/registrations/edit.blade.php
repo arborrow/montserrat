@@ -8,85 +8,85 @@
         </h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['method' => 'PUT', 'route' => ['registration.update', $registration->id]]) !!}
-        {!! Form::hidden('id', $registration->id) !!}
+        {{ html()->form('PUT', route('registration.update', [$registration->id]))->open() }}
+        {{ html()->hidden('id', $registration->id) }}
 
         <div class="form-group">
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('event_id', 'Retreat') !!}
-                    {!! Form::select('event_id', $retreats, $registration->event_id, ['class' => 'form-control']) !!}
-                    {!! Form::label('start', 'Retreat Dates: '.date('M j, Y', strtotime($registration->retreat->start_date)).' - '.date('M j, Y', strtotime($registration->retreat->end_date))) !!}
+                    {{ html()->label('Retreat', 'event_id') }}
+                    {{ html()->select('event_id', $retreats, $registration->event_id)->class('form-control') }}
+                    {{ html()->label('Retreat Dates: ' . date('M j, Y', strtotime($registration->retreat->start_date)) . ' - ' . date('M j, Y', strtotime($registration->retreat->end_date)), 'start') }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('register_date', 'Registered') !!}
-                    {!! Form::date('register_date', isset($registration->register_date) ? $registration->register_date : now() , ['class'=>'form-control flatpickr-date']) !!}
+                    {{ html()->label('Registered', 'register_date') }}
+                    {{ html()->date('register_date', isset($registration->register_date) ? $registration->register_date : now())->class('form-control flatpickr-date') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('source', 'Registration from:') !!}
-                    {!! Form::select('source', $defaults['registration_source'], $registration->source, ['class' => 'form-control']) !!}
+                    {{ html()->label('Registration from:', 'source') }}
+                    {{ html()->select('source', $defaults['registration_source'], $registration->source)->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('status_id', 'Status:') !!}
-                    {!! Form::select('status_id', $defaults['participant_status_type'], $registration->status_id, ['class' => 'form-control']) !!}
+                    {{ html()->label('Status:', 'status_id') }}
+                    {{ html()->select('status_id', $defaults['participant_status_type'], $registration->status_id)->class('form-control') }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('registration_confirm_date', 'Registration Confirmed:') !!}
+                    {{ html()->label('Registration Confirmed:', 'registration_confirm_date') }}
                     @if ($registration->registration_confirm_date == NULL)
-                        {!! Form::date('registration_confirm_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
+                        {{ html()->date('registration_confirm_date')->class('form-control flatpickr-date') }}
                     @else
-                        {!! Form::date('registration_confirm_date', $registration->registration_confirm_date, ['class'=>'form-control flatpickr-date']) !!}
+                        {{ html()->date('registration_confirm_date', $registration->registration_confirm_date)->class('form-control flatpickr-date') }}
                     @endif
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('confirmed_by', 'Confirmed by:') !!}
-                    {!! Form::text('confirmed_by', $registration->confirmed_by, ['class'=>'form-control']) !!}
+                    {{ html()->label('Confirmed by:', 'confirmed_by') }}
+                    {{ html()->text('confirmed_by', $registration->confirmed_by)->class('form-control') }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('arrived_at', 'Arrived at:') !!}
-                    {!! Form::datetime('arrived_at', $registration->arrived_at, ['class'=>'form-control flatpickr-date-time']) !!}
+                    {{ html()->label('Arrived at:', 'arrived_at') }}
+                    {{ html()->datetime('arrived_at', $registration->arrived_at)->class('form-control flatpickr-date-time') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('departed_at', 'Departed at:') !!}
-                    {!! Form::datetime('departed_at', $registration->departed_at, ['class'=>'form-control flatpickr-date-time']) !!}
+                    {{ html()->label('Departed at:', 'departed_at') }}
+                    {{ html()->datetime('departed_at', $registration->departed_at)->class('form-control flatpickr-date-time') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('canceled_at', 'Canceled at:') !!}
-                    {!! Form::date('canceled_at', $registration->canceled_at, ['class'=>'form-control flatpickr-date']) !!}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-4">
-                    {!! Form::label('room_id', 'Room:')  !!}
-                    {!! Form::select('room_id', $rooms, $registration->room_id, ['class' => 'form-control']) !!}
+                    {{ html()->label('Canceled at:', 'canceled_at') }}
+                    {{ html()->date('canceled_at', $registration->canceled_at)->class('form-control flatpickr-date') }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('deposit', 'Deposit:') !!}
-                    {!! Form::text('deposit', $registration->deposit, ['class'=>'form-control']) !!}
+                    {{ html()->label('Room:', 'room_id') }}
+                    {{ html()->select('room_id', $rooms, $registration->room_id)->class('form-control') }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('notes', 'Notes:') !!}
-                    {!! Form::textarea('notes', $registration->notes, ['class'=>'form-control', 'rows'=>'3']) !!}
+                    {{ html()->label('Deposit:', 'deposit') }}
+                    {{ html()->text('deposit', $registration->deposit)->class('form-control') }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    {{ html()->label('Notes:', 'notes') }}
+                    {{ html()->textarea('notes', $registration->notes)->class('form-control')->rows('3') }}
                 </div>
             </div>
             <div class="row text-center mt-3">
                 <div class="col-lg-12">
-                    {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-light']) !!}
+                    {{ html()->input('image', 'btnSave')->class('btn btn-light')->attribute('src', asset('images/save.png')) }}
                 </div>
             </div>
         </div>
 
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

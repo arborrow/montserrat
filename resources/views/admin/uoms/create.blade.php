@@ -6,41 +6,41 @@
         <h1>Create unit of measure</h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url'=>'admin/uom', 'method'=>'post']) !!}
+        {{ html()->form('POST', 'admin/uom')->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('unit_name', 'Unit name') !!}
-                        {!! Form::text('unit_name', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('Unit name', 'unit_name') }}
+                        {{ html()->text('unit_name')->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('type', 'Type') !!}
-                        {!! Form::select('type', $uom_types, NULL, ['class' => 'form-control']) !!}
+                        {{ html()->label('Type', 'type') }}
+                        {{ html()->select('type', $uom_types)->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('unit_symbol', 'Unit symbol')  !!}
-                        {!! Form::text('unit_symbol', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('Unit symbol', 'unit_symbol') }}
+                        {{ html()->text('unit_symbol')->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        {!! Form::label('description', 'Description') !!}
-                        {!! Form::textarea('description', NULL, ['class' => 'form-control', 'rows' => 3]) !!}
+                        {{ html()->label('Description', 'description') }}
+                        {{ html()->textarea('description')->class('form-control')->rows(3) }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        {!! Form::label('is_active', 'Active:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::checkbox('is_active', 1, true,['class' => 'col-md-1']) !!}
+                        {{ html()->label('Active:', 'is_active')->class('col-md-1') }}
+                        {{ html()->checkbox('is_active', true, 1)->class('col-md-1') }}
                     </div>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-lg-12">
-                    {!! Form::submit('Add unit of measure', ['class'=>'btn btn-outline-dark']) !!}
+                    {{ html()->submit('Add unit of measure')->class('btn btn-outline-dark') }}
                 </div>
             </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

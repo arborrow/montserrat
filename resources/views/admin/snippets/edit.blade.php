@@ -10,29 +10,29 @@
                 <h2>Snippet</h2>
             </div>
             <div class="col-lg-12">
-                {!! Form::open(['method' => 'PUT', 'route' => ['snippet.update', $snippet->id]]) !!}
-                {!! Form::hidden('id', $snippet->id) !!}
+                {{ html()->form('PUT', route('snippet.update', [$snippet->id]))->open() }}
+                {{ html()->hidden('id', $snippet->id) }}
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3">
-                                        {!! Form::label('title', 'Title') !!}
-                                        {!! Form::text('title', $snippet->title , ['class' => 'form-control']) !!}
+                                        {{ html()->label('Title', 'title') }}
+                                        {{ html()->text('title', $snippet->title)->class('form-control') }}
                                     </div>
                                     <div class="col-lg-3">
-                                        {!! Form::label('label', 'Label') !!}
-                                        {!! Form::text('label', $snippet->label , ['class' => 'form-control']) !!}
+                                        {{ html()->label('Label', 'label') }}
+                                        {{ html()->text('label', $snippet->label)->class('form-control') }}
                                     </div>
                                     <div class="col-lg-3">
-                                        {!! Form::label('locale', 'Locale') !!}
-                                        {!! Form::select('locale', $locales, $snippet->locale, ['class' => 'form-control']) !!}
+                                        {{ html()->label('Locale', 'locale') }}
+                                        {{ html()->select('locale', $locales, $snippet->locale)->class('form-control') }}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        {!! Form::label('snippet', 'Snippet') !!}
-                                        {!! Form::textarea('snippet', $snippet->snippet, ['class' => 'form-control', 'rows' => 3]) !!}
+                                        {{ html()->label('Snippet', 'snippet') }}
+                                        {{ html()->textarea('snippet', $snippet->snippet)->class('form-control')->rows(3) }}
                                     </div>
                                 </div>
                             </div>
@@ -40,10 +40,10 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12 text-center">
-                            {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+                            {{ html()->input('image', 'btnSave')->class('btn btn-outline-dark')->attribute('src', asset('images/save.png')) }}
                         </div>
                     </div>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
             </div>
         </div>
     </div>

@@ -8,51 +8,51 @@
             <h1><strong>Search Events</strong></h1>
         </div>
 
-        {!! Form::open(['method' => 'GET', 'class' => 'form-horizontal', 'route' => ['retreats.results']]) !!}
+        {{ html()->form('GET', route('retreats.results', ))->class('form-horizontal')->open() }}
 
         <div class="panel-body">
             <div class='panel-heading'>
                 <h2>
-                    <span>{!! Form::image('images/submit.png','btnSave',['class' => 'btn btn-outline-dark pull-right']) !!}</span>
+                    <span>{{ html()->input('image', 'btnSave')->class('btn btn-outline-dark pull-right')->attribute('src', asset('images/submit.png')) }}</span>
                 </h2>
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    {!! Form::label('begin_date', 'Begin Date:', ['class' => 'control-label col-sm-3']) !!}
+                    {{ html()->label('Begin Date:', 'begin_date')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('begin_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
+                        {{ html()->text('begin_date')->class('form-control flatpickr-date') }}
                     </div>
 
-                    {!! Form::label('end_date', 'End Date:', ['class' => 'control-label col-sm-3']) !!}
+                    {{ html()->label('End Date:', 'end_date')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('end_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
+                        {{ html()->text('end_date')->class('form-control flatpickr-date') }}
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('title', 'Title:', ['class' => 'control-label col-sm-3'])  !!}
+                        {{ html()->label('Title:', 'title')->class('control-label col-sm-3') }}
                         <div class="col-sm-8">
-                            {!! Form::text('title', NULL, ['class' => 'form-control']) !!}
+                            {{ html()->text('title')->class('form-control') }}
                         </div>
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('idnumber', 'ID number:', ['class' => 'control-label col-sm-3'])  !!}
+                        {{ html()->label('ID number:', 'idnumber')->class('control-label col-sm-3') }}
                         <div class="col-sm-8">
-                            {!! Form::text('idnumber', NULL, ['class' => 'form-control']) !!}
+                            {{ html()->text('idnumber')->class('form-control') }}
                         </div>
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('event_type_id', 'Event type:', ['class' => 'control-label col-sm-3'])  !!}
+                        {{ html()->label('Event type:', 'event_type_id')->class('control-label col-sm-3') }}
                         <div class="col-sm-8">
-                        {!! Form::select('event_type_id', $event_types, NULL, ['class' => 'form-control']) !!}
+                        {{ html()->select('event_type_id', $event_types)->class('form-control') }}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
 
 

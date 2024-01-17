@@ -6,8 +6,8 @@
         <h1>Create payment for <a href="{{url('donation/'.$donation->donation_id)}}">Donation {{$donation->donation_id}}</a></h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url' => 'payment', 'method' => 'post']) !!}
-        {!! Form::hidden('donation_id', $donation->donation_id) !!}
+        {{ html()->form('POST', 'payment')->open() }}
+        {{ html()->hidden('donation_id', $donation->donation_id) }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-12">
@@ -16,26 +16,26 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label('payment_date', 'Payment date')  !!}
-                        {!! Form::date('payment_date',\Carbon\Carbon::now(), ['class' => 'form-control flatpickr-date']) !!}
+                        {{ html()->label('Payment date', 'payment_date') }}
+                        {{ html()->date('payment_date', \Carbon\Carbon::now())->class('form-control flatpickr-date') }}
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label('payment_amount', 'Payment amount (paid)')  !!}
-                        {!! Form::number('payment_amount', 0, ['class' => 'form-control','step'=>'0.01']) !!}
+                        {{ html()->label('Payment amount (paid)', 'payment_amount') }}
+                        {{ html()->number('payment_amount', 0)->class('form-control')->attribute('step', '0.01') }}
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label('payment_description', 'Payment method')  !!}
-                        {!! Form::select('payment_description', $payment_methods, NULL, ['class' => 'form-control']) !!}
+                        {{ html()->label('Payment method', 'payment_description') }}
+                        {{ html()->select('payment_description', $payment_methods)->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label('payment_idnumber', 'Check/CC Number')  !!}
-                        {!! Form::number('payment_idnumber', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->label('Check/CC Number', 'payment_idnumber') }}
+                        {{ html()->number('payment_idnumber')->class('form-control') }}
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label('note', 'Note') !!}
-                        {!! Form::text('note', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->label('Note', 'note') }}
+                        {{ html()->text('note')->class('form-control') }}
                     </div>
                 </div>
             </div>
@@ -76,10 +76,10 @@
             </div>
             <div class="row mt-3 text-center">
                 <div class="col-lg-12">
-                    {!! Form::submit('Add payment', ['class'=>'btn btn-outline-dark']) !!}
+                    {{ html()->submit('Add payment')->class('btn btn-outline-dark') }}
                 </div>
             </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

@@ -4,44 +4,44 @@
 <section class="section-padding">
     <div class="jumbotron text-left">
         <h2><strong>Create Relationship Type</strong></h2>
-        {!! Form::open(['url' => 'relationship_type', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
+        {{ html()->form('POST', 'relationship_type')->class('form-horizontal panel')->open() }}
         <span>
             <div class='row'>
-                {!! Form::label('name_a_b', 'Name A-B:', ['class' => 'col-md-1'])  !!}
-                {!! Form::text('name_a_b', null, ['class' => 'col-md-3']) !!}
+                {{ html()->label('Name A-B:', 'name_a_b')->class('col-md-1') }}
+                {{ html()->text('name_a_b')->class('col-md-3') }}
 
-                {!! Form::label('label_a_b', 'Label A-B:', ['class' => 'col-md-1'])  !!}
-                {!! Form::text('label_a_b', null, ['class' => 'col-md-3']) !!}
+                {{ html()->label('Label A-B:', 'label_a_b')->class('col-md-1') }}
+                {{ html()->text('label_a_b')->class('col-md-3') }}
             
-                {!! Form::label('contact_type_a', 'Contact Type A:', ['class' => 'col-md-2'])  !!}
-                {!! Form::select('contact_type_a', $contact_types, 'Individual', ['class' => 'col-md-1']) !!}            
+                {{ html()->label('Contact Type A:', 'contact_type_a')->class('col-md-2') }}
+                {{ html()->select('contact_type_a', $contact_types, 'Individual')->class('col-md-1') }}            
             </div>
             <div class='row'>
-                {!! Form::label('name_b_a', 'Name B-A:', ['class' => 'col-md-1'])  !!}
-                {!! Form::text('name_b_a', null, ['class' => 'col-md-3']) !!}
+                {{ html()->label('Name B-A:', 'name_b_a')->class('col-md-1') }}
+                {{ html()->text('name_b_a')->class('col-md-3') }}
 
-                {!! Form::label('label_b_a', 'Label B-A:', ['class' => 'col-md-1'])  !!}
-                {!! Form::text('label_b_a', null, ['class' => 'col-md-3']) !!}
+                {{ html()->label('Label B-A:', 'label_b_a')->class('col-md-1') }}
+                {{ html()->text('label_b_a')->class('col-md-3') }}
 
-                {!! Form::label('contact_type_b', 'Contact Type B:', ['class' => 'col-md-2'])  !!}
-                {!! Form::select('contact_type_b', $contact_types, 'Individual', ['class' => 'col-md-1']) !!}
+                {{ html()->label('Contact Type B:', 'contact_type_b')->class('col-md-2') }}
+                {{ html()->select('contact_type_b', $contact_types, 'Individual')->class('col-md-1') }}
             </div>
             <div class='row'>
-                {!! Form::label('description', 'Description:', ['class' => 'col-md-1'])  !!}
-                {!! Form::textarea('description', NULL, ['class' => 'col-md-3']) !!}                   
+                {{ html()->label('Description:', 'description')->class('col-md-1') }}
+                {{ html()->textarea('description')->class('col-md-3') }}                   
             </div>             
             <div class="form-group">
-                {!! Form::label('is_active', 'Active:', ['class' => 'col-md-1'])  !!}
-                {!! Form::checkbox('is_active', 1, false,['class' => 'col-md-1']) !!}
-                {!! Form::label('is_reserved', 'Reserved:', ['class' => 'col-md-1'])  !!}
-                {!! Form::checkbox('is_reserved', 0, false,['class' => 'col-md-1']) !!}
+                {{ html()->label('Active:', 'is_active')->class('col-md-1') }}
+                {{ html()->checkbox('is_active', false, 1)->class('col-md-1') }}
+                {{ html()->label('Reserved:', 'is_reserved')->class('col-md-1') }}
+                {{ html()->checkbox('is_reserved', false, 0)->class('col-md-1') }}
             </div>
         <div class="clearfix"> </div>
      <div class="col-md-1">
             <div class="form-group">
-                {!! Form::submit('Add Relationship Type', ['class'=>'btn btn-primary']) !!}
+                {{ html()->submit('Add Relationship Type')->class('btn btn-primary') }}
             </div>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
         </div><div class="clearfix"> </div>
     </span>
     </div>

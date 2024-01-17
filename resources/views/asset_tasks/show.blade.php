@@ -135,9 +135,9 @@
             </div>
             <div class="col-lg-6 text-left">
                 @can('delete-asset-task')
-                {!! Form::open(['method' => 'DELETE', 'route' => ['asset_task.destroy', $asset_task->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                {!! Form::close() !!}
+                {{ html()->form('DELETE', route('asset_task.destroy', [$asset_task->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                {{ html()->form()->close() }}
                 @endCan
             </div>
         </div>

@@ -35,9 +35,9 @@
             </div>
             <div class="col-lg-6 text-left">
                 @can('delete-export-list')
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['export_list.destroy', $export_list->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                    {!! Form::close() !!}
+                    {{ html()->form('DELETE', route('export_list.destroy', [$export_list->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                    {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                    {{ html()->form()->close() }}
                 @endCan
             </div>
         </div>

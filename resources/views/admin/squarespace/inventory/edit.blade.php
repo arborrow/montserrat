@@ -10,23 +10,23 @@
                 <h2>Squarespace Inventory</h2>
             </div>
             <div class="col-lg-12">
-                {!! Form::open(['method' => 'PUT', 'route' => ['inventory.update', $inventory->id]]) !!}
-                {!! Form::hidden('id', $inventory->id) !!}
+                {{ html()->form('PUT', route('inventory.update', [$inventory->id]))->open() }}
+                {{ html()->hidden('id', $inventory->id) }}
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4">
-                                        {!! Form::label('name', 'Name:') !!}
-                                        {!! Form::text('name', $inventory->name , ['class' => 'form-control']) !!}
+                                        {{ html()->label('Name:', 'name') }}
+                                        {{ html()->text('name', $inventory->name)->class('form-control') }}
                                     </div>
                                     <div class="col-lg-3 col-md-4">
-                                        {!! Form::label('custom_form_id', 'Custom Form:') !!}
-                                        {!! Form::select('custom_form_id', $custom_forms, $inventory->custom_form_id, ['class' => 'form-control']) !!}
+                                        {{ html()->label('Custom Form:', 'custom_form_id') }}
+                                        {{ html()->select('custom_form_id', $custom_forms, $inventory->custom_form_id)->class('form-control') }}
                                     </div>
                                     <div class="col-lg-3 col-md-4">
-                                        {!! Form::label('variant_options', 'Variant options:') !!}
-                                        {!! Form::number('variant_options', $inventory->variant_options, ['class' => 'form-control','step'=>'1']) !!}
+                                        {{ html()->label('Variant options:', 'variant_options') }}
+                                        {{ html()->number('variant_options', $inventory->variant_options)->class('form-control')->attribute('step', '1') }}
                                     </div>
                                 </div>
                             </div>
@@ -34,10 +34,10 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12 text-center">
-                            {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+                            {{ html()->input('image', 'btnSave')->class('btn btn-outline-dark')->attribute('src', asset('images/save.png')) }}
                         </div>
                     </div>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
             </div>
         </div>
     </div>

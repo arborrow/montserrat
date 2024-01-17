@@ -6,30 +6,30 @@
     </div>
     <div class="col-lg-12">
         <h2>Permission details</h2>
-        {!! Form::open(['method' => 'PUT', 'route' => ['permission.update', $permission->id]]) !!}
-        {!! Form::hidden('id', $permission->id) !!}
+        {{ html()->form('PUT', route('permission.update', [$permission->id]))->open() }}
+        {{ html()->hidden('id', $permission->id) }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('name', 'Name')  !!}
-                        {!! Form::text('name', $permission->name, ['class' => 'form-control']) !!}
+                        {{ html()->label('Name', 'name') }}
+                        {{ html()->text('name', $permission->name)->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('display_name', 'Display name')  !!}
-                        {!! Form::text('display_name', $permission->display_name, ['class' => 'form-control']) !!}
+                        {{ html()->label('Display name', 'display_name') }}
+                        {{ html()->text('display_name', $permission->display_name)->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('description', 'Description')  !!}
-                        {!! Form::text('description', $permission->description, ['class' => 'form-control']) !!}
+                        {{ html()->label('Description', 'description') }}
+                        {{ html()->text('description', $permission->description)->class('form-control') }}
                     </div>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-lg-12">
-                    {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+                    {{ html()->input('image', 'btnSave')->class('btn btn-outline-dark')->attribute('src', asset('images/save.png')) }}
                 </div>
             </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

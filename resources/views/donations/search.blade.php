@@ -8,12 +8,12 @@
             <h1><strong>Search Donations</strong></h1>
         </div>
 
-        {!! Form::open(['method' => 'GET', 'class' => 'form-horizontal', 'route' => ['donations.results']]) !!}
+        {{ html()->form('GET', route('donations.results', ))->class('form-horizontal')->open() }}
 
         <div class="panel-body">
             <div class='panel-heading'>
                 <h2>
-                    <span>{!! Form::image('images/submit.png','btnSave',['class' => 'btn btn-outline-dark pull-right']) !!}</span>
+                    <span>{{ html()->input('image', 'btnSave')->class('btn btn-outline-dark pull-right')->attribute('src', asset('images/submit.png')) }}</span>
                 </h2>
             </div>
             <div class="panel-body">
@@ -21,78 +21,78 @@
                     <h3 class="text-primary">Donation information</h3>
                     <div class="row">
                         <div class="col-lg-1">
-                            {!! Form::label('donation_date_operator', 'Comp.')  !!}
-                            {!! Form::select('donation_date_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
+                            {{ html()->label('Comp.', 'donation_date_operator') }}
+                            {{ html()->select('donation_date_operator', config('polanco.operators'), '=')->class('form-control') }}
                         </div>
                         <div class="col-lg-3">
-                            {!! Form::label('donation_date', 'Date')  !!}
-                            {!! Form::date('donation_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
+                            {{ html()->label('Date', 'donation_date') }}
+                            {{ html()->date('donation_date')->class('form-control flatpickr-date') }}
                         </div>
                         <div class="col-lg-4">
-                            {!! Form::label('donation_description', 'Description')  !!}
-                            {!! Form::select('donation_description', $descriptions, NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Description', 'donation_description') }}
+                            {{ html()->select('donation_description', $descriptions)->class('form-control') }}
                         </div>
                         <div class="col-lg-4">
-                            {!! Form::label('event_id', 'Retreat')  !!}
-                            {!! Form::select('event_id', $retreats, NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Retreat', 'event_id') }}
+                            {{ html()->select('event_id', $retreats)->class('form-control') }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-1">
-                            {!! Form::label('donation_amount_operator', 'Comp.')  !!}
-                            {!! Form::select('donation_amount_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
+                            {{ html()->label('Comp.', 'donation_amount_operator') }}
+                            {{ html()->select('donation_amount_operator', config('polanco.operators'), '=')->class('form-control') }}
                         </div>
                         <div class="col-lg-3">
-                            {!! Form::label('donation_amount', 'Amount')  !!}
-                            {!! Form::number('donation_amount', NULL, ['class' => 'form-control','step'=>'0.01']) !!}
+                            {{ html()->label('Amount', 'donation_amount') }}
+                            {{ html()->number('donation_amount')->class('form-control')->attribute('step', '0.01') }}
                         </div>
                         <div class="col-lg-4">
-                            {!! Form::label('notes1', 'Primary contact for invoice')  !!}
-                            {!! Form::text('notes1', NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Primary contact for invoice', 'notes1') }}
+                            {{ html()->text('notes1')->class('form-control') }}
                         </div>
                         <div class="col-lg-3 col-md-4">
-                            {!! Form::label('notes', 'Notes')  !!}
-                            {!! Form::text('notes', NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Notes', 'notes') }}
+                            {{ html()->text('notes')->class('form-control') }}
                         </div>
                     </div>
                     <div class="row">
                       <div class="col-lg-1">
-                          {!! Form::label('start_date_operator', 'Comp.')  !!}
-                          {!! Form::select('start_date_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
+                          {{ html()->label('Comp.', 'start_date_operator') }}
+                          {{ html()->select('start_date_operator', config('polanco.operators'), '=')->class('form-control') }}
                       </div>
                         <div class="col-lg-3">
-                            {!! Form::label('start_date', 'Start date')  !!}
-                            {!! Form::date('start_date', NULL, ['class' => 'form-control flatpickr-date']) !!}
+                            {{ html()->label('Start date', 'start_date') }}
+                            {{ html()->date('start_date')->class('form-control flatpickr-date') }}
                         </div>
                         <div class="col-lg-1">
-                            {!! Form::label('end_date_operator', 'Comp.')  !!}
-                            {!! Form::select('end_date_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
+                            {{ html()->label('Comp.', 'end_date_operator') }}
+                            {{ html()->select('end_date_operator', config('polanco.operators'), '=')->class('form-control') }}
                         </div>
                         <div class="col-lg-3">
-                            {!! Form::label('end_date', 'End date')  !!}
-                            {!! Form::date('end_date', NULL, ['class' => 'form-control flatpickr-date']) !!}
+                            {{ html()->label('End date', 'end_date') }}
+                            {{ html()->date('end_date')->class('form-control flatpickr-date') }}
                         </div>
                         <div class="col-lg-3">
-                            {!! Form::label('stripe_invoice', 'Stripe Invoice #')  !!}
-                            {!! Form::text('stripe_invoice', NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Stripe Invoice #', 'stripe_invoice') }}
+                            {{ html()->text('stripe_invoice')->class('form-control') }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-1">
-                            {!! Form::label('donation_install_operator', 'Comp.')  !!}
-                            {!! Form::select('donation_install_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
+                            {{ html()->label('Comp.', 'donation_install_operator') }}
+                            {{ html()->select('donation_install_operator', config('polanco.operators'), '=')->class('form-control') }}
                         </div>
                         <div class="col-lg-3">
-                            {!! Form::label('donation_install', 'Installment')  !!}
-                            {!! Form::number('donation_install', NULL, ['class' => 'form-control','step'=>'0.01']) !!}
+                            {{ html()->label('Installment', 'donation_install') }}
+                            {{ html()->number('donation_install')->class('form-control')->attribute('step', '0.01') }}
                         </div>
                         <div class="col-lg-4">
-                            {!! Form::label('terms', 'Terms')  !!}
-                            {!! Form::text('terms', NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Terms', 'terms') }}
+                            {{ html()->text('terms')->class('form-control') }}
                         </div>
                         <div class="col-lg-4">
-                            {!! Form::label('donation_thank_you', 'Thank you letter')  !!}
-                            {!! Form::select('donation_thank_you', ['' => 'N/A', 'Y' => 'Yes', 'N' => 'No'], NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Thank you letter', 'donation_thank_you') }}
+                            {{ html()->select('donation_thank_you', ['' => 'N/A', 'Y' => 'Yes', 'N' => 'No'])->class('form-control') }}
                         </div>
 
                     </div>
@@ -100,7 +100,7 @@
             </div>
         </div>
     </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
 
 @stop

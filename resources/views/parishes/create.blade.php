@@ -5,70 +5,70 @@
         <h2>Add a Parish</h2>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url' => 'parish', 'method' => 'post']) !!}
+        {{ html()->form('POST', 'parish')->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-4">
-                        {!! Form::label('diocese_id', 'Diocese:') !!}
-                        {!! Form::select('diocese_id', $dioceses, 0, ['class' => 'form-control']) !!}
+                        {{ html()->label('Diocese:', 'diocese_id') }}
+                        {{ html()->select('diocese_id', $dioceses, 0)->class('form-control') }}
                     </div>
                     <div class="col-lg-4">
-                        {!! Form::label('pastor_id', 'Pastor:') !!}
-                        {!! Form::select('pastor_id', $pastors, 0, ['class' => 'form-control']) !!}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        {!! Form::label('organization_name', 'Name:') !!}
-                        {!! Form::text('organization_name', null, ['class'=>'form-control']) !!}
-                    </div>
-                    <div class="col-lg-4">
-                        {!! Form::label('street_address', 'Address Line 1:') !!}
-                        {!! Form::text('street_address', null, ['class'=>'form-control']) !!}
-                    </div>
-                    <div class="col-lg-4">
-                        {!! Form::label('supplemental_address_1', 'Address Line 2:') !!}
-                        {!! Form::text('supplemental_address_1', null, ['class'=>'form-control']) !!}
+                        {{ html()->label('Pastor:', 'pastor_id') }}
+                        {{ html()->select('pastor_id', $pastors, 0)->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        {!! Form::label('city', 'City:') !!}
-                        {!! Form::text('city', null, ['class'=>'form-control']) !!}
+                        {{ html()->label('Name:', 'organization_name') }}
+                        {{ html()->text('organization_name')->class('form-control') }}
                     </div>
                     <div class="col-lg-4">
-                        {!! Form::label('state_province_id', 'State:')  !!}
-                        {!! Form::select('state_province_id', $states, $defaults['state_province_id'], ['class' => 'form-control']) !!}
+                        {{ html()->label('Address Line 1:', 'street_address') }}
+                        {{ html()->text('street_address')->class('form-control') }}
                     </div>
                     <div class="col-lg-4">
-                        {!! Form::label('postal_code', 'Zip:') !!}
-                        {!! Form::text('postal_code', null, ['class'=>'form-control']) !!}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        {!! Form::label('country_id', 'Country:')  !!}
-                        {!! Form::select('country_id', $countries, $defaults['country_id'], ['class' => 'form-control']) !!}
+                        {{ html()->label('Address Line 2:', 'supplemental_address_1') }}
+                        {{ html()->text('supplemental_address_1')->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        {!! Form::label('phone_main_phone', 'Phone:') !!}
-                        {!! Form::text('phone_main_phone', null, ['class'=>'form-control']) !!}
+                        {{ html()->label('City:', 'city') }}
+                        {{ html()->text('city')->class('form-control') }}
                     </div>
                     <div class="col-lg-4">
-                        {!! Form::label('phone_main_fax', 'Fax:') !!}
-                        {!! Form::text('phone_main_fax', null, ['class'=>'form-control']) !!}
+                        {{ html()->label('State:', 'state_province_id') }}
+                        {{ html()->select('state_province_id', $states, $defaults['state_province_id'])->class('form-control') }}
                     </div>
                     <div class="col-lg-4">
-                        {!! Form::label('email_main', 'Email:') !!}
-                        {!! Form::text('email_main', null, ['class'=>'form-control']) !!}
+                        {{ html()->label('Zip:', 'postal_code') }}
+                        {{ html()->text('postal_code')->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        {!! Form::label('parish_note', 'Note:') !!}
-                        {!! Form::textarea('parish_note', null, ['class'=>'form-control', 'rows'=>'3']) !!}
+                        {{ html()->label('Country:', 'country_id') }}
+                        {{ html()->select('country_id', $countries, $defaults['country_id'])->class('form-control') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        {{ html()->label('Phone:', 'phone_main_phone') }}
+                        {{ html()->text('phone_main_phone')->class('form-control') }}
+                    </div>
+                    <div class="col-lg-4">
+                        {{ html()->label('Fax:', 'phone_main_fax') }}
+                        {{ html()->text('phone_main_fax')->class('form-control') }}
+                    </div>
+                    <div class="col-lg-4">
+                        {{ html()->label('Email:', 'email_main') }}
+                        {{ html()->text('email_main')->class('form-control') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        {{ html()->label('Note:', 'parish_note') }}
+                        {{ html()->textarea('parish_note')->class('form-control')->rows('3') }}
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -81,11 +81,11 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        {!! Form::submit('Add Parish', ['class'=>'btn btn-light']) !!}
+                        {{ html()->submit('Add Parish')->class('btn btn-light') }}
                     </div>
                 </div>
             </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop
