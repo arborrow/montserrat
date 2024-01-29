@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 @can('update-donation-type')
-                    <a href="{{ action([\App\Http\Controllers\DonationTypeController::class, 'edit'], $donation_type->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\DonationTypeController::class, 'edit'], $donation_type->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                 @endCan
             </div>
             <div class="col-lg-6 text-left">

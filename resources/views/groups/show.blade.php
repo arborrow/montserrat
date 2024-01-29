@@ -8,7 +8,7 @@
                 <span>
                     <h2><strong>
                         @can('update-group')
-                            {!! Html::link(url('group/'.$group->id.'/edit'),$group->name.' group') !!} 
+                            {{ html()->a(url(url('group/' . $group->id . '/edit')), $group->name . ' group') }} 
                         @else
                             {{$group->name}} group
                         @endCan
@@ -57,7 +57,7 @@
         <div class='row'>
             @can('update-group')
                 <div class='col-md-1'>
-                    <a href="{{ action([\App\Http\Controllers\GroupController::class, 'edit'], $group->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\GroupController::class, 'edit'], $group->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                 </div>
             @endCan
             @can('delete-group')

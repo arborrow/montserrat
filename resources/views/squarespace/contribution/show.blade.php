@@ -16,7 +16,7 @@
                 </div>
                 <div class='row'>
                     <a href={{ action([\App\Http\Controllers\SquarespaceContributionController::class, 'index']) }}>
-                        {!! Html::image('images/donation.png', 'Squarespace Contribution Index',array('title'=>"Squarespace Contribution Index",'class' => 'btn btn-primary')) !!}
+                        {{ html()->img(asset('images/donation.png'), 'Squarespace Contribution Index')->attribute('title', "Squarespace Contribution Index")->class('btn btn-primary') }}
                     </a>
                 </div>
             </div>
@@ -107,7 +107,7 @@
             <div class='row'>
                 @can('update-squarespace-contribution')
                     <div class='col-md-1'>
-                        <a href="{{ action([\App\Http\Controllers\SquarespaceContributionController::class, 'edit'], $ss_contribution->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action([\App\Http\Controllers\SquarespaceContributionController::class, 'edit'], $ss_contribution->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                     </div>
                 @endCan
                 @can('delete-squarespace-contribution')

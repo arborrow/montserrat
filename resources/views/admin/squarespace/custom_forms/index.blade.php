@@ -10,7 +10,7 @@
                         @can('create-group')
                             <span class="create">
                                 <a href="{{ action([\App\Http\Controllers\SquarespaceCustomFormController::class, 'create']) }}">
-                                   {!! Html::image('images/create.png', 'Add Custom Form',array('title'=>"Add Custom Form",'class' => 'btn btn-primary')) !!}
+                                   {{ html()->img(asset('images/create.png'), 'Add Custom Form')->attribute('title', "Add Custom Form")->class('btn btn-primary') }}
                                 </a>
 
                             </span>

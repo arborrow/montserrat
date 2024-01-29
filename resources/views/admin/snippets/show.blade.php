@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 @can('update-snippet')
-                    <a href="{{ action([\App\Http\Controllers\SnippetController::class, 'edit'], $snippet->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\SnippetController::class, 'edit'], $snippet->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                 @endCan
             </div>
             <div class="col-lg-6 text-left">

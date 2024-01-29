@@ -28,7 +28,7 @@
             <div class='row'>
                 @can('update-touchpoint')
                     <div class='col-md-1'>
-                        <a href="{{ action([\App\Http\Controllers\TouchpointController::class, 'edit'], $touchpoint->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action([\App\Http\Controllers\TouchpointController::class, 'edit'], $touchpoint->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                     </div>
                 @endCan
                 @can('delete-touchpoint')

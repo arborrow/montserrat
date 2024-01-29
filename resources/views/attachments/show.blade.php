@@ -8,7 +8,7 @@
                 <span>
                     <h2><strong>Attachment details: 
                         @can('update-attachment')
-                            {!! Html::link(url('attachment/'.$attachment->id.'/edit'),$attachment->uri) !!}
+                            {{ html()->a(url(url('attachment/' . $attachment->id . '/edit')), $attachment->uri) }}
                         @else
                             {{$attachment->uri}}
                         @endCan
@@ -32,7 +32,7 @@
         <div class='row'>
             @can('update-attachment')
                 <div class='col-md-1'>
-                    <a href="{{ action([\App\Http\Controllers\AttachmentController::class, 'edit'], $attachment->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\AttachmentController::class, 'edit'], $attachment->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                 </div>
             @endCan
             <div class="clearfix"> </div>

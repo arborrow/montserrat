@@ -8,7 +8,7 @@
                     <h1>
                         Payment Index
                         <a href={{ action([\App\Http\Controllers\PaymentController::class, 'search']) }}>
-                            {!! Html::image('images/search.png', 'Search payments',array('title'=>"Search payments",'class' => 'btn btn-link')) !!}</a>
+                            {{ html()->img(asset('images/search.png'), 'Search payments')->attribute('title', "Search payments")->class('btn btn-link') }}</a>
                         <p class="lead">({{$payments->total()}} records)</p>
                         <!-- payments are not created independently of donations so there should not be an option here to create a payment -->
                     </h1>

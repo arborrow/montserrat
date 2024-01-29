@@ -13,15 +13,15 @@
         </h1>
         <div class="row">
             <div class="col-lg-12">
-                {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
+                {{ html()->a(url('#notes'), 'Notes')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#relationships'), 'Relationships')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#touchpoints'), 'Touchpoints')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#registrations'), 'Registrations')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#attachments'), 'Attachments')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#donations'), 'Donations')->class('btn btn-outline-dark') }}
             </div>
             <div class="col-lg-12 mt-3">
-                <span><a href={{ action([\App\Http\Controllers\OrganizationController::class, 'index']) }}>{!! Html::image('images/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-outline-dark')) !!}</a></span>
+                <span><a href={{ action([\App\Http\Controllers\OrganizationController::class, 'index']) }}>{{ html()->img(asset('images/organization.png'), 'Organization Index')->attribute('title', "Organization Index")->class('btn btn-outline-dark') }}</a></span>
                 @can('create-touchpoint')
                 <span class="btn btn-outline-dark">
                     <a href={{ action([\App\Http\Controllers\TouchpointController::class, 'add'],$organization->id) }}>Add Touchpoint</a>
@@ -214,7 +214,7 @@
                 <div class="col-lg-12" id="donations">
                     <h2>Donations for {{ $organization->display_name }} ({{$donations->total() }} donations totaling:  ${{ number_format($donations->sum('donation_amount'),2)}})</h2>
                     @can('create-donation')
-                        {!! Html::link(route('donation.add',$organization->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
+                        {{ html()->a(url(route('donation.add', $organization->id)), 'Create donation')->class('btn btn-outline-dark') }}
                     @endCan
                     @if ($donations->isEmpty())
                         <div class="text-center">
@@ -268,7 +268,7 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 @can('update-contact')
-                    <a href="{{ action([\App\Http\Controllers\OrganizationController::class, 'edit'], $organization->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\OrganizationController::class, 'edit'], $organization->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                 @endCan
             </div>
             <div class="col-lg-6 text-left">

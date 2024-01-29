@@ -6,7 +6,7 @@
         <h2>
             Audits
             <a href={{ action([\App\Http\Controllers\AuditController::class, 'search']) }}>
-                {!! Html::image('images/search.png', 'Search audits',array('title'=>"Search audits",'class' => 'btn btn-link')) !!}
+                {{ html()->img(asset('images/search.png'), 'Search audits')->attribute('title', "Search audits")->class('btn btn-link') }}
             </a>
         </h2>
 

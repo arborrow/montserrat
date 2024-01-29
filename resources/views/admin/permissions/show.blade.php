@@ -44,7 +44,7 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 <a href="{{ action([\App\Http\Controllers\PermissionController::class, 'edit'], $permission->id) }}" class="btn btn-info">
-                    {!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}
+                    {{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}
                 </a>
             </div>
             <div class="col-lg-6 text-left">

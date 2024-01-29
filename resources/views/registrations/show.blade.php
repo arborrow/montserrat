@@ -12,7 +12,7 @@
                 Registration #{{ $registration->id }}
             @endCan
 
-            <span class="back"><a href={{ action([\App\Http\Controllers\RegistrationController::class, 'index']) }}>{!! Html::image('images/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-light')) !!}</a>
+            <span class="back"><a href={{ action([\App\Http\Controllers\RegistrationController::class, 'index']) }}>{{ html()->img(asset('images/registration.png'), 'Registration Index')->attribute('title', "Registration Index")->class('btn btn-light') }}</a>
 
             @can('update-registration')
                 @if (empty($registration->registration_confirm_date))
@@ -115,7 +115,7 @@
         <div class="row mt-3">
             <div class="col-lg-6 text-right">
                 @can('update-registration')
-                    <a href="{{ action([\App\Http\Controllers\RegistrationController::class, 'edit'], $registration->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\RegistrationController::class, 'edit'], $registration->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                 @endCan
             </div>
             <div class="col-lg-6 text-left">

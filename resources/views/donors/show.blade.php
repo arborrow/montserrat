@@ -8,7 +8,7 @@
                 <span>
                     <h2><strong>
                         @can('update-donor')
-                            {!! Html::link(url('donor/'.$donor->donor_id.'/edit'),$donor->sort_name) !!} 
+                            {{ html()->a(url(url('donor/' . $donor->donor_id . '/edit')), $donor->sort_name) }} 
                         @else
                             {{$donor->name}} group
                         @endCan

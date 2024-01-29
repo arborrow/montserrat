@@ -7,7 +7,7 @@
             Registrations
             @can('create-registration')
                 <span class="options">
-                    <a href={{ action([\App\Http\Controllers\RegistrationController::class, 'create']) }}>{!! Html::image('images/create.png', 'Create a Registration',array('title'=>"Create a Registration",'class' => 'btn btn-light')) !!}</a>
+                    <a href={{ action([\App\Http\Controllers\RegistrationController::class, 'create']) }}>{{ html()->img(asset('images/create.png'), 'Create a Registration')->attribute('title', "Create a Registration")->class('btn btn-light') }}</a>
                 </span>
             @endCan
         </h1>

@@ -7,7 +7,7 @@
             <div class="panel-heading">
                 <h1>
                     <span class="grey">{{$audits->total()}} result(s) found</span>
-                    <span class="search"><a href={{ action([\App\Http\Controllers\AuditController::class, 'search']) }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span>
+                    <span class="search"><a href={{ action([\App\Http\Controllers\AuditController::class, 'search']) }}>{{ html()->img(asset('images/search.png'), 'New search')->attribute('title', "New search")->class('btn btn-link') }}</a></span>
                 </h1>
             </div>
             @if ($audits->isEmpty())

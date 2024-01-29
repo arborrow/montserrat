@@ -14,7 +14,7 @@
                             @endCan
                         </h2>
                     </span>
-                    <span class="back"><a href={{ action([\App\Http\Controllers\RoomController::class, 'index']) }}>{!! Html::image('images/room.png', 'Room Index',array('title'=>"Room Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="back"><a href={{ action([\App\Http\Controllers\RoomController::class, 'index']) }}>{{ html()->img(asset('images/room.png'), 'Room Index')->attribute('title', "Room Index")->class('btn btn-primary') }}</a></span></h1>
                 </div>
                 <div class='row'>
                     <div class='col-md-2'><strong>Building: </strong>{{ $room->building}}</div>
@@ -38,7 +38,7 @@
                 <div class='row'>
                     @can('update-room')
                         <div class='col-md-1'>
-                            <a href="{{ action([\App\Http\Controllers\RoomController::class, 'edit'], $room->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                            <a href="{{ action([\App\Http\Controllers\RoomController::class, 'edit'], $room->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                         </div>
                     @endCan
                     @can('delete-room')

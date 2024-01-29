@@ -7,21 +7,21 @@
         <h2>Edit: {{ $person->full_name }}</h2>
     </div>
     <div class="col-lg-12 text-center">
-        @if ($person->is_board_member) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'boardmembers']) }}>{!! Html::image('images/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_ambassador) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'ambassadors']) }}>{!! Html::image('images/ambassador.png', 'Ambassador Group',array('title'=>"Ambassadors Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_staff) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'staff']) }}>{!! Html::image('images/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_steward) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'stewards']) }}>{!! Html::image('images/steward.png', 'Steward Group',array('title'=>"Stewards Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_volunteer) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'volunteers']) }}>{!! Html::image('images/volunteer.png', 'Volunteers Group',array('title'=>"Volunteers Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_retreat_director) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'directors']) }}>{!! Html::image('images/director.png', 'Retreat Directors Group',array('title'=>"Directors Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_retreat_innkeeper) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'innkeepers']) }}>{!! Html::image('images/innkeeper.png', 'Retreat Innkeepers Group',array('title'=>"Innkeepers Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_retreat_assistant) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'assistants']) }}>{!! Html::image('images/assistant.png', 'Retreat Assistants Group',array('title'=>"Assistants Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_bishop) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'bishops']) }}>{!! Html::image('images/bishop.png', 'Bishops Group',array('title'=>"Bishop Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_pastor) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'pastors']) }}>{!! Html::image('images/pastor.png', 'Pastors Group',array('title'=>"Pastors Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_priest) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'priests']) }}>{!! Html::image('images/priest.png', 'Priests Group',array('title'=>"Priests Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_deacon) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'deacons']) }}>{!! Html::image('images/deacon.png', 'Deacons Group',array('title'=>"Deacons Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_provincial) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'provincials']) }}>{!! Html::image('images/provincial.png', 'Provincials Group',array('title'=>"Provincials Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_superior) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'superiors']) }}>{!! Html::image('images/superior.png', 'Superiors Group',array('title'=>"Superiors Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_jesuit) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'jesuits']) }}>{!! Html::image('images/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
+        @if ($person->is_board_member) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'boardmembers']) }}>{{ html()->img(asset('images/board.png'), 'Board Members Group')->attribute('title', "Board Members Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_ambassador) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'ambassadors']) }}>{{ html()->img(asset('images/ambassador.png'), 'Ambassador Group')->attribute('title', "Ambassadors Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_staff) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'staff']) }}>{{ html()->img(asset('images/employee.png'), 'Staff Group')->attribute('title', "Employees Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_steward) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'stewards']) }}>{{ html()->img(asset('images/steward.png'), 'Steward Group')->attribute('title', "Stewards Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_volunteer) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'volunteers']) }}>{{ html()->img(asset('images/volunteer.png'), 'Volunteers Group')->attribute('title', "Volunteers Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_retreat_director) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'directors']) }}>{{ html()->img(asset('images/director.png'), 'Retreat Directors Group')->attribute('title', "Directors Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_retreat_innkeeper) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'innkeepers']) }}>{{ html()->img(asset('images/innkeeper.png'), 'Retreat Innkeepers Group')->attribute('title', "Innkeepers Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_retreat_assistant) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'assistants']) }}>{{ html()->img(asset('images/assistant.png'), 'Retreat Assistants Group')->attribute('title', "Assistants Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_bishop) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'bishops']) }}>{{ html()->img(asset('images/bishop.png'), 'Bishops Group')->attribute('title', "Bishop Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_pastor) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'pastors']) }}>{{ html()->img(asset('images/pastor.png'), 'Pastors Group')->attribute('title', "Pastors Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_priest) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'priests']) }}>{{ html()->img(asset('images/priest.png'), 'Priests Group')->attribute('title', "Priests Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_deacon) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'deacons']) }}>{{ html()->img(asset('images/deacon.png'), 'Deacons Group')->attribute('title', "Deacons Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_provincial) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'provincials']) }}>{{ html()->img(asset('images/provincial.png'), 'Provincials Group')->attribute('title', "Provincials Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_superior) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'superiors']) }}>{{ html()->img(asset('images/superior.png'), 'Superiors Group')->attribute('title', "Superiors Group")->class('btn btn-outline-dark') }}</a></span> @endIf
+        @if ($person->is_jesuit) <span><a href={{ action([\App\Http\Controllers\PersonController::class, 'jesuits']) }}>{{ html()->img(asset('images/jesuit.png'), 'Jesuits Group')->attribute('title', "Jesuits Group")->class('btn btn-outline-dark') }}</a></span> @endIf
     </div>
     <div class="col-lg-12">
         {{ html()->form('PUT', route('person.update', [$person->id]))->acceptsFiles()->open() }}
@@ -33,16 +33,16 @@
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center my-2">
-                {!! Html::link('#emergency_contact','Emergency contact',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#addresses','Addresses',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#phones','Phones',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#emails','Emails',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#websites','Websites',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#demographics','Demographics',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#languages','Languages',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#groups','Groups',array('class' => 'btn btn-outline-dark')) !!}
+                {{ html()->a(url('#emergency_contact'), 'Emergency contact')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#addresses'), 'Addresses')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#phones'), 'Phones')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#emails'), 'Emails')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#websites'), 'Websites')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#demographics'), 'Demographics')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#languages'), 'Languages')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#notes'), 'Notes')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#attachments'), 'Attachments')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#groups'), 'Groups')->class('btn btn-outline-dark') }}
                 </div>
             </div>
 

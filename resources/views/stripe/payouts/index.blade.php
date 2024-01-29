@@ -9,7 +9,7 @@
                     </h1>
                     <span>{{ $payouts->links() }}</span>
                 </div>
-                {!! Html::link(action([\App\Http\Controllers\StripePayoutController::class, 'import']),'Import New Stripe Payouts',array('class' => 'btn btn-secondary'))!!}
+                {{ html()->a(url(action([\App\Http\Controllers\StripePayoutController::class, 'import'])), 'Import New Stripe Payouts')->class('btn btn-secondary') }}
 
                 <table class="table table-bordered table-striped table-hover"><caption><h2>Stripe Payouts ({{ $payouts->total() }})</h2></caption>
                     <thead>
@@ -43,7 +43,7 @@
                                 @if (isset($payout->fee_payment_id))
                                     <a href = "{{ URL('/payment/'.$payout->fee_payment_id)}}">${{ number_format($payout->total_fee_amount,2) }} </a>
                                 @else
-                                    {!! Html::link(action([\App\Http\Controllers\StripePayoutController::class, 'process_fees'],$payout->id),'Create Stripe Fee Payment for $'.number_format($payout->total_fee_amount,2),array('class' => 'btn btn-warning'))!!}
+                                    {{ html()->a(url(action([\App\Http\Controllers\StripePayoutController::class, 'process_fees'], $payout->id)), 'Create Stripe Fee Payment for $' . number_format($payout->total_fee_amount, 2))->class('btn btn-warning') }}
                                 @endIf
                             </td>
                             <td class='text-right'>${{ number_format($payout->amount + $payout->total_fee_amount,2) }}</td>

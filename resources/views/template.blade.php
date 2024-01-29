@@ -164,7 +164,7 @@
 				{{ html()->text('contactSearch', '')->id('contactSearch')->placeholder('Find contact by name')->class('form-control mr-sm-2') }}
 				{{ html()->hidden('response', '')->id('response') }}
 				{{ html()->submit('Find Person')->class('btn btn-outline-success my-2 my-sm-0')->id('btnSearch')->style('display:none') }}
-				<a href="{{action([\App\Http\Controllers\SearchController::class, 'search'])}}">{!! Html::image('images/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
+				<a href="{{action([\App\Http\Controllers\SearchController::class, 'search'])}}">{{ html()->img(asset('images/search.png'), 'Advanced search')->attribute('title', "Advanced search")->class('btn btn-link') }}</a>
 				{{ html()->form()->close() }}
 				@endcan
 				@auth

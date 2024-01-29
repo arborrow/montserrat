@@ -15,15 +15,15 @@
         </h1>
     </div>
     <div class="col-lg-12 text-center">
-        {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
-        {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
-        {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
-        {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
-        {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
-        {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
+        {{ html()->a(url('#notes'), 'Notes')->class('btn btn-outline-dark') }}
+        {{ html()->a(url('#relationships'), 'Relationships')->class('btn btn-outline-dark') }}
+        {{ html()->a(url('#registrations'), 'Registrations')->class('btn btn-outline-dark') }}
+        {{ html()->a(url('#touchpoints'), 'Touchpoints')->class('btn btn-outline-dark') }}
+        {{ html()->a(url('#attachments'), 'Attachments')->class('btn btn-outline-dark') }}
+        {{ html()->a(url('#donations'), 'Donations')->class('btn btn-outline-dark') }}
     </div>
     <div class="col-lg-12 text-center mt-3">
-        <span><a href={{ action([\App\Http\Controllers\VendorController::class, 'index']) }}>{!! Html::image('images/vendor.png', 'Vendor Index',array('title'=>"Vendor Index",'class' => 'btn btn-outline-dark')) !!}</a></span>
+        <span><a href={{ action([\App\Http\Controllers\VendorController::class, 'index']) }}>{{ html()->img(asset('images/vendor.png'), 'Vendor Index')->attribute('title', "Vendor Index")->class('btn btn-outline-dark') }}</a></span>
         @can('create-touchpoint')
             <span><a href={{ action([\App\Http\Controllers\TouchpointController::class, 'add'],$vendor->id) }} class="btn btn-outline-dark">Add Touchpoint</a></span>
         @endCan
@@ -271,7 +271,7 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 @can('update-contact')
-                    <a href="{{ action([\App\Http\Controllers\VendorController::class, 'edit'], $vendor->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\VendorController::class, 'edit'], $vendor->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                 @endCan
             </div>
             <div class="col-lg-6 text-left">

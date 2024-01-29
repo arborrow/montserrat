@@ -8,7 +8,7 @@
             @can('create-permission')
                 <span class="options">
                     <a href={{ action([\App\Http\Controllers\PermissionController::class, 'create']) }}>
-                        {!! Html::image('images/create.png', 'Add Permission',array('title'=>"Add Permission",'class' => 'btn btn-light')) !!}
+                        {{ html()->img(asset('images/create.png'), 'Add Permission')->attribute('title', "Add Permission")->class('btn btn-light') }}
                     </a>
                 </span>
             @endcan

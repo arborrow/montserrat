@@ -18,20 +18,20 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#parishioners','Parishioners',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
+                {{ html()->a(url('#notes'), 'Notes')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#parishioners'), 'Parishioners')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#touchpoints'), 'Touchpoints')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#relationships'), 'Relationships')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#registrations'), 'Registrations')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#attachments'), 'Attachments')->class('btn btn-outline-dark') }}
+                {{ html()->a(url('#donations'), 'Donations')->class('btn btn-outline-dark') }}
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-lg-12">
                 <span class="back">
                     <a href={{ action([\App\Http\Controllers\ParishController::class, 'index']) }}>
-                        {!! Html::image('images/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-outline-dark')) !!}
+                        {{ html()->img(asset('images/parish.png'), 'Parish Index')->attribute('title', "Parish Index")->class('btn btn-outline-dark') }}
                     </a>
                 </span>
                 @can('create-touchpoint')
@@ -121,7 +121,7 @@
                             <tr>
                                 <td><a href="../person/{{$parishioner->contact_b->id}}">
                                         @if($parishioner->contact_b->is_ambassador)
-                                            {!! Html::image('images/ambassador.png', 'Ambassador',array('title'=>"Ambassador",'class' => 'btn btn-outline-dark')) !!}
+                                            {{ html()->img(asset('images/ambassador.png'), 'Ambassador')->attribute('title', "Ambassador")->class('btn btn-outline-dark') }}
                                         @endIf
                                         {!! $parishioner->contact_b->contact_link_full_name !!} ({{$parishioner->contact_b->participant_count}})
                                     </a>
@@ -313,7 +313,7 @@
             </div>
             <div class="col-lg-12">
                 @can('create-donation')
-                    {!! Html::link(route('donation.add',$parish->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
+                    {{ html()->a(url(route('donation.add', $parish->id)), 'Create donation')->class('btn btn-outline-dark') }}
                 @endCan
             </div>
             <div class="col-lg-12">
@@ -364,7 +364,7 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 <a href="{{ action([\App\Http\Controllers\ParishController::class, 'edit'], $parish->id) }}" class="btn btn-info">
-                    {!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}
+                    {{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}
                 </a>
             </div>
             <div class="col-lg-6 text-left">

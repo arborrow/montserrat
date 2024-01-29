@@ -12,7 +12,7 @@
                         @can('create-donor')
                             <span class="create">
                                 <a href="{{ action([\App\Http\Controllers\DonorController::class, 'create']) }}">
-                                   {!! Html::image('images/create.png', 'Add Donor',array('title'=>"Add Donor",'class' => 'btn btn-primary')) !!}
+                                   {{ html()->img(asset('images/create.png'), 'Add Donor')->attribute('title', "Add Donor")->class('btn btn-primary') }}
                                 </a>
 
                             </span>

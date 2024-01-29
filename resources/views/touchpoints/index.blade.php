@@ -10,10 +10,10 @@
                         <span class="grey">({{$touchpoints->total()}} records)</span>
                         @can('update-touchpoint')
                             <span class="create">
-                                <a href={{ action([\App\Http\Controllers\TouchpointController::class, 'create']) }}>{!! Html::image('images/create.png', 'Add Touchpoint',array('title'=>"Add Touchpoint",'class' => 'btn btn-primary')) !!}</a>
+                                <a href={{ action([\App\Http\Controllers\TouchpointController::class, 'create']) }}>{{ html()->img(asset('images/create.png'), 'Add Touchpoint')->attribute('title', "Add Touchpoint")->class('btn btn-primary') }}</a>
                             </span>
                             <span class="create">
-                                <a href={{ action([\App\Http\Controllers\TouchpointController::class, 'add_group'],0) }}>{!! Html::image('images/group_add.png', 'Add Group Touchpoint',array('title'=>"Add Group Touchpoint",'class' => 'btn btn-primary')) !!}</a>
+                                <a href={{ action([\App\Http\Controllers\TouchpointController::class, 'add_group'],0) }}>{{ html()->img(asset('images/group_add.png'), 'Add Group Touchpoint')->attribute('title', "Add Group Touchpoint")->class('btn btn-primary') }}</a>
                             </span>
                     </h1>@endCan
                     <span>{{ $touchpoints->links() }}</span>
