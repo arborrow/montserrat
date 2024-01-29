@@ -25,7 +25,6 @@
         "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
-        "laravelcollective/html": "^6.4",
         "mailgun/mailgun-php": "^3.5",
         "nyholm/psr7": "^1.5",
         "owen-it/laravel-auditing": "^13.1",
@@ -34,7 +33,8 @@
         "spatie/laravel-stripe-webhooks": "^3.2",
         "stuyam/laravel-phone-validator": "^1.0",
         "symfony/http-client": "^6.2",
-        "symfony/mailgun-mailer": "^6.2"
+        "symfony/mailgun-mailer": "^6.2",
+        "spatie/laravel-html": "^3.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
