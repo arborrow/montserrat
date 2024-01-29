@@ -1,8 +1,8 @@
 <div class="form-group">
     <div class="row">
         <div class="col-lg-3 col-md-4">
-            {!! Form::label('primary_phone_location_id', 'Primary phone:') !!}
-            {!! Form::select('primary_phone_location_id', $primary_phones, config('polanco.location_type.home').":Phone", ['class' => 'form-control']) !!}
+            {{ html()->label('Primary phone:', 'primary_phone_location_id') }}
+            {{ html()->select('primary_phone_location_id', $primary_phones, config('polanco.location_type.home') . ":Phone")->class('form-control') }}
         </div>
     </div>
 </div><div class="form-group">
@@ -32,16 +32,16 @@
 
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_home_phone', 'Main:') !!}
-                    {!! Form::text('phone_home_phone', null, ['class' => 'form-control']) !!}
+                    {{ html()->label('Main:', 'phone_home_phone') }}
+                    {{ html()->text('phone_home_phone')->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_home_mobile', 'Mobile:') !!}
-                    {!! Form::text('phone_home_mobile', null, ['class' => 'form-control']) !!}
+                    {{ html()->label('Mobile:', 'phone_home_mobile') }}
+                    {{ html()->text('phone_home_mobile')->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_home_fax', 'Fax:') !!}
-                    {!! Form::text('phone_home_fax', null, ['class' => 'form-control']) !!}
+                    {{ html()->label('Fax:', 'phone_home_fax') }}
+                    {{ html()->text('phone_home_fax')->class('form-control') }}
                 </div>
             </div>
         </div>
@@ -50,16 +50,16 @@
 
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_work_phone', 'Main:') !!}
-                    {!! Form::text('phone_work_phone', null, ['class' => 'form-control']) !!}
+                    {{ html()->label('Main:', 'phone_work_phone') }}
+                    {{ html()->text('phone_work_phone')->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_work_mobile', 'Mobile:') !!}
-                    {!! Form::text('phone_work_mobile', null, ['class' => 'form-control']) !!}
+                    {{ html()->label('Mobile:', 'phone_work_mobile') }}
+                    {{ html()->text('phone_work_mobile')->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_work_fax', 'Fax:') !!}
-                    {!! Form::text('phone_work_fax', null, ['class' => 'form-control']) !!}
+                    {{ html()->label('Fax:', 'phone_work_fax') }}
+                    {{ html()->text('phone_work_fax')->class('form-control') }}
                 </div>
             </div>
         </div>
@@ -68,26 +68,26 @@
 
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_other_phone', 'Main:') !!}
-                    {!! Form::text('phone_other_phone', null, ['class' => 'form-control']) !!}
+                    {{ html()->label('Main:', 'phone_other_phone') }}
+                    {{ html()->text('phone_other_phone')->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_other_mobile', 'Mobile:') !!}
-                    {!! Form::text('phone_other_mobile', null, ['class' => 'form-control']) !!}
+                    {{ html()->label('Mobile:', 'phone_other_mobile') }}
+                    {{ html()->text('phone_other_mobile')->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_other_fax', 'Fax:') !!}
-                    {!! Form::text('phone_other_fax', null, ['class' => 'form-control']) !!}
+                    {{ html()->label('Fax:', 'phone_other_fax') }}
+                    {{ html()->text('phone_other_fax')->class('form-control') }}
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div class="form-group form-check">
-    {!! Form::checkbox('do_not_phone', 1, 0,['class' => 'form-check-input', 'id' => 'do_not_phone']) !!}
-    {!! Form::label('do_not_phone', 'Do not call', ['class' => 'form-check-label', 'id' => 'do_not_phone']) !!}
+    {{ html()->checkbox('do_not_phone', 0, 1)->class('form-check-input')->id('do_not_phone') }}
+    {{ html()->label('Do not call', 'do_not_phone')->class('form-check-label')->id('do_not_phone') }}
 </div>
 <div class="form-group form-check">
-    {!! Form::checkbox('do_not_sms', 1, 0,['class' => 'form-check-input', 'id' => 'do_not_sms']) !!}
-    {!! Form::label('do_not_sms', 'Do not text', ['class' => 'form-check-label', 'id' => 'do_not_sms']) !!}
+    {{ html()->checkbox('do_not_sms', 0, 1)->class('form-check-input')->id('do_not_sms') }}
+    {{ html()->label('Do not text', 'do_not_sms')->class('form-check-label')->id('do_not_sms') }}
 </div>

@@ -6,21 +6,21 @@
         <h1>Create Squarespace Custom Form</h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url'=>'admin/squarespace/custom_form/', 'method'=>'post']) !!}
+        {{ html()->form('POST', 'admin/squarespace/custom_form/')->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('name', 'Name') !!}
-                        {!! Form::text('name', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('Name', 'name') }}
+                        {{ html()->text('name')->class('form-control') }}
                     </div>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-lg-12">
-                    {!! Form::submit('Add Custom Form', ['class'=>'btn btn-outline-dark']) !!}
+                    {{ html()->submit('Add Custom Form')->class('btn btn-outline-dark') }}
                 </div>
             </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

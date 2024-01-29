@@ -62,9 +62,9 @@
             @endCan
             @can('delete-group')
                 <div class='col-md-1'>
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['group.destroy', $group->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                    {!! Form::close() !!}
+                    {{ html()->form('DELETE', route('group.destroy', [$group->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                    {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }} 
+                    {{ html()->form()->close() }}
                 </div>
             @endCan
             <div class="clearfix"> </div>

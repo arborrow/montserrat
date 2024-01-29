@@ -33,9 +33,9 @@
                 @endCan
                 @can('delete-touchpoint')
                     <div class='col-md-1'>
-                        {!! Form::open(['method' => 'DELETE', 'route' => ['touchpoint.destroy', $touchpoint->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                        {!! Form::close() !!}
+                        {{ html()->form('DELETE', route('touchpoint.destroy', [$touchpoint->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                        {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }} 
+                        {{ html()->form()->close() }}
                     </div>
                 @endCan
                 <div class="clearfix"> </div>

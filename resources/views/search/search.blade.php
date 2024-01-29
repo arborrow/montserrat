@@ -9,319 +9,319 @@
             <h1><strong>Search Contacts</strong></h1>
         </div>
 
-        {!! Form::open(['url'=>'results', 'method'=>'get']) !!}
+        {{ html()->form('GET', 'results')->open() }}
 
         <div class="panel-body">
             <div class='panel-heading'>
                 <h2>
                     <span>Name</span>
-                    <span>{!! Form::image('images/submit.png','search',['class' => 'btn btn-outline-dark pull-right']) !!}</span>
+                    <span>{{ html()->input('image', 'search')->class('btn btn-outline-dark pull-right')->attribute('src', asset('images/submit.png')) }}</span>
                 </h2>
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    {!! Form::label('prefix_id', 'Title:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Title:', 'prefix_id')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('prefix_id', $prefixes, NULL, ['class' => 'form-control']) !!}
+                        {{ html()->select('prefix_id', $prefixes)->class('form-control') }}
                     </div>
 
                 </div>
                 <div class="form-group">
-                    {!! Form::label('first_name', 'First:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('First:', 'first_name')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('first_name', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('first_name')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('middle_name', 'Middle:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Middle:', 'middle_name')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('middle_name', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('middle_name')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('last_name', 'Last:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Last:', 'last_name')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                    {!! Form::text('last_name', NULL, ['class' => 'form-control']) !!}
+                    {{ html()->text('last_name')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('suffix_id', 'Suffix:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Suffix:', 'suffix_id')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                    {!! Form::select('suffix_id', $suffixes, NULL, ['class' => 'form-control']) !!}
+                    {{ html()->select('suffix_id', $suffixes)->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('nick_name', 'Nickname: ', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Nickname: ', 'nick_name')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                    {!! Form::text('nick_name', NULL, ['class' => 'form-control']) !!}
+                    {{ html()->text('nick_name')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('display_name', 'Display name: ', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Display name: ', 'display_name')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                    {!! Form::text('display_name', NULL, ['class' => 'form-control']) !!}
+                    {{ html()->text('display_name')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('sort_name', 'Sort name: ', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Sort name: ', 'sort_name')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                    {!! Form::text('sort_name', NULL, ['class' => 'form-control']) !!}
+                    {{ html()->text('sort_name')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('contact_type', 'Contact type: ', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Contact type: ', 'contact_type')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                    {!! Form::select('contact_type', $contact_types, 0, ['class' => 'form-control']) !!}
+                    {{ html()->select('contact_type', $contact_types, 0)->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('subcontact_type', 'Subcontact type: ', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Subcontact type: ', 'subcontact_type')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                    {!! Form::select('subcontact_type', $subcontact_types, 0, ['class' => 'form-control']) !!}
+                    {{ html()->select('subcontact_type', $subcontact_types, 0)->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('has_avatar', 'Has avatar?:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Has avatar?:', 'has_avatar')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                    {!! Form::checkbox('has_avatar', 1, 0,['class' => '']) !!}
+                    {{ html()->checkbox('has_avatar', 0, 1)->class('') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('has_attachment', 'Has attachment(s)?:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Has attachment(s)?:', 'has_attachment')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                    {!! Form::checkbox('has_attachment', 1, 0,['class' => '']) !!}
+                    {{ html()->checkbox('has_attachment', 0, 1)->class('') }}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="clearfix"> </div>
-                    {!! Form::label('attachment_description', 'Description: (max 200)', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Description: (max 200)', 'attachment_description')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                    {!! Form::text('attachment_description', NULL, ['class' => 'form-control']) !!}
+                    {{ html()->text('attachment_description')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('phone', 'Phone:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Phone:', 'phone')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('phone', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('phone')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('do_not_phone', 'Do not phone:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Do not phone:', 'do_not_phone')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('do_not_phone', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) !!}
+                        {{ html()->select('do_not_phone', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('do_not_sms', 'Do not SMS:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Do not SMS:', 'do_not_sms')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('do_not_sms', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) !!}
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label('email', 'Email:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('email', NULL, ['class' => 'form-control']) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('do_not_email', 'Do not email:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">
-                        {!! Form::select('do_not_email', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('street_address', 'Address:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('street_address', NULL, ['class' => 'form-control']) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('city', 'City:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('city', NULL, ['class' => 'form-control']) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('state_province_id', 'State:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">
-                        {!! Form::select('state_province_id', $states, NULL, ['class' => 'form-control']) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('postal_code', 'Zip:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('postal_code', NULL, ['class' => 'form-control']) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('country_id', 'Country:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">
-                        {!! Form::select('country_id', $countries, NULL, ['class' => 'form-control']) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('do_not_mail', 'Do not mail:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">
-                        {!! Form::select('do_not_mail', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) !!}
+                        {{ html()->select('do_not_sms', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) }}
                     </div>
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('url', 'Website:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Email:', 'email')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('url', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('email')->class('form-control') }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ html()->label('Do not email:', 'do_not_email')->class('control-label col-sm-3') }}
+                    <div class="col-sm-8">
+                        {{ html()->select('do_not_email', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ html()->label('Address:', 'street_address')->class('control-label col-sm-3') }}
+                    <div class="col-sm-8">
+                        {{ html()->text('street_address')->class('form-control') }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ html()->label('City:', 'city')->class('control-label col-sm-3') }}
+                    <div class="col-sm-8">
+                        {{ html()->text('city')->class('form-control') }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ html()->label('State:', 'state_province_id')->class('control-label col-sm-3') }}
+                    <div class="col-sm-8">
+                        {{ html()->select('state_province_id', $states)->class('form-control') }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ html()->label('Zip:', 'postal_code')->class('control-label col-sm-3') }}
+                    <div class="col-sm-8">
+                        {{ html()->text('postal_code')->class('form-control') }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ html()->label('Country:', 'country_id')->class('control-label col-sm-3') }}
+                    <div class="col-sm-8">
+                        {{ html()->select('country_id', $countries)->class('form-control') }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ html()->label('Do not mail:', 'do_not_mail')->class('control-label col-sm-3') }}
+                    <div class="col-sm-8">
+                        {{ html()->select('do_not_mail', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ html()->label('Website:', 'url')->class('control-label col-sm-3') }}
+                    <div class="col-sm-8">
+                        {{ html()->text('url')->class('form-control') }}
                     </div>
                 </div>
             </div>
             <div class='panel-heading' style="background-color: lightcoral;"><h2>Emergency Contact Information</h2></div>
             <div class="panel-body" style="background-color: lightcoral;">
                 <div class="form-group">
-                    {!! Form::label('emergency_contact_name', 'Name: ', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Name: ', 'emergency_contact_name')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('emergency_contact_name', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('emergency_contact_name')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('emergency_contact_relationship', 'Relationship: ', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Relationship: ', 'emergency_contact_relationship')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('emergency_contact_relationship', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('emergency_contact_relationship')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('emergency_contact_phone', 'Phone: ', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Phone: ', 'emergency_contact_phone')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('emergency_contact_phone', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('emergency_contact_phone')->class('form-control') }}
                     </div>
                 </div>
             </div>
             <div class='panel-heading'><h2>Demographics</h2></div>
             <div class="panel-body">
                <div class="form-group">
-                    {!! Form::label('gender_id', 'Gender:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Gender:', 'gender_id')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('gender_id', $genders, 0, ['class' => 'form-control']) !!}
+                        {{ html()->select('gender_id', $genders, 0)->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('birth_date', 'Birth Date:', ['class' => 'control-label col-sm-3']) !!}
+                    {{ html()->label('Birth Date:', 'birth_date')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('birth_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
+                        {{ html()->text('birth_date')->class('form-control flatpickr-date') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('religion_id', 'Religion:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Religion:', 'religion_id')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('religion_id', $religions, 0, ['class' => 'form-control']) !!}
+                        {{ html()->select('religion_id', $religions, 0)->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('occupation_id', 'Occupation:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Occupation:', 'occupation_id')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('occupation_id', $occupations, 0, ['class' => 'form-control']) !!}
+                        {{ html()->select('occupation_id', $occupations, 0)->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('parish_id', 'Parish:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Parish:', 'parish_id')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('parish_id', $parish_list, 0, ['class' => 'form-control']) !!}
+                        {{ html()->select('parish_id', $parish_list, 0)->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('ethnicity_id', 'Ethnicity:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Ethnicity:', 'ethnicity_id')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('ethnicity_id', $ethnicities, 0, ['class' => 'form-control']) !!}
+                        {{ html()->select('ethnicity_id', $ethnicities, 0)->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('languages', 'Languages:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Languages:', 'languages')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('languages[]', $languages, NULL, ['id'=>'languages','class' => 'form-control','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+                        {{ html()->multiselect('languages[]', $languages)->id('languages')->class('form-control')->style('width: auto; font-size: inherit;') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('preferred_language_id', 'Preferred Language:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Preferred Language:', 'preferred_language_id')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('preferred_language_id', $languages, 0, ['class' => 'form-control']) !!}
+                        {{ html()->select('preferred_language_id', $languages, 0)->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('referrals', 'Referral source(s):', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Referral source(s):', 'referrals')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('referrals[]', $referrals, NULL, ['id'=>'referrals','class' => 'form-control','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+                        {{ html()->multiselect('referrals[]', $referrals)->id('referrals')->class('form-control')->style('width: auto; font-size: inherit;') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Deceased Date:', 'deceased_date')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('deceased_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
+                        {{ html()->text('deceased_date')->class('form-control flatpickr-date') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('is_deceased', 'Is Deceased:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Is Deceased:', 'is_deceased')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::checkbox('is_deceased', 1, NULL, ['class' => '']) !!}
+                        {{ html()->checkbox('is_deceased', NULL, 1)->class('') }}
                     </div>
                 </div>
             </div>
             <div class='panel-heading'><h2>Health Notes</h2></div>
             <div class="panel-body">
                 <div class="form-group">
-                    {!! Form::label('note_health', 'Health Notes:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Health Notes:', 'note_health')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('note_health', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('note_health')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('note_dietary', 'Dietary Notes:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Dietary Notes:', 'note_dietary')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('note_dietary', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('note_dietary')->class('form-control') }}
                     </div>
                 </div>
             </div>
             <div class='panel-heading'><h2>General Notes</h2></div>
             <div class="panel-body">
                 <div class="form-group">
-                    {!! Form::label('note_general', 'General Notes:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('General Notes:', 'note_general')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('note_general', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('note_general')->class('form-control') }}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('note_room_preference', 'Room Preference:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Room Preference:', 'note_room_preference')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('note_room_preference', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('note_room_preference')->class('form-control') }}
                     </div>
                 </div>
             </div>
             <div class='panel-heading'><h2>Touchpoints</h2></div>
             <div class="form-group">
                     <div class="clearfix"> </div>
-                        {!! Form::label('touchpoint_notes', 'Note: ', ['class' => 'control-label col-sm-3'])  !!}
+                        {{ html()->label('Note: ', 'touchpoint_notes')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('touchpoint_notes', NULL, ['class' => 'form-control']) !!}
+                        {{ html()->text('touchpoint_notes')->class('form-control') }}
                     </div>
                 </div>
             <div class="form-group">
                     <div class="clearfix"> </div>
-                        {!! Form::label('touched_at', 'Touched at: ', ['class' => 'control-label col-sm-3'])  !!}
+                        {{ html()->label('Touched at: ', 'touched_at')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::text('touched_at', NULL, ['class' => 'form-control flatpickr-date bg-white']) !!}
+                        {{ html()->text('touched_at')->class('form-control flatpickr-date bg-white') }}
                     </div>
                 </div>
             <div class='panel-heading'><h2>Groups and Relationships</h2></div>
             <div class="panel-body">
                 <div class="form-group">
-                    {!! Form::label('groups', 'Groups:', ['class' => 'control-label col-sm-3'])  !!}
+                    {{ html()->label('Groups:', 'groups')->class('control-label col-sm-3') }}
                     <div class="col-sm-8">
-                        {!! Form::select('groups[]', $groups, NULL, ['id'=>'groups','class' => 'form-control','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+                        {{ html()->multiselect('groups[]', $groups)->id('groups')->class('form-control')->style('width: auto; font-size: inherit;') }}
                     </div>
                 </div>
             </div>
         </div>
 
    </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
 
 

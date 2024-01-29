@@ -7,78 +7,78 @@
     </div>
     <div class="col-lg-12">
         <h2>Donation details</h2>
-        {!! Form::open(['method' => 'PUT', 'route' => ['donation.update', $donation->donation_id]]) !!}
-        {!! Form::hidden('donation_id', $donation->donation_id) !!}
-        {!! Form::hidden('donor_id', $donation->contact_id) !!}
+        {{ html()->form('PUT', route('donation.update', [$donation->donation_id]))->open() }}
+        {{ html()->hidden('donation_id', $donation->donation_id) }}
+        {{ html()->hidden('donor_id', $donation->contact_id) }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('donation_description', 'Description')  !!}
-                        {!! Form::select('donation_description', $descriptions, $donation->donation_description, ['class' => 'form-control']) !!}
+                        {{ html()->label('Description', 'donation_description') }}
+                        {{ html()->select('donation_description', $descriptions, $donation->donation_description)->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('event_id', 'Retreat')  !!}
+                        {{ html()->label('Retreat', 'event_id') }}
                         @if (isset($defaults['event_id']))
-                            {!! Form::select('event_id', $retreats, $defaults['event_id'], ['class' => 'form-control']) !!}
+                            {{ html()->select('event_id', $retreats, $defaults['event_id'])->class('form-control') }}
                         @else
-                            {!! Form::select('event_id', $retreats, $donation->event_id, ['class' => 'form-control']) !!}
+                            {{ html()->select('event_id', $retreats, $donation->event_id)->class('form-control') }}
                         @endif
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('donation_date', 'Date')  !!}
-                        {!! Form::date('donation_date', $donation->donation_date, ['class'=>'form-control flatpickr-date']) !!}
+                        {{ html()->label('Date', 'donation_date') }}
+                        {{ html()->date('donation_date', $donation->donation_date)->class('form-control flatpickr-date') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('donation_amount', 'Amount')  !!}
-                        {!! Form::number('donation_amount', $donation->donation_amount, ['class' => 'form-control','step'=>'0.01']) !!}
+                        {{ html()->label('Amount', 'donation_amount') }}
+                        {{ html()->number('donation_amount', $donation->donation_amount)->class('form-control')->attribute('step', '0.01') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('notes1', 'Primary contact for invoice')  !!}
-                        {!! Form::text('notes1', $donation->Notes1, ['class' => 'form-control']) !!}
+                        {{ html()->label('Primary contact for invoice', 'notes1') }}
+                        {{ html()->text('notes1', $donation->Notes1)->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('notes', 'Notes')  !!}
-                        {!! Form::text('notes', $donation->Notes, ['class' => 'form-control']) !!}
+                        {{ html()->label('Notes', 'notes') }}
+                        {{ html()->text('notes', $donation->Notes)->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-3 col-md-4">
-                      {!! Form::label('donation_thank_you', 'Thank you letter')  !!}
-                      {!! Form::select('donation_thank_you', ['Y' => 'Yes','N' => 'No'], $donation->donation_thank_you_sent, ['class' => 'form-control']) !!}
+                      {{ html()->label('Thank you letter', 'donation_thank_you') }}
+                      {{ html()->select('donation_thank_you', ['Y' => 'Yes', 'N' => 'No'], $donation->donation_thank_you_sent)->class('form-control') }}
                   </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('start_date', 'Start date')  !!}
-                        {!! Form::date('start_date', $donation->start_date, ['class' => 'form-control flatpickr-date']) !!}
+                        {{ html()->label('Start date', 'start_date') }}
+                        {{ html()->date('start_date', $donation->start_date)->class('form-control flatpickr-date') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('end_date', 'End date')  !!}
-                        {!! Form::date('end_date', $donation->end_date, ['class' => 'form-control flatpickr-date']) !!}
+                        {{ html()->label('End date', 'end_date') }}
+                        {{ html()->date('end_date', $donation->end_date)->class('form-control flatpickr-date') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('donation_install', 'Installment')  !!}
-                        {!! Form::number('donation_install', $donation->donation_install, ['class' => 'form-control','step'=>'0.01']) !!}
+                        {{ html()->label('Installment', 'donation_install') }}
+                        {{ html()->number('donation_install', $donation->donation_install)->class('form-control')->attribute('step', '0.01') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('terms', 'Terms')  !!}
-                        {!! Form::text('terms', $donation->terms, ['class' => 'form-control']) !!}
+                        {{ html()->label('Terms', 'terms') }}
+                        {{ html()->text('terms', $donation->terms)->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        {!! Form::label('stripe_invoice', 'Stripe Invoice #')  !!}
-                        {!! Form::text('stripe_invoice', $donation->stripe_invoice, ['class' => 'form-control']) !!}
+                        {{ html()->label('Stripe Invoice #', 'stripe_invoice') }}
+                        {{ html()->text('stripe_invoice', $donation->stripe_invoice)->class('form-control') }}
                     </div>
 
                 </div>
                 <div class="row text-center mt-4">
                     <div class="col-lg-12">
-                        {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+                        {{ html()->input('image', 'btnSave')->class('btn btn-outline-dark')->attribute('src', asset('images/save.png')) }}
                     </div>
                 </div>
             </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

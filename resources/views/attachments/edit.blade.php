@@ -5,14 +5,14 @@
 <div class="jumbotron text-left">
     <span><h2><strong>Edit Attachment:</strong></h2></span>
 
-    {!! Form::open(['method' => 'PUT', 'route' => ['attachment.update', $attachment->id]]) !!}
-    {!! Form::hidden('id', $attachment->id) !!}
+    {{ html()->form('PUT', route('attachment.update', [$attachment->id]))->open() }}
+    {{ html()->hidden('id', $attachment->id) }}
 
         <span><h2>Attachment details for {{ $attachment->uri }}</h2>
             <div class="form-group">
                 <div class='row'>
-                    {!! Form::label('description', 'Description:')  !!}
-                    {!! Form::textarea('description', $attachment->description, ['class' => 'form-control']) !!}
+                    {{ html()->label('Description:', 'description') }}
+                    {{ html()->textarea('description', $attachment->description)->class('form-control') }}
                 </div>
                 <div class="form-group">
 
@@ -31,8 +31,8 @@
 
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-primary']) !!}
+        {{ html()->input('image', 'btnSave')->class('btn btn-primary')->attribute('src', asset('images/save.png')) }}
     </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
 @stop

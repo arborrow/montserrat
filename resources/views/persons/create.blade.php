@@ -6,7 +6,7 @@
         <h2>Create Person</h2>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url' => 'person', 'files' => 'true', 'method' => 'post']) !!}
+        {{ html()->form('POST', 'person')->acceptsFiles()->open() }}
         <div class="row">
             <div class="col-lg-12">
                 <h3>Basic Information</h3>
@@ -15,51 +15,50 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-2 col-md-3">
-                            {!! Form::label('prefix_id', 'Title: ') !!}
-                            {!! Form::select('prefix_id', $prefixes, 0, ['class' => 'form-control']) !!}
+                            {{ html()->label('Title: ', 'prefix_id') }}
+                            {{ html()->select('prefix_id', $prefixes, 0)->class('form-control') }}
                         </div>
                         <div class="col-lg-3 col-md-4">
-                            {!! Form::label('first_name', 'First: ') !!}
-                            {!! Form::text('first_name', null, ['required'=>'', 'class' =>
-                            'form-control','oninvalid'=>"this.setCustomValidity('First name required')"]) !!}
+                            {{ html()->label('First: ', 'first_name') }}
+                            {{ html()->text('first_name')->required('')->class('form-control')->attribute('oninvalid', "this.setCustomValidity('First name required')") }}
                         </div>
                         <div class="col-lg-2 col-md-3">
-                            {!! Form::label('middle_name', 'Middle: ') !!}
-                            {!! Form::text('middle_name', null, ['class' => 'form-control']) !!}
+                            {{ html()->label('Middle: ', 'middle_name') }}
+                            {{ html()->text('middle_name')->class('form-control') }}
                         </div>
                         <div class="col-lg-3 col-md-4">
-                            {!! Form::label('last_name', 'Last: ') !!}
-                            {!! Form::text('last_name', null, ['required'=>'','class' => 'form-control']) !!}
+                            {{ html()->label('Last: ', 'last_name') }}
+                            {{ html()->text('last_name')->required('')->class('form-control') }}
                         </div>
                         <div class="col-lg-2 col-md-3">
-                            {!! Form::label('suffix_id', 'Suffix: ') !!}
-                            {!! Form::select('suffix_id', $suffixes, 0, ['class' => 'form-control']) !!}
+                            {{ html()->label('Suffix: ', 'suffix_id') }}
+                            {{ html()->select('suffix_id', $suffixes, 0)->class('form-control') }}
                         </div>
                     </div>
                     <div class="row">
                     </div>
                     <div class="row">
                         <div class="col-lg-3 col-md-4">
-                            {!! Form::label('nick_name', 'Nickname: ') !!}
-                            {!! Form::text('nick_name', null, ['class' => 'form-control']) !!}
+                            {{ html()->label('Nickname: ', 'nick_name') }}
+                            {{ html()->text('nick_name')->class('form-control') }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-2 col-md-3">
-                            {!! Form::label('contact_type', 'Contact type: ') !!}
-                            {!! Form::select('contact_type', $contact_types, 1, ['class' => 'form-control']) !!}
+                            {{ html()->label('Contact type: ', 'contact_type') }}
+                            {{ html()->select('contact_type', $contact_types, 1)->class('form-control') }}
                         </div>
                         <div class="col-lg-2 col-md-3">
-                            {!! Form::label('subcontact_type', 'Subcontact type: ') !!}
-                            {!! Form::select('subcontact_type', $subcontact_types, 0, ['class' => 'form-control']) !!}
+                            {{ html()->label('Subcontact type: ', 'subcontact_type') }}
+                            {{ html()->select('subcontact_type', $subcontact_types, 0)->class('form-control') }}
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-lg-3 col-md-4">
                             @can('create-avatar')
-                            {!! Form::label('avatar', 'Picture (max 5M): ') !!}
-                            {!! Form::file('avatar', ['class' => 'form-control-file']); !!}
+                            {{ html()->label('Picture (max 5M): ', 'avatar') }}
+                            {{ html()->file('avatar')->class('form-control-file') }}
                             @endCan
                         </div>
                     </div>
@@ -73,20 +72,20 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
-                        {!! Form::label('emergency_contact_name', 'Name: ') !!}
-                        {!! Form::text('emergency_contact_name', null, ['class' => 'form-control']) !!}
+                        {{ html()->label('Name: ', 'emergency_contact_name') }}
+                        {{ html()->text('emergency_contact_name')->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        {!! Form::label('emergency_contact_relationship', 'Relationship: ') !!}
-                        {!! Form::text('emergency_contact_relationship', null, ['class' => 'form-control']) !!}
+                        {{ html()->label('Relationship: ', 'emergency_contact_relationship') }}
+                        {{ html()->text('emergency_contact_relationship')->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        {!! Form::label('emergency_contact_phone', 'Phone: ') !!}
-                        {!! Form::text('emergency_contact_phone', null, ['class' => 'form-control']) !!}
+                        {{ html()->label('Phone: ', 'emergency_contact_phone') }}
+                        {{ html()->text('emergency_contact_phone')->class('form-control') }}
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        {!! Form::label('emergency_contact_phone_alternate', 'Alt. Phone: ') !!}
-                        {!! Form::text('emergency_contact_phone_alternate', null, ['class' => 'form-control']) !!}
+                        {{ html()->label('Alt. Phone: ', 'emergency_contact_phone_alternate') }}
+                        {{ html()->text('emergency_contact_phone_alternate')->class('form-control') }}
                     </div>
                 </div>
             </div>
@@ -98,8 +97,8 @@
             <div class="col-lg-3 col-md-4" id="contact_info">
                 <h3>Contact Information</h3>
 
-                {!! Form::label('preferred_communication_method_id', 'Preferred communication method:') !!}
-                {!! Form::select('preferred_communication_method_id', $preferred_communication_methods, 0, ['class' => 'form-control']) !!}
+                {{ html()->label('Preferred communication method:', 'preferred_communication_method_id') }}
+                {{ html()->select('preferred_communication_method_id', $preferred_communication_methods, 0)->class('form-control') }}
             </div>
         </div>
         <div class="row">
@@ -154,45 +153,41 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-2 col-md-4">
-                            {!! Form::label('gender_id', 'Gender:') !!}
-                            {!! Form::select('gender_id', $genders, 0, ['class' => 'form-control']) !!}
+                            {{ html()->label('Gender:', 'gender_id') }}
+                            {{ html()->select('gender_id', $genders, 0)->class('form-control') }}
                         </div>
                         <div class="col-lg-3 col-md-4">
-                            {!! Form::label('birth_date', 'Birth Date:') !!}
-                            {!! Form::text('birth_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'
-                            => 'off']) !!}
+                            {{ html()->label('Birth Date:', 'birth_date') }}
+                            {{ html()->text('birth_date')->class('form-control flatpickr-date')->attribute('autocomplete', 'off') }}
                         </div>
                         <div class="col-lg-3 col-md-4">
-                            {!! Form::label('deceased_date', 'Deceased Date:') !!}
-                            {!! Form::text('deceased_date', null, ['class'=>'form-control flatpickr-date']) !!}
+                            {{ html()->label('Deceased Date:', 'deceased_date') }}
+                            {{ html()->text('deceased_date')->class('form-control flatpickr-date') }}
                         </div>
                         <div class="col-lg-3 col-md-4">
                             <div class="form-check mt-4">
-                                {!! Form::checkbox('is_deceased', 1, false,['class' => 'form-check-input', 'id' =>
-                                'is_deceased']) !!}
-                                {!! Form::label('is_deceased', 'Is Deceased', ['class' => 'form-check-label', 'for' =>
-                                'is_deceased']) !!}
+                                {{ html()->checkbox('is_deceased', false, 1)->class('form-check-input')->id('is_deceased') }}
+                                {{ html()->label('Is Deceased', 'is_deceased')->class('form-check-label')->for('is_deceased') }}
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-2 col-md-3">
-                            {!! Form::label('ethnicity_id', 'Ethnicity:') !!}
-                            {!! Form::select('ethnicity_id', $ethnicities, 'Unspecified', ['class' => 'form-control'])
-                            !!}
+                            {{ html()->label('Ethnicity:', 'ethnicity_id') }}
+                            {{ html()->select('ethnicity_id', $ethnicities, 'Unspecified')->class('form-control') }}
                         </div>
                         <div class="col-lg-2 col-md-3">
-                            {!! Form::label('religion_id', 'Religion:') !!}
-                            {!! Form::select('religion_id', $religions, 1, ['class' => 'form-control']) !!}
+                            {{ html()->label('Religion:', 'religion_id') }}
+                            {{ html()->select('religion_id', $religions, 1)->class('form-control') }}
                         </div>
                         <div class="col-lg-5 col-md-6">
-                            {!! Form::label('parish_id', 'Parish:') !!}
-                            {!! Form::select('parish_id', $parish_list, 0, ['class' => 'form-control']) !!}
+                            {{ html()->label('Parish:', 'parish_id') }}
+                            {{ html()->select('parish_id', $parish_list, 0)->class('form-control') }}
                         </div>
                         <div class="col-lg-3 col-md-4">
-                            {!! Form::label('occupation_id', 'Occupation:') !!}
-                            {!! Form::select('occupation_id', $occupations, 0, ['class' => 'form-control']) !!}
+                            {{ html()->label('Occupation:', 'occupation_id') }}
+                            {{ html()->select('occupation_id', $occupations, 0)->class('form-control') }}
                         </div>
                     </div>
                 </div>
@@ -209,13 +204,12 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-3 col-md-4 mr-2">
-                            {!! Form::label('languages', 'Languages:') !!}
-                            {!! Form::select('languages[]', $languages, 45, ['id' => 'languages', 'class' =>
-                            'form-control select2', 'multiple' => 'multiple']) !!}
+                            {{ html()->label('Languages:', 'languages') }}
+                            {{ html()->multiselect('languages[]', $languages, 45)->id('languages')->class('form-control select2') }}
                         </div>
                         <div class="col-lg-3 col-md-4 ml-2">
-                            {!! Form::label('preferred_language_id', 'Preferred Language:') !!}
-                            {!! Form::select('preferred_language_id', $languages, 45, ['class' => 'form-control']) !!}
+                            {{ html()->label('Preferred Language:', 'preferred_language_id') }}
+                            {{ html()->select('preferred_language_id', $languages, 45)->class('form-control') }}
                         </div>
                     </div>
                 </div>
@@ -229,27 +223,26 @@
                 <h3>Notes</h3>
             </div>
             <div class="col-lg-3 col-md-6 alert alert-info alert-important">
-                {!! Form::label('note_health', 'Health Notes:') !!}
-                {!! Form::textarea('note_health', null, ['class' => 'form-control', 'rows' => '3']) !!}
+                {{ html()->label('Health Notes:', 'note_health') }}
+                {{ html()->textarea('note_health')->class('form-control')->rows('3') }}
             </div>
             <div class="col-lg-3 col-md-6 alert alert-info alert-important">
-                {!! Form::label('note_dietary', 'Dietary Notes:') !!}
-                {!! Form::textarea('note_dietary', null, ['class' => 'form-control', 'rows' => '3']) !!}
+                {{ html()->label('Dietary Notes:', 'note_dietary') }}
+                {{ html()->textarea('note_dietary')->class('form-control')->rows('3') }}
             </div>
             <div class="col-lg-3 col-md-6">
-                {!! Form::label('note_contact', 'General Notes:') !!}
-                {!! Form::textarea('note_contact', null, ['class' => 'form-control', 'rows' => '3']) !!}
+                {{ html()->label('General Notes:', 'note_contact') }}
+                {{ html()->textarea('note_contact')->class('form-control')->rows('3') }}
             </div>
             <div class="col-lg-3 col-md-6">
-                {!! Form::label('note_room_preference', 'Room Preference:') !!}
-                {!! Form::textarea('note_room_preference', null, ['class' => 'form-control', 'rows' => '3']) !!}
+                {{ html()->label('Room Preference:', 'note_room_preference') }}
+                {{ html()->textarea('note_room_preference')->class('form-control')->rows('3') }}
             </div>
         </div>
         <div class="row">
             <div class="col-lg-3 col-md-4 mt-2">
-                {!! Form::label('referrals', 'Referral sources:') !!}
-                {!! Form::select('referrals[]', $referrals, NULL, ['id' => 'referrals', 'class' =>
-                'form-control select2', 'multiple' => 'multiple']) !!}
+                {{ html()->label('Referral sources:', 'referrals') }}
+                {{ html()->multiselect('referrals[]', $referrals)->id('referrals')->class('form-control select2') }}
             </div>
         </div>
 
@@ -264,112 +257,112 @@
         <div class="row">
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_retreatant', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_retreatant', 'Retreatant', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_retreatant', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Retreatant', 'is_retreatant')->class('form-check-label') }}
                 </div>
             </div>
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_donor', 1, false, ['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_donor', 'Donor', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_donor', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Donor', 'is_donor')->class('form-check-label') }}
                 </div>
             </div>
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_steward', 1, false, ['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_steward', 'Steward', ['class' => 'form-check-label']) !!}
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-2 col-md-3">
-                <div class="form-check">
-                    {!! Form::checkbox('is_ambassador', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_ambassador', 'Ambassador', ['class' => 'form-check-label']) !!}
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3">
-                <div class="form-check">
-                    {!! Form::checkbox('is_volunteer', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_volunteer', 'Volunteer', ['class' => 'form-check-label']) !!}
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3">
-                <div class="form-check">
-                    {!! Form::checkbox('is_board', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_board', 'Board Member', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_steward', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Steward', 'is_steward')->class('form-check-label') }}
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_bishop', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_bishop', 'Bishop', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_ambassador', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Ambassador', 'is_ambassador')->class('form-check-label') }}
                 </div>
             </div>
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_pastor', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_pastor', 'Pastor', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_volunteer', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Volunteer', 'is_volunteer')->class('form-check-label') }}
                 </div>
             </div>
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_priest', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_priest', 'Priest', ['class' => 'form-check-label']) !!}
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3">
-                <div class="form-check">
-                    {!! Form::checkbox('is_deacon', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_deacon', 'Deacon', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_board', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Board Member', 'is_board')->class('form-check-label') }}
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_jesuit', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_jesuit', 'Jesuit', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_bishop', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Bishop', 'is_bishop')->class('form-check-label') }}
                 </div>
             </div>
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_provincial', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_provincial', 'Provincial', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_pastor', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Pastor', 'is_pastor')->class('form-check-label') }}
                 </div>
             </div>
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_superior', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_superior', 'Superior', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_priest', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Priest', 'is_priest')->class('form-check-label') }}
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3">
+                <div class="form-check">
+                    {{ html()->checkbox('is_deacon', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Deacon', 'is_deacon')->class('form-check-label') }}
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_staff', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_staff', 'Staff', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_jesuit', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Jesuit', 'is_jesuit')->class('form-check-label') }}
                 </div>
             </div>
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_director', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_director', 'Retreat Director', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_provincial', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Provincial', 'is_provincial')->class('form-check-label') }}
                 </div>
             </div>
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_innkeeper', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_innkeeper', 'Retreat Innkeeper', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_superior', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Superior', 'is_superior')->class('form-check-label') }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-md-3">
+                <div class="form-check">
+                    {{ html()->checkbox('is_staff', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Staff', 'is_staff')->class('form-check-label') }}
                 </div>
             </div>
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_assistant', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_assistant', 'Retreat Assistant', ['class' => 'form-check-label']) !!}
+                    {{ html()->checkbox('is_director', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Retreat Director', 'is_director')->class('form-check-label') }}
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3">
+                <div class="form-check">
+                    {{ html()->checkbox('is_innkeeper', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Retreat Innkeeper', 'is_innkeeper')->class('form-check-label') }}
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3">
+                <div class="form-check">
+                    {{ html()->checkbox('is_assistant', false, 1)->class('form-check-input') }}
+                    {{ html()->label('Retreat Assistant', 'is_assistant')->class('form-check-label') }}
                 </div>
             </div>
         </div>
@@ -378,10 +371,10 @@
 
     <div class="row">
         <div class="col-lg-12 mt-5">
-            {!! Form::submit('Add Person', ['class'=>'btn btn-light']) !!}
+            {{ html()->submit('Add Person')->class('btn btn-light') }}
         </div>
     </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
 </div>
 @stop

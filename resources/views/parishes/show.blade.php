@@ -209,10 +209,10 @@
                   @foreach($parish->a_relationships as $a_relationship)
                       <li>
                         @can('delete-relationship')
-                          {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                          {{ html()->form('DELETE', route('relationship.destroy', [$a_relationship->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
                               {!!$parish->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}
                               <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
-                          {!! Form::close() !!}
+                          {{ html()->form()->close() }}
                         @else
                           {!!$parish->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}
                         @endCan
@@ -222,10 +222,10 @@
                   @foreach($parish->b_relationships as $b_relationship)
                       <li>
                         @can('delete-relationship')
-                          {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                          {{ html()->form('DELETE', route('relationship.destroy', [$b_relationship->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
                               {!!$parish->contact_link!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link !!}
                               <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
-                          {!! Form::close() !!}
+                          {{ html()->form()->close() }}
                         @else
                           {!!$parish->contact_link!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link !!}
                         @endCan
@@ -237,24 +237,24 @@
 
         @can('create-relationship')
             <div class = "border card border-secondary form-group">
-            {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
+            {{ html()->form('POST', route('relationship_type.addme', ))->open() }}
                 <div class = "card-title p-2 m-1 h4">
                     Create a New Relationship
                 </div>
                 <div class="card-body p-2 m-1">
                     <div class="row">
                         <div class="col-lg-4">
-                            {!! Form::label('relationship_type_name', 'Relationship: ', ['class' => 'font-weight-bold'])  !!}
-                            {!! Form::select('relationship_type_name', $relationship_filter_types, NULL, ['class' => 'form-control']) !!}
-                            {!! Form::hidden('contact_id',$parish->id)!!}
+                            {{ html()->label('Relationship: ', 'relationship_type_name')->class('font-weight-bold') }}
+                            {{ html()->select('relationship_type_name', $relationship_filter_types)->class('form-control') }}
+                            {{ html()->hidden('contact_id', $parish->id) }}
                         </div>
                         <div class="col-lg-4">
-                            {!! Form::label('relationship_filter_alternate_name', 'Alternate name: ', ['class' => 'font-weight-bold'])  !!}
-                            {!! Form::text('relationship_filter_alternate_name', null, ['class' => 'form-control','required']) !!}
+                            {{ html()->label('Alternate name: ', 'relationship_filter_alternate_name')->class('font-weight-bold') }}
+                            {{ html()->text('relationship_filter_alternate_name')->class('form-control')->required() }}
                         </div>
                         <div class="col-lg-4">
-                        {!! Form::submit('Create', ['class' => 'm-1 btn btn-primary']) !!}
-                        {!! Form::close() !!}
+                        {{ html()->submit('Create')->class('m-1 btn btn-primary') }}
+                        {{ html()->form()->close() }}
                         </div>
                     </div>
                 </div>
@@ -368,9 +368,9 @@
                 </a>
             </div>
             <div class="col-lg-6 text-left">
-                {!! Form::open(['method' => 'DELETE', 'route' => ['parish.destroy', $parish->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                {!! Form::close() !!}
+                {{ html()->form('DELETE', route('parish.destroy', [$parish->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                {{ html()->form()->close() }}
             </div>
         </div>
     </div>

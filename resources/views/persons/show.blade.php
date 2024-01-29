@@ -141,9 +141,9 @@
                         <span class="font-weight-bold">{{$address->location->display_name}}:</span>
                         <address class="d-inline">{!!$address->google_map!!}</address>
                         @can('delete-address')
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['address.destroy', $address->id],'onsubmit'=>'return ConfirmDelete()', 'class' => 'd-inline']) !!}
+                            {{ html()->form('DELETE', route('address.destroy', [$address->id]))->attribute('onsubmit', 'return ConfirmDelete()')->class('d-inline')->open() }}
                                 <button type="submit" class="m-1 btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
-                            {!! Form::close() !!}
+                            {{ html()->form()->close() }}
                         @endCan
                         <br>
                     @endif
@@ -255,10 +255,10 @@
                     @foreach($person->a_relationships as $a_relationship)
                     <li>
                         @can('delete-relationship')
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                            {{ html()->form('DELETE', route('relationship.destroy', [$a_relationship->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
                                 {!!$person->contact_link_full_name!!} is {{ $a_relationship->is_former }} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link_full_name !!}
                                 <button type="submit" class="m-1 btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
-                            {!! Form::close() !!}
+                            {{ html()->form()->close() }}
                         @else
                             {!!$person->contact_link_full_name!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link_full_name !!}
                         @endCan
@@ -268,10 +268,10 @@
                     @foreach($person->b_relationships as $b_relationship)
                     <li>
                         @can('delete-relationship')
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                            {{ html()->form('DELETE', route('relationship.destroy', [$b_relationship->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
                                 {!!$person->contact_link_full_name!!} is {{ $b_relationship->is_former }} {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link_full_name!!}
                                 <button type="submit" class="m-1 btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
-                            {!! Form::close() !!}
+                            {{ html()->form()->close() }}
                         @else
                             {!!$person->contact_link_full_name!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link_full_name!!}
                         @endCan
@@ -280,24 +280,24 @@
                 </ul>
                 @can('create-relationship')
                 <div class = "border card border-secondary form-group">
-                {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
+                {{ html()->form('POST', route('relationship_type.addme', ))->open() }}
                     <div class = "card-title p-2 m-1 h4">
                         Create a New Relationship
                     </div>
                     <div class="card-body p-2 m-1">
                         <div class="row">
                             <div class="col-lg-4">
-                                {!! Form::label('relationship_type_name', 'Relationship: ', ['class' => 'font-weight-bold'])  !!}
-                                {!! Form::select('relationship_type_name', $relationship_types, NULL, ['class' => 'form-control']) !!}
-                                {!! Form::hidden('contact_id',$person->id)!!}
+                                {{ html()->label('Relationship: ', 'relationship_type_name')->class('font-weight-bold') }}
+                                {{ html()->select('relationship_type_name', $relationship_types)->class('form-control') }}
+                                {{ html()->hidden('contact_id', $person->id) }}
                             </div>
                             <div class="col-lg-4">
-                                {!! Form::label('relationship_filter_alternate_name', 'Alternate name: ', ['class' => 'font-weight-bold'])  !!}
-                                {!! Form::text('relationship_filter_alternate_name', null, ['class' => 'form-control']) !!}
+                                {{ html()->label('Alternate name: ', 'relationship_filter_alternate_name')->class('font-weight-bold') }}
+                                {{ html()->text('relationship_filter_alternate_name')->class('form-control') }}
                             </div>
                             <div class="col-lg-4">
-                            {!! Form::submit('Create', ['class' => 'm-1 btn btn-primary']) !!}
-                            {!! Form::close() !!}
+                            {{ html()->submit('Create')->class('m-1 btn btn-primary') }}
+                            {{ html()->form()->close() }}
                             </div>
                         </div>
                     </div>
@@ -450,9 +450,9 @@
             @endCan
 
             @can('delete-contact')
-                {!! Form::open(['method' => 'DELETE', 'route' => ['person.destroy', $person->id],'onsubmit'=>'return ConfirmDelete()','class' => 'd-inline']) !!}
-                {!! Form::image('images/delete.png','btnDelete',['class' => 'm-1 btn btn-danger','title'=>'Delete']) !!}
-                {!! Form::close() !!}
+                {{ html()->form('DELETE', route('person.destroy', [$person->id]))->attribute('onsubmit', 'return ConfirmDelete()')->class('d-inline')->open() }}
+                {{ html()->input('image', 'btnDelete')->class('m-1 btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                {{ html()->form()->close() }}
             @endCan
         </div>
       </div>

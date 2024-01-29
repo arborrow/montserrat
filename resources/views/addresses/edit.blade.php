@@ -11,65 +11,65 @@
             </div>
             <div class="form-group">
 
-                {!! Form::open(['method' => 'PUT', 'route' => ['address.update', $address->id]]) !!}
-                {!! Form::hidden('id', $address->id) !!}
+                {{ html()->form('PUT', route('address.update', [$address->id]))->open() }}
+                {{ html()->hidden('id', $address->id) }}
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label('contact_id', 'Name of Contact:') !!}
-                        {!! Form::select('contact_id', $contacts, $address->contact_id, ['class' => 'form-control', 'required']) !!}
+                        {{ html()->label('Name of Contact:', 'contact_id') }}
+                        {{ html()->select('contact_id', $contacts, $address->contact_id)->class('form-control')->required() }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label('location_type_id', 'Location type')  !!}
-                        {!! Form::select('location_type_id', $location_types, $address->location_type_id, ['class' => 'form-control']) !!}
+                        {{ html()->label('Location type', 'location_type_id') }}
+                        {{ html()->select('location_type_id', $location_types, $address->location_type_id)->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label("street_address", "Address Line 1:") !!}
-                        {!! Form::text("street_address", $address->street_address, ["class" => "form-control"]) !!}
+                        {{ html()->label("Address Line 1:", "street_address") }}
+                        {{ html()->text("street_address", $address->street_address)->class("form-control") }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label("supplemental_address_1", "Address Line 2:") !!}
-                        {!! Form::text("supplemental_address_1", $address->supplemental_address_1, ["class" => "form-control"]) !!}
+                        {{ html()->label("Address Line 2:", "supplemental_address_1") }}
+                        {{ html()->text("supplemental_address_1", $address->supplemental_address_1)->class("form-control") }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label("city", "City:") !!}
-                        {!! Form::text("city", $address->city, ["class" => "form-control"]) !!}
+                        {{ html()->label("City:", "city") }}
+                        {{ html()->text("city", $address->city)->class("form-control") }}
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label("state_province_id", "State:") !!}
-                        {!! Form::select("state_province_id", $states, $address->state_province_id, ["class" => "form-control"]) !!}
+                        {{ html()->label("State:", "state_province_id") }}
+                        {{ html()->select("state_province_id", $states, $address->state_province_id)->class("form-control") }}
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label("postal_code", "Zip:") !!}
-                        {!! Form::text("postal_code", $address->postal_code, ["class" => "form-control"]) !!}
+                        {{ html()->label("Zip:", "postal_code") }}
+                        {{ html()->text("postal_code", $address->postal_code)->class("form-control") }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
-                        {!! Form::label("country_id", "Country:") !!}
-                        {!! Form::select("country_id", $countries, $address->country_id, ["class" => "form-control"]) !!}
+                        {{ html()->label("Country:", "country_id") }}
+                        {{ html()->select("country_id", $countries, $address->country_id)->class("form-control") }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group form-check">
-                        {!! Form::checkbox("is_primary", 1, $address->is_primary,["class" => "form-check-input", "id" => "is_primary"]) !!}
-                        {!! Form::label("is_primary", "Is primary", ["class" => "form-check-label", "id" => "is_primary"]) !!}
+                        {{ html()->checkbox("is_primary", $address->is_primary, 1)->class("form-check-input")->id("is_primary") }}
+                        {{ html()->label("Is primary", "is_primary")->class("form-check-label")->id("is_primary") }}
                     </div>
                 </div>
 
                     <div class="row">
                         <div class="col-lg-12 text-center">
-                            {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+                            {{ html()->input('image', 'btnSave')->class('btn btn-outline-dark')->attribute('src', asset('images/save.png')) }}
                         </div>
                     </div>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
             </div>
         </div>
     </div>

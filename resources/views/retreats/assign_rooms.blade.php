@@ -3,7 +3,7 @@
 
 <section class="section-padding">
     <div class="jumbotron text-left">
-        {!! Form::open(['url' => 'retreat/room_update', 'method' => 'POST', 'route' => ['retreat.room_update', $retreat->id]]) !!}
+        {{ html()->form('POST', route('retreat.room_update', [$retreat->id]))->open() }}
 
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -74,7 +74,7 @@
         <div class="panel panel-default">
         <div class="panel-heading">
             <h2>Registered Retreatants</h2>
-            Save Room Assignments {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+            Save Room Assignments {{ html()->input('image', 'btnSave')->class('btn btn-outline-dark')->attribute('src', asset('images/save.png')) }}
 
 
         </div>
@@ -99,13 +99,13 @@
                         <td class='col-md-2'>{{$registration->retreatant->note_room_preference_text}}</td>
                         <td class='col-md-2'>
                             @if($registration->canceled_at === NULL)
-                            {!! Form::select('registrations['.$registration->id.']', $rooms, $registration->room_id) !!}
+                            {{ html()->select('registrations[' . $registration->id . ']', $rooms, $registration->room_id) }}
                             @else
                             Canceled
                             @endIf
                         </td>
                         <td class='col-md-3'>
-                            {!! Form::text('notes['.$registration->id.']', $registration->notes) !!}
+                            {{ html()->text('notes[' . $registration->id . ']', $registration->notes) }}
                         </td>
                     </tr>
                 @endforeach

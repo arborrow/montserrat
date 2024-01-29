@@ -8,12 +8,12 @@
             <h1><strong>Search Payments</strong></h1>
         </div>
 
-        {!! Form::open(['method' => 'GET', 'class' => 'form-horizontal', 'route' => ['payments.results']]) !!}
+        {{ html()->form('GET', route('payments.results', ))->class('form-horizontal')->open() }}
 
         <div class="panel-body">
             <div class='panel-heading'>
                 <h2>
-                    <span>{!! Form::image('images/submit.png','btnSave',['class' => 'btn btn-outline-dark pull-right']) !!}</span>
+                    <span>{{ html()->input('image', 'btnSave')->class('btn btn-outline-dark pull-right')->attribute('src', asset('images/submit.png')) }}</span>
                 </h2>
             </div>
             <div class="panel-body">
@@ -22,46 +22,46 @@
 
                     <div class="row">
                         <div class="col-lg-1">
-                            {!! Form::label('payment_date_operator', 'Comp.')  !!}
-                            {!! Form::select('payment_date_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
+                            {{ html()->label('Comp.', 'payment_date_operator') }}
+                            {{ html()->select('payment_date_operator', config('polanco.operators'), '=')->class('form-control') }}
                         </div>
                         <div class="col-lg-2">
-                            {!! Form::label('payment_date', 'Date')  !!}
-                            {!! Form::date('payment_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
+                            {{ html()->label('Date', 'payment_date') }}
+                            {{ html()->date('payment_date')->class('form-control flatpickr-date') }}
                         </div>
                         <div class="col-lg-1">
-                            {!! Form::label('payment_amount_operator', 'Comp.')  !!}
-                            {!! Form::select('payment_amount_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
+                            {{ html()->label('Comp.', 'payment_amount_operator') }}
+                            {{ html()->select('payment_amount_operator', config('polanco.operators'), '=')->class('form-control') }}
                         </div>
                         <div class="col-lg-2">
-                            {!! Form::label('payment_amount', 'Amount')  !!}
-                            {!! Form::number('payment_amount', NULL, ['class' => 'form-control','step'=>'0.01']) !!}
+                            {{ html()->label('Amount', 'payment_amount') }}
+                            {{ html()->number('payment_amount')->class('form-control')->attribute('step', '0.01') }}
                         </div>
                         <div class="col-lg-2">
-                            {!! Form::label('payment_description', 'Payment method')  !!}
-                            {!! Form::select('payment_description', $payment_methods, NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Payment method', 'payment_description') }}
+                            {{ html()->select('payment_description', $payment_methods)->class('form-control') }}
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-5">
-                            {!! Form::label('donation_description', 'Donation description')  !!}
-                            {!! Form::select('donation_description', $descriptions, NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Donation description', 'donation_description') }}
+                            {{ html()->select('donation_description', $descriptions)->class('form-control') }}
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-4">
-                            {!! Form::label('note', 'Notes')  !!}
-                            {!! Form::text('note', NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Notes', 'note') }}
+                            {{ html()->text('note')->class('form-control') }}
                         </div>
                         <div class="col-lg-3">
-                            {!! Form::label('cknumber', 'Check #')  !!}
-                            {!! Form::number('cknumber', NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Check #', 'cknumber') }}
+                            {{ html()->number('cknumber')->class('form-control') }}
                         </div>
                         <div class="col-lg-3">
-                            {!! Form::label('ccnumber', 'Credit Card #')  !!}
-                            {!! Form::number('ccnumber', NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Credit Card #', 'ccnumber') }}
+                            {{ html()->number('ccnumber')->class('form-control') }}
                         </div>
                     </div>
 
@@ -69,7 +69,7 @@
             </div>
         </div>
     </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
 
 @stop

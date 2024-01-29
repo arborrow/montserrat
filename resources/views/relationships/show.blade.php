@@ -50,9 +50,9 @@
             </div>
             <div class="col-lg-6 text-left">
                 @can('delete-relationship')
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                    {!! Form::close() !!}
+                    {{ html()->form('DELETE', route('relationship.destroy', [$relationship->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                    {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                    {{ html()->form()->close() }}
                 @endCan
             </div>
         </div>

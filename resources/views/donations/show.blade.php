@@ -101,9 +101,9 @@
             </div>
             <div class="col-lg-6 text-left">
                 @can('delete-donation')
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['donation.destroy', $donation->donation_id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'm-1 btn btn-danger','title'=>'Delete']) !!}
-                    {!! Form::close() !!}
+                    {{ html()->form('DELETE', route('donation.destroy', [$donation->donation_id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                    {{ html()->input('image', 'btnDelete')->class('m-1 btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                    {{ html()->form()->close() }}
                 @endCan
             </div>
         </div>

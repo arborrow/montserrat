@@ -49,9 +49,9 @@
 
         @endcan
         @can('delete-ss-custom-form')
-                {!! Form::open(['method' => 'DELETE', 'route' => ['custom_form.destroy', $custom_form->id], 'onsubmit'=>'return ConfirmDelete()', 'class' => 'd-inline']) !!}
-                {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                {!! Form::close() !!}
+                {{ html()->form('DELETE', route('custom_form.destroy', [$custom_form->id]))->attribute('onsubmit', 'return ConfirmDelete()')->class('d-inline')->open() }}
+                {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                {{ html()->form()->close() }}
 
         @endcan
 
