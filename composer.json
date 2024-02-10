@@ -54,6 +54,9 @@
         "symfony/dom-crawler": "^6.2"
     },
     "autoload": {
+        "files": [
+            "app/Helpers/helpers.php"
+        ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
@@ -61,6 +64,9 @@
         }
     },
     "autoload-dev": {
+        "files": [
+            "app/Helpers/helpers.php"
+        ],
         "psr-4": {
             "Tests\\": "tests/"
         }
