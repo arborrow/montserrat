@@ -8,7 +8,7 @@
                 <span>
                     <h2><strong>
                         @can('update-group')
-                            {{ html()->a(url(url('group/' . $group->id . '/edit')), $group->name . ' group') }} 
+                            {{ html()->a(url('group/' . $group->id . '/edit'), $group->name . ' group') }} 
                         @else
                             {{$group->name}} group
                         @endCan

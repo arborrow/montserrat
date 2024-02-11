@@ -8,7 +8,7 @@
                 <span>
                     <h2><strong>Attachment details: 
                         @can('update-attachment')
-                            {{ html()->a(url(url('attachment/' . $attachment->id . '/edit')), $attachment->uri) }}
+                            {{ html()->a(url('attachment/' . $attachment->id . '/edit'), $attachment->uri) }}
                         @else
                             {{$attachment->uri}}
                         @endCan

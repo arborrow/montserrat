@@ -7,13 +7,13 @@
             <div class="panel-heading">
                 <h2>
                     @can('update-retreat')
-                        Retreat {{ html()->a(url(url('retreat/' . $retreat->id . '/edit')), $retreat->idnumber . ' - ' . $retreat->title . ' Waitlist') }}
+                        Retreat {{ html()->a(url('retreat/' . $retreat->id . '/edit'), $retreat->idnumber . ' - ' . $retreat->title . ' Waitlist') }}
                     @else
                         Retreat {{$retreat->idnumber.' - '.$retreat->title}} Waitlist
                     @endCan
                 </h2>
                 {{ html()->a(url('#registrations'), 'Waitlist Registrations')->class('btn btn-primary') }}
-                {{ html()->a(url(url('retreat')), 'Retreat index')->class('btn btn-primary') }}
+                {{ html()->a(url('retreat'), 'Retreat index')->class('btn btn-primary') }}
 
             </div>
             <div class='row'>
@@ -140,7 +140,7 @@
             </div><br />
         <div class="panel panel-default">
         <div class="panel-heading" id='registrations'>
-            <h2>Waitlist for {{ html()->a(url(url('retreat/' . $retreat->id)), $retreat->idnumber . ' - ' . $retreat->title) }} </h2>
+            <h2>Waitlist for {{ html()->a(url('retreat/' . $retreat->id), $retreat->idnumber . ' - ' . $retreat->title) }} </h2>
 
             @can('show-contact')
                 {{ html()->a(url($retreat->email_waitlist_retreatants), 'Email retreatants on waitlist')->class('btn btn-outline-dark') }}
@@ -200,7 +200,7 @@
                             <td>
                                 @can('update-registration')
                                 <span class="btn btn-danger">
-                                    {{ html()->a(url(url('registration/' . $registration->id . '/offwaitlist')), 'Register') }}
+                                    {{ html()->a(url('registration/' . $registration->id . '/offwaitlist'), 'Register') }}
                                 </span>
                                 @else
                                     {{ $registration->status_name }}

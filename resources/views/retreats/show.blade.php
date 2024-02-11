@@ -5,7 +5,7 @@
     <div class="col-lg-12">
         <h1>
             @can('update-retreat')
-            Retreat {{ html()->a(url(url('retreat/' . $retreat->id . '/edit')), $retreat->title . ' (' . $retreat->idnumber . ')') }}
+            Retreat {{ html()->a(url('retreat/' . $retreat->id . '/edit'), $retreat->title . ' (' . $retreat->idnumber . ')') }}
             @else
             Retreat {{$retreat->title.' ('.$retreat->idnumber.')'}}
             @endCan
@@ -47,7 +47,7 @@
                 @endIf
                 <br>
                 @if ($retreat->retreatant_waitlist_count > 0)
-                ({{ html()->a(url(url('retreat/' . $retreat->id . '/waitlist')), $retreat->retreatant_waitlist_count) }}) <br>
+                ({{ html()->a(url('retreat/' . $retreat->id . '/waitlist'), $retreat->retreatant_waitlist_count) }}) <br>
                 @endif
             </div>
             <div class="col-lg-4 col-md-6 ">
