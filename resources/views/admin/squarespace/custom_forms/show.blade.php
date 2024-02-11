@@ -20,7 +20,7 @@
             <span>
                 @can('create-squarespace-custom-form')
                         <a href={{ action([\App\Http\Controllers\SquarespaceCustomFormController::class, 'create_field'],$custom_form->id) }}>
-                            {!! Html::image('images/create.png', 'Create Form Field',array('title'=>"Create Form Field",'class' => 'btn btn-light')) !!}
+                            {{ html()->img(asset('images/create.png'), 'Create Form Field')->attribute('title', "Create Form Field")->class('btn btn-light') }}
                         </a>
                 @endCan
             </span>
@@ -45,13 +45,13 @@
     </table>
     <div class="col-lg-12 mb-4">
         @can('update-ss-custom-form')
-            <a href="{{ action([\App\Http\Controllers\SquarespaceCustomFormController::class, 'edit'], $custom_form->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+            <a href="{{ action([\App\Http\Controllers\SquarespaceCustomFormController::class, 'edit'], $custom_form->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
 
         @endcan
         @can('delete-ss-custom-form')
-                {!! Form::open(['method' => 'DELETE', 'route' => ['custom_form.destroy', $custom_form->id], 'onsubmit'=>'return ConfirmDelete()', 'class' => 'd-inline']) !!}
-                {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                {!! Form::close() !!}
+                {{ html()->form('DELETE', route('custom_form.destroy', [$custom_form->id]))->attribute('onsubmit', 'return ConfirmDelete()')->class('d-inline')->open() }}
+                {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                {{ html()->form()->close() }}
 
         @endcan
 

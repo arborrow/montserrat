@@ -20,14 +20,14 @@
     </div>
     <div class="col-lg-12">
         @can('manage-permission')
-            {!! Form::open(['url' => 'admin/permission/update_roles', 'method' => 'POST', 'route' => ['admin.permission.update_roles']]) !!}
+            {{ html()->form('POST', route('admin.permission.update_roles', ))->open() }}
                 <div class="form-group">
-                    {!! Form::hidden('id', $permission->id) !!}
-                    {!! Form::label('roles', 'Assigned roles:')  !!}
-                    {!! Form::select('roles[]', $roles, $permission->roles->pluck('id')->toArray(), ['id'=>'roles','class' => 'form-control select2','multiple' => 'multiple']) !!}
-                    {!! Form::submit('Update role assignments', ['class' => 'btn btn-outline-dark mt-3']) !!}
+                    {{ html()->hidden('id', $permission->id) }}
+                    {{ html()->label('Assigned roles:', 'roles') }}
+                    {{ html()->multiselect('roles[]', $roles, $permission->roles->pluck('id')->toArray())->id('roles')->class('form-control select2') }}
+                    {{ html()->submit('Update role assignments')->class('btn btn-outline-dark mt-3') }}
                 </div>
-            {!! Form::close() !!}
+            {{ html()->form()->close() }}
         @endCan
     </div>
     <div class="col-lg-12">Users with {{ $permission->name }} permission:
@@ -44,13 +44,13 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 <a href="{{ action([\App\Http\Controllers\PermissionController::class, 'edit'], $permission->id) }}" class="btn btn-info">
-                    {!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}
+                    {{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}
                 </a>
             </div>
             <div class="col-lg-6 text-left">
-                {!! Form::open(['method' => 'DELETE', 'route' => ['permission.destroy', $permission->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                {!! Form::close() !!}</div><div class="clearfix">
+                {{ html()->form('DELETE', route('permission.destroy', [$permission->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                    {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                {{ html()->form()->close() }}</div><div class="clearfix">
             </div>
         </div>
     </div>

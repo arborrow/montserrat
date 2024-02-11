@@ -3,48 +3,48 @@
 
 <div class="jumbotron text-left">
     <h1>Edit Room {!! $room->id !!}</h1>
-    {!! Form::open(['method' => 'PUT', 'route' => ['room.update', $room->id]]) !!}
-    {!! Form::hidden('id', $room->id) !!}
+    {{ html()->form('PUT', route('room.update', [$room->id]))->open() }}
+    {{ html()->hidden('id', $room->id) }}
     <div class="form-group">
-        {!! Form::label('location_id', 'Building ID:', ['class' => 'col-md-1'])  !!}
-        {!! Form::select('location_id', $locations, $room->location_id, ['class' => 'col-md-2']) !!}
+        {{ html()->label('Building ID:', 'location_id')->class('col-md-1') }}
+        {{ html()->select('location_id', $locations, $room->location_id)->class('col-md-2') }}
     </div><div class="clearfix"> </div>
 
     <div class="form-group">
-        {!! Form::label('name', 'Name:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('name', $room->name, ['class' => 'col-md-2']) !!}
+        {{ html()->label('Name:', 'name')->class('col-md-1') }}
+        {{ html()->text('name', $room->name)->class('col-md-2') }}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('description', 'Description:', ['class' => 'col-md-1']) !!}
-        {!! Form::textarea('description', $room->description, ['class' => 'col-md-5', 'rows'=>'3']) !!}
+        {{ html()->label('Description:', 'description')->class('col-md-1') }}
+        {{ html()->textarea('description', $room->description)->class('col-md-5')->rows('3') }}
     </div>
     <div class="form-group">
-        {!! Form::label('notes', 'Notes:', ['class' => 'col-md-1']) !!}
-        {!! Form::textarea('notes', $room->notes, ['class' => 'col-md-5', 'rows'=>'3']) !!}
+        {{ html()->label('Notes:', 'notes')->class('col-md-1') }}
+        {{ html()->textarea('notes', $room->notes)->class('col-md-5')->rows('3') }}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('floor', 'Floor:', ['class' => 'col-md-1'])  !!}
-        {!! Form::select('floor', $floors, $room->floor, ['class' => 'col-md-2']) !!}
+        {{ html()->label('Floor:', 'floor')->class('col-md-1') }}
+        {{ html()->select('floor', $floors, $room->floor)->class('col-md-2') }}
 
-        {!! Form::label('access', 'Access:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('access', $room->access, ['class' => 'col-md-1']) !!}
+        {{ html()->label('Access:', 'access')->class('col-md-1') }}
+        {{ html()->text('access', $room->access)->class('col-md-1') }}
 
-        {!! Form::label('type', 'Type:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('type', $room->type, ['class' => 'col-md-1']) !!}
+        {{ html()->label('Type:', 'type')->class('col-md-1') }}
+        {{ html()->text('type', $room->type)->class('col-md-1') }}
 
-        {!! Form::label('occupancy', 'Occupancy:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('occupancy', $room->occupancy, ['class' => 'col-md-1']) !!}
+        {{ html()->label('Occupancy:', 'occupancy')->class('col-md-1') }}
+        {{ html()->text('occupancy', $room->occupancy)->class('col-md-1') }}
 
-        {!! Form::label('status', 'Status:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('status', $room->status, ['class' => 'col-md-1']) !!}
+        {{ html()->label('Status:', 'status')->class('col-md-1') }}
+        {{ html()->text('status', $room->status)->class('col-md-1') }}
     </div>
     <div class="clearfix"> </div>
 
     <div class="form-group">
-        {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-primary']) !!}
+        {{ html()->input('image', 'btnSave')->class('btn btn-primary')->attribute('src', asset('images/save.png')) }}
     </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
 @stop

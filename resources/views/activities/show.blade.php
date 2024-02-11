@@ -37,14 +37,14 @@
             <div class='row'>
                 @can('update-activity')
                     <div class='col-md-1'>
-                        <a href="{{ action([\App\Http\Controllers\ActivityController::class, 'edit'], $activity->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action([\App\Http\Controllers\ActivityController::class, 'edit'], $activity->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                     </div>
                 @endCan
                 @can('delete-activity')
                     <div class='col-md-1'>
-                        {!! Form::open(['method' => 'DELETE', 'route' => ['activity.destroy', $activity->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                        {!! Form::close() !!}
+                        {{ html()->form('DELETE', route('activity.destroy', [$activity->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                        {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }} 
+                        {{ html()->form()->close() }}
                     </div>
                 @endCan
                 <div class="clearfix"> </div>

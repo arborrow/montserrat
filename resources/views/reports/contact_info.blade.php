@@ -144,7 +144,7 @@
 
 
         <span class="logo">
-            {!! Html::image('images/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo','align'=>'right')) !!}
+            {{ html()->img(asset('images/mrhlogoblack.png'), 'Home')->attribute('title', 'Home')->class('logo')->attribute('align', 'right') }}
 
         </span>
     <span class='pagefooter'>

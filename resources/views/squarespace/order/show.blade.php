@@ -14,7 +14,7 @@
                             @endCan
                         </h2>
                     </span>
-                    <span class="back"><a href={{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']) }}>{!! Html::image('images/order.png', 'Squarespace Order Index',array('title'=>"Squarespace Order Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="back"><a href={{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']) }}>{{ html()->img(asset('images/order.png'), 'Squarespace Order Index')->attribute('title', "Squarespace Order Index")->class('btn btn-primary') }}</a></span></h1>
                 </div>
                 @if (isset($order->gift_certificate_number))
                     <div class='row'>
@@ -194,14 +194,14 @@
                 <div class='row'>
                     @can('update-squarespace-order')
                         <div class='col-md-1'>
-                            <a href="{{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'edit'], $order->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                            <a href="{{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'edit'], $order->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                         </div>
                     @endCan
                     @can('delete-squarespace-order')
                         <div class='col-md-1'>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['squarespace.order.destroy', $order->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                            {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                            {!! Form::close() !!}
+                            {{ html()->form('DELETE', route('squarespace.order.destroy', [$order->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                            {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                            {{ html()->form()->close() }}
                         </div>
                     @endCan
                     <div class="clearfix"> </div>

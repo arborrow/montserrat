@@ -15,15 +15,15 @@
         </h1>
     </div>
     <div class="col-lg-12 text-center">
-        {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
-        {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
-        {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
-        {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
-        {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
-        {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
+        {{ html()->a(url('#notes'), 'Notes')->class('btn btn-outline-dark') }}
+        {{ html()->a(url('#relationships'), 'Relationships')->class('btn btn-outline-dark') }}
+        {{ html()->a(url('#registrations'), 'Registrations')->class('btn btn-outline-dark') }}
+        {{ html()->a(url('#touchpoints'), 'Touchpoints')->class('btn btn-outline-dark') }}
+        {{ html()->a(url('#attachments'), 'Attachments')->class('btn btn-outline-dark') }}
+        {{ html()->a(url('#donations'), 'Donations')->class('btn btn-outline-dark') }}
     </div>
     <div class="col-lg-12 text-center mt-3">
-        <span><a href={{ action([\App\Http\Controllers\VendorController::class, 'index']) }}>{!! Html::image('images/vendor.png', 'Vendor Index',array('title'=>"Vendor Index",'class' => 'btn btn-outline-dark')) !!}</a></span>
+        <span><a href={{ action([\App\Http\Controllers\VendorController::class, 'index']) }}>{{ html()->img(asset('images/vendor.png'), 'Vendor Index')->attribute('title', "Vendor Index")->class('btn btn-outline-dark') }}</a></span>
         @can('create-touchpoint')
             <span><a href={{ action([\App\Http\Controllers\TouchpointController::class, 'add'],$vendor->id) }} class="btn btn-outline-dark">Add Touchpoint</a></span>
         @endCan
@@ -86,10 +86,10 @@
                 @foreach($vendor->a_relationships as $a_relationship)
                     <li>
                         @can('delete-relationship')
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                            {{ html()->form('DELETE', route('relationship.destroy', [$a_relationship->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
                                 {!!$vendor->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}
-                                {!! Form::image('images/delete.png','btnDelete',['title'=>'Delete Relationship '.$a_relationship->id, 'style'=>'padding-left: 50px;']) !!}
-                            {!! Form::close() !!}
+                                {{ html()->input('image', 'btnDelete')->attribute('title', 'Delete Relationship ' . $a_relationship->id)->style('padding-left: 50px;')->attribute('src', asset('images/delete.png')) }}
+                            {{ html()->form()->close() }}
                         @else
                             {!!$vendor->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}
                         @endCan
@@ -99,10 +99,10 @@
                 @foreach($vendor->b_relationships as $b_relationship)
                     <li>
                         @can('delete-relationship')
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                            {{ html()->form('DELETE', route('relationship.destroy', [$b_relationship->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
                             {!!$vendor->contact_link!!} {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link!!}
-                            {!! Form::image('images/delete.png','btnDelete',['title'=>'Delete Relationship '.$b_relationship->id, 'style'=>'padding-left: 50px;']) !!}
-                            {!! Form::close() !!}
+                            {{ html()->input('image', 'btnDelete')->attribute('title', 'Delete Relationship ' . $b_relationship->id)->style('padding-left: 50px;')->attribute('src', asset('images/delete.png')) }}
+                            {{ html()->form()->close() }}
                         @else
                             {!!$vendor->contact_link!!} {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link!!}
                         @endCan
@@ -112,24 +112,24 @@
 
             @can('create-relationship')
             <div class = "border card border-secondary form-group">
-            {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
+            {{ html()->form('POST', route('relationship_type.addme', ))->open() }}
                 <div class = "card-title p-2 m-1 h4">
                     Create a New Relationship
                 </div>
                 <div class="card-body p-2 m-1">
                     <div class="row">
                         <div class="col-lg-4">
-                            {!! Form::label('relationship_type_name', 'Relationship: ', ['class' => 'font-weight-bold'])  !!}
-                            {!! Form::select('relationship_type_name', $relationship_filter_types, NULL, ['class' => 'form-control']) !!}
-                            {!! Form::hidden('contact_id',$vendor->id)!!}
+                            {{ html()->label('Relationship: ', 'relationship_type_name')->class('font-weight-bold') }}
+                            {{ html()->select('relationship_type_name', $relationship_filter_types)->class('form-control') }}
+                            {{ html()->hidden('contact_id', $vendor->id) }}
                         </div>
                         <div class="col-lg-4">
-                            {!! Form::label('relationship_filter_alternate_name', 'Alternate name: ', ['class' => 'font-weight-bold'])  !!}
-                            {!! Form::text('relationship_filter_alternate_name', null, ['class' => 'form-control','required']) !!}
+                            {{ html()->label('Alternate name: ', 'relationship_filter_alternate_name')->class('font-weight-bold') }}
+                            {{ html()->text('relationship_filter_alternate_name')->class('form-control')->required() }}
                         </div>
                         <div class="col-lg-4">
-                        {!! Form::submit('Create', ['class' => 'm-1 btn btn-primary']) !!}
-                        {!! Form::close() !!}
+                        {{ html()->submit('Create')->class('m-1 btn btn-primary') }}
+                        {{ html()->form()->close() }}
                         </div>
                     </div>
                 </div>
@@ -271,14 +271,14 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 @can('update-contact')
-                    <a href="{{ action([\App\Http\Controllers\VendorController::class, 'edit'], $vendor->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\VendorController::class, 'edit'], $vendor->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                 @endCan
             </div>
             <div class="col-lg-6 text-left">
                 @can('delete-contact')
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['vendor.destroy', $vendor->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                    {!! Form::close() !!}
+                    {{ html()->form('DELETE', route('vendor.destroy', [$vendor->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                    {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                    {{ html()->form()->close() }}
                 @endCan
             </div>
         </div>

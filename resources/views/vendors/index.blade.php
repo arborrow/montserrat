@@ -7,7 +7,7 @@
             @can('create-contact')
                 <span class="options">
                     <a href={{ action([\App\Http\Controllers\VendorController::class, 'create']) }}>
-                        {!! Html::image('images/create.png', 'Create Vendor',array('title'=>"Create Vendor",'class' => 'btn btn-light')) !!}
+                        {{ html()->img(asset('images/create.png'), 'Create Vendor')->attribute('title', "Create Vendor")->class('btn btn-light') }}
                     </a>
                 </span>
             @endCan

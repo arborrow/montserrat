@@ -10,7 +10,7 @@
                             Mailgun Message Details for #{{$message->id}} - {{ $message->subject }}
                         </h2>
                     </span>
-                    <span class="back"><a href={{ action([\App\Http\Controllers\MailgunController::class, 'index']) }}>{!! Html::image('images/news29.png', 'Message Index',array('title'=>"Message Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="back"><a href={{ action([\App\Http\Controllers\MailgunController::class, 'index']) }}>{{ html()->img(asset('images/news29.png'), 'Message Index')->attribute('title', "Message Index")->class('btn btn-primary') }}</a></span></h1>
                 </div>
                 <div class='row'>
                     <div class='col-md-3'><strong>Timestamp: </strong>{{ $message->mailgun_timestamp}}</div>
@@ -34,14 +34,14 @@
                 <div class='row'>
                     @can('update-message')
                         <div class='col-md-1'>
-                            <a href="{{ action([\App\Http\Controllers\MailgunController::class, 'unprocess'], $message->id) }}" class="btn btn-info">{!! Html::image('images/undo.png', 'Unprocess',array('title'=>"Unprocess")) !!}</a>
+                            <a href="{{ action([\App\Http\Controllers\MailgunController::class, 'unprocess'], $message->id) }}" class="btn btn-info">{{ html()->img(asset('images/undo.png'), 'Unprocess')->attribute('title', "Unprocess") }}</a>
                         </div>
                     @endCan
                     @can('delete-message')
                         <div class='col-md-1'>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['mailgun.destroy', $message->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                            {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                            {!! Form::close() !!}
+                            {{ html()->form('DELETE', route('mailgun.destroy', [$message->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                            {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                            {{ html()->form()->close() }}
                         </div>
                     @endCan
                     <div class="clearfix"> </div>

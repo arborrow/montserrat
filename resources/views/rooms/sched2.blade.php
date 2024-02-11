@@ -48,7 +48,7 @@
                             @foreach($dts as $dt)
                                 @if (($m[$room->id][$dt->toDateString()]['status'] == 'R') OR ($m[$room->id][$dt->toDateString()]['status'] == 'O')) 
                                 <td class="table-warning">
-                                {!! Html::link('registration/'.$m[$room->id][$dt->toDateString()]['registration_id'], $m[$room->id][$dt->toDateString()]['status'] , array('title'=>$m[$room->id][$dt->toDateString()]['retreat_name'].' ('.$m[$room->id][$dt->toDateString()]['retreatant_name'].')')) !!} 
+                                {{ html()->a(url('registration/' . $m[$room->id][$dt->toDateString()]['registration_id']), $m[$room->id][$dt->toDateString()]['status'])->attribute('title', $m[$room->id][$dt->toDateString()]['retreat_name'] . ' (' . $m[$room->id][$dt->toDateString()]['retreatant_name'] . ')') }} 
                                 @else
                                 <td class="table-success">
                                     A

@@ -18,9 +18,9 @@
             <a href="{{ action([\App\Http\Controllers\RoleController::class, 'edit'], $role->id) }}" class="btn btn-light">Update Role</a>
         @endcan
         @can('delete-role')
-            {!! Form::open(['method' => 'DELETE', 'route' => ['role.destroy', $role->id], 'onsubmit'=>'return ConfirmDelete()', 'class' => 'd-inline']) !!}
-                {!! Form::submit('Delete Role', ['class'=>'btn btn-danger']) !!} 
-            {!! Form::close() !!}
+            {{ html()->form('DELETE', route('role.destroy', [$role->id]))->attribute('onsubmit', 'return ConfirmDelete()')->class('d-inline')->open() }}
+                {{ html()->submit('Delete Role')->class('btn btn-danger') }} 
+            {{ html()->form()->close() }}
         @endcan
     </div>
     <div class="col-lg-12">
@@ -30,40 +30,40 @@
     </div>
     @can('manage-permission')             
         <div class="col-lg-12">
-            {!! Form::open(['url' => 'admin/role/update_permissions', 'method' => 'POST', 'route' => ['role.update_permissions']]) !!}
-                {!! Form::hidden('id',$role->id) !!}
+            {{ html()->form('POST', route('role.update_permissions', ))->open() }}
+                {{ html()->hidden('id', $role->id) }}
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-8">
-                            {!! Form::label('permissions',$role->name.' Permissions:')  !!}
-                            {!! Form::select('permissions[]', $permissions, $role->permissions->pluck('id')->toArray(), ['id'=>'permissions','class' => 'form-control select2','multiple' => 'multiple']) !!}
+                            {{ html()->label($role->name . ' Permissions:', 'permissions') }}
+                            {{ html()->multiselect('permissions[]', $permissions, $role->permissions->pluck('id')->toArray())->id('permissions')->class('form-control select2') }}
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        {!! Form::submit('Update Permissions', ['class'=>'btn btn-light']) !!}
+                        {{ html()->submit('Update Permissions')->class('btn btn-light') }}
                     </div>
                 </div>
-            {!! Form::close() !!}
+            {{ html()->form()->close() }}
         </div>
         <div class="col-lg-12 mt-5">
-            {!! Form::open(['url' => 'admin/role/update_users', 'method' => 'POST', 'route' => ['role.update_users']]) !!}
-            {!! Form::hidden('id',$role->id) !!}
+            {{ html()->form('POST', route('role.update_users', ))->open() }}
+            {{ html()->hidden('id', $role->id) }}
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-8">
-                            {!! Form::label('users', 'Users with '.$role->name.' role:')  !!}
-                            {!! Form::select('users[]', $users, $role->users->pluck('id')->toArray(), ['id'=>'users', 'class' => 'form-control select2','multiple' => 'multiple']) !!}
+                            {{ html()->label('Users with ' . $role->name . ' role:', 'users') }}
+                            {{ html()->multiselect('users[]', $users, $role->users->pluck('id')->toArray())->id('users')->class('form-control select2') }}
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        {!! Form::submit('Update Users', ['class'=>'btn btn-light']) !!}
+                        {{ html()->submit('Update Users')->class('btn btn-light') }}
                     </div>
                 </div>
-            {!! Form::close() !!}
+            {{ html()->form()->close() }}
         </div>
     @endCan
 </div>

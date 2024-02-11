@@ -8,7 +8,7 @@
                 <span>
                     <h2><strong>
                         @can('update-group')
-                            {!! Html::link(url('group/'.$group->id.'/edit'),$group->name.' group') !!} 
+                            {{ html()->a(url('group/' . $group->id . '/edit'), $group->name . ' group') }} 
                         @else
                             {{$group->name}} group
                         @endCan
@@ -57,14 +57,14 @@
         <div class='row'>
             @can('update-group')
                 <div class='col-md-1'>
-                    <a href="{{ action([\App\Http\Controllers\GroupController::class, 'edit'], $group->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\GroupController::class, 'edit'], $group->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                 </div>
             @endCan
             @can('delete-group')
                 <div class='col-md-1'>
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['group.destroy', $group->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                    {!! Form::close() !!}
+                    {{ html()->form('DELETE', route('group.destroy', [$group->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                    {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }} 
+                    {{ html()->form()->close() }}
                 </div>
             @endCan
             <div class="clearfix"> </div>

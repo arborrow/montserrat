@@ -20,7 +20,7 @@
         @can('show-contact')
             <span class="person">
                 <a href={{ action([\App\Http\Controllers\PersonController::class, 'index']) }} class="btn btn-light">
-                    {!! Html::image('images/person.png', 'Show Persons',array('title'=>"Show Persons")) !!}
+                    {{ html()->img(asset('images/person.png'), 'Show Persons')->attribute('title', "Show Persons") }}
                 </a>
             </span>
         @if(isset($role['email_link']))

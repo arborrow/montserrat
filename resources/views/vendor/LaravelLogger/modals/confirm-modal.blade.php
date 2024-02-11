@@ -24,8 +24,8 @@ if (!isset($btnSubmitText)) {
         <p>Are you sure?</p>
       </div>
       <div class="modal-footer">
-        {!! Form::button('<i class="fa fa-fw fa-close" aria-hidden="true"></i> ' . trans('LaravelLogger::laravel-logger.modals.shared.btnCancel'), array('class' => 'btn btn-outline pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-        {!! Form::button('<i class="fa ' . $actionBtnIcon . '" aria-hidden="true"></i> ' . $btnSubmitText, array('class' => 'btn btn-' . $modalClass . ' pull-right btn-flat', 'type' => 'button', 'id' => 'confirm' )) !!}
+        {{ html()->button('<i class="fa fa-fw fa-close" aria-hidden="true"></i> ' . trans('LaravelLogger::laravel-logger.modals.shared.btnCancel'))->class('btn btn-outline pull-left btn-flat')->type('button')->data('dismiss', 'modal') }}
+        {{ html()->button('<i class="fa ' . $actionBtnIcon . '" aria-hidden="true"></i> ' . $btnSubmitText)->class('btn btn-' . $modalClass . ' pull-right btn-flat')->type('button')->id('confirm') }}
       </div>
     </div>
   </div>

@@ -7,13 +7,13 @@
             <div class="panel-heading">
                 <h2>
                     @can('update-retreat')
-                        Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title.' Waitlist')!!}
+                        Retreat {{ html()->a(url('retreat/' . $retreat->id . '/edit'), $retreat->idnumber . ' - ' . $retreat->title . ' Waitlist') }}
                     @else
                         Retreat {{$retreat->idnumber.' - '.$retreat->title}} Waitlist
                     @endCan
                 </h2>
-                {!! Html::link('#registrations','Waitlist Registrations',array('class' => 'btn btn-primary')) !!}
-                {!! Html::link(url('retreat'),'Retreat index',array('class' => 'btn btn-primary')) !!}
+                {{ html()->a(url('#registrations'), 'Waitlist Registrations')->class('btn btn-primary') }}
+                {{ html()->a(url('retreat'), 'Retreat index')->class('btn btn-primary') }}
 
             </div>
             <div class='row'>
@@ -127,26 +127,26 @@
             <div class='row'>
                 @can('update-retreat')
                     <div class='col-md-1'>
-                        <a href="{{ action([\App\Http\Controllers\RetreatController::class, 'edit'], $retreat->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action([\App\Http\Controllers\RetreatController::class, 'edit'], $retreat->id) }}" class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                     </div>
                 @endCan
                 @can('delete-retreat')
-                    <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                        {!! Form::close() !!}
+                    <div class='col-md-1'>{{ html()->form('DELETE', route('retreat.destroy', [$retreat->id]))->attribute('onsubmit', 'return ConfirmDelete()')->open() }}
+                        {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                        {{ html()->form()->close() }}
                     </div>
                 @endCan
                 <div class="clearfix"> </div>
             </div><br />
         <div class="panel panel-default">
         <div class="panel-heading" id='registrations'>
-            <h2>Waitlist for {!!Html::link(url('retreat/'.$retreat->id),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
+            <h2>Waitlist for {{ html()->a(url('retreat/' . $retreat->id), $retreat->idnumber . ' - ' . $retreat->title) }} </h2>
 
             @can('show-contact')
-                {!! Html::link($retreat->email_waitlist_retreatants,'Email retreatants on waitlist',array('class' => 'btn btn-outline-dark'))!!}
+                {{ html()->a(url($retreat->email_waitlist_retreatants), 'Email retreatants on waitlist')->class('btn btn-outline-dark') }}
             @endCan
             @can('create-touchpoint')
-                {!! Html::link(action([\App\Http\Controllers\TouchpointController::class, 'add_retreat_waitlist'],$retreat->id),'Waitlist touchpoint',array('class' => 'btn btn-outline-dark'))!!}
+                {{ html()->a(url(action([\App\Http\Controllers\TouchpointController::class, 'add_retreat_waitlist'], $retreat->id)), 'Waitlist touchpoint')->class('btn btn-outline-dark') }}
             @endCan
         </div>
             @if ($registrations->isEmpty())
@@ -200,7 +200,7 @@
                             <td>
                                 @can('update-registration')
                                 <span class="btn btn-danger">
-                                    {!!Html::link(url('registration/'.$registration->id.'/offwaitlist'),'Register')!!}
+                                    {{ html()->a(url('registration/' . $registration->id . '/offwaitlist'), 'Register') }}
                                 </span>
                                 @else
                                     {{ $registration->status_name }}

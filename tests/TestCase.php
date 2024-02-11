@@ -8,7 +8,7 @@ use JMac\Testing\Traits\AdditionalAssertions;
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, AdditionalAssertions;
-
+    
     protected function stristrarray($array, $str)
     {
         //This array will hold the indexes of every
@@ -73,7 +73,7 @@ abstract class TestCase extends BaseTestCase
                 break;
             case 'datetime':
                 if (! is_null($field_value)) {
-                    $field_value_string = 'value="'.$field_value->format('Y-m-d\TH:i:sP').'"';
+                    $field_value_string = 'value="'.$field_value->format('Y-m-d\TH:i:s').'"';
                 } else {
                     return true;
                 }
@@ -108,9 +108,9 @@ abstract class TestCase extends BaseTestCase
                 // checkbox is handled differently, it adds a checked parameter rather than using the database value
                 case 'checkbox':
                     if ($field_value == true) { // if the database value is true, ensure the selected param is in fact present on the line
-                        $value_found = (strpos($contents_array[$line_number], 'checked="checked"'));
+                        $value_found = (strpos($contents_array[$line_number], 'checked'));
                     } else { // if the database value is false then, ensure that the checked param is NOT on the line
-                        $value_found = ! (strpos($contents_array[$line_number], 'checked="checked"'));
+                        $value_found = ! (strpos($contents_array[$line_number], 'checked'));
                     }
                     break;
                     // deal with cases where selected value is 0 or not yet defined by checking for 0
@@ -159,7 +159,7 @@ abstract class TestCase extends BaseTestCase
         if ($value_found > 0) {
             return true;
         } else {
-            dd($value_found, $line_number, $field_value, $field_name_string, $field_value_string, gettype($field_value_string), $contents_array[$line_number]);
+            // dd($value_found, $line_number, $field_value, $field_name_string, $field_value_string, gettype($field_value_string), $contents_array[$line_number]);
 
             return false;
         }

@@ -13,7 +13,7 @@
             </span>
             @endCan
             <a href={{ action([\App\Http\Controllers\AssetController::class, 'search']) }}>
-                {!! Html::image('images/search.png', 'Search assets',array('title'=>"Search assets",'class' => 'btn btn-link')) !!}
+                {{ html()->img(asset('images/search.png'), 'Search assets')->attribute('title', "Search assets")->class('btn btn-link') }}
             </a>
 
         </h2>

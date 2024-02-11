@@ -6,11 +6,11 @@
         <h1>Edit: {{ $vendor->organization_name }}</h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['method' => 'PUT', 'files'=>'true', 'route' => ['vendor.update', $vendor->id]]) !!}
-        {!! Form::hidden('id', $vendor->id) !!}
+        {{ html()->form('PUT', route('vendor.update', [$vendor->id]))->acceptsFiles()->open() }}
+        {{ html()->hidden('id', $vendor->id) }}
         <div class="row text-center">
             <div class="col-lg-12">
-                {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+                {{ html()->input('image', 'btnSave')->class('btn btn-outline-dark')->attribute('src', asset('images/save.png')) }}
             </div>
         </div>
         <div class="row">
@@ -19,16 +19,16 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('organization_name', 'Name') !!}
-                            {!! Form::text('organization_name', $vendor->organization_name, ['class' => 'form-control']) !!}
+                            {{ html()->label('Name', 'organization_name') }}
+                            {{ html()->text('organization_name', $vendor->organization_name)->class('form-control') }}
                         </div>
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('display_name', 'Display') !!}
-                            {!! Form::text('display_name', $vendor->display_name, ['class' => 'form-control']) !!}
+                            {{ html()->label('Display', 'display_name') }}
+                            {{ html()->text('display_name', $vendor->display_name)->class('form-control') }}
                         </div>
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('sort_name', 'Sort') !!}
-                            {!! Form::text('sort_name', $vendor->sort_name, ['class' => 'form-control']) !!}
+                            {{ html()->label('Sort', 'sort_name') }}
+                            {{ html()->text('sort_name', $vendor->sort_name)->class('form-control') }}
                         </div>
                     </div>
                 </div>
@@ -38,28 +38,28 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('street_address', 'Address') !!}
-                            {!! Form::text('street_address', $vendor->address_primary_street, ['class' => 'form-control']) !!}
+                            {{ html()->label('Address', 'street_address') }}
+                            {{ html()->text('street_address', $vendor->address_primary_street)->class('form-control') }}
                         </div>
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('supplemental_address_1', 'Address Line 2') !!}
-                            {!! Form::text('supplemental_address_1', $vendor->address_primary_supplemental_address, ['class' => 'form-control']) !!}
+                            {{ html()->label('Address Line 2', 'supplemental_address_1') }}
+                            {{ html()->text('supplemental_address_1', $vendor->address_primary_supplemental_address)->class('form-control') }}
                         </div>
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('city', 'City') !!}
-                            {!! Form::text('city', $vendor->address_primary_city, ['class' => 'form-control']) !!}
+                            {{ html()->label('City', 'city') }}
+                            {{ html()->text('city', $vendor->address_primary_city)->class('form-control') }}
                         </div>
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('state_province_id', 'State') !!}
-                            {!! Form::select('state_province_id', $states, $vendor->address_primary_state_id, ['class' => 'form-control']) !!}
+                            {{ html()->label('State', 'state_province_id') }}
+                            {{ html()->select('state_province_id', $states, $vendor->address_primary_state_id)->class('form-control') }}
                         </div>
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('postal_code', 'Zip') !!}
-                            {!! Form::text('postal_code', $vendor->address_primary_postal_code, ['class' => 'form-control']) !!}
+                            {{ html()->label('Zip', 'postal_code') }}
+                            {{ html()->text('postal_code', $vendor->address_primary_postal_code)->class('form-control') }}
                         </div>
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('country_id', 'Country') !!}
-                            {!! Form::select('country_id', $countries, $vendor->address_primary_country_id, ['class' => 'form-control']) !!}
+                            {{ html()->label('Country', 'country_id') }}
+                            {{ html()->select('country_id', $countries, $vendor->address_primary_country_id)->class('form-control') }}
                         </div>
 
                     </div>
@@ -70,24 +70,24 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('phone_main_phone', 'Phone') !!}
+                            {{ html()->label('Phone', 'phone_main_phone') }}
                             @if (empty($vendor->phone_primary))
-                                {!! Form::text('phone_main_phone', NULL, ['class' => 'form-control']) !!}
+                                {{ html()->text('phone_main_phone')->class('form-control') }}
                             @else
-                                {!! Form::text('phone_main_phone', $vendor->phone_main_phone_number, ['class' => 'form-control']) !!}
+                                {{ html()->text('phone_main_phone', $vendor->phone_main_phone_number)->class('form-control') }}
                             @endif
                         </div>
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('phone_main_fax', 'Fax') !!}
+                            {{ html()->label('Fax', 'phone_main_fax') }}
                             @if (empty($vendor->phone_main_fax))
-                                {!! Form::text('phone_main_fax', NULL, ['class' => 'form-control']) !!}
+                                {{ html()->text('phone_main_fax')->class('form-control') }}
                             @else
-                                {!! Form::text('phone_main_fax', $vendor->phone_main_fax_number, ['class' => 'form-control']) !!}
+                                {{ html()->text('phone_main_fax', $vendor->phone_main_fax_number)->class('form-control') }}
                             @endif
                         </div>
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('email_primary', 'Email') !!}
-                            {!! Form::text('email_primary', $vendor->email_primary_text, ['class' => 'form-control']) !!}
+                            {{ html()->label('Email', 'email_primary') }}
+                            {{ html()->text('email_primary', $vendor->email_primary_text)->class('form-control') }}
                         </div>
                     </div>
                 </div>
@@ -103,24 +103,24 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-12 col-lg-4">
-                            {!! Form::label('note_vendor', 'Notes') !!}
-                            {!! Form::textarea('note_vendor', $vendor->note_vendor_text, ['class'=>'form-control', 'rows'=>'3']) !!}
+                            {{ html()->label('Notes', 'note_vendor') }}
+                            {{ html()->textarea('note_vendor', $vendor->note_vendor_text)->class('form-control')->rows('3') }}
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-lg-12">
-                            {!! Form::label('avatar', 'Picture (max 5M)') !!}
-                            {!! Form::file('avatar'); !!}
+                            {{ html()->label('Picture (max 5M)', 'avatar') }}
+                            {{ html()->file('avatar') }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            {!! Form::label('attachment', 'Attachment (max 10M): ', ['class' => ''])  !!}
-                            {!! Form::file('attachment'); !!}
+                            {{ html()->label('Attachment (max 10M): ', 'attachment')->class('') }}
+                            {{ html()->file('attachment') }}
                         </div>
                         <div class="col-lg-6">
-                            {!! Form::label('attachment_description', 'Attachment Description (max 200)')  !!}
-                            {!! Form::text('attachment_description', NULL, ['class' => 'form-control']) !!}
+                            {{ html()->label('Attachment Description (max 200)', 'attachment_description') }}
+                            {{ html()->text('attachment_description')->class('form-control') }}
                         </div>
                     </div>
                 </div>
@@ -128,10 +128,10 @@
         </div>
         <div class="row text-center">
             <div class="col-lg-12">
-                {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+                {{ html()->input('image', 'btnSave')->class('btn btn-outline-dark')->attribute('src', asset('images/save.png')) }}
             </div>
         </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

@@ -26,13 +26,12 @@
     <div class="col-lg-12 mt-3">
         @can('update-ss-custom-form')
             <a href="{{ action([\App\Http\Controllers\SquarespaceCustomFormController::class, 'edit'], $inventory->id) }}"
-                class="btn btn-info">{!! Html::image('images/edit.png', 'Edit', ['title' => 'Edit']) !!}</a>
+                class="btn btn-info">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', 'Edit') }}</a>
         @endcan
         @can('delete-ss-custom-form')
-            {!! Form::open(['method' => 'DELETE', 'route' => ['inventory.destroy', $inventory->id], 'onsubmit' =>
-            'return ConfirmDelete()', 'class' => 'd-inline']) !!}
-            {!! Form::image('images/delete.png', 'btnDelete', ['class' => 'btn btn-danger', 'title' => 'Delete']) !!}
-            {!! Form::close() !!}
+            {{ html()->form('DELETE', route('inventory.destroy', [$inventory->id]))->attribute('onsubmit', 'return ConfirmDelete()')->class('d-inline')->open() }}
+            {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+            {{ html()->form()->close() }}
         @endcan
 
     </div>

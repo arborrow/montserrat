@@ -3,8 +3,8 @@
 
     <section class="section-padding">
         <div class="jumbotron text-left">
-            {!! Form::open(['url' => 'retreat/payments/update', 'method' => 'POST', 'route' => ['retreat.payments.update']]) !!}
-            {!! Form::hidden('event_id', $retreat->id) !!}
+            {{ html()->form('POST', route('retreat.payments.update', ))->open() }}
+            {{ html()->hidden('event_id', $retreat->id) }}
                         
             <h2><strong>Retreat Offerings for {{$retreat->title}}</strong></h2>
              @if ($registrations->isEmpty())
@@ -25,15 +25,15 @@
                     <tbody>
                         @foreach($registrations ->sortBy('retreatant.sort_name') as $registration)
                             <tr>
-                        {!! Form::hidden('event_id', $retreat->id) !!}
-                        {!! Form::hidden('donations['.$registration->id.'][id]', $registration->id) !!}
+                        {{ html()->hidden('event_id', $retreat->id) }}
+                        {{ html()->hidden('donations[' . $registration->id . '][id]', $registration->id) }}
                             <td width="25%"><a href="{{url('person/'.$registration->retreatant->id)}}">{{ $registration->retreatant->sort_name}}</a></td>
                             <td width="10%"> <a href="{{url('registration/'.$registration->id)}}">{{$registration->deposit}}</a></td>
-                            <td width="10%"> {!! Form::number('donations['.$registration->id.'][pledge]', is_null($registration->donation) ? 0 : $registration->donation->donation_amount, ['id' => 'pledge['.$registration->id.']','step'=>'0.01']) !!}</td>
-                            <td width="10%"> {!! Form::number('donations['.$registration->id.'][paid]', is_null($registration->donation) ? 0 : $registration->donation->retreat_offering->payment_amount, ['id' => 'paid['.$registration->id.']','step'=>'0.01']) !!}</td>
-                            <td width="15%">{!! Form::select('donations['.$registration->id.'][method]', $payment_description, is_null($registration->donation) ? 'Unassigned' : $registration->donation->retreat_offering->payment_description, ['id' => 'method['.$registration->id.']']) !!}</td>
-                            <td width="5%"> {!! Form::number('donations['.$registration->id.'][idnumber]', is_null($registration->donation) ? 0 : $registration->donation->retreat_offering->payment_number, ['id' => 'idnumber['.$registration->id.']']) !!}</td>
-                            <td width="25%"> {!! Form::text('donations['.$registration->id.'][terms]', is_null($registration->donation) ? NULL : $registration->donation->terms, ['id' => 'terms['.$registration->id.']']) !!}</td>
+                            <td width="10%"> {{ html()->number('donations[' . $registration->id . '][pledge]', is_null($registration->donation) ? 0 : $registration->donation->donation_amount)->id('pledge[' . $registration->id . ']')->attribute('step', '0.01') }}</td>
+                            <td width="10%"> {{ html()->number('donations[' . $registration->id . '][paid]', is_null($registration->donation) ? 0 : $registration->donation->retreat_offering->payment_amount)->id('paid[' . $registration->id . ']')->attribute('step', '0.01') }}</td>
+                            <td width="15%">{{ html()->select('donations[' . $registration->id . '][method]', $payment_description, is_null($registration->donation) ? 'Unassigned' : $registration->donation->retreat_offering->payment_description)->id('method[' . $registration->id . ']') }}</td>
+                            <td width="5%"> {{ html()->number('donations[' . $registration->id . '][idnumber]', is_null($registration->donation) ? 0 : $registration->donation->retreat_offering->payment_number)->id('idnumber[' . $registration->id . ']') }}</td>
+                            <td width="25%"> {{ html()->text('donations[' . $registration->id . '][terms]', is_null($registration->donation) ? NULL : $registration->donation->terms)->id('terms[' . $registration->id . ']') }}</td>
                             </tr>
                         @endforeach
                         <tr>
@@ -55,9 +55,9 @@
             
             
             <div class="col-md-2"><div class="form-group">
-                {!! Form::submit('Submit retreat payments', ['class'=>'btn btn-primary']) !!}
+                {{ html()->submit('Submit retreat payments')->class('btn btn-primary') }}
             </div></div><div class="clearfix"> </div>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
         </div>
     </section>
 

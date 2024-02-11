@@ -6,35 +6,35 @@
         <h1>Create snippet</h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url'=>'admin/snippet', 'method'=>'post']) !!}
+        {{ html()->form('POST', 'admin/snippet')->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3">
-                        {!! Form::label('title', 'Title') !!}
-                        {!! Form::text('title', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('Title', 'title') }}
+                        {{ html()->text('title')->class('form-control') }}
                     </div>
                     <div class="col-lg-3">
-                        {!! Form::label('label', 'Label') !!}
-                        {!! Form::text('label', NULL , ['class' => 'form-control']) !!}
+                        {{ html()->label('Label', 'label') }}
+                        {{ html()->text('label')->class('form-control') }}
                     </div>
                     <div class="col-lg-3">
-                        {!! Form::label('locale', 'Language') !!}
-                        {!! Form::select('locale', $locales, 'en_US', ['class' => 'form-control']) !!}
+                        {{ html()->label('Language', 'locale') }}
+                        {{ html()->select('locale', $locales, 'en_US')->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        {!! Form::label('snippet', 'Snippet') !!}
-                        {!! Form::textarea('snippet', NULL, ['class' => 'form-control', 'rows' => 3]) !!}
+                        {{ html()->label('Snippet', 'snippet') }}
+                        {{ html()->textarea('snippet')->class('form-control')->rows(3) }}
                     </div>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-lg-12">
-                    {!! Form::submit('Add snippet', ['class'=>'btn btn-outline-dark']) !!}
+                    {{ html()->submit('Add snippet')->class('btn btn-outline-dark') }}
                 </div>
             </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

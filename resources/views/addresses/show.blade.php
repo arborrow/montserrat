@@ -27,14 +27,14 @@
     <div class="col-lg-6 mt-4 mb-4">
         @can('update-address')
             <a href="{{ action([\App\Http\Controllers\AddressController::class, 'edit'], $address->id) }}" class="btn btn-info mr-4">
-              {!! Html::image('images/edit.png', 'Edit address',array('title'=>"Edit address")) !!}
+              {{ html()->img(asset('images/edit.png'), 'Edit address')->attribute('title', "Edit address") }}
             </a>
         @endcan
     
         @can('delete-address')
-            {!! Form::open(['method' => 'DELETE', 'route' => ['address.destroy', $address->id], 'onsubmit'=>'return ConfirmDelete()', 'class' => 'd-inline']) !!}
-            {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete address']) !!}
-            {!! Form::close() !!}
+            {{ html()->form('DELETE', route('address.destroy', [$address->id]))->attribute('onsubmit', 'return ConfirmDelete()')->class('d-inline')->open() }}
+            {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete address')->attribute('src', asset('images/delete.png')) }}
+            {{ html()->form()->close() }}
         @endcan
 
     </div>

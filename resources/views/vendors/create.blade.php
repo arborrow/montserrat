@@ -6,60 +6,60 @@
         <h1>Add a Vendor</h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url' => 'vendor', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
+        {{ html()->form('POST', 'vendor')->class('form-horizontal panel')->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-12 col-lg-4">
-                        {!! Form::label('organization_name', 'Name') !!}
-                        {!! Form::text('organization_name', null, ['class'=>'form-control']) !!}
+                        {{ html()->label('Name', 'organization_name') }}
+                        {{ html()->text('organization_name')->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12 col-lg-4">
-                        {!! Form::label('street_address', 'Address Line 1') !!}
-                        {!! Form::text('street_address', null, ['class'=>'form-control']) !!}
+                        {{ html()->label('Address Line 1', 'street_address') }}
+                        {{ html()->text('street_address')->class('form-control') }}
                     </div>
                     <div class="col-lg-12 col-lg-4">
-                        {!! Form::label('supplemental_address_1', 'Address Line 2') !!}
-                        {!! Form::text('supplemental_address_1', null, ['class'=>'form-control']) !!}
+                        {{ html()->label('Address Line 2', 'supplemental_address_1') }}
+                        {{ html()->text('supplemental_address_1')->class('form-control') }}
                     </div>
                     <div class="col-lg-12 col-lg-4">
-                        {!! Form::label('city', 'City') !!}
-                        {!! Form::text('city', null, ['class'=>'form-control']) !!}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 col-lg-4">
-                        {!! Form::label('state_province_id', 'State')  !!}
-                        {!! Form::select('state_province_id', $states, $defaults['state_province_id'], ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="col-lg-12 col-lg-4">
-                        {!! Form::label('postal_code', 'Zip') !!}
-                        {!! Form::text('postal_code', null, ['class'=>'form-control']) !!}
-                    </div>
-                    <div class="col-lg-12 col-lg-4">
-                        {!! Form::label('country_id', 'Country')  !!}
-                        {!! Form::select('country_id', $countries, $defaults['country_id'], ['class' => 'form-control']) !!}
+                        {{ html()->label('City', 'city') }}
+                        {{ html()->text('city')->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12 col-lg-4">
-                        {!! Form::label('phone_main_phone', 'Phone') !!}
-                        {!! Form::text('phone_main_phone', null, ['class'=>'form-control']) !!}
+                        {{ html()->label('State', 'state_province_id') }}
+                        {{ html()->select('state_province_id', $states, $defaults['state_province_id'])->class('form-control') }}
                     </div>
                     <div class="col-lg-12 col-lg-4">
-                        {!! Form::label('phone_main_fax', 'Fax') !!}
-                        {!! Form::text('phone_main_fax', null, ['class'=>'form-control']) !!}
+                        {{ html()->label('Zip', 'postal_code') }}
+                        {{ html()->text('postal_code')->class('form-control') }}
                     </div>
                     <div class="col-lg-12 col-lg-4">
-                        {!! Form::label('email_main', 'Email') !!}
-                        {!! Form::text('email_main', null, ['class'=>'form-control']) !!}
+                        {{ html()->label('Country', 'country_id') }}
+                        {{ html()->select('country_id', $countries, $defaults['country_id'])->class('form-control') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12 col-lg-4">
-                        {!! Form::label('note', 'Note') !!}
-                        {!! Form::textarea('note', null, ['class'=>'form-control', 'rows'=>'3']) !!}
+                        {{ html()->label('Phone', 'phone_main_phone') }}
+                        {{ html()->text('phone_main_phone')->class('form-control') }}
+                    </div>
+                    <div class="col-lg-12 col-lg-4">
+                        {{ html()->label('Fax', 'phone_main_fax') }}
+                        {{ html()->text('phone_main_fax')->class('form-control') }}
+                    </div>
+                    <div class="col-lg-12 col-lg-4">
+                        {{ html()->label('Email', 'email_main') }}
+                        {{ html()->text('email_main')->class('form-control') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-lg-4">
+                        {{ html()->label('Note', 'note') }}
+                        {{ html()->textarea('note')->class('form-control')->rows('3') }}
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -73,10 +73,10 @@
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    {!! Form::submit('Add Vendor', ['class'=>'btn btn-outline-dark']) !!}
+                    {{ html()->submit('Add Vendor')->class('btn btn-outline-dark') }}
                 </div>
             </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

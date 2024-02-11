@@ -8,7 +8,7 @@
             @can('create-contact')
                 <span class="options">
                     <a href={{ action([\App\Http\Controllers\DioceseController::class, 'create']) }}>
-                        {!! Html::image('images/create.png', 'Create Diocese',array('title'=>"Create Diocese",'class' => 'btn btn-light')) !!}
+                        {{ html()->img(asset('images/create.png'), 'Create Diocese')->attribute('title', "Create Diocese")->class('btn btn-light') }}
                     </a>
                 </span>
             @endCan

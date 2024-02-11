@@ -6,7 +6,7 @@
         <h1>Create Donation</h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url' => 'donation', 'method' => 'post']) !!}
+        {{ html()->form('POST', 'donation')->open() }}
             <div class="row">
                 <div class="col-lg-12">
                     <h2>Basic Details</h2>
@@ -15,34 +15,34 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-lg-3 col-md-6">
-                                {!! Form::label('donor_id', 'Donor')  !!}
+                                {{ html()->label('Donor', 'donor_id') }}
                                 @if (isset($defaults['donor_id']))
-                                    {!! Form::select('donor_id', $donors, $defaults['donor_id'], ['class' => 'form-control']) !!}
+                                    {{ html()->select('donor_id', $donors, $defaults['donor_id'])->class('form-control') }}
                                 @else
-                                    {!! Form::select('donor_id', $donors, NULL, ['class' => 'form-control']) !!}
+                                    {{ html()->select('donor_id', $donors)->class('form-control') }}
                                 @endif
                             </div>
                             <div class="col-lg-4 col-md-6">
-                                {!! Form::label('donation_description', 'Description')  !!}
-                                {!! Form::select('donation_description', $descriptions, 'Retreat Offering', ['class' => 'form-control']) !!}
+                                {{ html()->label('Description', 'donation_description') }}
+                                {{ html()->select('donation_description', $descriptions, 'Retreat Offering')->class('form-control') }}
                             </div>
                             <div class="col-lg-3 col-md-6">
-                                {!! Form::label('event_id', 'Retreat')  !!}
+                                {{ html()->label('Retreat', 'event_id') }}
                                 @if (isset($defaults['event_id']))
-                                    {!! Form::select('event_id', $retreats, $defaults['event_id'], ['class' => 'form-control']) !!}
+                                    {{ html()->select('event_id', $retreats, $defaults['event_id'])->class('form-control') }}
                                 @else
-                                    {!! Form::select('event_id', $retreats, NULL, ['class' => 'form-control']) !!}
+                                    {{ html()->select('event_id', $retreats)->class('form-control') }}
                                 @endif
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('donation_date', 'Date of donation')  !!}
-                                {!! Form::text('donation_date',now() , ['class' => 'flatpickr-date']) !!}
+                                {{ html()->label('Date of donation', 'donation_date') }}
+                                {{ html()->text('donation_date', now())->class('flatpickr-date') }}
                             </div>
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('donation_amount', 'Donation amount (pledged)')  !!}
-                                {!! Form::number('donation_amount', 0, ['class' => 'form-control','step'=>'0.01']) !!}
+                                {{ html()->label('Donation amount (pledged)', 'donation_amount') }}
+                                {{ html()->number('donation_amount', 0)->class('form-control')->attribute('step', '0.01') }}
                             </div>
                         </div>
                     </div>
@@ -57,20 +57,20 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('payment_date', 'Date of payment')  !!}
-                                {!! Form::text('payment_date',now(), ['class' => 'flatpickr-date']) !!}
+                                {{ html()->label('Date of payment', 'payment_date') }}
+                                {{ html()->text('payment_date', now())->class('flatpickr-date') }}
                             </div>
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('payment_amount', 'Payment amount (paid)')  !!}
-                                {!! Form::number('payment_amount', 0, ['class' => 'form-control','step'=>'0.01']) !!}
+                                {{ html()->label('Payment amount (paid)', 'payment_amount') }}
+                                {{ html()->number('payment_amount', 0)->class('form-control')->attribute('step', '0.01') }}
                             </div>
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('payment_description', 'Payment method')  !!}
-                                {!! Form::select('payment_description', $payment_methods, NULL, ['class' => 'form-control']) !!}
+                                {{ html()->label('Payment method', 'payment_description') }}
+                                {{ html()->select('payment_description', $payment_methods)->class('form-control') }}
                             </div>
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('payment_idnumber', 'Check/CC Number')  !!}
-                                {!! Form::number('payment_idnumber', NULL, ['class' => 'form-control']) !!}
+                                {{ html()->label('Check/CC Number', 'payment_idnumber') }}
+                                {{ html()->number('payment_idnumber')->class('form-control') }}
                             </div>
                         </div>
                     </div>
@@ -85,30 +85,30 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('notes1', 'Primary contact for invoice')  !!}
-                                {!! Form::text('notes1', NULL, ['class' => 'form-control']) !!}
+                                {{ html()->label('Primary contact for invoice', 'notes1') }}
+                                {{ html()->text('notes1')->class('form-control') }}
                             </div>
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('notes', 'Notes')  !!}
-                                {!! Form::text('notes', NULL, ['class' => 'form-control']) !!}
+                                {{ html()->label('Notes', 'notes') }}
+                                {{ html()->text('notes')->class('form-control') }}
                             </div>
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('terms', 'Terms')  !!}
-                                {!! Form::text('terms', NULL, ['class' => 'form-control']) !!}
+                                {{ html()->label('Terms', 'terms') }}
+                                {{ html()->text('terms')->class('form-control') }}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('start_date', 'Start date')  !!}
-                                {!! Form::text('start_date', NULL, ['class'=>'flatpickr-date']) !!}
+                                {{ html()->label('Start date', 'start_date') }}
+                                {{ html()->text('start_date')->class('flatpickr-date') }}
                             </div>
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('end_date', 'End date')  !!}
-                                {!! Form::text('end_date', NULL, ['class'=>'flatpickr-date']) !!}
+                                {{ html()->label('End date', 'end_date') }}
+                                {{ html()->text('end_date')->class('flatpickr-date') }}
                             </div>
                             <div class="col-lg-3 col-md-4">
-                                {!! Form::label('donation_install', 'Installment')  !!}
-                                {!! Form::number('donation_install', 0.00, ['class' => 'form-control','step'=>'0.01']) !!}
+                                {{ html()->label('Installment', 'donation_install') }}
+                                {{ html()->number('donation_install', 0.0)->class('form-control')->attribute('step', '0.01') }}
                             </div>
                         </div>
                     </div>
@@ -117,11 +117,11 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    {!! Form::submit('Add donation', ['class'=>'btn btn-light']) !!}
+                    {{ html()->submit('Add donation')->class('btn btn-light') }}
                 </div>
             </div>
 
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

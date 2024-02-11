@@ -35,20 +35,20 @@
     </div>
 
     <div class="col-lg-12">
-        {!! Form::open(['method' => 'PUT', 'route' => ['squarespace.contribution.update', $ss_contribution->id]]) !!}
-        {!! Form::hidden('id', $ss_contribution->id) !!}
+        {{ html()->form('PUT', route('squarespace.contribution.update', [$ss_contribution->id]))->open() }}
+        {{ html()->hidden('id', $ss_contribution->id) }}
 
         <hr>
         <div class="form-group">
 
             <div class="row">
                 <div class="col-lg-3 col-md-6">
-                    <strong>{!! Form::label('contact_id', 'Donor: ' .$ss_contribution->name) !!}</strong>
-                    {!! Form::select('contact_id', $matching_contacts, $ss_contribution->contact_id, ['class' => 'form-control']) !!}
+                    <strong>{{ html()->label('Donor: ' . $ss_contribution->name, 'contact_id') }}</strong>
+                    {{ html()->select('contact_id', $matching_contacts, $ss_contribution->contact_id)->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <strong>{!! Form::label('event_id', 'Retreat ID: #'. $ss_contribution->idnumber) !!}</strong>
-                        {!! Form::select('event_id', $retreats, (isset($ss_contribution->event_id)) ? $ss_contribution->event_id : $ids['retreat_id'], ['class' => 'form-control']) !!}
+                    <strong>{{ html()->label('Retreat ID: #' . $ss_contribution->idnumber, 'event_id') }}</strong>
+                        {{ html()->select('event_id', $retreats, isset($ss_contribution->event_id) ? $ss_contribution->event_id : $ids['retreat_id'])->class('form-control') }}
                     @if (isset($ss_contribution->retreat_description))
                         {{ $ss_contribution->retreat_description }} {{ $ids['retreat_id'] }}
                     @endIf
@@ -56,7 +56,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <strong>
-                        {!! Form::label('donation_description', 'Fund:')  !!}
+                        {{ html()->label('Fund:', 'donation_description') }}
                     </strong>
                     @if (isset($ss_contribution->offering_type))
                         {{ $ss_contribution->offering_type }}
@@ -64,7 +64,7 @@
                     @if (isset($ss_contribution->fund))
                         {{ $ss_contribution->fund }}
                     @endIf
-                    {!! Form::select('donation_description', array_flip(config('polanco.donation_descriptions')), (isset($ss_contribution->fund)) ? config('polanco.donation_descriptions.'.$ss_contribution->fund) : config('polanco.donation_descriptions.'.$ss_contribution->offering_type), ['class' => 'form-control']) !!}
+                    {{ html()->select('donation_description', array_flip(config('polanco.donation_descriptions')), isset($ss_contribution->fund) ? config('polanco.donation_descriptions.' . $ss_contribution->fund) : config('polanco.donation_descriptions.' . $ss_contribution->offering_type))->class('form-control') }}
                     {{ $ss_contribution->donation?->donation_description }}
                 </div>
 
@@ -74,17 +74,17 @@
                     <div class="col-lg-3 col-md-6 bg-warning">
                 @endIf
                     <strong>
-                        {!! Form::label('amount', 'Amount:')  !!}
+                        {{ html()->label('Amount:', 'amount') }}
                     </strong>
-                        {!! Form::number('amount', $ss_contribution->amount, ['class' => 'form-control','step'=>'0.01']) !!}
+                        {{ html()->number('amount', $ss_contribution->amount)->class('form-control')->attribute('step', '0.01') }}
                         {{ $ss_contribution->donation?->donation_amount }}
                     </div>
 
                 <div class="col-lg-3 col-md-6">
                     <strong>
-                        {!! Form::label('comments', 'Comments:')  !!}
+                        {{ html()->label('Comments:', 'comments') }}
                     </strong>
-                    {!! Form::text('comments', $ss_contribution->comments, ['class' => 'form-control']) !!}
+                    {{ html()->text('comments', $ss_contribution->comments)->class('form-control') }}
                 </div>
 
             </div>
@@ -94,10 +94,10 @@
                 <div class="col-lg-12">
                     @if (!$ss_contribution->is_processed)
                         @if ($ss_contribution->contact_id > 0 )
-                        {!! Form::submit('Proceed with Contribution',['class' => 'btn btn-dark']) !!}
+                        {{ html()->submit('Proceed with Contribution')->class('btn btn-dark') }}
                         <a class="btn btn-info" href="{{ action([\App\Http\Controllers\SquarespaceContributionController::class, 'reset'],['contribution'=>$ss_contribution->id]) }}">Reset Contact for Contribution #{{ $ss_contribution->id }}</a>
                     @else
-                        {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
+                        {{ html()->submit('Retrieve Contact Info')->class('btn btn-info') }}
 
                         @endif
                     @else
@@ -124,7 +124,7 @@
                     </td>
                     <td>
                         <strong>
-                            {!! Form::text('name', ucwords(strtolower($ss_contribution->name)), ['class' => 'form-control']) !!}
+                            {{ html()->text('name', ucwords(strtolower($ss_contribution->name)))->class('form-control') }}
                         </strong>
                         @if (isset($ss_contribution->donor?->id))
                         {!! $ss_contribution->donor->contact_link_full_name !!}
@@ -139,7 +139,7 @@
                         @else
                     <td class='table-warning'>
                         @endif
-                        {!! Form::text('first_name', ucwords(strtolower(trim(substr($ss_contribution->name,0,strpos($ss_contribution->name,' '))))), ['class' => 'form-control']) !!}
+                        {{ html()->text('first_name', ucwords(strtolower(trim(substr($ss_contribution->name, 0, strpos($ss_contribution->name, ' '))))))->class('form-control') }}
                         {{ $ss_contribution->donor?->first_name }}
                     </td>
                 </tr>
@@ -151,7 +151,7 @@
                         @else
                     <td class='table-warning'>
                         @endif
-                        {!! Form::text('last_name', ucwords(strtolower(trim(substr($ss_contribution->name,strrpos($ss_contribution->name,' '))))), ['class' => 'form-control']) !!}
+                        {{ html()->text('last_name', ucwords(strtolower(trim(substr($ss_contribution->name, strrpos($ss_contribution->name, ' '))))))->class('form-control') }}
                         {{ $ss_contribution->donor?->last_name }}
                     </td>
                 </tr>
@@ -163,7 +163,7 @@
                         @else
                     <td class='table-warning'>
                         @endif
-                        {!! Form::text('email', trim($ss_contribution->email), ['class' => 'form-control']) !!}
+                        {{ html()->text('email', trim($ss_contribution->email))->class('form-control') }}
                         {{ $ss_contribution->donor?->email_primary_text }}
                     </td>
                 </tr>
@@ -176,7 +176,7 @@
                         @else
                     <td class='table-warning'>
                         @endif
-                        {!! Form::text('phone', $ss_contribution->phone, ['class' => 'form-control']) !!}
+                        {{ html()->text('phone', $ss_contribution->phone)->class('form-control') }}
                         {{ $ss_contribution->donor?->primary_phone_number }}
                     </td>
                 </tr>
@@ -189,7 +189,7 @@
                         @else
                     <td class='table-warning'>
                         @endIf
-                        {!! Form::text('address_street', ucwords(strtolower($ss_contribution->address_street)), ['class' => 'form-control']) !!}
+                        {{ html()->text('address_street', ucwords(strtolower($ss_contribution->address_street)))->class('form-control') }}
                         {{ $ss_contribution->donor?->address_primary_street }}
                     </td>
                 </tr>
@@ -202,7 +202,7 @@
                         @else
                     <td class='table-warning'>
                         @endIf
-                        {!! Form::text('address_supplemental', $ss_contribution->address_supplemental, ['class' => 'form-control']) !!}
+                        {{ html()->text('address_supplemental', $ss_contribution->address_supplemental)->class('form-control') }}
                         {{ $ss_contribution->donor?->address_primary_supplemental_address }}
                 </tr>
                 @endIf
@@ -214,7 +214,7 @@
                         @else
                     <td class="table-warning">
                         @endif
-                        {!! Form::text('address_city', ucwords(strtolower($ss_contribution->address_city)), ['class' => 'form-control']) !!}
+                        {{ html()->text('address_city', ucwords(strtolower($ss_contribution->address_city)))->class('form-control') }}
                         {{ $ss_contribution->donor?->address_primary_city }}
                     </td>
                 </tr>
@@ -229,7 +229,7 @@
                         @if (!isset($ids['address_state']))
                         {{ strtoupper($ss_contribution->address_state)}}
                         @endIf
-                        {!! Form::select('address_state_id', $states, $ids['address_state'], ['class' => 'form-control']) !!}
+                        {{ html()->select('address_state_id', $states, $ids['address_state'])->class('form-control') }}
                         {{ $ss_contribution->donor?->address_primary_state }}
                     </td>
                 </tr>
@@ -241,7 +241,7 @@
                         @else
                     <td class='table-warning'>
                         @endIf
-                        {!! Form::text('address_zip', $ss_contribution->address_zip, ['class' => 'form-control']) !!}
+                        {{ html()->text('address_zip', $ss_contribution->address_zip)->class('form-control') }}
                         {{ $ss_contribution->donor?->address_primary_postal_code }}
                     </td>
                 </tr>
@@ -253,8 +253,8 @@
                         @else
                     <td class='table-warning'>
                         @endif
-                        {!! Form::label('address_country_id', $ss_contribution->address_country) !!}
-                        {!! Form::select('address_country_id', $countries, $ids['address_country'], ['class' => 'form-control']) !!}
+                        {{ html()->label($ss_contribution->address_country, 'address_country_id') }}
+                        {{ html()->select('address_country_id', $countries, $ids['address_country'])->class('form-control') }}
                         {{ $ss_contribution->donor?->address_primary_country_abbreviation }}
                     </td>
                 </tr>
@@ -267,9 +267,9 @@
             <div class="col-lg-12">
                 @if (!$ss_contribution->is_processed)
                     @if ($ss_contribution->contact_id > 0 )
-                    {!! Form::submit('Proceed with Contribution',['class' => 'btn btn-dark']) !!}
+                    {{ html()->submit('Proceed with Contribution')->class('btn btn-dark') }}
                     @else
-                    {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
+                    {{ html()->submit('Retrieve Contact Info')->class('btn btn-info') }}
                     @endif
                 @else
                     <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\SquarespaceContributionController::class, 'index']) }}">Squarespace Contribution #{{ $ss_contribution->id }} has already been processed</a>
@@ -296,7 +296,7 @@
                 <strong>Processed:</strong> {{ ($ss_contribution->is_processed) ? 'Yes' : 'No' }} <br />
             </div>
         </div>
-        {!! Form::close() !!}
+        {{ html()->form()->close() }}
     </div>
 </div>
 @stop

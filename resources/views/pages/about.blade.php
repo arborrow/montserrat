@@ -10,5 +10,5 @@
 <li><div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>        
 </ul>
 <p>This is an alpha version of the Montserrat Retreat House database. It is a work in progress!<p>
-    {!! Html::image('images/codetest.png', 'Code test ;)',array('title'=>"Code test ;)",'style'=>"height: 300px;")) !!}
+    {{ html()->img(asset('images/codetest.png'), 'Code test ;)')->attribute('title', "Code test ;)")->attribute('style', "height: 300px;") }}
 @stop

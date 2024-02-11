@@ -8,7 +8,7 @@
             @can('create-permission')
                 <span class="options">
                     <a href={{ action([\App\Http\Controllers\PermissionController::class, 'create']) }}>
-                        {!! Html::image('images/create.png', 'Add Permission',array('title'=>"Add Permission",'class' => 'btn btn-light')) !!}
+                        {{ html()->img(asset('images/create.png'), 'Add Permission')->attribute('title', "Add Permission")->class('btn btn-light') }}
                     </a>
                 </span>
             @endcan
@@ -16,19 +16,19 @@
     </div>
     <div class="col-lg-12">
         @can('manage-permission')
-            {!! Form::open(['url' => 'admin/permission', 'method' => 'GET', 'route' => ['admin.permission'], 'class' => 'form-inline']) !!}
+            {{ html()->form('GET', route('admin.permission', ))->class('form-inline')->open() }}
                 <div class="form-group mb-2 mx-2">
-                    {!! Form::label('action', 'Action')  !!}
-                    {!! Form::select('action', $actions, 0, ['id'=>'action','class' => 'form-control mx-1']) !!}
+                    {{ html()->label('Action', 'action') }}
+                    {{ html()->select('action', $actions, 0)->id('action')->class('form-control mx-1') }}
                 </div>
                 <div class="form-group mb-2 mx-2">
-                    {!! Form::label('model', 'Model')  !!}
-                    {!! Form::select('model', $models, 0, ['id'=>'model','class' => 'form-control mx-1']) !!}
+                    {{ html()->label('Model', 'model') }}
+                    {{ html()->select('model', $models, 0)->id('model')->class('form-control mx-1') }}
                 </div>
                 <div class="form-group mb-2 mx-3">
-                    {!! Form::submit('Search', ['class'=>'btn btn-outline-dark']) !!}
+                    {{ html()->submit('Search')->class('btn btn-outline-dark') }}
                 </div>
-            {!! Form::close() !!}
+            {{ html()->form()->close() }}
         @endCan
     </div>
     <div class="col-lg-12 my-3 table-responsive-md">

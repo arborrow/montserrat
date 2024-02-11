@@ -41,7 +41,7 @@
                         <td><a href="{{URL('donation/'.$donation->max_donation_id)}}">{{ $donation->max_donation_id}}</a></td>
                         <td>{{ $donation->donation_count }} </td>
                         <td>
-                            {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'merge'], [$donation->min_donation_id, $donation->max_donation_id]),'Merge Donations',array('class' => 'btn btn-secondary'))!!}
+                            {{ html()->a(url(action([\App\Http\Controllers\DonationController::class, 'merge'], [$donation->min_donation_id, $donation->max_donation_id])), 'Merge Donations')->class('btn btn-secondary') }}
                         </td>
                     </tr>
                     @endforeach

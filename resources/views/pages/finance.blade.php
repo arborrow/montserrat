@@ -5,21 +5,24 @@
 
 @can('show-donation')
 
-    {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'index']),'Donations',array('class' => 'btn
-    btn-outline-dark'))!!}
+    {{ html()->a(action([\App\Http\Controllers\DonationController::class, 'index']),'Donations')
+        ->class('m-2 btn btn-outline-dark')
+    }}
     
-    {!! Html::link(action([\App\Http\Controllers\PaymentController::class, 'index']),'Payments',array('class' => 'btn
-    btn-outline-dark'))!!}
+    {{ html()->a(action([\App\Http\Controllers\PaymentController::class, 'index']),'Payments')
+        ->class('m-2 btn btn-outline-dark')
+    }}
 
     @can('show-squarespace-contribution')
-        {!! Html::link(action([\App\Http\Controllers\SquarespaceContributionController::class, 'index']),'Squarespace
-        Contributions',array('class' => 'btn btn-outline-dark'))!!}
+        {{ html()->a(action([\App\Http\Controllers\SquarespaceContributionController::class, 'index']),'Squarespace Contributions')
+            ->class('m-2 btn btn-outline-dark')
+        }}
     @endcan
 
     @can('show-stripe-payout')
-        {!! Html::link(action([\App\Http\Controllers\StripePayoutController::class, 'index']),'Stripe
-        Payouts',array('class'
-        => 'btn btn-outline-dark'))!!}
+        {{ html()->a(action([\App\Http\Controllers\StripePayoutController::class, 'index']),'Stripe Payouts')
+            ->class('m-2 btn btn-outline-dark')
+        }}
     @endCan
 
     <hr />
@@ -29,52 +32,55 @@
     <div class="row bg-cover">
         <div class="col-lg-2 col-md-4">
             <h5>AGC Reports</h5>
-            {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'agc'],$current_fiscal_year),'AGC
-            FY'.$current_fiscal_year,array('class' => 'm-2 btn btn-outline-dark'))!!}
-
-            {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'agc'],$current_fiscal_year-1),'AGC
-            FY'.$current_fiscal_year-1,array('class' => 'm-2 btn btn-outline-dark'))!!}
+            {{ html()->a(action([\App\Http\Controllers\DonationController::class, 'agc'],$current_fiscal_year),'AGC FY'.$current_fiscal_year)
+                ->class('m-2 btn btn-outline-dark')
+            }}
+            
+            {{ html()->a(action([\App\Http\Controllers\DonationController::class, 'agc'],$current_fiscal_year-1),'AGC FY'.$current_fiscal_year-1)
+                ->class('m-2 btn btn-outline-dark')
+            }}
 
         </div>
     
         <div class="col-lg-2 col-md-4">
             <h5>Bank Reports</h5>
-            {!! Html::link(action([\App\Http\Controllers\PageController::class,
-            'finance_cash_deposit'],now()->format('Ymd')),'Cash/Check bank deposit report',array('class' =>
-            'm-2 btn btn-outline-dark'))!!}
+            {{ html()->a(action([\App\Http\Controllers\PageController::class, 'finance_cash_deposit'],now()->format('Ymd')),'Cash/Check bank deposit report')
+                ->class('m-2 btn btn-outline-dark')
+            }}
             
-            {!! Html::link(action([\App\Http\Controllers\PageController::class,
-                'finance_cc_deposit'],now()->format('Ymd')),'Credit Card (Internet) bank deposit report',array('class'
-                =>
-                'm-2 btn btn-outline-dark'))!!}
+            {{ html()->a(action([\App\Http\Controllers\PageController::class, 'finance_cc_deposit'],now()->format('Ymd')),'Credit Card (Internet) bank deposit report')
+                ->class('m-2 btn btn-outline-dark')
+            }}
         </div>
     
         <div class="col-lg-2 col-md-4">       
             <h5>Deposit Reports</h5>
             
-                {!! Html::link(action([\App\Http\Controllers\PageController::class, 'finance_deposits']),'Retreat
-                    deposits
-                    report',array('class' => 'm-2 btn btn-outline-dark'))!!}
-                {!! Html::link(action([\App\Http\Controllers\PageController::class,
-                    'finance_reconcile_deposit_show']),'Unreconciled open deposits',array('class' =>
-                    'm-2 btn btn-outline-dark'))!!}
+                {{ html()->a(action([\App\Http\Controllers\PageController::class, 'finance_deposits']),'Retreat deposits report')
+                    ->class('m-2 btn btn-outline-dark')
+                }}
+                {{ html()->a(action([\App\Http\Controllers\PageController::class, 'finance_reconcile_deposit_show']),'Unreconciled open deposits')
+                    ->class('m-2 btn btn-outline-dark')
+                }}
         </div>
             
         <div class="col-lg-2 col-md-4">         
             <h5>Donation Reports</h5>
             
-                {!! Html::link(action([\App\Http\Controllers\PageController::class,
-                    'finance_retreatdonations'],'201601'),'Retreat donation report',array('class' =>
-                    'm-2 btn btn-outline-dark'))!!}
-                {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'overpaid']),'Overpaid
-                    donations',array('class' => 'm-2 btn btn-outline-dark'))!!}
+                {{ html()->a(action([\App\Http\Controllers\PageController::class, 'finance_retreatdonations'],'201601'),'Retreat donation report')
+                    ->class('m-2 btn btn-outline-dark')
+                }}
+                {{ html()->a(action([\App\Http\Controllers\DonationController::class, 'overpaid']),'Overpaid donations')
+                    ->class('m-2 btn btn-outline-dark')
+                }}
         </div>
             
         <div class="col-lg-2 col-md-4">         
             <h5>Other Reports</h5>
      
-                {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'mergeable']),'Mergeable Donations',
-                array('class' => 'm-2 btn btn-outline-dark'))!!}
+                {{ html()->a(action([\App\Http\Controllers\DonationController::class, 'mergeable']),'Mergeable Donations',)
+                    ->class('m-2 btn btn-outline-dark')
+                }}
 
         </div>
     </div>

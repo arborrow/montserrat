@@ -1,11 +1,11 @@
 <div class="form-group">
     <div class="row">
         <div class="col-lg-3 col-md-4">
-            {!! Form::label('primary_phone_location_id', 'Primary phone:') !!}
+            {{ html()->label('Primary phone:', 'primary_phone_location_id') }}
             @if ($person->primary_phone_location_type_id == 0)
-                {!! Form::select('primary_phone_location_id', $primary_phones, config('polanco.location_type.home').":Phone", ['class' => 'form-control']) !!}
+                {{ html()->select('primary_phone_location_id', $primary_phones, config('polanco.location_type.home') . ":Phone")->class('form-control') }}
             @else
-                {!! Form::select('primary_phone_location_id', $primary_phones, $person->primary_phone_location_type_id.":".$person->primary_phone_type, ['class' => 'form-control']) !!}
+                {{ html()->select('primary_phone_location_id', $primary_phones, $person->primary_phone_location_type_id . ":" . $person->primary_phone_type)->class('form-control') }}
             @endIf
         </div>
     </div>
@@ -52,16 +52,16 @@
 
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_home_phone', 'Main:') !!}
-                    {!! Form::text('phone_home_phone', $defaults['Home']['Phone'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Main:', 'phone_home_phone') }}
+                    {{ html()->text('phone_home_phone', $defaults['Home']['Phone'])->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_home_mobile', 'Mobile:') !!}
-                    {!! Form::text('phone_home_mobile', $defaults['Home']['Mobile'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Mobile:', 'phone_home_mobile') }}
+                    {{ html()->text('phone_home_mobile', $defaults['Home']['Mobile'])->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_home_fax', 'Fax:') !!}
-                    {!! Form::text('phone_home_fax', $defaults['Home']['Fax'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Fax:', 'phone_home_fax') }}
+                    {{ html()->text('phone_home_fax', $defaults['Home']['Fax'])->class('form-control') }}
                 </div>
             </div>
         </div>
@@ -74,16 +74,16 @@
 
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_work_phone', 'Main:') !!}
-                    {!! Form::text('phone_work_phone', $defaults['Work']['Phone'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Main:', 'phone_work_phone') }}
+                    {{ html()->text('phone_work_phone', $defaults['Work']['Phone'])->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_work_mobile', 'Mobile:') !!}
-                    {!! Form::text('phone_work_mobile', $defaults['Work']['Mobile'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Mobile:', 'phone_work_mobile') }}
+                    {{ html()->text('phone_work_mobile', $defaults['Work']['Mobile'])->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_work_fax', 'Fax:') !!}
-                    {!! Form::text('phone_work_fax', $defaults['Work']['Fax'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Fax:', 'phone_work_fax') }}
+                    {{ html()->text('phone_work_fax', $defaults['Work']['Fax'])->class('form-control') }}
                 </div>
             </div>
         </div>
@@ -96,26 +96,26 @@
 
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_other_phone', 'Main:') !!}
-                    {!! Form::text('phone_other_phone', $defaults['Other']['Phone'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Main:', 'phone_other_phone') }}
+                    {{ html()->text('phone_other_phone', $defaults['Other']['Phone'])->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_other_mobile', 'Mobile:') !!}
-                    {!! Form::text('phone_other_mobile', $defaults['Other']['Mobile'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Mobile:', 'phone_other_mobile') }}
+                    {{ html()->text('phone_other_mobile', $defaults['Other']['Mobile'])->class('form-control') }}
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('phone_other_fax', 'Fax:') !!}
-                    {!! Form::text('phone_other_fax', $defaults['Other']['Fax'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Fax:', 'phone_other_fax') }}
+                    {{ html()->text('phone_other_fax', $defaults['Other']['Fax'])->class('form-control') }}
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div class="form-group form-check">
-    {!! Form::checkbox('do_not_phone', 1, $person->do_not_phone,['class' => 'form-check-input', 'id' => 'do_not_phone']) !!}
-    {!! Form::label('do_not_phone', 'Do not call', ['class' => 'form-check-label', 'id' => 'do_not_phone']) !!}
+    {{ html()->checkbox('do_not_phone', $person->do_not_phone, 1)->class('form-check-input')->id('do_not_phone') }}
+    {{ html()->label('Do not call', 'do_not_phone')->class('form-check-label')->id('do_not_phone') }}
 </div>
 <div class="form-group form-check">
-    {!! Form::checkbox('do_not_sms', 1, $person->do_not_sms,['class' => 'form-check-input', 'id' => 'do_not_sms']) !!}
-    {!! Form::label('do_not_sms', 'Do not text', ['class' => 'form-check-label', 'id' => 'do_not_sms']) !!}
+    {{ html()->checkbox('do_not_sms', $person->do_not_sms, 1)->class('form-check-input')->id('do_not_sms') }}
+    {{ html()->label('Do not text', 'do_not_sms')->class('form-check-label')->id('do_not_sms') }}
 </div>

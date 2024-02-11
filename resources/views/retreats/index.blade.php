@@ -8,14 +8,14 @@
             <span class="options">
                 @can('create-retreat')
                     <a href={{ action([\App\Http\Controllers\RetreatController::class, 'create']) }}>
-                        {!! Html::image('images/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-light')) !!}
+                        {{ html()->img(asset('images/create.png'), 'Create a Retreat')->attribute('title', "Create Retreat")->class('btn btn-light') }}
                     </a>
                 @endCan
                 <a href="#previous">
                     <i class="fas fa-history" title="Previous Retreats"></i>
                 </a>
                 <a href={{ action([\App\Http\Controllers\RetreatController::class, 'search']) }}>
-                    {!! Html::image('images/search.png', 'Search retreats',array('title'=>"Search retreats",'class' => 'btn btn-link')) !!}
+                    {{ html()->img(asset('images/search.png'), 'Search retreats')->attribute('title', "Search retreats")->class('btn btn-link') }}
                 </a>
             </span>
         </h2>

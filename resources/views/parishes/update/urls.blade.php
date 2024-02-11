@@ -41,48 +41,48 @@
         <div id="url_main" class="tab-pane fade show active" role="tabpanel">
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('url_main', 'Personal (main):')  !!}
-                    {!! Form::text('url_main', $defaults['Main']['url'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Personal (main):', 'url_main') }}
+                    {{ html()->text('url_main', $defaults['Main']['url'])->class('form-control') }}
                 </div>
             </div>
         </div>
         <div id="url_work" class="tab-pane fade" role="tabpanel">
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('url_work', 'Work:')  !!}
-                    {!! Form::text('url_work', $defaults['Work']['url'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Work:', 'url_work') }}
+                    {{ html()->text('url_work', $defaults['Work']['url'])->class('form-control') }}
                 </div>
             </div>
         </div>
         <div id="url_facebook" class="tab-pane fade" role="tabpanel">
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('url_facebook', 'Facebook:')  !!}
-                    {!! Form::text('url_facebook', $defaults['Facebook']['url'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Facebook:', 'url_facebook') }}
+                    {{ html()->text('url_facebook', $defaults['Facebook']['url'])->class('form-control') }}
                 </div>
             </div>
         </div>
         <div id="url_instagram" class="tab-pane fade" role="tabpanel">
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('url_instagram', 'Instagram:')  !!}
-                    {!! Form::text('url_instagram', $defaults['Instagram']['url'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Instagram:', 'url_instagram') }}
+                    {{ html()->text('url_instagram', $defaults['Instagram']['url'])->class('form-control') }}
                 </div>
             </div>
         </div>
         <div id="url_linkedin" class="tab-pane fade" role="tabpanel">
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('url_linkedin', 'LinkedIn:')  !!}
-                    {!! Form::text('url_linkedin', $defaults['LinkedIn']['url'], ['class' => 'form-control']) !!}
+                    {{ html()->label('LinkedIn:', 'url_linkedin') }}
+                    {{ html()->text('url_linkedin', $defaults['LinkedIn']['url'])->class('form-control') }}
                 </div>
             </div>
         </div>
         <div id="url_twitter" class="tab-pane fade" role="tabpanel">
             <div class="row">
                 <div class="col-lg-3 col-md-4">
-                    {!! Form::label('url_twitter', 'Twitter:')  !!}
-                    {!! Form::text('url_twitter', $defaults['Twitter']['url'], ['class' => 'form-control']) !!}
+                    {{ html()->label('Twitter:', 'url_twitter') }}
+                    {{ html()->text('url_twitter', $defaults['Twitter']['url'])->class('form-control') }}
                 </div>
             </div>
         </div>

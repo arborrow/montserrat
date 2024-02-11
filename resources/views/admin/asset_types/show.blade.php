@@ -27,12 +27,12 @@
         <div class="row">
             <div class="col-lg-6 mt-4 mb-4">
                 @can('update-asset-type')
-                    <a href="{{ action([\App\Http\Controllers\AssetTypeController::class, 'edit'], $asset_type->id) }}" class="btn btn-info mr-4">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\AssetTypeController::class, 'edit'], $asset_type->id) }}" class="btn btn-info mr-4">{{ html()->img(asset('images/edit.png'), 'Edit')->attribute('title', "Edit") }}</a>
                 @endCan
                 @can('delete-asset-type')
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['asset_type.destroy', $asset_type->id],'onsubmit'=>'return ConfirmDelete()','class' => 'd-inline']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                    {!! Form::close() !!}
+                    {{ html()->form('DELETE', route('asset_type.destroy', [$asset_type->id]))->attribute('onsubmit', 'return ConfirmDelete()')->class('d-inline')->open() }}
+                    {{ html()->input('image', 'btnDelete')->class('btn btn-danger')->attribute('title', 'Delete')->attribute('src', asset('images/delete.png')) }}
+                    {{ html()->form()->close() }}
                 @endCan
             </div>
         </div>
