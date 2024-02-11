@@ -38,6 +38,8 @@
                             {{ html()->label('Balance Transaction ID', 'stripe_balance_transaction_id') }}
                             {{ html()->number('stripe_balance_transaction_id', $payment->stripe_balance_transaction_id)->class('form-control') }}
                         </div>
+                    @else
+                        {{ html()->hidden('stripe_balance_transaction_id', $payment->stripe_balance_transaction_id) }}
                     @endif
                 </div>
             </div>
