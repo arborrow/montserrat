@@ -241,7 +241,7 @@ class Retreat extends Model implements Auditable
     public function getRetreatScheduleLinkAttribute()
     {
         if (Storage::has('event/'.$this->id.'/schedule.pdf')) {
-            $img = Html::image('images/schedule.png', 'Schedule', ['title' => 'Schedule']);
+            $img = html()->img(asset('images/schedule.png'), 'Schedule')->attribute('title', 'Schedule');
             $link = '<a href="'.url('retreat/'.$this->id.'/schedule" ').'class="btn btn-default" style="padding: 3px;">'.$img.'Schedule</a>';
 
             return $link;
@@ -253,7 +253,7 @@ class Retreat extends Model implements Auditable
     public function getRetreatContractLinkAttribute()
     {
         if (Storage::has('event/'.$this->id.'/contract.pdf')) {
-            $img = Html::image('images/contract.png', 'Contract', ['title' => 'Contract']);
+            $img = html()->img(asset('images/contract.png'), 'Contract')->attribute('title', 'Contract');
             $link = '<a href="'.url('retreat/'.$this->id.'/contract" ').'class="btn btn-default" style="padding: 3px;">'.$img.'Contract</a>';
 
             return $link;
@@ -265,7 +265,7 @@ class Retreat extends Model implements Auditable
     public function getRetreatEvaluationsLinkAttribute()
     {
         if (Storage::has('event/'.$this->id.'/evaluations.pdf')) {
-            $img = Html::image('images/evaluation.png', 'Evaluations', ['title' => 'Evaluations']);
+            $img = html()->img(asset('images/evaluation.png'), 'Evaluations')->attribute('title', 'Evaluations');
             $link = '<a href="'.url('retreat/'.$this->id.'/evaluations" ').'class="btn btn-default" style="padding: 3px;">'.$img.'Evaluation</a>';
 
             return $link;

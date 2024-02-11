@@ -28,8 +28,15 @@ class PostRetreat extends Mailable
      */
     public function build(): static
     {
-        return $this->subject('Post Retreat Group Picture '.$this->participant->contact->display_name)
-                    ->replyTo('registration@montserratretreat.org')
-                    ->view('emails.post-retreat');
+
+        if ($this->participant->preferred_language == 'es_ES') {
+            return $this->replyTo('registration@montserratretreat.org')
+                        ->subject('Foto del grupo despues del retiro para '.$this->participant->contact->display_name)
+                        ->view('emails.es_ES.post-retreat');
+        } else { //en_US is the default language
+            return $this->replyTo('registration@montserratretreat.org')
+                        ->subject('Post Retreat Group Picture '.$this->participant->contact->display_name)
+                        ->view('emails.en_US.post-retreat');
+        }
     }
 }

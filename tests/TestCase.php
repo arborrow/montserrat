@@ -8,7 +8,7 @@ use JMac\Testing\Traits\AdditionalAssertions;
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, AdditionalAssertions;
-
+    
     protected function stristrarray($array, $str)
     {
         //This array will hold the indexes of every
@@ -73,7 +73,7 @@ abstract class TestCase extends BaseTestCase
                 break;
             case 'datetime':
                 if (! is_null($field_value)) {
-                    $field_value_string = 'value="'.$field_value->format('Y-m-d\TH:i:sP').'"';
+                    $field_value_string = 'value="'.$field_value->format('Y-m-d\TH:i:s').'"';
                 } else {
                     return true;
                 }

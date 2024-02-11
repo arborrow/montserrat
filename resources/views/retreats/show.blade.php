@@ -101,9 +101,9 @@
                 <span class="font-weight-bold">Status: </span>{{ $retreat->is_active == 0 ? 'Canceled' : 'Active' }} <br>
                 @can('show-donation')
                     <span class="font-weight-bold">Donations: </span>
-                    {!! Html::link('report/finance/retreatdonations/'.$retreat->idnumber,
+                    {{ html()->a('report/finance/retreatdonations/'.$retreat->idnumber,
                         ($retreat->donations_pledged_sum)>0 ? '$'.number_format($retreat->donations_pledged_sum,2) : '$'.number_format(0,2))
-                    !!}
+                    }}
                     @can('update-donation')
                         @if ($retreat->hasDeposits && $retreat->end_date < now())
                             ({{ html()->a(url('donation/process_deposits/' . $retreat->id), "Process Retreat Deposits") }})
@@ -202,7 +202,7 @@
                     {{$registrations->total()}} Registrations
                     {{($status ? '('.ucfirst($status).')' : NULL) }} for
                     @can('update-retreat')
-                    {{ html()->a(url(url('retreat/' . $retreat->id . '/edit')), $retreat->title . ' (' . $retreat->idnumber . ')') }}
+                    {{ html()->a(url('retreat/' . $retreat->id . '/edit'), $retreat->title . ' (' . $retreat->idnumber . ')') }}
                     @else
                     {{$retreat->title.' ('.$retreat->idnumber.')'}}
                     @endCan
