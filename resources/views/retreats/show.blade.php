@@ -101,7 +101,7 @@
                 <span class="font-weight-bold">Status: </span>{{ $retreat->is_active == 0 ? 'Canceled' : 'Active' }} <br>
                 @can('show-donation')
                     <span class="font-weight-bold">Donations: </span>
-                    {{ html()->a('report/finance/retreatdonations/'.$retreat->idnumber,
+                    {{ html()->a(url('report/finance/retreatdonations/'.$retreat->idnumber),
                         ($retreat->donations_pledged_sum)>0 ? '$'.number_format($retreat->donations_pledged_sum,2) : '$'.number_format(0,2))
                     }}
                     @can('update-donation')
