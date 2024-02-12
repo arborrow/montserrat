@@ -7,7 +7,7 @@
         <p>Use this page to test snippets by sending an email to your self with fake data.</p>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'admin/snippet/test')->open() }}
+        {{ html()->form('POST', url('admin/snippet/test'))->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3">

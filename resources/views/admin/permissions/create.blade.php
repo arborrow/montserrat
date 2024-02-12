@@ -6,7 +6,7 @@
         <h1>Create Permission</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'admin/permission')->class('form-horizontal panel')->open() }}
+        {{ html()->form('POST', url('admin/permission'))->class('form-horizontal panel')->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">

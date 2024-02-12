@@ -4,7 +4,7 @@
 <section class="section-padding">
     <div class="jumbotron text-left">
         <h2><strong>Create Relationship Type</strong></h2>
-        {{ html()->form('POST', 'relationship_type')->class('form-horizontal panel')->open() }}
+        {{ html()->form('POST', url('relationship_type'))->class('form-horizontal panel')->open() }}
         <span>
             <div class='row'>
                 {{ html()->label('Name A-B:', 'name_a_b')->class('col-md-1') }}

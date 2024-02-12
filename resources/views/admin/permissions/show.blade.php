@@ -20,7 +20,7 @@
     </div>
     <div class="col-lg-12">
         @can('manage-permission')
-            {{ html()->form('POST', route('admin.permission.update_roles', ))->open() }}
+            {{ html()->form('POST', url('admin/permission/update_roles'))->open() }}
                 <div class="form-group">
                     {{ html()->hidden('id', $permission->id) }}
                     {{ html()->label('Assigned roles:', 'roles') }}

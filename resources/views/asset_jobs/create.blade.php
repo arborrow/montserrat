@@ -6,7 +6,7 @@
         <h1>Create asset job</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'asset_job')->acceptsFiles()->open() }}
+        {{ html()->form('POST', url('asset_job'))->acceptsFiles()->open() }}
         <div class="form-group">
 
             <h3 class="text-primary">Job info</h3>

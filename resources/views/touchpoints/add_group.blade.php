@@ -4,7 +4,7 @@
 <section class="section-padding">
     <div class="jumbotron text-left">
         <h2><strong>Create Group Touchpoint</strong></h2>
-        {{ html()->form('POST', 'touchpoint/add_group')->class('form-horizontal panel')->open() }}
+        {{ html()->form('POST', url('touchpoint/add_group'))->class('form-horizontal panel')->open() }}
         <span>
             <div class='row'>
                     {{ html()->label('Date of contact:', 'touched_at')->class('col-md-3') }}

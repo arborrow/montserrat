@@ -6,7 +6,7 @@
         <h1>Create location</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'admin/location')->open() }}
+        {{ html()->form('POST', url('admin/location'))->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">

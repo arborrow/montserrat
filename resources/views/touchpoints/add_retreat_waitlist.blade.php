@@ -4,7 +4,7 @@
 <section class="section-padding">
     <div class="jumbotron text-left">
         <h2><strong>Create Retreat Waitlist Touchpoint for {{$retreat->title}}</strong></h2>
-        {{ html()->form('POST', 'touchpoint/add_retreat_waitlist')->class('form-horizontal panel')->open() }}
+        {{ html()->form('POST', url('touchpoint/add_retreat_waitlist'))->class('form-horizontal panel')->open() }}
         <span>
             <h3>A retreat touchpoint will add a touchpoint to each of the retreatants currently on the waitlist.</h3>
             <div class='row'>

@@ -4,7 +4,7 @@
 <section class="section-padding">
     <div class="jumbotron text-left">
         <h2><strong>Create Activity</strong></h2>
-        {{ html()->form('POST', 'activity')->class('form-horizontal panel')->open() }}
+        {{ html()->form('POST', url('activity'))->class('form-horizontal panel')->open() }}
         <span>
             <div class='row'>
                 {{ html()->label('Date of activity:', 'activity_date_time')->class('col-md-3') }}

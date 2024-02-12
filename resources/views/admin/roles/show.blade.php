@@ -30,7 +30,7 @@
     </div>
     @can('manage-permission')             
         <div class="col-lg-12">
-            {{ html()->form('POST', route('role.update_permissions', ))->open() }}
+            {{ html()->form('POST', url('admin/role/update_permissions', ))->open() }}
                 {{ html()->hidden('id', $role->id) }}
                 <div class="form-group">
                     <div class="row">
@@ -48,7 +48,7 @@
             {{ html()->form()->close() }}
         </div>
         <div class="col-lg-12 mt-5">
-            {{ html()->form('POST', route('role.update_users', ))->open() }}
+            {{ html()->form('POST', url('admin/role/update_users'))->open() }}
             {{ html()->hidden('id', $role->id) }}
                 <div class="form-group">
                     <div class="row">

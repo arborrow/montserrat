@@ -6,7 +6,7 @@
         <h1>Create unit of measure</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'admin/uom')->open() }}
+        {{ html()->form('POST', url('admin/uom'))->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">

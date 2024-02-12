@@ -5,7 +5,7 @@
 		<h2>Create Touchpoint</h2>
     </div>
 	<div class="col-lg-12">
-        {{ html()->form('POST', 'touchpoint')->open() }}
+        {{ html()->form('POST', url('touchpoint'))->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">

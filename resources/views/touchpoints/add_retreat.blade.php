@@ -6,7 +6,7 @@
         <h3>A retreat touchpoint will add a touchpoint to each of the retreat participants.</h3>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'touchpoint/add_retreat')->class('form-horizontal panel')->open() }}
+        {{ html()->form('POST', url('touchpoint/add_retreat'))->class('form-horizontal panel')->open() }}
             <div class="form-group">
                 <div class='row'>
                         {{ html()->label('Date of contact:', 'touched_at')->class('col-lg-2') }}

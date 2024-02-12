@@ -4,7 +4,7 @@
 <section class="section-padding">
     <div class="jumbotron text-left">
         <h2><strong>Create Group</strong></h2>
-        {{ html()->form('POST', 'group')->class('form-horizontal panel')->open() }}
+        {{ html()->form('POST', url('group'))->class('form-horizontal panel')->open() }}
         <span>
             <div class='row'>
                 {{ html()->label('Name:', 'name')->class('col-md-3') }}

@@ -3,7 +3,7 @@
 
 <section class="section-padding">
     <div class="jumbotron text-left">
-        {{ html()->form('POST', 'relationship/add')->class('form-horizontal panel')->open() }}
+        {{ html()->form('POST', url('relationship/add'))->class('form-horizontal panel')->open() }}
         {{ html()->hidden('relationship_type_id', $relationship_type->id) }}
         {{ html()->hidden('direction', $direction) }}
         @if ($direction == 'a')

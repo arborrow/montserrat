@@ -36,7 +36,7 @@
 
 
     <div class="col-lg-12">
-        {{ html()->form('POST', 'gift_certificate')->acceptsFiles()->open() }}
+        {{ html()->form('POST', url('gift_certificate'))->acceptsFiles()->open() }}
         <div class="form-group">
             <div class="border  border-secondary m-2 p-2">
                 <h3 class="text-primary">Info</h3>

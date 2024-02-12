@@ -4,7 +4,7 @@
 <div class="row bg-cover">
     <div class="col-lg-12">
         <h1>Add a Diocese</h1>
-        {{ html()->form('POST', 'diocese')->class('form-horizontal panel')->open() }}
+        {{ html()->form('POST', url('diocese'))->class('form-horizontal panel')->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-12 col-lg-4">

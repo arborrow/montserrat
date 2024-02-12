@@ -6,7 +6,7 @@
         <h1>Add a Vendor</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'vendor')->class('form-horizontal panel')->open() }}
+        {{ html()->form('POST', url('vendor'))->class('form-horizontal panel')->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-12 col-lg-4">

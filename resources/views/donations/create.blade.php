@@ -6,7 +6,7 @@
         <h1>Create Donation</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'donation')->open() }}
+        {{ html()->form('POST', url('donation'))->open() }}
             <div class="row">
                 <div class="col-lg-12">
                     <h2>Basic Details</h2>

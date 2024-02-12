@@ -6,7 +6,7 @@
         <h1>Create asset task</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'asset_task')->acceptsFiles()->open() }}
+        {{ html()->form('POST', url('asset_task'))->acceptsFiles()->open() }}
         <div class="form-group">
             <div class="row">
                 <div class="col-lg-3">

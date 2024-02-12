@@ -6,7 +6,7 @@
         <h2>Create Person</h2>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'person')->acceptsFiles()->open() }}
+        {{ html()->form('POST', url('person'))->acceptsFiles()->open() }}
         <div class="row">
             <div class="col-lg-12">
                 <h3>Basic Information</h3>

@@ -6,7 +6,7 @@
         <h1>Create snippet</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'admin/snippet')->open() }}
+        {{ html()->form('POST', url('admin/snippet'))->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3">

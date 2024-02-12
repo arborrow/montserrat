@@ -6,7 +6,7 @@
         <h1>Add an Organization</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'organization')->open() }}
+        {{ html()->form('POST', url('organization'))->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-12 col-lg-4">

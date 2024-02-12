@@ -6,7 +6,7 @@
         <h1>Create payment for <a href="{{url('donation/'.$donation->donation_id)}}">Donation {{$donation->donation_id}}</a></h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'payment')->open() }}
+        {{ html()->form('POST', url('payment'))->open() }}
         {{ html()->hidden('donation_id', $donation->donation_id) }}
             <div class="form-group">
                 <div class="row">

@@ -6,7 +6,7 @@
         <h1>Create donation type</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'admin/donation_type')->open() }}
+        {{ html()->form('POST', url('admin/donation_type'))->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">

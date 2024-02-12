@@ -7,7 +7,7 @@
     </div>
 
     <div class="col-lg-12">
-        {{ html()->form('POST', 'admin/export_list')->open() }}
+        {{ html()->form('POST', url('admin/export_list'))->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-4">

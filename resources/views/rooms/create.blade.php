@@ -4,7 +4,7 @@
 <section class="section-padding">
     <div class="jumbotron text-left">
         <h2><strong>Add A Room</strong></h2>
-        {{ html()->form('POST', 'room')->class('form-horizontal panel')->open() }}
+        {{ html()->form('POST', url('room'))->class('form-horizontal panel')->open() }}
         <div class="form-group">
 
             {{ html()->label('Location:', 'location_id')->class('col-md-1') }}

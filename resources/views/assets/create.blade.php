@@ -6,7 +6,7 @@
         <h1>Create asset</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'asset')->acceptsFiles()->open() }}
+        {{ html()->form('POST', url('asset'))->acceptsFiles()->open() }}
         <div class="form-group">
 
             <h3 class="text-primary">General information</h3>

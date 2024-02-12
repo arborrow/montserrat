@@ -6,7 +6,7 @@
         <h1>Create address</h1>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'address')->open() }}
+        {{ html()->form('POST', url('address'))->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-4 col-md-6">

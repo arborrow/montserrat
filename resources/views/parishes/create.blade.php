@@ -5,7 +5,7 @@
         <h2>Add a Parish</h2>
     </div>
     <div class="col-lg-12">
-        {{ html()->form('POST', 'parish')->open() }}
+        {{ html()->form('POST', url('parish'))->open() }}
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-4">
