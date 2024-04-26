@@ -111,6 +111,7 @@ return [
     'donation_descriptions' => [
         'N/A' => '',
         'Annual Giving Campaign' => 'AGC - General',
+        'Bookstore' => 'Bookstore Revenue',
         'Building & Maintenance Fund' => 'AGC - Buildings & Maintenance',
         'Flowers and Landscaping' => 'Flowers and Landscaping',
         'Memorial Donation' => 'Memorials',
