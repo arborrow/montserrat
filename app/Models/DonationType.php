@@ -19,8 +19,8 @@ class DonationType extends Model implements Auditable
      The name field is more of a longer description to be used in reports.  The value field refers to the Quickbooks chart of accounts number.
      */
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'donation_type';
 

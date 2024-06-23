@@ -78,6 +78,7 @@ class MailgunController extends Controller
     public function edit(int $id)
     {
         $this->authorize('admin-mailgun');
+
         // $message = Message::with('contact_from','contact_to')->findOrFail($id);
         // return view('mailgun.edit', compact('message'));
         return Redirect::action([MailgunController::class, 'index']);

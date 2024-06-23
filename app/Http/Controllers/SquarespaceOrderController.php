@@ -210,10 +210,10 @@ class SquarespaceOrderController extends Controller
         $order->address_supplemental = $request->input('address_supplemental');
         $order->address_city = $request->input('address_city');
         $state = ($request->filled('address_state_id')) ? StateProvince::findOrFail(($request->input('address_state_id'))) : null;
-        $order->address_state = (null !== $state?->abbreviation) ? $state?->abbreviation : $order->address_state;
+        $order->address_state = ($state?->abbreviation !== null) ? $state?->abbreviation : $order->address_state;
         $order->address_zip = $request->input('address_zip');
         $country = ($request->filled('address_country_id')) ? Country::findOrFail(($request->input('address_country_id'))) : null;
-        $order->address_country = (null !== $country?->iso_code) ? $country?->iso_code : $order->address_country;
+        $order->address_country = ($country?->iso_code !== null) ? $country?->iso_code : $order->address_country;
         $order->dietary = $request->input('dietary');
         $order->couple_dietary = $request->input('couple_dietary');
         $order->date_of_birth = $request->input('date_of_birth');
@@ -221,7 +221,7 @@ class SquarespaceOrderController extends Controller
         $order->room_preference = $request->input('room_preference');
 
         $preferred_language = ($request->filled('preferred_language_id')) ? Language::findOrFail($request->input('preferred_language_id')) : null;
-        $order->preferred_language = (null !== $preferred_language?->label) ? $preferred_language?->label : $order->preferred_language;
+        $order->preferred_language = ($preferred_language?->label !== null) ? $preferred_language?->label : $order->preferred_language;
         $english_language = Language::whereName('en_US')->first();
 
         if (isset($preferred_language)) {
@@ -601,7 +601,7 @@ class SquarespaceOrderController extends Controller
                     $gift_certificate->save();
                 }
 
-//                dd($request->input('send_fulfillment'), $request->filled('email'), $tmp );
+                //                dd($request->input('send_fulfillment'), $request->filled('email'), $tmp );
                 if ($request->input('send_fulfillment') && $request->filled('email')) {
                     // generate email
                     try {

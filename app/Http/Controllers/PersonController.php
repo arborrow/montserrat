@@ -154,14 +154,14 @@ class PersonController extends Controller
 
         $person->save();
 
-        if (null !== $request->input('agc_household_name')) {
+        if ($request->input('agc_household_name') !== null) {
             $agc2019 = \App\Models\Agc2019::findOrNew($person->id);
             $agc2019->contact_id = $person->id;
             $agc2019->household_name = $request->input('agc_household_name');
             $agc2019->save();
         }
 
-        if (null !== $request->file('avatar')) {
+        if ($request->file('avatar') !== null) {
             $description = 'Avatar for '.$person->full_name;
             $attachment = new AttachmentController;
             $attachment->store_attachment($request->file('avatar'), 'contact', $person->id, 'avatar', $description);
@@ -474,7 +474,7 @@ class PersonController extends Controller
         $other_address->country_id = $request->input('address_other_country');
         $other_address->save();
 
-        if ((null !== $request->input('primary_phone_location_id'))) {
+        if (($request->input('primary_phone_location_id') !== null)) {
             $primary_phone_input = explode(':', $request->input('primary_phone_location_id'));
         } else {
             $primary_phone_input[0] = 0;
@@ -717,7 +717,7 @@ class PersonController extends Controller
      * Display the name and mailing address for a contact.
      *
      * @return \Illuminate\Http\Response
-     * TODO: Shift suggestion - review these instances for dynamic validation rules - handle in a custom request like EnvelopeRequest
+     *                                   TODO: Shift suggestion - review these instances for dynamic validation rules - handle in a custom request like EnvelopeRequest
      */
     public function envelope(int $id, Request $request)
     {
@@ -998,13 +998,13 @@ class PersonController extends Controller
         }
 
         $person->save();
-        if (null !== $request->file('avatar')) {
+        if ($request->file('avatar') !== null) {
             $description = 'Avatar for '.$person->full_name;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('avatar'), 'contact', $person->id, 'avatar', $description);
         }
 
-        if (null !== $request->file('attachment')) {
+        if ($request->file('attachment') !== null) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $person->id, 'attachment', $description);
@@ -1104,7 +1104,7 @@ class PersonController extends Controller
         $other_address->country_id = $request->input('address_other_country');
         $other_address->save();
 
-        if ((null !== $request->input('primary_phone_location_id'))) {
+        if (($request->input('primary_phone_location_id') !== null)) {
             $primary_phone_input = explode(':', $request->input('primary_phone_location_id'));
         } else {
             $primary_phone_input[0] = 0;
@@ -1543,7 +1543,7 @@ class PersonController extends Controller
             $group_assistant->save();
         }
 
-        if (null !== $request->input('agc_household_name')) {
+        if ($request->input('agc_household_name') !== null) {
             $agc2019 = \App\Models\Agc2019::findOrNew($person->id);
             $agc2019->contact_id = $person->id;
             $agc2019->household_name = $request->input('agc_household_name');
@@ -1776,6 +1776,7 @@ class PersonController extends Controller
         $duplicates = \App\Models\Contact::whereIn('id', function ($query) {
             $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(null)->havingRaw('count(*)>1');
         })->orderBy('sort_name')->paginate(25, ['*'], 'duplicates');
+
         // dd($duplicates,$duplicates->total());
         return view('persons.duplicates', compact('duplicates'));
     }
@@ -1897,7 +1898,7 @@ class PersonController extends Controller
                 $contact->save();
 
                 //addresses
-                if (null === $contact->address_primary) {
+                if ($contact->address_primary === null) {
                     $contact->address_primary = new \App\Models\Address;
                     $contact->address_primary->contact_id = $contact->id;
                     $contact->address_primary->is_primary = 1;
@@ -1926,7 +1927,7 @@ class PersonController extends Controller
                 $contact->address_primary->save();
 
                 //emergency_contact_info
-                if (null === $contact->emergency_contact) {
+                if ($contact->emergency_contact === null) {
                     $contact->emergency_contact = new \App\Models\EmergencyContact;
                     $contact->emergency_contact->contact_id = $contact->id;
                 }

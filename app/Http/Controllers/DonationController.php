@@ -37,6 +37,7 @@ class DonationController extends Controller
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
         // dd($donation_descriptions);
         $donations = Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix', 'retreat')->paginate(25, ['*'], 'donations');
+
         //dd($donations);
         return view('donations.index', compact('donations', 'donation_descriptions'));
     }
@@ -88,13 +89,13 @@ class DonationController extends Controller
     {
         $this->authorize('show-donation');
         $overpaid = DB::table('Donations_payment as p')
-         ->select(DB::raw('d.contact_id, c.sort_name, d.donation_id, d.donation_date, ROUND(SUM(p.payment_amount),2) as paid, ROUND(d.donation_amount,2) as pledged'))
-         ->leftjoin('Donations as d', 'd.donation_id', '=', 'p.donation_id')
-         ->leftjoin('contact as c', 'd.contact_id', '=', 'c.id')
-         ->whereRaw('d.deleted_at IS NULL AND p.deleted_at IS NULL')
-         ->groupBy('p.donation_id')
-         ->havingRaw('paid>pledged')
-         ->orderBy('d.donation_date', 'DESC')->get();
+            ->select(DB::raw('d.contact_id, c.sort_name, d.donation_id, d.donation_date, ROUND(SUM(p.payment_amount),2) as paid, ROUND(d.donation_amount,2) as pledged'))
+            ->leftjoin('Donations as d', 'd.donation_id', '=', 'p.donation_id')
+            ->leftjoin('contact as c', 'd.contact_id', '=', 'c.id')
+            ->whereRaw('d.deleted_at IS NULL AND p.deleted_at IS NULL')
+            ->groupBy('p.donation_id')
+            ->havingRaw('paid>pledged')
+            ->orderBy('d.donation_date', 'DESC')->get();
 
         return view('donations.overpaid', compact('overpaid'));
     }
@@ -104,12 +105,13 @@ class DonationController extends Controller
     {   // contact id 5847 hardcoded for anonymous user
         $this->authorize('show-donation');
         $mergeable = DB::table('Donations as d')
-         ->select(DB::raw('CONCAT(d.contact_id,"-",d.event_id,"-",d.donation_description) as unique_value, COUNT(*) as donation_count, MAX(d.donation_date) as donation_date, MIN(d.donation_id) as min_donation_id, MAX(d.donation_id) as max_donation_id, MIN(c.sort_name) as sort_name, MIN(e.idnumber) as idnumber, MIN(e.title) as event_title, MIN(d.donation_description) as donation_description, MIN(d.contact_id) as contact_id'))
-         ->leftjoin('event as e', 'd.event_id', '=', 'e.id')
-         ->leftjoin('contact as c', 'd.contact_id', '=', 'c.id')
-         ->whereRaw('d.deleted_at IS NULL AND d.donation_amount>0 AND d.contact_id IS NOT NULL AND d.event_id IS NOT NULL AND d.donation_description IS NOT NULL AND d.contact_id <> 5847 AND d.donation_date>="2021-07-01"')
-         ->groupByRaw('CONCAT(d.contact_id,"-",d.event_id,"-",d.donation_description)')
-         ->havingRaw('COUNT(*)>1')->paginate(25, ['*'], 'mergeable');
+            ->select(DB::raw('CONCAT(d.contact_id,"-",d.event_id,"-",d.donation_description) as unique_value, COUNT(*) as donation_count, MAX(d.donation_date) as donation_date, MIN(d.donation_id) as min_donation_id, MAX(d.donation_id) as max_donation_id, MIN(c.sort_name) as sort_name, MIN(e.idnumber) as idnumber, MIN(e.title) as event_title, MIN(d.donation_description) as donation_description, MIN(d.contact_id) as contact_id'))
+            ->leftjoin('event as e', 'd.event_id', '=', 'e.id')
+            ->leftjoin('contact as c', 'd.contact_id', '=', 'c.id')
+            ->whereRaw('d.deleted_at IS NULL AND d.donation_amount>0 AND d.contact_id IS NOT NULL AND d.event_id IS NOT NULL AND d.donation_description IS NOT NULL AND d.contact_id <> 5847 AND d.donation_date>="2021-07-01"')
+            ->groupByRaw('CONCAT(d.contact_id,"-",d.event_id,"-",d.donation_description)')
+            ->havingRaw('COUNT(*)>1')->paginate(25, ['*'], 'mergeable');
+
         // dd($mergeable);
         return view('donations.mergeable', compact('mergeable'));
     }
@@ -191,9 +193,9 @@ class DonationController extends Controller
 
         if (is_null($unthanked)) {
             $all_donations = Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')
-            ->get();
+                ->get();
             $donations = Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')
-            ->paginate(25, ['*'], 'donations');
+                ->paginate(25, ['*'], 'donations');
         } else {
             $all_donations = Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')
                 ->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->whereNull('Thank you')->get();
@@ -403,9 +405,9 @@ class DonationController extends Controller
      * Process retreat payments from retreat.payments.
      *
      * @param  \Illuminate\Http\Request  $request
-     * $request contains a $donations array with fields for id, pledge, paid, method and terms
-     * this method will only be used for retreat offerings - other types of donations should be handled elsewhere
-     * primary use is for creating retreat offering donations but will have ability to edit existing retreat offerings
+     *                                             $request contains a $donations array with fields for id, pledge, paid, method and terms
+     *                                             this method will only be used for retreat offerings - other types of donations should be handled elsewhere
+     *                                             primary use is for creating retreat offering donations but will have ability to edit existing retreat offerings
      */
     public function retreat_payments_update(Request $request): RedirectResponse
     {   // I removed the permission check for update-payment as it seemed redundant to update-donation and it makes testing a little easier
@@ -489,28 +491,28 @@ class DonationController extends Controller
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
-        // TODO:: add unit test for this method; creating method as proof of concept - need to come back and test
-        public function unprocess_deposits($event_id): RedirectResponse
-        {
-            $this->authorize('update-donation');
-            $event = Retreat::findOrFail($event_id);
-            $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription('Retreat Funding')->get();
-            foreach ($event_deposits as $event_deposit) {
-                try {
-                    if (strpos($event_deposit->Notes, 'Automated deposit to funding transfer processed.') === 0) {
-                        // string not found; skip
-                    } else {
-                        $event_deposit->donation_description = 'Retreat Deposit';
-                        $event_deposit->Notes = 'Automated deposit to funding transfer processed. '.$event_deposit->Notes;
-//                        $event_deposit->save();
-                    }
-                } catch (\Exception $e) {
-                    dd($e);
+    // TODO:: add unit test for this method; creating method as proof of concept - need to come back and test
+    public function unprocess_deposits($event_id): RedirectResponse
+    {
+        $this->authorize('update-donation');
+        $event = Retreat::findOrFail($event_id);
+        $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription('Retreat Funding')->get();
+        foreach ($event_deposits as $event_deposit) {
+            try {
+                if (strpos($event_deposit->Notes, 'Automated deposit to funding transfer processed.') === 0) {
+                    // string not found; skip
+                } else {
+                    $event_deposit->donation_description = 'Retreat Deposit';
+                    $event_deposit->Notes = 'Automated deposit to funding transfer processed. '.$event_deposit->Notes;
+                    //                        $event_deposit->save();
                 }
+            } catch (\Exception $e) {
+                dd($e);
             }
-
-            flash('Retreat Donations Unprocessed for ID#: <a href="'.url('/retreat/'.$event_id).'">'.$event->idnumber.' - '.$event->title.'</a>')->success();
-
-            return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
         }
+
+        flash('Retreat Donations Unprocessed for ID#: <a href="'.url('/retreat/'.$event_id).'">'.$event->idnumber.' - '.$event->title.'</a>')->success();
+
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
+    }
 }

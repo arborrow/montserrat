@@ -18,7 +18,7 @@ class UpdateSquarespaceCustomFormRequest extends FormRequest
      * Get the validation rules that apply to the request.
      */
 
-     //name , custom_form_id , variant_options
+    //name , custom_form_id , variant_options
 
     public function rules(): array
     {

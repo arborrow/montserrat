@@ -4,42 +4,47 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Activity extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'activity';
 
-    protected $casts = [
-        'activity_date_time' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'activity_date_time' => 'datetime',
+        ];
+    }
 
-    public function contacts()
+    public function contacts(): HasMany
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id');
     }
 
-    public function targets()
+    public function targets(): HasMany
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id')->whereRecordTypeId(config('polanco.activity_contacts_type.target'));
     }
 
-    public function creators()
+    public function creators(): HasMany
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id')->whereRecordTypeId(config('polanco.activity_contacts_type.creator'));
     }
 
-    public function assignees()
+    public function assignees(): HasMany
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id')->whereRecordTypeId(config('polanco.activity_contacts_type.assignee'));
     }
 
-    public function activity_type()
+    public function activity_type(): HasOne
     {
         return $this->hasOne(ActivityType::class, 'id', 'activity_type_id');
     }
@@ -57,7 +62,7 @@ class Activity extends Model implements Auditable
         foreach ($targets as $target) {
             if ($targets->last() === $target) {
                 $target_list .= $target->contact->contact_link_full_name;
-            //$target_list .= $target->contact_id;
+                //$target_list .= $target->contact_id;
             } else {
                 $target_list .= $target->contact->contact_link_full_name.', ';
             }

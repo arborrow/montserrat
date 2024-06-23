@@ -10,8 +10,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 class ParticipantRoleType extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'participant_role_type';
 }

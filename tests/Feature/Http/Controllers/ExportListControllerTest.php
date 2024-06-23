@@ -59,7 +59,7 @@ class ExportListControllerTest extends TestCase
         $response->assertViewHas('export_list');
         $response->assertSeeText('Edit');
 
-//        $this->assertTrue($this->findFieldValueInResponseContent('unit_name', $export_list->unit_name, 'text', $response->getContent()));
+        //        $this->assertTrue($this->findFieldValueInResponseContent('unit_name', $export_list->unit_name, 'text', $response->getContent()));
     }
 
     /**

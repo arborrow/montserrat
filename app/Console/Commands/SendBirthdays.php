@@ -9,7 +9,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
-
 class SendBirthdays extends Command
 {
     /**
@@ -74,6 +73,7 @@ class SendBirthdays extends Command
                 $status = 1;
             }
         }
+
         return $status;
     }
 }

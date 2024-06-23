@@ -157,7 +157,7 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function schedule(int|string $ymd = null)
+    public function schedule(int|string|null $ymd = null)
     {
         $this->authorize('show-room');
         if ((! isset($ymd)) or ($ymd == 0)) {

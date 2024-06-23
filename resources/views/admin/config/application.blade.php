@@ -17,7 +17,7 @@
                         <br /><strong>URL (APP_URL): </strong>  @if(null!==config('app.url')) <div class="alert alert-success alert-important" role="alert">Configured: {{ config('app.url') }}</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
                         <br /><strong>Domain (APP_DOMAIN): </strong>  @if(null!==config('app.domain')) <div class="alert alert-success alert-important" role="alert">Configured: {{ config('app.domain') }}</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
 
-                        <br /><strong>Cache (CACHE_DRIVER): </strong>  @if(null!==config('cache.default')) <div class="alert alert-success alert-important" role="alert">Configured: {{ config('cache.default') }}</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
+                        <br /><strong>Cache (CACHE_STORE): </strong>  @if(null!==config('cache.default')) <div class="alert alert-success alert-important" role="alert">Configured: {{ config('cache.default') }}</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
                         <br /><strong>Session (SESSION_DRIVER): </strong>  @if(null!==config('session.driver')) <div class="alert alert-success alert-important" role="alert">Configured: {{ config('session.driver') }}</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
                         <br /><strong>Queue (QUEUE_DRIVER): </strong>  @if(null!==config('queue.default')) <div class="alert alert-success alert-important" role="alert">Configured: {{ config('queue.default') }}</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
 

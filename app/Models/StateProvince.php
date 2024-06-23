@@ -10,8 +10,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 class StateProvince extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'state_province';
 }

@@ -37,7 +37,7 @@ class StoreDioceseRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         // if Twilio is enabled then validate phone numbers otherwise allow strings
-        if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
+        if (config('settings.twilio_sid') !== null && config('settings.twilio_token') !== null) {
             $this->assertEquals([
                 'organization_name' => 'required',
                 'bishop_id' => 'integer|min:0',

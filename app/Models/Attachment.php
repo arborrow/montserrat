@@ -4,25 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Attachment extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'file';
-
-    protected $casts = [
-        'upload_date' => 'datetime',
-    ];
 
     //
     protected $fillable = ['entity', 'entity_id', 'file_type_id'];
 
-    public function file_type()
+    protected function casts(): array
+    {
+        return [
+            'upload_date' => 'datetime',
+        ];
+    }
+
+    public function file_type(): HasOne
     {
         return $this->hasOne(FileType::class, 'id', 'file_type_id');
     }

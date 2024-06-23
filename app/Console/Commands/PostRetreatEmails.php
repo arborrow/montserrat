@@ -43,7 +43,7 @@ class PostRetreatEmails extends Command
         $retreats = Retreat::where('event_type_id', 7)
             ->whereDate('end_date', $endDate)
             ->get();
-        $status = 0; // initialize return status 
+        $status = 0; // initialize return status
 
         if ($retreats->count() >= 1) {
             foreach ($retreats as $retreat) {
@@ -56,7 +56,7 @@ class PostRetreatEmails extends Command
 
                 if ($registrations->count() >= 1) {
                     foreach ($registrations as $registration) {
-                        if (null !== $registration->retreatant->primaryEmail()->first()) {
+                        if ($registration->retreatant->primaryEmail()->first() !== null) {
                             $primaryEmail = $registration->retreatant->primaryEmail()->first()->email;
                             try {
                                 Mail::to($primaryEmail)->queue(new PostRetreat($registration));
@@ -66,10 +66,12 @@ class PostRetreatEmails extends Command
                         }
                     }
                 }
+
                 // TODO: explore why behavior in test changed during upgrade to Laravel 7
                 return $status;
             }
         }
+
         return $status;
     }
 }

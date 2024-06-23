@@ -7,8 +7,8 @@ use JMac\Testing\Traits\AdditionalAssertions;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, AdditionalAssertions;
-    
+    use AdditionalAssertions;
+
     protected function stristrarray($array, $str)
     {
         //This array will hold the indexes of every
@@ -139,8 +139,9 @@ abstract class TestCase extends BaseTestCase
                         $options_count = count($this->stristrarray($options, 'selected="selected">'));
                         $results_count = count($this->stristrarray($results, '1'));
 
-//                        dd(count($selected_options), count($field_value), $value_found, $field_name, $field_value,$line_number,$contents_array[$line_number],$results, $options);
+                        //                        dd(count($selected_options), count($field_value), $value_found, $field_name, $field_value,$line_number,$contents_array[$line_number],$results, $options);
                     }
+
                     // dd(count($field_value), $field_value, $options_count, $options, $results_count, $results);
                     return ($options_count == $results_count) && (count($field_value) == $results_count);
                     break;

@@ -27,6 +27,7 @@ class OrganizationController extends Controller
         $this->authorize('show-contact');
         $organizations = \App\Models\Contact::with('addresses', 'phone_main_phone', 'email_primary', 'websites', 'subcontacttype')->organizations_generic()->orderBy('organization_name', 'asc')->paginate(25, ['*'], 'organizations');
         $subcontact_types = \App\Models\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
+
         //dd($subcontact_types);
         return view('organizations.index', compact('organizations', 'subcontact_types'));   //
     }
@@ -268,7 +269,7 @@ class OrganizationController extends Controller
         $address_primary->country_id = config('polanco.country_id_usa');
         $address_primary->is_primary = 1;
         $address_primary->save();
-//        dd($organization->phone_main_phone);
+        //        dd($organization->phone_main_phone);
         if (empty($organization->phone_main_phone)) {
             $phone_primary = new \App\Models\Phone;
         } else {
@@ -310,18 +311,18 @@ class OrganizationController extends Controller
         $organization_note->subject = 'Organization Note';
         $organization_note->save();
 
-        if (null !== $request->file('avatar')) {
+        if ($request->file('avatar') !== null) {
             $description = 'Avatar for '.$organization->organization_name;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('avatar'), 'contact', $organization->id, 'avatar', $description);
         }
-        if (null !== $request->file('signature')) {
+        if ($request->file('signature') !== null) {
             $description = 'Signature for '.$organization->organization_name;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('signature'), 'contact', $organization->id, 'signature', $description);
         }
 
-        if (null !== $request->file('attachment')) {
+        if ($request->file('attachment') !== null) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $organization->id, 'attachment', $description);

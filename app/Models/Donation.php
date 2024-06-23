@@ -5,14 +5,17 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Donation extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'Donations';
 
@@ -22,11 +25,14 @@ class Donation extends Model implements Auditable
 
     protected $appends = ['payments_paid'];
 
-    protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
-        'donation_date' => 'datetime', 'donation_amount' => 'decimal:2', 'donation_install' => 'decimal:2',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'datetime',
+            'end_date' => 'datetime',
+            'donation_date' => 'datetime', 'donation_amount' => 'decimal:2', 'donation_install' => 'decimal:2',
+        ];
+    }
 
     public function generateTags(): array
     {
@@ -36,22 +42,22 @@ class Donation extends Model implements Auditable
         ];
     }
 
-    public function contact()
+    public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
 
-    public function payments()
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class, 'donation_id', 'donation_id');
     }
 
-    public function retreat()
+    public function retreat(): HasOne
     {
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
 
-    public function description()
+    public function description(): HasOne
     {
         return $this->hasOne(DonationType::class, 'name', 'donation_description');
     }

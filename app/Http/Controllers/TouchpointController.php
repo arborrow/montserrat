@@ -37,7 +37,7 @@ class TouchpointController extends Controller
     /**
      * Display a listing of touchpoints associated with a particular staff member
      */
-    public function index_type(int $staff_id = null): View
+    public function index_type(?int $staff_id = null): View
     {
         $this->authorize('show-touchpoint');
 
@@ -306,8 +306,9 @@ class TouchpointController extends Controller
         } else {
             $persons = \App\Models\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
+
         //$persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name','id');
-// check contact type and if parish get list of parishes if individual get list of persons
+        // check contact type and if parish get list of parishes if individual get list of persons
         return view('touchpoints.edit', compact('touchpoint', 'staff', 'persons')); //
     }
 

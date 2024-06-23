@@ -5,41 +5,42 @@ namespace App\Models;
 use App\Traits\PhoneTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class SquarespaceOrder extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
     use PhoneTrait;
+    use SoftDeletes;
 
     protected $table = 'squarespace_order';
 
     protected $fillable = ['order_number'];
 
-    public function message()
+    public function message(): HasOne
     {
         return $this->hasOne(Message::class, 'id', 'message_id');
     }
 
-    public function event()
+    public function event(): HasOne
     {
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
 
-    public function retreatant()
+    public function retreatant(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'contact_id');
     }
 
-    public function couple()
+    public function couple(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'couple_contact_id');
     }
 
-    public function registration()
+    public function registration(): HasOne
     {
         return $this->hasOne(Registration::class, 'id', 'participant_id');
     }
@@ -48,11 +49,11 @@ class SquarespaceOrder extends Model implements Auditable
     {
         if (! empty($this->gift_certificate_year_issued) && ! empty($this->gift_certificate_number)) {
             $gift_certificate = GiftCertificate::whereYear('purchase_date', $this->gift_certificate_year_issued)
-            ->where(function ($query) {
-                $query->where('sequential_number', '=', $this->gift_certificate_number)
-                      ->orWhere('squarespace_order_number', '=', $this->gift_certificate_number);
-            })
-            ->first();
+                ->where(function ($query) {
+                    $query->where('sequential_number', '=', $this->gift_certificate_number)
+                        ->orWhere('squarespace_order_number', '=', $this->gift_certificate_number);
+                })
+                ->first();
 
             return isset($gift_certificate->id) ? $gift_certificate->id : null;
         }

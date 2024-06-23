@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 class Audit extends Model
@@ -12,14 +13,17 @@ class Audit extends Model
 
     protected $table = 'audits';
 
-    protected $casts = [
-        'old_values' => 'array',
-        'new_values' => 'array',
-    ];
-
     protected $appends = ['user_name'];
 
-    public function user()
+    protected function casts(): array
+    {
+        return [
+            'old_values' => 'array',
+            'new_values' => 'array',
+        ];
+    }
+
+    public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }

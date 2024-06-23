@@ -10,8 +10,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 class MessageAttachment extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $fillable = ['mailgun_id', 'mailgun_timestamp', 'attachment_id', 'url', 'content_type'];
 }
