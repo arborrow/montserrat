@@ -14,7 +14,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->redirectGuestsTo(fn () => route('login'));
+        $middleware->redirectUsersTo(RouteServiceProvider::HOME);
+
+        $middleware->validateCsrfTokens(except: [
+            'stripe/webhooks',
+        ]);
+
+        $middleware->throttleApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
