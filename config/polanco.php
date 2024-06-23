@@ -119,22 +119,7 @@ return [
         'Post-Retreat offering' => 'Retreat Funding',
         'Pre-Retreat offering' => 'Retreat Deposits',
         "Pay for Another Person's Retreat" => 'AGC - Scholarships',
-        'Saturday of Renewal' => 'Retreat Funding',
-        'Tips' => 'Tips',
-    ],
-
-    'donation_descriptions_flip' => [
-        '' => 'N/A',
-        'AGC - General' => 'Annual Giving Campaign',
-        'Bookstore Revenue' => 'Bookstore',
-        'AGC - Buildings & Maintenance' => 'Building & Maintenance Fund',
-        'Flowers and Landscaping' => 'Flowers and Landscaping',
-        'Memorials' => 'Memorial Donation',
-        'AGC - Endowment' => 'Montserrat Foundation Endowment',
-        'AGC - Scholarships' => "Pay for Another Person's Retreat",
-        'Retreat Funding' => 'Post-Retreat offering',
-        'Retreat Deposits' => 'Pre-Retreat offering',
-        'Retreat Funding' => 'Saturday of Renewal',
+        'Saturday of Renewal' => 'Saturday of Renewal Funding',
         'Tips' => 'Tips',
     ],
 
