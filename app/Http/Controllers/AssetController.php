@@ -217,7 +217,7 @@ class AssetController extends Controller
 
         $asset->save();
 
-        if (null !== $request->file('asset_photo')) {
+        if ($request->file('asset_photo') !== null) {
             $description = 'Photo of '.$asset->name;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('asset_photo'), 'asset', $asset->id, 'asset_photo', $description);
@@ -356,13 +356,13 @@ class AssetController extends Controller
 
         $asset->save();
 
-        if (null !== $request->file('asset_photo')) {
+        if ($request->file('asset_photo') !== null) {
             $description = 'Photo of '.$asset->name;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('asset_photo'), 'asset', $asset->id, 'asset_photo', $description);
         }
 
-        if (null !== $request->file('attachment')) {
+        if ($request->file('attachment') !== null) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'asset', $asset->id, 'attachment', $description);

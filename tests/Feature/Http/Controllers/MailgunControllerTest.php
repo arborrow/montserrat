@@ -22,7 +22,7 @@ class MailgunControllerTest extends TestCase
     {   // $this->withoutExceptionHandling();
         $this->followingRedirects();
         $user = $this->createUserWithPermission('admin-mailgun');
-        if (null !== config('services.mailgun.domain') && null !== config('services.mailgun.secret')) {
+        if (config('services.mailgun.domain') !== null && config('services.mailgun.secret') !== null) {
             $response = $this->actingAs($user)->get(route('mailgun.get'));
             $response->assertOk();
             $response->assertViewIs('mailgun.index');

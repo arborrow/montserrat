@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Html;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,8 +13,8 @@ class Retreat extends Model implements Auditable
 {
     use HasFactory;
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'event';
 
@@ -86,6 +85,7 @@ class Retreat extends Model implements Auditable
     {
         $start = $this->start_date->setHour(0)->setMinute(0)->setSecond(0);
         $end = $this->end_date->setHour(0)->setMinute(0)->setSecond(0);
+
         // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
         return $start->diffInDays($end);
     }

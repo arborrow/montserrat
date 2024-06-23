@@ -34,7 +34,7 @@ class AssetTaskController extends Controller
         // if creating a task for a particular asset (default behavior from asset.show blade) then no need to get long list of assets to choose from
         if (isset($asset_id) && $asset_id > 0) {
             $assets = \App\Models\Asset::whereId($asset_id)->pluck('name', 'id');
-        // dd($asset_id, $assets);
+            // dd($asset_id, $assets);
         } else {
             $assets = \App\Models\Asset::orderBy('name')->pluck('name', 'id');
             $assets->prepend('N/A', '');

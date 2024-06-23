@@ -11,9 +11,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 class SquarespaceContribution extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
     use PhoneTrait;
+    use SoftDeletes;
 
     protected $table = 'squarespace_contribution';
 

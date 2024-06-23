@@ -469,31 +469,31 @@ class RetreatController extends Controller
         $retreat->max_participants = $request->input('max_participants');
         $retreat->save();
 
-        if (null !== $request->file('contract')) {
+        if ($request->file('contract') !== null) {
             $description = 'Contract for '.$retreat->idnumber.'-'.$retreat->title;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('contract'), 'event', $retreat->id, 'contract', $description);
         }
 
-        if (null !== $request->file('schedule')) {
+        if ($request->file('schedule') !== null) {
             $description = 'Schedule for '.$retreat->idnumber.'-'.$retreat->title;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('schedule'), 'event', $retreat->id, 'schedule', $description);
         }
 
-        if (null !== $request->file('evaluations')) {
+        if ($request->file('evaluations') !== null) {
             $description = 'Evaluations for '.$retreat->idnumber.'-'.$retreat->title;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('evaluations'), 'event', $retreat->id, 'evaluations', $description);
         }
 
-        if (null !== $request->file('group_photo')) {
+        if ($request->file('group_photo') !== null) {
             $description = 'Group photo for '.$retreat->idnumber.'-'.$retreat->title;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('group_photo'), 'event', $retreat->id, 'group_photo', $description);
         }
 
-        if (null !== $request->file('event_attachment')) {
+        if ($request->file('event_attachment') !== null) {
             $description = $request->input('event_attachment_description');
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('event_attachment'), 'event', $retreat->id, 'event_attachment', $description);
@@ -715,7 +715,7 @@ class RetreatController extends Controller
     {
         $this->authorize('update-registration');
 
-        if (null !== $request->input('registrations')) {
+        if ($request->input('registrations') !== null) {
             foreach ($request->input('registrations') as $key => $value) {
                 $registration = \App\Models\Registration::findOrFail($key);
                 if (! isset($event_id)) {
@@ -725,7 +725,7 @@ class RetreatController extends Controller
                 $registration->save();
             }
         }
-        if (null !== $request->input('notes')) {
+        if ($request->input('notes') !== null) {
             foreach ($request->input('notes') as $key => $value) {
                 $registration = \App\Models\Registration::findOrFail($key);
                 if (! isset($event_id)) {
@@ -812,18 +812,18 @@ class RetreatController extends Controller
         $this->authorize('show-registration');
         $event = \App\Models\Retreat::findOrFail($event_id);
         switch ($role) {
-            case  'retreatant': $role = config('polanco.participant_role_id.retreatant');
+            case 'retreatant': $role = config('polanco.participant_role_id.retreatant');
                 break;
-            case  'director': $role = config('polanco.participant_role_id.director');
+            case 'director': $role = config('polanco.participant_role_id.director');
                 break;
-            case  'innkeeper': $role = config('polanco.participant_role_id.innkeeper');
+            case 'innkeeper': $role = config('polanco.participant_role_id.innkeeper');
                 break;
-            case  'assistant': $role = config('polanco.participant_role_id.assistant');
+            case 'assistant': $role = config('polanco.participant_role_id.assistant');
                 break;
             case 'ambassador':
                 $role = config('polanco.participant_role_id.ambassador');
                 break;
-            case  'all': $role = null;
+            case 'all': $role = null;
                 break;
             default: $role = config('polanco.participant_role_id.retreatant');
         }
@@ -917,7 +917,7 @@ class RetreatController extends Controller
     {
         $file = 'google-calendar/service-account-credentials.json';
         //dd(config('settings.google_calendar_id'));
-        if (null !== config('settings.google_calendar_id') && Storage::exists($file)) {
+        if (config('settings.google_calendar_id') !== null && Storage::exists($file)) {
             return true;
         } else {
             return false;

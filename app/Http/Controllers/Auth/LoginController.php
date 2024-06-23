@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\Request;
 
-
 //use Illuminate\Support\Facades\Session;
 
 // use Illuminate\Support\Facades\Redirect;
@@ -71,7 +70,7 @@ class LoginController extends Controller
                     Auth::login($currentuser, true);
 
                     return redirect()->intended('/welcome');
-                //return $this->userHasLoggedIn($currentuser);
+                    //return $this->userHasLoggedIn($currentuser);
                 } else { // the user has a domain but it does not match the socialite restrict domain so do not authenticate
                     return redirect()->to('restricted');
                 }

@@ -56,7 +56,7 @@ return [
         15 => '0,128,128', // teal (dark green)
         16 => '0,0,128', // navy (dark blue)
         17 => '240, 50, 230', // magenta (dark purple)
-        18 => '210, 245, 60', // lime  
+        18 => '210, 245, 60', // lime
         19 => '128, 128, 128', // gray
     ],
 

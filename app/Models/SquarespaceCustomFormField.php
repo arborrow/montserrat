@@ -10,8 +10,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 class SquarespaceCustomFormField extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'squarespace_custom_form_field';
 

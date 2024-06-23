@@ -10,8 +10,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Activity extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'activity';
 
@@ -57,7 +57,7 @@ class Activity extends Model implements Auditable
         foreach ($targets as $target) {
             if ($targets->last() === $target) {
                 $target_list .= $target->contact->contact_link_full_name;
-            //$target_list .= $target->contact_id;
+                //$target_list .= $target->contact_id;
             } else {
                 $target_list .= $target->contact->contact_link_full_name.', ';
             }

@@ -10,8 +10,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Snippet extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     public function language()
     {

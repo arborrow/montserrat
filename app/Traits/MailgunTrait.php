@@ -22,7 +22,7 @@ trait MailgunTrait
         }
     }
 
-        /*
+    /*
      * extract value between two search strings from email body plain
      *
      * returns string of trimmed value
@@ -74,6 +74,7 @@ trait MailgunTrait
         if ((! $field_position === false) && array_key_exists($field_position + 1, $body)) {
             $data = $body[$field_position + 1];
         }
+
         // dd($body, $start_text, $field_position, $data);
         return (isset($data)) ? trim($data) : null;
     }

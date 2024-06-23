@@ -33,7 +33,7 @@ class SystemController extends Controller
 
     public static function is_twilio_enabled()
     {
-        if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
+        if (config('settings.twilio_sid') !== null && config('settings.twilio_token') !== null) {
             return true;
         } else {
             return false;
@@ -42,7 +42,7 @@ class SystemController extends Controller
 
     public static function is_google_client_enabled()
     {
-        if (null !== config('services.google.client_id') && null !== config('services.google.client_secret') && null !== config('services.google.redirect')) {
+        if (config('services.google.client_id') !== null && config('services.google.client_secret') !== null && config('services.google.redirect') !== null) {
             return true;
         } else {
             return false;
@@ -51,7 +51,7 @@ class SystemController extends Controller
 
     public static function is_mailgun_enabled()
     {
-        if (null !== config('services.mailgun.domain') && null !== config('services.mailgun.secret')) {
+        if (config('services.mailgun.domain') !== null && config('services.mailgun.secret') !== null) {
             return true;
         } else {
             return false;
@@ -63,6 +63,7 @@ class SystemController extends Controller
         $this->authorize('show-offeringdedup');
 
         $offeringdedup = \App\Models\TmpOfferingDedup::orderBy('count', 'desc')->paginate(50);
+
         // dd($dioceses);
         return view('offeringdedup.index', compact('offeringdedup'));
     }

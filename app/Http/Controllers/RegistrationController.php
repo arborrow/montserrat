@@ -406,7 +406,7 @@ class RegistrationController extends Controller
 
         return redirect(url($contact->contact_url));
 
-//        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
+        //        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
     }
 
     /**

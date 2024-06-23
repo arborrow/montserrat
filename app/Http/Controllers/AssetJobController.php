@@ -35,7 +35,7 @@ class AssetJobController extends Controller
         // if creating a task for a particular asset (default behavior from asset.show blade) then no need to get long list of assets to choose from
         if (isset($asset_task_id) && $asset_task_id > 0) {
             $asset_tasks = \App\Models\AssetTask::whereId($asset_task_id)->pluck('title', 'id');
-        // dd($asset_id, $assets);
+            // dd($asset_id, $assets);
         } else {
             $asset_tasks = \App\Models\AssetTask::orderBy('title')->pluck('title', 'id');
             $asset_tasks->prepend('N/A', '');
@@ -46,6 +46,7 @@ class AssetJobController extends Controller
         })->orderBy('sort_name')->pluck('sort_name', 'id')->toArray();
 
         $status = config('polanco.asset_job_status');
+
         // dd($asset_tasks,$staff,$status);
         return view('asset_jobs.create', compact('asset_tasks', 'staff', 'status'));
     }
@@ -158,7 +159,7 @@ class AssetJobController extends Controller
         $asset_job->save();
 
         //TODO: implement on asset_job edit blade
-        if (null !== $request->file('attachment')) {
+        if ($request->file('attachment') !== null) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'asset_job', $asset_job->id, 'attachment', $description);
@@ -179,6 +180,7 @@ class AssetJobController extends Controller
 
         \App\Models\AssetJob::destroy($id);
         flash('Asset job #'.$asset_job->id.' deleted')->warning()->important();
+
         // consider where to redirect to Asset, Asset Task, or Asset Job Index - I'm inclined toward asset_task
         return Redirect::action([self::class, 'index']);
     }

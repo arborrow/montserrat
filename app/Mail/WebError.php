@@ -30,7 +30,7 @@ class WebError extends Mailable
         $web_error = $this->web_error['body'];
 
         return $this->from(config('polanco.site_email'))
-                ->subject($this->web_error['subject'])
-                ->view('emails.en_US.error');
+            ->subject($this->web_error['subject'])
+            ->view('emails.en_US.error');
     }
 }

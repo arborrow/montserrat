@@ -11,9 +11,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 class SquarespaceOrder extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
     use PhoneTrait;
+    use SoftDeletes;
 
     protected $table = 'squarespace_order';
 
@@ -48,11 +48,11 @@ class SquarespaceOrder extends Model implements Auditable
     {
         if (! empty($this->gift_certificate_year_issued) && ! empty($this->gift_certificate_number)) {
             $gift_certificate = GiftCertificate::whereYear('purchase_date', $this->gift_certificate_year_issued)
-            ->where(function ($query) {
-                $query->where('sequential_number', '=', $this->gift_certificate_number)
-                      ->orWhere('squarespace_order_number', '=', $this->gift_certificate_number);
-            })
-            ->first();
+                ->where(function ($query) {
+                    $query->where('sequential_number', '=', $this->gift_certificate_number)
+                        ->orWhere('squarespace_order_number', '=', $this->gift_certificate_number);
+                })
+                ->first();
 
             return isset($gift_certificate->id) ? $gift_certificate->id : null;
         }

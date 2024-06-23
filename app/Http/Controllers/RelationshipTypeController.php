@@ -477,8 +477,8 @@ class RelationshipTypeController extends Controller
 
                             return $alternate_names;
                             break;
-                        // $alternate_names = $alternate_names->toArray();
-                        // $individuals = $individuals + $alternate_names;
+                            // $alternate_names = $alternate_names->toArray();
+                            // $individuals = $individuals + $alternate_names;
                         } else {
                             $contact = \App\Models\Contact::findOrFail($contact_id);
 

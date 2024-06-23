@@ -117,15 +117,15 @@ class GetMailgunMessages extends Command
                             // $message->body = str_replace("\r\n","\n", html_entity_decode(strip_tags($message_email->getBodyHtml())));
                             $message->body = $message_email->getBodyHtml();
 
-                            if (null !== $message_email->getSender()) {
+                            if ($message_email->getSender() !== null) {
                                 $message->from = $this->clean_email($message_email->getSender());
                             }
-                            if (null !== $message_email->getRecipients()) {
+                            if ($message_email->getRecipients() !== null) {
                                 $message->recipients = $this->clean_email($message_email->getRecipients());
                             }
                             $headers = $event_item->getMessage()['headers'];
 
-                            if (null !== $headers['to']) {
+                            if ($headers['to'] !== null) {
                                 $list_of_to_addresses = explode(',', $headers['to']);
                                 // dd($headers, $headers['to'],$list_of_to_addresses);
                                 // for now only take the first to address
@@ -439,7 +439,7 @@ class GetMailgunMessages extends Command
                             $order->unit_price = str_replace('$', '', end($retreat));
                             $order->save();
 
-                        // TODO: create gift certificate on processing order (not here but in edit after selecting or creating contacts)
+                            // TODO: create gift certificate on processing order (not here but in edit after selecting or creating contacts)
                         } else { // Retreat Registration Order
                             $order->retreat_sku = (array_key_exists(1, $retreat)) ? $retreat[1] : null;
 
