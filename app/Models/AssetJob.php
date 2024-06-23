@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,12 +26,12 @@ class AssetJob extends Model implements Auditable
     }
 
     // relations
-    public function asset_task()
+    public function asset_task(): BelongsTo
     {
         return $this->belongsTo(AssetTask::class, 'asset_task_id');
     }
 
-    public function assigned_to()
+    public function assigned_to(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'assigned_to_id', 'id');
     }

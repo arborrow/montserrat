@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,27 +24,27 @@ class Activity extends Model implements Auditable
         ];
     }
 
-    public function contacts()
+    public function contacts(): HasMany
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id');
     }
 
-    public function targets()
+    public function targets(): HasMany
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id')->whereRecordTypeId(config('polanco.activity_contacts_type.target'));
     }
 
-    public function creators()
+    public function creators(): HasMany
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id')->whereRecordTypeId(config('polanco.activity_contacts_type.creator'));
     }
 
-    public function assignees()
+    public function assignees(): HasMany
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id')->whereRecordTypeId(config('polanco.activity_contacts_type.assignee'));
     }
 
-    public function activity_type()
+    public function activity_type(): HasOne
     {
         return $this->hasOne(ActivityType::class, 'id', 'activity_type_id');
     }

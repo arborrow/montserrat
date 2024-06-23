@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,12 +18,12 @@ class GroupContact extends Model implements Auditable
 
     protected $fillable = ['contact_id', 'group_id', 'status'];
 
-    public function group()
+    public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class, 'group_id', 'id');
     }
 
-    public function contact()
+    public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }

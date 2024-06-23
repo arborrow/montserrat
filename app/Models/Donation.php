@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -39,22 +42,22 @@ class Donation extends Model implements Auditable
         ];
     }
 
-    public function contact()
+    public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
 
-    public function payments()
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class, 'donation_id', 'donation_id');
     }
 
-    public function retreat()
+    public function retreat(): HasOne
     {
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
 
-    public function description()
+    public function description(): HasOne
     {
         return $this->hasOne(DonationType::class, 'name', 'donation_description');
     }

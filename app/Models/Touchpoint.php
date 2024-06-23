@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,18 +31,18 @@ class Touchpoint extends Model implements Auditable
         $this->attributes['touched_at'] = Carbon::parse($date);
     }
 
-    public function person()
+    public function person(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'person_id', 'id');
     }
 
     //alias for person
-    public function contact()
+    public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'person_id', 'id');
     }
 
-    public function staff()
+    public function staff(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'staff_id', 'id');
     }

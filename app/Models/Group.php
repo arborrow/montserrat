@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,7 +16,7 @@ class Group extends Model implements Auditable
 
     protected $table = 'group';
 
-    public function members()
+    public function members(): HasMany
     {
         return $this->hasMany(GroupContact::class, 'group_id', 'id');
     }

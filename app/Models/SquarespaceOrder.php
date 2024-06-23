@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Traits\PhoneTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,27 +20,27 @@ class SquarespaceOrder extends Model implements Auditable
 
     protected $fillable = ['order_number'];
 
-    public function message()
+    public function message(): HasOne
     {
         return $this->hasOne(Message::class, 'id', 'message_id');
     }
 
-    public function event()
+    public function event(): HasOne
     {
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
 
-    public function retreatant()
+    public function retreatant(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'contact_id');
     }
 
-    public function couple()
+    public function couple(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'couple_contact_id');
     }
 
-    public function registration()
+    public function registration(): HasOne
     {
         return $this->hasOne(Registration::class, 'id', 'participant_id');
     }

@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,22 +17,22 @@ class Parish extends Model
     protected $table = 'contact';
 
     //
-    public function diocese()
+    public function diocese(): BelongsTo
     {
         return $this->belongsTo(Diocese::class, 'diocese_id', 'id');
     }
 
-    public function diocese_relationship()
+    public function diocese_relationship(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
     }
 
-    public function parishioners()
+    public function parishioners(): HasMany
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parishioner'));
     }
 
-    public function pastor()
+    public function pastor(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.pastor'));
     }

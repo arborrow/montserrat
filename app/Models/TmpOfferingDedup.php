@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,12 +18,12 @@ class TmpOfferingDedup extends Model
 
     protected $fillable = ['contact_id', 'event_id'];
 
-    public function contact()
+    public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
 
-    public function retreat()
+    public function retreat(): HasOne
     {
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }

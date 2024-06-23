@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,7 +27,7 @@ class StripePayout extends Model implements Auditable
         ];
     }
 
-    public function transactions()
+    public function transactions(): HasMany
     {
         return $this->hasMany(StripeBalanceTransaction::class, 'payout_id', 'payout_id');
     }

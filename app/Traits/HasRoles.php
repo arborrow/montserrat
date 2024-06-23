@@ -2,11 +2,12 @@
 
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Role;
 
 trait HasRoles
 {
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
     }

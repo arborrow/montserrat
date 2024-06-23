@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -136,33 +138,33 @@ class Retreat extends Model implements Auditable
         return $this->retreatants_waitlist->count();
     }
 
-    public function assistants()
+    public function assistants(): HasMany
     {   // TODO: evaluate whether the assumption that this is an individual makes a difference, currently retreat factory will force individual to avoid undefined variable on retreat.show
         return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.assistant'));
     }
 
-    public function attachments()
+    public function attachments(): HasMany
     {
         return $this->hasMany(Attachment::class, 'entity_id', 'id')->whereEntity('event');
     }
 
-    public function ambassadors()
+    public function ambassadors(): HasMany
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
         return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.ambassador'));
     }
 
-    public function innkeepers()
+    public function innkeepers(): HasMany
     {   // TODO: evaluate whether the assumption that this is an individual makes a difference, currently retreat factory will force individual to avoid undefined variable on retreat.show
         return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.innkeeper'));
     }
 
-    public function event_type()
+    public function event_type(): HasOne
     {
         return $this->hasOne(EventType::class, 'id', 'event_type_id');
     }
 
-    public function donations()
+    public function donations(): HasMany
     {
         return $this->hasMany(Donation::class, 'event_id', 'id')->withSum('payments', 'payment_amount');
     }
@@ -172,13 +174,13 @@ class Retreat extends Model implements Auditable
         return $this->registrations()->whereCanceledAt(null)->whereIn('role_id', [config('polanco.participant_role_id.retreatant'), config('polanco.participant_role_id.ambassador')])->whereStatusId(config('polanco.registration_status_id.registered'));
     }
 
-    public function retreatmasters()
+    public function retreatmasters(): HasMany
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
         return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.director'));
     }
 
-    public function registrations()
+    public function registrations(): HasMany
     {
         return $this->hasMany(Registration::class, 'event_id', 'id');
     }

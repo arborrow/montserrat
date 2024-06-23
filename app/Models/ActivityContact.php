@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,12 +16,12 @@ class ActivityContact extends Model implements Auditable
 
     protected $table = 'activity_contact';
 
-    public function activity()
+    public function activity(): HasOne
     {
         return $this->hasOne(Activity::class, 'id', 'activity_id');
     }
 
-    public function contact()
+    public function contact(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'contact_id');
     }

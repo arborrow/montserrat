@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Traits\PhoneTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,22 +20,22 @@ class SquarespaceContribution extends Model implements Auditable
 
     protected $fillable = ['message_id'];
 
-    public function message()
+    public function message(): HasOne
     {
         return $this->hasOne(Message::class, 'id', 'message_id');
     }
 
-    public function event()
+    public function event(): HasOne
     {
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
 
-    public function donor()
+    public function donor(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'contact_id');
     }
 
-    public function donation()
+    public function donation(): HasOne
     {
         return $this->hasOne(Donation::class, 'donation_id', 'donation_id');
     }

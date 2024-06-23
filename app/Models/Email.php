@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,12 +18,12 @@ class Email extends Model implements Auditable
 
     protected $fillable = ['contact_id', 'location_type_id', 'is_primary', 'email'];
 
-    public function owner()
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
 
-    public function location()
+    public function location(): BelongsTo
     {
         return $this->belongsTo(LocationType::class, 'location_type_id', 'id');
     }

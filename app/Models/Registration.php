@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -252,47 +255,47 @@ class Registration extends Model implements Auditable
         }
     }
 
-    public function event()
+    public function event(): HasOne
     {
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
 
-    public function contact()
+    public function contact(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'contact_id');
     }
 
-    public function participant_role_type()
+    public function participant_role_type(): HasOne
     {
         return $this->hasOne(ParticipantRoleType::class, 'id', 'role_id');
     }
 
-    public function participant_status_type()
+    public function participant_status_type(): HasOne
     {
         return $this->hasOne(ParticipantStatus::class, 'id', 'status_id');
     }
 
-    public function retreat()
+    public function retreat(): BelongsTo
     {
         return $this->belongsTo(Retreat::class, 'event_id', 'id');
     }
 
-    public function retreatant()
+    public function retreatant(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
 
-    public function retreatant_events()
+    public function retreatant_events(): HasOneThrough
     {
         return $this->hasOneThrough(self::class, Contact::class, 'id', 'contact_id', 'contact_id', 'id');
     }
 
-    public function room()
+    public function room(): HasOne
     {
         return $this->hasOne(Room::class, 'id', 'room_id');
     }
 
-    public function donation()
+    public function donation(): HasOne
     {
         return $this->hasOne(Donation::class, 'donation_id', 'donation_id');
     }

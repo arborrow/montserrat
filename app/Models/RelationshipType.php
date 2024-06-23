@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -51,22 +52,22 @@ class RelationshipType extends Model implements Auditable
         }
     }
 
-    public function contacttype_a()
+    public function contacttype_a(): HasOne
     {
         return $this->hasOne(ContactType::class, 'name', 'contact_type_a');
     }
 
-    public function contacttype_b()
+    public function contacttype_b(): HasOne
     {
         return $this->hasOne(ContactType::class, 'name', 'contact_type_b');
     }
 
-    public function contactsubtype_a()
+    public function contactsubtype_a(): HasOne
     {
         return $this->hasOne(ContactType::class, 'name', 'contact_sub_type_a');
     }
 
-    public function contactsubtype_b()
+    public function contactsubtype_b(): HasOne
     {
         return $this->hasOne(ContactType::class, 'name', 'contact_sub_type_b');
     }
