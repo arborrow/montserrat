@@ -16,15 +16,18 @@ class Asset extends Model implements Auditable
 
     protected $table = 'asset';
 
-    protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
-        'purchase_date' => 'datetime',
-        'warranty_start_date' => 'datetime',
-        'warranty_end_date' => 'datetime',
-        'depreciation_start_date' => 'datetime',
-        'depreciation_end_date' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'datetime',
+            'end_date' => 'datetime',
+            'purchase_date' => 'datetime',
+            'warranty_start_date' => 'datetime',
+            'warranty_end_date' => 'datetime',
+            'depreciation_start_date' => 'datetime',
+            'depreciation_end_date' => 'datetime',
+        ];
+    }
 
     // relations
 

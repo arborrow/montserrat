@@ -15,9 +15,12 @@ class Activity extends Model implements Auditable
 
     protected $table = 'activity';
 
-    protected $casts = [
-        'activity_date_time' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'activity_date_time' => 'datetime',
+        ];
+    }
 
     public function contacts()
     {

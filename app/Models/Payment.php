@@ -20,10 +20,13 @@ class Payment extends Model implements Auditable
 
     protected $primaryKey = 'payment_id';
 
-    protected $casts = [
-        'payment_date' => 'datetime',
-        'expire_date' => 'datetime', 'payment_amount' => 'decimal:2',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'payment_date' => 'datetime',
+            'expire_date' => 'datetime', 'payment_amount' => 'decimal:2',
+        ];
+    }
 
     public function donation()
     {

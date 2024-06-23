@@ -15,13 +15,16 @@ class StripeBalanceTransaction extends Model implements Auditable
 
     protected $table = 'stripe_balance_transaction';
 
-    protected $casts = [
-        'payout_date' => 'datetime',
-        'available_date' => 'datetime',
-        'reconcile_date' => 'datetime',
-    ];  //
-
     protected $fillable = ['balance_transaction_id', 'payout_id', 'customer_id', 'charge_id', 'total_amount', 'fee_amount', 'net_amount', 'payout_date', 'available_date', 'reconcile_date'];
+
+    protected function casts(): array
+    {
+        return [
+            'payout_date' => 'datetime',
+            'available_date' => 'datetime',
+            'reconcile_date' => 'datetime',
+        ];
+    }
 
     public function contact()
     {

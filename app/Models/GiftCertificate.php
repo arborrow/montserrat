@@ -16,13 +16,16 @@ class GiftCertificate extends Model implements Auditable
 
     protected $table = 'gift_certificate';
 
-    protected $casts = [
-        'purchase_date' => 'datetime',
-        'issue_date' => 'datetime',
-        'expiration_date' => 'datetime',
-    ];
-
     protected $appends = ['certificate_number'];
+
+    protected function casts(): array
+    {
+        return [
+            'purchase_date' => 'datetime',
+            'issue_date' => 'datetime',
+            'expiration_date' => 'datetime',
+        ];
+    }
 
     public function purchaser()
     {
