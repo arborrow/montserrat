@@ -68,9 +68,9 @@ trait MailgunTrait
      * returns string of trimmed value
      */
 
-    public function extract_data($body, $start_text = null)
+    public function extract_data($body, $start_text = null, $offset = 0)
     {
-        $field_position = array_search($start_text, $body);
+        $field_position = array_search($start_text, $body)+$offset;
         if ((! $field_position === false) && array_key_exists($field_position + 1, $body)) {
             $data = $body[$field_position + 1];
         }
