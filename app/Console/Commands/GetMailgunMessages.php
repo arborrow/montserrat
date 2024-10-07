@@ -148,13 +148,13 @@ class GetMailgunMessages extends Command
                             //dd($message);
                         }
                     } catch (\Exception $exception) {
-                        Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject, 'mailgun_url' => $mailgun_url],
-                            function ($m) {
-                                $m->to(config('polanco.admin_email'))
-                                    ->subject('Error Retrieving Mailgun Messages');
-                            });
+                        // Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject, 'mailgun_url' => $mailgun_url],
+                        //    function ($m) {
+                        //         $m->to(config('polanco.admin_email'))
+                        //            ->subject('Error Retrieving Mailgun Messages');
+                        //    });
 
-                        return 1;
+                        // return 1;
                     }
                 }
             }
@@ -167,8 +167,7 @@ class GetMailgunMessages extends Command
             // #TOUCHPOINT - if this is a touchpoint
             // if we have from and to ids for contacts go ahead and create a touchpoint
             // TODO: validate that from is from enforced domain (if applicable)
-            $clean_message = str_replace("\r\n", "\n", html_entity_decode(strip_tags($message->body)));
-
+		$clean_message = str_replace("\r\n", "\n", html_entity_decode(strip_tags($message->body)));
             if (($message->from_id > 0) && ($message->to_id > 0) && (str_contains($message->recipients, 'touchpoint'))) {
                 try {
                     $touch = new Touchpoint();
@@ -204,8 +203,9 @@ class GetMailgunMessages extends Command
                         'message_id' => $message->id,
                     ]);
                     $donation = explode("\n", $clean_message);
-                    $donation = array_map('trim', $donation);
-                    $donation = array_values(array_filter($donation));
+		    $donation = preg_replace('/\xc2\xa0/', '', $donation);
+		    $donation = array_map('trim', $donation);
+		    $donation = array_values(array_filter($donation));
                     $address_start_row = array_search('BILLED TO', $donation)+1;
                     $address_end_row = array_search('United States', $donation)+1;
                     /*
@@ -224,7 +224,6 @@ class GetMailgunMessages extends Command
                         $full_address .= $donation[$line].' ';
                     }
                     $full_address = trim($full_address);
-                    
                     if ($address_start_row > 0 && $address_end_row > 0) { // if there is no address_start_row and address_end_row then skip attempt to process address
                         // dd($donation,$address_start_row, $address_end_row);
                         if (($address_end_row - $address_start_row) == 5) {
@@ -239,7 +238,7 @@ class GetMailgunMessages extends Command
                         $ss_donation->address_state = trim($address_details[1]);
                         $ss_donation->address_zip = trim($address_details[2]);
                         $ss_donation->address_country = ucwords($donation[$address_end_row - 1]);
-                    }
+		    }
                     
                     $ss_donation->message_id = $message->id;
                     
@@ -254,7 +253,7 @@ class GetMailgunMessages extends Command
                     $ss_donation->retreat_description = $this->extract_data($donation, 'Retreat:');
                     
                     // it seems some of the emails had * characters and some do not so we will check for both
-                    $donation_amount = $this->extract_data($donation, 'SUBTOTAL',1);
+                    $donation_amount = $this->extract_data($donation, 'SUBTOTAL',2);
                     $amount = $donation_amount;
                     // $amount = substr($donation_amount, strpos($donation_amount, '$'), strpos($donation_amount, '!') - strpos($donation_amount, '$'));
                     $amount = str_replace('$', '', $amount);
@@ -267,10 +266,12 @@ class GetMailgunMessages extends Command
                     $ss_donation->fund = $this->extract_data($donation, 'Please Select a Fund:');
                     $year = substr($ss_donation->retreat_description, -5, 4);
                     
-                    $retreat_number = trim(substr($ss_donation->retreat_description,
-                    strpos($ss_donation->retreat_description, '#') + 1,
-                    (strpos($ss_donation->retreat_description, ' ') - strpos($ss_donation->retreat_description, '#'))
-                ));
+		    //dd($ss_donation,$donation);
+		    
+		    $retreat_number = trim(substr($ss_donation->retreat_description,
+                    	strpos($ss_donation->retreat_description, '#') + 1,
+		    	(strpos($ss_donation->retreat_description, ' ') - strpos($ss_donation->retreat_description, '#'))
+                    ));
                 
                 $ss_donation->idnumber = ($ss_donation->retreat_description == 'Individual Private Retreat') ? null : trim($year.$retreat_number);
                 $ss_donation->comments = trim($this->extract_data($donation, 'Comments or Special Instructions:'));
@@ -346,20 +347,21 @@ class GetMailgunMessages extends Command
 
                         $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
                         $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
-                        $order->comments = (str_contains($order->comments, 'Sent via form submission')) ? null : $order->comments;
+			$order->comments = (str_contains($order->comments, 'Sent via form submission')) ? null : $order->comments;
 
-                        // TODO: DRY - refactor into a process_order_full_address method
+			// TODO: DRY - refactor into a process_order_full_address method
                         if (isset($order->full_address)) {
-                            $address = explode(', ', $order->full_address);
+			    $address = explode(', ', $order->full_address);
 
                             if (count($address) == 4) {
                                 $order->address_street = trim($address[0]);
-                                $order->address_supplemental = trim($address[1]);
-                                $order->address_city = trim($address[2]);
-                                $address_detail = explode(' ', $address[3]);
+//                                $order->address_supplemental = trim($address[1]);
+                                $order->address_city = trim($address[1]);
+                                $address_detail = explode(' ', $address[2]);
                                 $order->address_state = trim($address_detail[0]);
-                                $order->address_zip = trim($address_detail[1]);
-                                $order->address_country = (count($address_detail) == 4) ? trim($address_detail[2]).' '.trim($address_detail[3]) : trim($address_detail[2]);
+				$order->address_zip = trim($address_detail[1]);
+				$order->address_country = "United States";
+                                // $order->address_country = (count($address_detail) == 4) ? trim($address_detail[2]).' '.trim($address_detail[3]) : trim($address_detail[2]);
                             }
 
                             if (count($address) == 3) {
@@ -381,8 +383,8 @@ class GetMailgunMessages extends Command
                                 }
                             }
                         } else {
-                            // something is wrong with the address - leave it as null
-                        }
+				// something is wrong with the address - leave it as null
+			}
                         $retreat_number = substr($order->retreat_description,
                             strpos($order->retreat_description, '#') + 1,
                             (strpos($order->retreat_description, ' ') - strpos($order->retreat_description, '#'))
@@ -397,7 +399,6 @@ class GetMailgunMessages extends Command
                         $order->retreat_start_date = $event?->start_date;
                         $order->retreat_registration_type = 'Gift Certificate Registration';
                         $order->event_id = $event?->id;
-
                         $order->save();
                     } else {
                         $order_number = $this->extract_value_between($clean_message, 'Order #', '.');
