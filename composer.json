@@ -15,7 +15,7 @@
         "h4cc/wkhtmltoimage-amd64": "0.12.x",
         "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "intervention/image": "^2.7",
-        "jeremykenedy/laravel-logger": "^7.0",
+        "jeremykenedy/laravel-logger": "^10.0",
         "kriswallsmith/buzz": "^1.2",
         "laracasts/flash": "^3.2",
         "laravel/cashier": "^14.7",
