@@ -20,6 +20,7 @@
             <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                 <option value="">Print ...</option>
                 <option value="{{url('retreat/'.$retreat->id.'/namebadges/all')}}">Namebadges</option>
+                <option value="{{url('report/retreatrosterphone/'.$retreat->idnumber)}}">Phone Roster</option>
                 <option value="{{url('report/retreatroster/'.$retreat->idnumber)}}">Roster</option>
                 <option value="{{url('report/retreatlisting/'.$retreat->idnumber)}}">Listing</option>
                 <option value="{{url('report/retreatantinfo/'.$retreat->idnumber)}}">Retreatant info sheets</option>

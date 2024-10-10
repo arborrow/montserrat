@@ -337,6 +337,29 @@ class PageController extends Controller
         return view('reports.retreatroster', compact('registrations'));   //
     }
 
+    public function retreatrosterphonereport($idnumber): View
+    {
+        $this->authorize('show-contact');
+
+        $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
+        $retreatants = \App\Models\Registration::whereCanceledAt(null)
+            ->whereEventId($retreat->id)
+            ->whereRoleId(config('polanco.participant_role_id.retreatant'))
+            ->whereStatusId(config('polanco.registration_status_id.registered'))
+            ->with('retreat', 'retreatant')
+            ->get();
+        $ambassadors = \App\Models\Registration::whereCanceledAt(null)
+                ->whereEventId($retreat->id)
+                ->whereRoleId(config('polanco.participant_role_id.ambassador'))
+                ->whereStatusId(config('polanco.registration_status_id.registered'))
+                ->with('retreat', 'retreatant')
+                ->get();
+        $registrations = $retreatants->merge($ambassadors);
+        $registrations = $registrations->sortBy('retreatant.sort_name');
+
+        return view('reports.retreatrosterphone', compact('registrations'));   //
+    }
+   
     public function retreatregistrations($idnumber): View
     {
         $this->authorize('show-registration');
