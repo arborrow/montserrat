@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 trait HasRoles
 {

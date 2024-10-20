@@ -8,7 +8,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-
 Schedule::command('mailgun:get')->hourlyAt(55)
     ->between('05:30', '18:30')
     ->emailOutputOnFailure(config('polanco.admin_email'));
