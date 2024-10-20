@@ -7,7 +7,7 @@ use JMac\Testing\Traits\AdditionalAssertions;
 
 abstract class TestCase extends BaseTestCase
 {
-    use AdditionalAssertions, CreatesApplication;
+    use AdditionalAssertions;
 
     protected function stristrarray($array, $str)
     {
