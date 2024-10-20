@@ -12,12 +12,15 @@ class Audit extends Model
 
     protected $table = 'audits';
 
-    protected $casts = [
-        'old_values' => 'array',
-        'new_values' => 'array',
-    ];
-
     protected $appends = ['user_name'];
+
+    protected function casts(): array
+    {
+        return [
+            'old_values' => 'array',
+            'new_values' => 'array',
+        ];
+    }
 
     public function user()
     {

@@ -15,13 +15,16 @@ class StripePayout extends Model implements Auditable
 
     protected $table = 'stripe_payout';
 
-    protected $casts = [
-        'arrival_date' => 'datetime',
-        'date' => 'datetime',
-        'reconcile_date' => 'datetime',
-    ];  //
-
     protected $fillable = ['payout_id', 'object', 'amount', 'arrival_date', 'date', 'status', 'total_fee_amount', 'reconcile_date'];
+
+    protected function casts(): array
+    {
+        return [
+            'arrival_date' => 'datetime',
+            'date' => 'datetime',
+            'reconcile_date' => 'datetime',
+        ];
+    }
 
     public function transactions()
     {

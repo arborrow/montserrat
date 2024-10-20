@@ -15,11 +15,14 @@ class AssetJob extends Model implements Auditable
 
     protected $table = 'asset_job';
 
-    protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
-        'scheduled_date' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'datetime',
+            'end_date' => 'datetime',
+            'scheduled_date' => 'datetime',
+        ];
+    }
 
     // relations
     public function asset_task()

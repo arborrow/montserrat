@@ -18,11 +18,14 @@ class Retreat extends Model implements Auditable
 
     protected $table = 'event';
 
-    protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
-        'disabled_at' => 'datetime',
-    ];  //
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'datetime',
+            'end_date' => 'datetime',
+            'disabled_at' => 'datetime',
+        ];
+    }
 
     public function setStartDateAttribute($date)
     {

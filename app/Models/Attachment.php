@@ -15,12 +15,15 @@ class Attachment extends Model implements Auditable
 
     protected $table = 'file';
 
-    protected $casts = [
-        'upload_date' => 'datetime',
-    ];
-
     //
     protected $fillable = ['entity', 'entity_id', 'file_type_id'];
+
+    protected function casts(): array
+    {
+        return [
+            'upload_date' => 'datetime',
+        ];
+    }
 
     public function file_type()
     {

@@ -15,18 +15,21 @@ class Registration extends Model implements Auditable
 
     protected $table = 'participant';
 
-    protected $casts = [
-        'register_date' => 'datetime',
-        'registration_confirm_date' => 'datetime',
-        'attendance_confirm_date' => 'datetime',
-        'canceled_at' => 'datetime',
-        'arrived_at' => 'datetime',
-        'departed_at' => 'datetime',
-    ];
-
     protected $fillable = ['contact_id', 'event_id', 'status_id', 'role_id', 'notes', 'register_date'];
 
     protected $appends = ['retreat_start_date'];
+
+    protected function casts(): array
+    {
+        return [
+            'register_date' => 'datetime',
+            'registration_confirm_date' => 'datetime',
+            'attendance_confirm_date' => 'datetime',
+            'canceled_at' => 'datetime',
+            'arrived_at' => 'datetime',
+            'departed_at' => 'datetime',
+        ];
+    }
 
     public function generateTags(): array
     {

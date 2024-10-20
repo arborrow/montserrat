@@ -16,11 +16,14 @@ class Touchpoint extends Model implements Auditable
     //
     use SoftDeletes;
 
-    protected $casts = [
-        'touched_at' => 'datetime',
-    ];
-
     protected $fillable = ['person_id', 'staff_id', 'notes', 'type'];
+
+    protected function casts(): array
+    {
+        return [
+            'touched_at' => 'datetime',
+        ];
+    }
 
     public function setTouchedAtAttribute($date)
     {

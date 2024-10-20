@@ -19,18 +19,21 @@ class Contact extends Model implements Auditable
 
     protected $table = 'contact';
 
-    protected $casts = [
-        'birth_date' => 'datetime',
-        'deceased_date' => 'datetime',
-        'created_date' => 'datetime',
-        'modified_date' => 'datetime',
-        'contact_type' => 'integer',
-        'subcontact_type' => 'integer',
-    ];
-
     protected $appends = ['full_name_with_city', 'agc_household_name'];
 
     protected $with = ['prefix', 'suffix'];
+
+    protected function casts(): array
+    {
+        return [
+            'birth_date' => 'datetime',
+            'deceased_date' => 'datetime',
+            'created_date' => 'datetime',
+            'modified_date' => 'datetime',
+            'contact_type' => 'integer',
+            'subcontact_type' => 'integer',
+        ];
+    }
 
     public function generateTags(): array
     {

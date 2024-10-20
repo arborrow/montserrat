@@ -13,12 +13,15 @@ class Message extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
-    protected $casts = [
-        'mailgun_timestamp' => 'datetime',
-        'disabled_at' => 'datetime',
-    ];  //
-
     protected $fillable = ['mailgun_id', 'mailgun_timestamp', 'storage_url', 'from', 'to', 'subject', 'from_id', 'to_id', 'is_processed'];
+
+    protected function casts(): array
+    {
+        return [
+            'mailgun_timestamp' => 'datetime',
+            'disabled_at' => 'datetime',
+        ];
+    }
 
     public function contact_from()
     {

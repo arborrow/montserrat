@@ -15,10 +15,13 @@ class AssetTask extends Model implements Auditable
 
     protected $table = 'asset_task';
 
-    protected $casts = [
-        'start_date' => 'datetime',
-        'scheduled_until_date' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'datetime',
+            'scheduled_until_date' => 'datetime',
+        ];
+    }
 
     // relations
     public function asset()
