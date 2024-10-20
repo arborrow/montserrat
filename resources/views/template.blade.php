@@ -160,7 +160,7 @@
 					@endCan
 				</ul>
 				@can('show-contact')
-				{{ html()->form('GET', action('App\\Http\\Controllers\\SearchController@getuser', ))->class('form-inline my-2 my-lg-0')->open() }}
+				{{ html()->form('GET', action([\App\Http\Controllers\SearchController::class, 'getuser'], ))->class('form-inline my-2 my-lg-0')->open() }}
 				{{ html()->text('contactSearch', '')->id('contactSearch')->placeholder('Find contact by name')->class('form-control mr-sm-2') }}
 				{{ html()->hidden('response', '')->id('response') }}
 				{{ html()->submit('Find Person')->class('btn btn-outline-success my-2 my-sm-0')->id('btnSearch')->style('display:none') }}
