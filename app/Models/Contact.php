@@ -6,17 +6,16 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Cashier\Billable;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Contact extends Model implements Auditable
 {
-    use HasFactory;
-    use SoftDeletes;
     use Billable;
+    use HasFactory;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'contact';
 
@@ -614,18 +613,18 @@ class Contact extends Model implements Auditable
         }
     }
 
-/*
+    /*
 
 
-SELECT p.id, p.contact_id, p.event_id, e.title, e.idnumber, c.sort_name, d.donation_amount
-FROM participant as p
-LEFT JOIN event as e ON (p.event_id = e.id)
-LEFT JOIN Donations as d ON (d.contact_id = p.contact_id AND p.event_id = d.event_id)
-LEFT JOIN contact as c ON (p.contact_id = c.id)
-WHERE p.deleted_at IS NULL AND p.status_id=1 AND p.role_id = 5 AND p.canceled_at IS NULL
-AND e.deleted_at IS NULL AND e.event_type_id = 7 AND e.end_date < NOW() AND YEAR(e.start_date)>=2019
-AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="Retreat Funding";
-*/
+    SELECT p.id, p.contact_id, p.event_id, e.title, e.idnumber, c.sort_name, d.donation_amount
+    FROM participant as p
+    LEFT JOIN event as e ON (p.event_id = e.id)
+    LEFT JOIN Donations as d ON (d.contact_id = p.contact_id AND p.event_id = d.event_id)
+    LEFT JOIN contact as c ON (p.contact_id = c.id)
+    WHERE p.deleted_at IS NULL AND p.status_id=1 AND p.role_id = 5 AND p.canceled_at IS NULL
+    AND e.deleted_at IS NULL AND e.event_type_id = 7 AND e.end_date < NOW() AND YEAR(e.start_date)>=2019
+    AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="Retreat Funding";
+    */
     public function getIsFreeLoaderAttribute()
     {
         $is_free_loader = 0;
@@ -1635,18 +1634,18 @@ AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="R
 
     public function birthdayEmailReceivers()
     {
-        $birthdays = Contact::whereRaw("DAY(birth_date) = DAY(now())")
-            ->whereRaw("MONTH(birth_date) = MONTH(now())")
-            ->where('do_not_email','<>',1)
+        $birthdays = Contact::whereRaw('DAY(birth_date) = DAY(now())')
+            ->whereRaw('MONTH(birth_date) = MONTH(now())')
+            ->where('do_not_email', '<>', 1)
             ->whereIsDeceased(0)
             ->whereNull('deceased_date')
             ->with('email_primary')
-            ->select('id', 'display_name','birth_date','nick_name','first_name','preferred_language')
+            ->select('id', 'display_name', 'birth_date', 'nick_name', 'first_name', 'preferred_language')
             ->whereHas('email_primary', function ($query) {
                 return $query->whereNotNull('email')->select('email');
             })
             ->get();
-        
+
         return $birthdays;
     }
 }

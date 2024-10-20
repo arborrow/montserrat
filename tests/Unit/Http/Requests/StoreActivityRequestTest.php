@@ -16,7 +16,7 @@ class StoreActivityRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreActivityRequest();
+        $this->subject = new \App\Http\Requests\StoreActivityRequest;
     }
 
     /**

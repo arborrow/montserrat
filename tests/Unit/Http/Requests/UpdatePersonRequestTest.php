@@ -16,7 +16,7 @@ class UpdatePersonRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdatePersonRequest();
+        $this->subject = new \App\Http\Requests\UpdatePersonRequest;
     }
 
     /**
@@ -37,7 +37,7 @@ class UpdatePersonRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         // if Twilio is enabled then validate phone numbers otherwise allow strings
-        if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
+        if (config('settings.twilio_sid') !== null && config('settings.twilio_token') !== null) {
             $this->assertEquals([
                 'address_home_address1' => 'string|max:125|nullable',
                 'address_home_address2' => 'string|max:125|nullable',

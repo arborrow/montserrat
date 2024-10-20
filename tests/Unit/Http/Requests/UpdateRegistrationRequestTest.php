@@ -16,7 +16,7 @@ class UpdateRegistrationRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateRegistrationRequest();
+        $this->subject = new \App\Http\Requests\UpdateRegistrationRequest;
     }
 
     /**

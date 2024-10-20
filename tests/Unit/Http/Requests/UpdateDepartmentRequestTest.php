@@ -16,7 +16,7 @@ class UpdateDepartmentRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateDepartmentRequest();
+        $this->subject = new \App\Http\Requests\UpdateDepartmentRequest;
     }
 
     /**

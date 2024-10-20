@@ -17,7 +17,7 @@ class UpdateRetreatRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateRetreatRequest();
+        $this->subject = new \App\Http\Requests\UpdateRetreatRequest;
         $this->id = null; //set arbitrary value of retreat->id to ignore
     }
 

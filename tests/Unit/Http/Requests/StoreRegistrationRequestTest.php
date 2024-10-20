@@ -16,7 +16,7 @@ class StoreRegistrationRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreRegistrationRequest();
+        $this->subject = new \App\Http\Requests\StoreRegistrationRequest;
     }
 
     /**

@@ -16,7 +16,7 @@ class UpdateAssetTaskRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateAssetTaskRequest();
+        $this->subject = new \App\Http\Requests\UpdateAssetTaskRequest;
     }
 
     /**

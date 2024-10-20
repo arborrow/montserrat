@@ -20,9 +20,10 @@ class AgcDonationsRequest extends FormRequest
     public function rules(): array
     {
         $valid_agc_donation_type = \App\Models\DonationType::active()
-                ->whereIn('name', config('polanco.agc_donation_descriptions'))
-                ->get();
+            ->whereIn('name', config('polanco.agc_donation_descriptions'))
+            ->get();
         $valid_agc_donation_type_ids = $valid_agc_donation_type->modelKeys();
+
         // dd($valid_agc_donation_type, $valid_agc_donation_type_ids);
         return [
             'donation_type_id' => 'in:'.implode(',', $valid_agc_donation_type_ids).',0|integer|nullable',

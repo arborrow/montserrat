@@ -24,6 +24,7 @@ class DioceseController extends Controller
         $this->authorize('show-contact');
 
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops.contact_b', 'parishes.contact_a')->paginate(25, ['*'], 'dioceses');
+
         // dd($dioceses);
         return view('dioceses.index', compact('dioceses'));   //
     }
@@ -372,13 +373,13 @@ class DioceseController extends Controller
             }
         }
 
-        if (null !== $request->file('avatar')) {
+        if ($request->file('avatar') !== null) {
             $description = 'Avatar for '.$diocese->organization_name;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('avatar'), 'contact', $diocese->id, 'avatar', $description);
         }
 
-        if (null !== $request->file('attachment')) {
+        if ($request->file('attachment') !== null) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $diocese->id, 'attachment', $description);

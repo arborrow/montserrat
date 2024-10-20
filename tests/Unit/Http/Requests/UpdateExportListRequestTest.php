@@ -16,7 +16,7 @@ class UpdateExportListRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateExportListRequest();
+        $this->subject = new \App\Http\Requests\UpdateExportListRequest;
     }
 
     /**

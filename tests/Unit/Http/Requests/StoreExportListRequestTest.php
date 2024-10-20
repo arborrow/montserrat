@@ -16,7 +16,7 @@ class StoreExportListRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreExportListRequest();
+        $this->subject = new \App\Http\Requests\StoreExportListRequest;
     }
 
     /**

@@ -173,7 +173,7 @@ class StripePayoutController extends Controller
     /**
      * Create Stripe Fee donation/payment for a payout.
      */
-    public function process_fees(int $id = null): RedirectResponse
+    public function process_fees(?int $id = null): RedirectResponse
     {
         $this->authorize('update-stripe-payout');
 

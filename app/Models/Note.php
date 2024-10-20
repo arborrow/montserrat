@@ -10,8 +10,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Note extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'note';
 

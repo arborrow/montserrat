@@ -9,7 +9,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
-
 class SendBirthdays extends Command
 {
     /**
@@ -58,7 +57,7 @@ class SendBirthdays extends Command
         }
         // for each receiver create a touchpoint and if able to send an email document success otherwise document failed email
         foreach ($receivers as $key => $receiver) {
-            $touchpoint = new \App\Models\Touchpoint();
+            $touchpoint = new \App\Models\Touchpoint;
             $touchpoint->person_id = $receiver->id;
             $touchpoint->staff_id = $alfonso->id;
             $touchpoint->touched_at = Carbon::now();
@@ -74,6 +73,7 @@ class SendBirthdays extends Command
                 $status = 1;
             }
         }
+
         return $status;
     }
 }

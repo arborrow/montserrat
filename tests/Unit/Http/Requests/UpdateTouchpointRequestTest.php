@@ -16,7 +16,7 @@ class UpdateTouchpointRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateTouchpointRequest();
+        $this->subject = new \App\Http\Requests\UpdateTouchpointRequest;
     }
 
     /**

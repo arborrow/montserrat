@@ -53,6 +53,7 @@ class GiftCertificateController extends Controller
         //dd($purchaser, $recipient);
         $purchasers = ($request->filled('purchaser_name')) ? $this->matched_contacts($purchaser) : null;
         $recipients = ($request->filled('recipient_name')) ? $this->matched_contacts($recipient) : null;
+
         // dd($purchasers, $recipients);
         return view('gift_certificates.create', compact('purchasers', 'recipients'));
     }
@@ -68,10 +69,10 @@ class GiftCertificateController extends Controller
         $recipient = $request->input('recipient_name');
 
         // dd($purchaser, null !== $request->input('purchaser_id'), $recipient, $request->recipient_id) ;
-        if (isset($purchaser) && (null !== $request->input('purchaser_id'))) {
+        if (isset($purchaser) && ($request->input('purchaser_id') !== null)) {
             if ($request->input('purchaser_id') == 0) {
                 // dd('purchaser', $purchaser, $request->input('purchaser_id'), $recipient, $request->input('recipient_id'));
-                $new_purchaser = new Contact();
+                $new_purchaser = new Contact;
                 $names = ($request->filled('purchaser_name')) ? explode(' ', $request->purchaser_name) : null;
                 if (count($names) > 1) {
                     $new_purchaser->contact_type = config('polanco.contact_type.individual');
@@ -90,10 +91,10 @@ class GiftCertificateController extends Controller
             }
         }
         // dd($purchaser, $request->purchaser_id, $recipient, $request->recipient_id, $new_purchaser->id) ;
-        if (isset($recipient) && (null !== $request->input('recipient_id'))) {
+        if (isset($recipient) && ($request->input('recipient_id') !== null)) {
             if ($request->input('recipient_id') == 0) {
                 // dd('recipient', $purchaser, $request->input('purchaser_id'), $recipient, $request->input('recipient_id'));
-                $new_recipient = new Contact();
+                $new_recipient = new Contact;
                 $names = ($request->filled('recipient_name')) ? explode(' ', $request->recipient_name) : null;
                 if (count($names) > 1) {
                     $new_recipient->contact_type = config('polanco.contact_type.individual');

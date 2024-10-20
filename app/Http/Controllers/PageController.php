@@ -64,7 +64,8 @@ class PageController extends Controller
     {
         $this->authorize('show-donation');
         $current_fiscal_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
-        return view('pages.finance',compact('current_fiscal_year'));
+
+        return view('pages.finance', compact('current_fiscal_year'));
     }
 
     public function bookstore(): View
@@ -192,7 +193,7 @@ class PageController extends Controller
         }
 
         $current_user = $request->user();
-//        dd($current_user->contact_id,  $donation->donation_thank_you_sent);
+        //        dd($current_user->contact_id,  $donation->donation_thank_you_sent);
 
         if (! empty($current_user->contact_id)) {
             if ($donation->donation_thank_you_sent == 'N') { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
@@ -303,11 +304,11 @@ class PageController extends Controller
             ->with('retreat', 'retreatant')
             ->get();
         $ambassadors = \App\Models\Registration::whereCanceledAt(null)
-                ->whereEventId($retreat->id)
-                ->whereRoleId(config('polanco.participant_role_id.ambassador'))
-                ->whereStatusId(config('polanco.registration_status_id.registered'))
-                ->with('retreat', 'retreatant')
-                ->get();
+            ->whereEventId($retreat->id)
+            ->whereRoleId(config('polanco.participant_role_id.ambassador'))
+            ->whereStatusId(config('polanco.registration_status_id.registered'))
+            ->with('retreat', 'retreatant')
+            ->get();
         $registrations = $retreatants->merge($ambassadors);
         $registrations = $registrations->sortBy('retreatant.sort_name');
 
@@ -326,11 +327,11 @@ class PageController extends Controller
             ->with('retreat', 'retreatant')
             ->get();
         $ambassadors = \App\Models\Registration::whereCanceledAt(null)
-                ->whereEventId($retreat->id)
-                ->whereRoleId(config('polanco.participant_role_id.ambassador'))
-                ->whereStatusId(config('polanco.registration_status_id.registered'))
-                ->with('retreat', 'retreatant')
-                ->get();
+            ->whereEventId($retreat->id)
+            ->whereRoleId(config('polanco.participant_role_id.ambassador'))
+            ->whereStatusId(config('polanco.registration_status_id.registered'))
+            ->with('retreat', 'retreatant')
+            ->get();
         $registrations = $retreatants->merge($ambassadors);
         $registrations = $registrations->sortBy('retreatant.sort_name');
 
@@ -349,17 +350,17 @@ class PageController extends Controller
             ->with('retreat', 'retreatant')
             ->get();
         $ambassadors = \App\Models\Registration::whereCanceledAt(null)
-                ->whereEventId($retreat->id)
-                ->whereRoleId(config('polanco.participant_role_id.ambassador'))
-                ->whereStatusId(config('polanco.registration_status_id.registered'))
-                ->with('retreat', 'retreatant')
-                ->get();
+            ->whereEventId($retreat->id)
+            ->whereRoleId(config('polanco.participant_role_id.ambassador'))
+            ->whereStatusId(config('polanco.registration_status_id.registered'))
+            ->with('retreat', 'retreatant')
+            ->get();
         $registrations = $retreatants->merge($ambassadors);
         $registrations = $registrations->sortBy('retreatant.sort_name');
 
         return view('reports.retreatrosterphone', compact('registrations'));   //
     }
-   
+
     public function retreatregistrations($idnumber): View
     {
         $this->authorize('show-registration');
@@ -395,11 +396,11 @@ class PageController extends Controller
 
         $contact = \App\Models\Contact::findOrFail($contact_id);
         $payments = \App\Models\Payment::with('donation.contact', 'donation.retreat')
-        ->whereHas('donation', function ($query) use ($contact_id) {
-            $query->whereContactId($contact_id);
-        })
-        ->where('payment_date', '>=', $start_date->toDateString())
-        ->where('payment_date', '<=', $end_date->toDateString())->get();
+            ->whereHas('donation', function ($query) use ($contact_id) {
+                $query->whereContactId($contact_id);
+            })
+            ->where('payment_date', '>=', $start_date->toDateString())
+            ->where('payment_date', '<=', $end_date->toDateString())->get();
 
         $acknowlegment_touchpoint = new \App\Models\Touchpoint;
         $acknowlegment_touchpoint->person_id = $contact_id;

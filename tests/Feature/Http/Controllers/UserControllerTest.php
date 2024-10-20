@@ -146,8 +146,8 @@ class UserControllerTest extends TestCase
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action([\App\Http\Controllers\UserController::class, 'index']));
-//        $this->assertEquals($updated->description, $new_description);
-//        $this->assertNotEquals($updated->description, $original_description);
+        //        $this->assertEquals($updated->description, $new_description);
+        //        $this->assertNotEquals($updated->description, $original_description);
     }
 
     // test cases...

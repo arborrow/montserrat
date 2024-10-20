@@ -16,7 +16,7 @@ class UpdateRoomRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateRoomRequest();
+        $this->subject = new \App\Http\Requests\UpdateRoomRequest;
     }
 
     /**

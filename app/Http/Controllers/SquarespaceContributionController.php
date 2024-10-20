@@ -143,10 +143,10 @@ class SquarespaceContributionController extends Controller
         $ss_contribution->address_supplemental = $request->input('address_supplemental');
         $ss_contribution->address_city = $request->input('address_city');
         $state = ($request->filled('address_state_id')) ? StateProvince::findOrFail(($request->input('address_state_id'))) : null;
-        $ss_contribution->address_state = (null !== $state?->abbreviation) ? $state?->abbreviation : $ss_contribution->address_state;
+        $ss_contribution->address_state = ($state?->abbreviation !== null) ? $state?->abbreviation : $ss_contribution->address_state;
         $ss_contribution->address_zip = $request->input('address_zip');
         $country = ($request->filled('address_country_id')) ? Country::findOrFail(($request->input('address_country_id'))) : null;
-        $ss_contribution->address_country = (null !== $country?->iso_code) ? $country?->iso_code : $ss_contribution->address_country;
+        $ss_contribution->address_country = ($country?->iso_code !== null) ? $country?->iso_code : $ss_contribution->address_country;
 
         $ss_contribution->comments = $request->input('comments');
         $ss_contribution->amount = $request->input('amount');
@@ -243,8 +243,8 @@ class SquarespaceContributionController extends Controller
             $donation->contact_id = $contact_id;
             $donation->event_id = ($request->filled('event_id')) ? $event_id : $donation->event_id;
             $donation->donation_description = ($request->filled('donation_description')) ? $request->input('donation_description') : $donation->donation_description;
-            if ($donation->donation_description == "Saturday of Renewal Funding") {
-                $donation->donation_description = "Retreat Funding";
+            if ($donation->donation_description == 'Saturday of Renewal Funding') {
+                $donation->donation_description = 'Retreat Funding';
             }
             $donation->donation_date = (isset($ss_contribution->event->start_date)) ? $ss_contribution->event->start_date : $ss_contribution->created_at;
             $donation->donation_amount = $ss_contribution->amount;

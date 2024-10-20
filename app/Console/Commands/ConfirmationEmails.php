@@ -86,7 +86,7 @@ class ConfirmationEmails extends Command
                     if (! isset($alfonso->id)) {
                         $alfonso = \App\Models\Contact::findOrFail(config('polanco.self.id'));
                     }
-                    $touchpoint = new \App\Models\Touchpoint();
+                    $touchpoint = new \App\Models\Touchpoint;
                     $touchpoint->person_id = $registration->contact->id;
                     $touchpoint->staff_id = $alfonso->id;
                     $touchpoint->touched_at = Carbon::now();

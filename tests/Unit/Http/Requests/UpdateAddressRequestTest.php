@@ -16,7 +16,7 @@ class UpdateAddressRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateAddressRequest();
+        $this->subject = new \App\Http\Requests\UpdateAddressRequest;
     }
 
     /**

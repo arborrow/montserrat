@@ -16,7 +16,7 @@ class StorePaymentRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StorePaymentRequest();
+        $this->subject = new \App\Http\Requests\StorePaymentRequest;
     }
 
     /**

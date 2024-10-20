@@ -16,7 +16,7 @@ class EventSearchRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\EventSearchRequest();
+        $this->subject = new \App\Http\Requests\EventSearchRequest;
     }
 
     /**

@@ -16,7 +16,7 @@ class UpdateGroupRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateGroupRequest();
+        $this->subject = new \App\Http\Requests\UpdateGroupRequest;
     }
 
     /**

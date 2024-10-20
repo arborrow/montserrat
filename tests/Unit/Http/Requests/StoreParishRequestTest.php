@@ -16,7 +16,7 @@ class StoreParishRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreParishRequest();
+        $this->subject = new \App\Http\Requests\StoreParishRequest;
     }
 
     /**
@@ -37,7 +37,7 @@ class StoreParishRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         // if Twilio is enabled then validate phone numbers otherwise allow strings
-        if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
+        if (config('settings.twilio_sid') !== null && config('settings.twilio_token') !== null) {
             $this->assertEquals([
                 'organization_name' => 'required',
                 'diocese_id' => 'integer|min:0',

@@ -274,13 +274,13 @@ class VendorController extends Controller
         $vendor_note->subject = 'Vendor note';
         $vendor_note->save();
 
-        if (null !== $request->file('avatar')) {
+        if ($request->file('avatar') !== null) {
             $description = 'Avatar for '.$vendor->organization_name;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('avatar'), 'contact', $vendor->id, 'avatar', $description);
         }
 
-        if (null !== $request->file('attachment')) {
+        if ($request->file('attachment') !== null) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $vendor->id, 'attachment', $description);

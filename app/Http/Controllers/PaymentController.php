@@ -23,6 +23,7 @@ class PaymentController extends Controller
     {
         $this->authorize('show-payment');
         $payments = \App\Models\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(25, ['*'], 'payments');
+
         //dd($donations);
         return view('payments.index', compact('payments'));
     }
@@ -114,6 +115,7 @@ class PaymentController extends Controller
     {
         $this->authorize('show-payment');
         $payment = \App\Models\Payment::with('donation.retreat', 'donation.contact', 'balance_transaction')->findOrFail($id);
+
         //dd($payment);
         return view('payments.show', compact('payment')); //
     }
