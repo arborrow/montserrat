@@ -31,7 +31,7 @@
         "php-http/curl-client": "^2.2",
         "spatie/laravel-google-calendar": "^3.8",
         "spatie/laravel-stripe-webhooks": "^3.7",
-        "stuyam/laravel-phone-validator": "^1.0",
+        "stuyam/laravel-phone-validator": "dev-master",
         "symfony/http-client": "^7.0",
         "symfony/mailgun-mailer": "^7.0",
         "spatie/laravel-html": "^3.6"
@@ -42,7 +42,7 @@
         "brianium/paratest": "^7.5",
         "fakerphp/faker": "^1.23",
         "jasonmccreary/laravel-test-assertions": "^2.4",
-        "laravel/homestead": "^13.2",
+        "laravel/homestead": "^15.0",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
