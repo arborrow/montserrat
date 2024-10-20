@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,22 +20,22 @@ class Address extends Model implements Auditable
     protected $fillable = ['contact_id', 'location_type_id', 'is_primary', 'street_address', 'supplemental_address_1', 'city', 'state_province_id', 'postal_code', 'country_id'];
 
     // the contact for whom this is an address for
-    public function addressee()
+    public function addressee(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
 
-    public function location()
+    public function location(): HasOne
     {
         return $this->hasOne(LocationType::class, 'id', 'location_type_id');
     }
 
-    public function state()
+    public function state(): HasOne
     {
         return $this->hasOne(StateProvince::class, 'id', 'state_province_id');
     }
 
-    public function country()
+    public function country(): HasOne
     {
         return $this->hasOne(Country::class, 'id', 'country_id');
     }

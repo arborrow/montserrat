@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,12 +29,12 @@ class Payment extends Model implements Auditable
         ];
     }
 
-    public function donation()
+    public function donation(): BelongsTo
     {
         return $this->belongsTo(Donation::class, 'donation_id', 'donation_id');
     }
 
-    public function balance_transaction()
+    public function balance_transaction(): BelongsTo
     {
         return $this->belongsTo(StripeBalanceTransaction::class, 'stripe_balance_transaction_id', 'id');
     }

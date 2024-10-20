@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -29,7 +30,7 @@ class AssetTask extends Model implements Auditable
         return $this->BelongsTo(Asset::class, 'asset_id');
     }
 
-    public function jobs()
+    public function jobs(): HasMany
     {
         return $this->hasMany(AssetJob::class, 'asset_task_id', 'id');
     }

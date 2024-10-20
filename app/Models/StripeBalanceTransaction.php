@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,22 +28,22 @@ class StripeBalanceTransaction extends Model implements Auditable
         ];
     }
 
-    public function contact()
+    public function contact(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'contact_id');
     }
 
-    public function payout()
+    public function payout(): HasOne
     {
         return $this->hasOne(StripePayout::class, 'id', 'payout_id');
     }
 
-    public function squarespace_order()
+    public function squarespace_order(): HasOne
     {
         return $this->hasOne(SquarespaceOrder::class, 'stripe_charge_id', 'charge_id');
     }
 
-    public function payments()
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class, 'stripe_balance_transaction_id', 'id');
     }

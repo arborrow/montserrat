@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,27 +28,27 @@ class GiftCertificate extends Model implements Auditable
         ];
     }
 
-    public function purchaser()
+    public function purchaser(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'purchaser_id', 'id');
     }
 
-    public function recipient()
+    public function recipient(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'recipient_id', 'id');
     }
 
-    public function registration()
+    public function registration(): BelongsTo
     {
         return $this->belongsTo(Registration::class, 'participant_id', 'id');
     }
 
-    public function donation()
+    public function donation(): BelongsTo
     {
         return $this->belongsTo(Donation::class, 'donation_id', 'id');
     }
 
-    public function squarespace_order()
+    public function squarespace_order(): BelongsTo
     {
         return $this->belongsTo(SquarespaceOrder::class, 'squarespace_order_number', 'order_number');
     }

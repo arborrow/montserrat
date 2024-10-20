@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,7 +21,7 @@ class Department extends Model implements Auditable
         return $query->whereIsActive(1);
     }
 
-    public function parent()
+    public function parent(): HasOne
     {
         return $this->hasOne(self::class, 'id', 'parent_id');
     }

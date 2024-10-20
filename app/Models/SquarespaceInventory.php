@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,7 +16,7 @@ class SquarespaceInventory extends Model implements Auditable
 
     protected $table = 'squarespace_inventory';
 
-    public function custom_form()
+    public function custom_form(): HasOne
     {
         return $this->hasOne(SquarespaceCustomForm::class, 'id', 'custom_form_id');
     }
