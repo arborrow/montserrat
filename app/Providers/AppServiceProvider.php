@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function bootAuth(): void
     {
-        parent::registerPolicies();
+        # parent::registerPolicies();
 
         //prior to installing the app ignore checking for superuser or permissions to avoid artisan errors about missing permissions table
         if (config('app.key') !== null) {
