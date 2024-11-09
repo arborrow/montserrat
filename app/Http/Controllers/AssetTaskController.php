@@ -191,7 +191,7 @@ class AssetTaskController extends Controller
 
             switch ($asset_task->frequency) {
                 case 'daily':
-                    $jobs_to_create = $asset_task->start_date->diffInDays($asset_task->scheduled_until_date);
+                    $jobs_to_create = (int) $asset_task->start_date->diffInDays($asset_task->scheduled_until_date);
                     for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
                         if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
                             $job_date = $asset_task->start_date->addDay($job_number);
@@ -216,7 +216,7 @@ class AssetTaskController extends Controller
 
                     break;
                 case 'weekly':
-                    $jobs_to_create = $asset_task->start_date->diffInWeeks($asset_task->scheduled_until_date);
+                    $jobs_to_create = (int) $asset_task->start_date->diffInWeeks($asset_task->scheduled_until_date);
                     for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
                         if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
                             $job_date = $asset_task->start_date->addWeek($job_number);
@@ -226,9 +226,9 @@ class AssetTaskController extends Controller
                             }
                             if (isset($asset_task->scheduled_time)) {
                                 $time = explode(':', $asset_task->scheduled_time);
-                                $job_date->hour = $time[0];
-                                $job_date->minute = $time[1];
-                                $job_date->second = $time[2];
+                                $job_date->hour = (int) $time[0];
+                                $job_date->minute = (int) $time[1];
+                                $job_date->second = (int) $time[2];
                             }
                             $new_job = new \App\Models\AssetJob;
                             $new_job->asset_task_id = $asset_task->id;
@@ -244,7 +244,7 @@ class AssetTaskController extends Controller
                     }
                     break;
                 case 'monthly':
-                    $jobs_to_create = $asset_task->start_date->diffInMonths($asset_task->scheduled_until_date);
+                    $jobs_to_create = (int) $asset_task->start_date->diffInMonths($asset_task->scheduled_until_date);
                     for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
                         if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
                             $job_date = $asset_task->start_date->addMonth($job_number);
@@ -271,7 +271,7 @@ class AssetTaskController extends Controller
                     }
                     break;
                 case 'yearly':
-                    $jobs_to_create = $asset_task->start_date->diffInYears($asset_task->scheduled_until_date);
+                    $jobs_to_create = (int) $asset_task->start_date->diffInYears($asset_task->scheduled_until_date);
                     for ($job_number = 1; $job_number <= $jobs_to_create; $job_number++) {
                         if ($job_number % $asset_task->frequency_interval == 0) { // if current job number is part of the interval then proceed otherwise skip
                             $job_date = $asset_task->start_date->addYear($job_number);
