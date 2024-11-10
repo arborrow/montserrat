@@ -193,8 +193,9 @@ class RoomController extends Controller
         $registrations_end = \App\Models\Registration::with('room', 'room.location', 'retreatant', 'retreat')->whereNull('canceled_at')->where('room_id', '>', 0)->whereHas('retreat', function ($query) use ($dts) {
             $query->where('end_date', '>=', $dts[0])->where('start_date', '<=', $dts[0]);
         })->get();
-
-        // create matrix of rooms and dates
+	
+#	dd($registrations_start,$registrations_end);
+	// create matrix of rooms and dates
         foreach ($rooms as $room) {
             foreach ($dts as $dt) {
                 //dd($dt);
@@ -218,7 +219,7 @@ class RoomController extends Controller
         foreach ($registrations_start as $registration) {
             $start_time = $registration->retreat->start_date->hour + (($registration->retreat->start_date->minute / 100));
             $end_time = $registration->retreat->end_date->hour + (($registration->retreat->end_date->minute / 100));
-            $numdays = ( (int) $registration->retreat->end_date->diffInDays($registration->retreat->start_date));
+            $numdays = ( (int) $registration->retreat->start_date->diffInDays($registration->retreat->end_date));
             $numdays = ($start_time > $end_time) ? $numdays + 1 : $numdays;
             for ($i = 0; $i <= $numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
@@ -243,7 +244,7 @@ class RoomController extends Controller
         foreach ($registrations_end as $registration) {
             $start_time = $registration->retreat->start_date->hour + (($registration->retreat->start_date->minute / 100));
             $end_time = $registration->retreat->end_date->hour + (($registration->retreat->end_date->minute / 100));
-            $numdays = ( (int) $registration->retreat->end_date->diffInDays($registration->retreat->start_date));
+            $numdays = ( (int) $registration->retreat->start_date->diffInDays($registration->retreat->end_date));
             $numdays = ($start_time > $end_time) ? $numdays + 1 : $numdays;
             for ($i = 0; $i <= $numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
@@ -263,7 +264,8 @@ class RoomController extends Controller
                      * Occupied will be the same link to the registration.
                      */
                 }
-            }
+	    }
+#	    dd($start_time, $end_time, $numdays, $matrixdate, $m);
         }
 
         return view('rooms.sched2', compact('dts', 'roomsort', 'm', 'previous_link', 'next_link'));
