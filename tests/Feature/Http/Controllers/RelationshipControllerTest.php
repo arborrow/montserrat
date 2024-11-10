@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\RelationshipController
  */
-class RelationshipControllerTest extends TestCase
+final class RelationshipControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

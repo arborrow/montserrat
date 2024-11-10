@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\UpdateAssetTypeRequest
  */
-class UpdateAssetTypeRequestTest extends TestCase
+final class UpdateAssetTypeRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\UpdateAssetTypeRequest */
     private $subject;

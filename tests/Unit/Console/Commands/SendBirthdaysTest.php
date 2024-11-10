@@ -11,7 +11,7 @@ use Tests\TestCase;
 /**
  * @see \App\Console\Commands\SendBirthdays
  */
-class SendBirthdaysTest extends TestCase
+final class SendBirthdaysTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

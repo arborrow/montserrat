@@ -11,7 +11,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\GroupController
  */
-class GroupControllerTest extends TestCase
+final class GroupControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

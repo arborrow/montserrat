@@ -12,7 +12,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\DonationTypeController
  */
-class DonationTypeControllerTest extends TestCase
+final class DonationTypeControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

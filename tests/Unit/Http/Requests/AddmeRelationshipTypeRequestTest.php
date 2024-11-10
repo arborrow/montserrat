@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\AddmeRelationshipTypeRequest
  */
-class AddmeRelationshipTypeRequestTest extends TestCase
+final class AddmeRelationshipTypeRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\AddmeRelationshipTypeRequest */
     private $subject;

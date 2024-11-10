@@ -17,7 +17,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\PageController
  */
-class PageControllerTest extends TestCase
+final class PageControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

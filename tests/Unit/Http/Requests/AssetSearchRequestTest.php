@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\SearchRequest
  */
-class AssetSearchRequestTest extends TestCase
+final class AssetSearchRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\AssetSearchRequest */
     private $subject;

@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\AssetTypeController
  */
-class AssetTypeControllerTest extends TestCase
+final class AssetTypeControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

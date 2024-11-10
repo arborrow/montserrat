@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\LocationController
  */
-class LocationControllerTest extends TestCase
+final class LocationControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

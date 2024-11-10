@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\StoreUomRequest
  */
-class StoreAssetTaskRequestTest extends TestCase
+final class StoreAssetTaskRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\StoreAssetTaskRequest */
     private $subject;

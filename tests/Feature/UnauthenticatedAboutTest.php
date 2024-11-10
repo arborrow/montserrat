@@ -5,7 +5,7 @@ namespace Tests\Feature;
 // use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
-class UnauthenticatedAboutTest extends TestCase
+final class UnauthenticatedAboutTest extends TestCase
 {
     /**
      * A basic test example.

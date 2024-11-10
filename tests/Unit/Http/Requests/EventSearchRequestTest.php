@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\SearchRequest
  */
-class EventSearchRequestTest extends TestCase
+final class EventSearchRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\EventSearchRequest */
     private $subject;

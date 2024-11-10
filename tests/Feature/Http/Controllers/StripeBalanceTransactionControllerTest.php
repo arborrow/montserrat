@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\SquarespaceInventoryController
  */
-class StripeBalanceTransactionControllerTest extends TestCase
+final class StripeBalanceTransactionControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

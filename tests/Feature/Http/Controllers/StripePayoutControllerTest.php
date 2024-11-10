@@ -11,7 +11,7 @@ use Tests\TestCase;
  * @see \App\Http\Controllers\StripePayoutController
  * TODO: copied from squarespace-inventory need to update tests to stripe-payout, disabling tests for now
  */
-class StripePayoutControllerTest extends TestCase
+final class StripePayoutControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

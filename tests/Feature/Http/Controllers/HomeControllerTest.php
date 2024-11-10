@@ -9,7 +9,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\HomeController
  */
-class HomeControllerTest extends TestCase
+final class HomeControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     #[Test]

@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\UpdateDonationRequest
  */
-class SnippetTestRequestTest extends TestCase
+final class SnippetTestRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\UpdateSnippetRequest */
     private $subject;

@@ -12,7 +12,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\RegistrationController
  */
-class RegistrationControllerTest extends TestCase
+final class RegistrationControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

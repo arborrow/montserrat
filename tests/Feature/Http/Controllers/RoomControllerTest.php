@@ -11,7 +11,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\RoomController
  */
-class RoomControllerTest extends TestCase
+final class RoomControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

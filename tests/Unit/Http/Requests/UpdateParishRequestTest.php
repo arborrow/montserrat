@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\UpdateParishRequest
  */
-class UpdateParishRequestTest extends TestCase
+final class UpdateParishRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\UpdateParishRequest */
     private $subject;

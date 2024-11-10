@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\PersonController
  */
-class PersonControllerTest extends TestCase
+final class PersonControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

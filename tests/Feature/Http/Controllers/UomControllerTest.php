@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\UomController
  */
-class UomControllerTest extends TestCase
+final class UomControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

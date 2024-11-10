@@ -12,7 +12,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\TouchpointController
  */
-class TouchpointControllerTest extends TestCase
+final class TouchpointControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

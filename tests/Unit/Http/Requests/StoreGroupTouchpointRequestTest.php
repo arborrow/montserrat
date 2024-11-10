@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\StoreGroupTouchpointRequest
  */
-class StoreGroupTouchpointRequestTest extends TestCase
+final class StoreGroupTouchpointRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\StoreGroupTouchpointRequest */
     private $subject;

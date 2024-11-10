@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\StoreWebsiteRequest
  */
-class StoreWebsiteRequestTest extends TestCase
+final class StoreWebsiteRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\StoreWebsiteRequest */
     private $subject;

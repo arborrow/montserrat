@@ -11,7 +11,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\AttachmentController
  */
-class AttachmentControllerTest extends TestCase
+final class AttachmentControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

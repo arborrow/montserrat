@@ -11,7 +11,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\RelationshipTypeController
  */
-class RelationshipTypeControllerTest extends TestCase
+final class RelationshipTypeControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

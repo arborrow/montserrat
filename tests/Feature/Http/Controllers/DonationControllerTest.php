@@ -11,7 +11,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\DonationController
  */
-class DonationControllerTest extends TestCase
+final class DonationControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

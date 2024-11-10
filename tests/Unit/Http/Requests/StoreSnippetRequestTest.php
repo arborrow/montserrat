@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\StoreSnippetRequest
  */
-class StoreSnippetRequestTest extends TestCase
+final class StoreSnippetRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\StoreSnippetRequest */
     private $subject;

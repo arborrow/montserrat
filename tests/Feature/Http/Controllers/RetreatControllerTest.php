@@ -11,7 +11,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\RetreatController
  */
-class RetreatControllerTest extends TestCase
+final class RetreatControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

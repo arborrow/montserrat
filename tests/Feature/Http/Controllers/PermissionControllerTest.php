@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\PermissionController
  */
-class PermissionControllerTest extends TestCase
+final class PermissionControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

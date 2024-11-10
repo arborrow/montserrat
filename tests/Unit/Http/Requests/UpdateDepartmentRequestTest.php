@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\UpdateDonationRequest
  */
-class UpdateDepartmentRequestTest extends TestCase
+final class UpdateDepartmentRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\UpdateDepartmentRequest * */
     private $subject;

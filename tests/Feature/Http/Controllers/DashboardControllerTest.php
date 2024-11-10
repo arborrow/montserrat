@@ -11,7 +11,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\DashboardController
  */
-class DashboardControllerTest extends TestCase
+final class DashboardControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

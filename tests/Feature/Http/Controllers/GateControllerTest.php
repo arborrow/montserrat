@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\GateController
  */
-class GateControllerTest extends TestCase
+final class GateControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

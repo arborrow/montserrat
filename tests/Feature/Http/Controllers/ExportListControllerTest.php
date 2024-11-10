@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\ExportListController
  */
-class ExportListControllerTest extends TestCase
+final class ExportListControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

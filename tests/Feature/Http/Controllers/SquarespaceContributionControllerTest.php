@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\SquarespaceInventoryController
  */
-class SquarespaceContributionControllerTest extends TestCase
+final class SquarespaceContributionControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

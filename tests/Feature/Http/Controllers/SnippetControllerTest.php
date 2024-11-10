@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\SnippetController
  */
-class SnippetControllerTest extends TestCase
+final class SnippetControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

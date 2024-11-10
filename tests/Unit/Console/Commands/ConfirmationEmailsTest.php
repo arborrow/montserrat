@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Console\Commands\ConfirmationEmails
  */
-class ConfirmationEmailsTest extends TestCase
+final class ConfirmationEmailsTest extends TestCase
 {
     #[Test]
     public function it_runs_successfully(): void

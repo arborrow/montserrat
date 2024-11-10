@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * @see \App\Console\Commands\PostRetreatEmails
  */
-class PostRetreatEmailsTest extends TestCase
+final class PostRetreatEmailsTest extends TestCase
 {
     #[Test]
     public function it_runs_successfully(): void

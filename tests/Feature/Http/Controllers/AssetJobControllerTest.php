@@ -11,7 +11,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\AssetJobController
  */
-class AssetJobControllerTest extends TestCase
+final class AssetJobControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

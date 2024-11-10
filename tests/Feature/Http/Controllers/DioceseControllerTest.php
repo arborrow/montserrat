@@ -10,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\DioceseController
  */
-class DioceseControllerTest extends TestCase
+final class DioceseControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;

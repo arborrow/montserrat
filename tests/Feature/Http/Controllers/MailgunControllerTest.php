@@ -11,7 +11,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\MailgunController
  */
-class MailgunControllerTest extends TestCase
+final class MailgunControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
