@@ -19,7 +19,7 @@ class UpdateVendorRequest extends FormRequest
      */
     public function rules(): array
     {   // if Twilio is enabled then validate phone numbers otherwise allow strings
-        if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
+        if (config('settings.twilio_sid') !== null && config('settings.twilio_token') !== null) {
             return [
                 'organization_name' => 'required',
                 'display_name' => 'required',

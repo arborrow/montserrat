@@ -16,7 +16,7 @@ class StoreAssetJobRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreAssetJobRequest();
+        $this->subject = new \App\Http\Requests\StoreAssetJobRequest;
     }
 
     /**

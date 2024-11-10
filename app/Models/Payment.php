@@ -5,14 +5,15 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Payment extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'Donations_payment';
 
@@ -20,17 +21,20 @@ class Payment extends Model implements Auditable
 
     protected $primaryKey = 'payment_id';
 
-    protected $casts = [
-        'payment_date' => 'datetime',
-        'expire_date' => 'datetime', 'payment_amount' => 'decimal:2',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'payment_date' => 'datetime',
+            'expire_date' => 'datetime', 'payment_amount' => 'decimal:2',
+        ];
+    }
 
-    public function donation()
+    public function donation(): BelongsTo
     {
         return $this->belongsTo(Donation::class, 'donation_id', 'donation_id');
     }
 
-    public function balance_transaction()
+    public function balance_transaction(): BelongsTo
     {
         return $this->belongsTo(StripeBalanceTransaction::class, 'stripe_balance_transaction_id', 'id');
     }

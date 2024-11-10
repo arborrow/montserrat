@@ -16,7 +16,7 @@ class AddmeRelationshipTypeRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\AddmeRelationshipTypeRequest();
+        $this->subject = new \App\Http\Requests\AddmeRelationshipTypeRequest;
     }
 
     /**

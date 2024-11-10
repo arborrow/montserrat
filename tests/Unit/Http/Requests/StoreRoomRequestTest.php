@@ -16,7 +16,7 @@ class StoreRoomRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreRoomRequest();
+        $this->subject = new \App\Http\Requests\StoreRoomRequest;
     }
 
     /**

@@ -16,7 +16,7 @@ class UpdateWebsiteRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateWebsiteRequest();
+        $this->subject = new \App\Http\Requests\UpdateWebsiteRequest;
     }
 
     /**

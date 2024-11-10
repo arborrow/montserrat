@@ -39,8 +39,8 @@ class DashboardController extends Controller
 
         $donors = [];
         $agc_descriptions = \App\Models\DonationType::active()
-           ->whereIn('name', config('polanco.agc_donation_descriptions'))
-           ->get();
+            ->whereIn('name', config('polanco.agc_donation_descriptions'))
+            ->get();
 
         foreach ($years as $year) {
             $label = $year->year;
@@ -80,14 +80,12 @@ class DashboardController extends Controller
             $donors[$label]['average_count'] = $average_donor_count;
             $donors[$label]['average_amount'] = $average_agc_amount;
         }
-        
+
         $labels = array_values(array_keys($donors));
         $avgs = array_column($donors, 'average_amount');
         $sums = array_column($donors, 'sum');
         $donor_count = array_column($donors, 'count');
         $donor_count_average = array_column($donors, 'average_count');
-
-
 
         $data = [
             'labels' => array_values(array_keys($donors)),
@@ -97,12 +95,10 @@ class DashboardController extends Controller
             'donor_count_average' => $donor_count_average,
         ];
 
-
         foreach (config('polanco.agc_donation_descriptions') as $key => $description) {
             $data[$description] = array_column($donors, 'sum_'.$description);
-            $data[$description . " Donors"] = array_column($donors, 'count_'.$description);
+            $data[$description.' Donors'] = array_column($donors, 'count_'.$description);
         }
-
 
         // dd($donors, $data);
         return view('dashboard.agc', compact('number_of_years', 'donors', 'agc_descriptions', 'data'));
@@ -149,7 +145,7 @@ class DashboardController extends Controller
         return view('donations.results', compact('donations', 'all_donations'));
     }
 
-    public function donation_description_chart(int $category_id = null): View
+    public function donation_description_chart(?int $category_id = null): View
     {
         $this->authorize('show-dashboard');
         $descriptions = \App\Models\DonationType::active()->orderBy('name')->pluck('id', 'name');
@@ -195,14 +191,13 @@ class DashboardController extends Controller
         $sums = array_column($donors, 'sum');
         $avgs = array_column($donors, 'average_amount');
 
-
         $data = [
             'labels' => array_values(array_keys($donors)),
             'dataset1' => $sums,
             'dataset2' => $avgs,
         ];
-        
-        return view('dashboard.description', compact('donation_type', 'descriptions','data'));
+
+        return view('dashboard.description', compact('donation_type', 'descriptions', 'data'));
     }
 
     public function events($year = null): View
@@ -267,12 +262,13 @@ class DashboardController extends Controller
             $quotient = intdiv($x, count($chart_colors));
             $inital_color_percentage = 0.80;
             $color_percentage = $inital_color_percentage - ($quotient * 0.2);
-            $event_colors[$x] = "rgba(" . $chart_colors[$mod]. ", ". $color_percentage . ")";
+            $event_colors[$x] = 'rgba('.$chart_colors[$mod].', '.$color_percentage.')';
         }
+
         // dd($colors, $event_colors, $revenue_data);
         // dd(count($labels), $labels, $chart_colors);
         // dd($total_revenue, $event_summary, $labels, $revenue_data);
-        return view('dashboard.events', compact('years', 'year', 'event_summary', 'total_revenue', 'total_participants', 'total_peoplenights','labels','revenue_data', 'participants_data','people_nights_data','event_colors'));
+        return view('dashboard.events', compact('years', 'year', 'event_summary', 'total_revenue', 'total_participants', 'total_peoplenights', 'labels', 'revenue_data', 'participants_data', 'people_nights_data', 'event_colors'));
     }
 
     public function drilldown($event_type_id = null, $year = null): View

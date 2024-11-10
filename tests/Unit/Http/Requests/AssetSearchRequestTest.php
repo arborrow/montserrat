@@ -16,7 +16,7 @@ class AssetSearchRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\AssetSearchRequest();
+        $this->subject = new \App\Http\Requests\AssetSearchRequest;
     }
 
     /**

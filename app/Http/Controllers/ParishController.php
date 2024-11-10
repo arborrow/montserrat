@@ -30,6 +30,7 @@ class ParishController extends Controller
         $parishes = $parishes->sortBy(function ($parish) {
             return sprintf('%-12s%s', $parish->diocese_name, $parish->organization_name);
         });
+
         // dd($parishes, $dioceses, $diocese);
         return view('parishes.index', compact('parishes', 'dioceses', 'diocese'));   //
     }
@@ -272,7 +273,7 @@ class ParishController extends Controller
         $diocese->contact_id_b = $parish->id;
         $diocese->relationship_type_id = config('polanco.relationship_type.diocese');
         $diocese->is_active = 1;
-        if (null !== $request->input('diocese_id')) {
+        if ($request->input('diocese_id') !== null) {
             $diocese->contact_id_a = $request->input('diocese_id');
             $diocese->save();
         }
@@ -394,13 +395,13 @@ class ParishController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-        if (null !== $request->file('avatar')) {
+        if ($request->file('avatar') !== null) {
             $description = 'Avatar for '.$parish->organization_name;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('avatar'), 'contact', $parish->id, 'avatar', $description);
         }
 
-        if (null !== $request->file('attachment')) {
+        if ($request->file('attachment') !== null) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $parish->id, 'attachment', $description);

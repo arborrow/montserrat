@@ -16,7 +16,7 @@ class StoreRetreatWaitlistTouchpointRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreRetreatWaitlistTouchpointRequest();
+        $this->subject = new \App\Http\Requests\StoreRetreatWaitlistTouchpointRequest;
     }
 
     /**

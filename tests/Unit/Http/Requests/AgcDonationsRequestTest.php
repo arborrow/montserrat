@@ -16,7 +16,7 @@ class AgcDonationsRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\AgcDonationsRequest();
+        $this->subject = new \App\Http\Requests\AgcDonationsRequest;
     }
 
     /**
@@ -36,8 +36,8 @@ class AgcDonationsRequestTest extends TestCase
     {
         $actual = $this->subject->rules();
         $valid_agc_donation_type = \App\Models\DonationType::active()
-             ->whereIn('name', config('polanco.agc_donation_descriptions'))
-             ->get();
+            ->whereIn('name', config('polanco.agc_donation_descriptions'))
+            ->get();
         $valid_agc_donation_type_ids = $valid_agc_donation_type->modelKeys();
 
         $this->assertEquals([

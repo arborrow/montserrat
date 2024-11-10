@@ -455,6 +455,7 @@ class AttachmentController extends Controller
     {
         $this->authorize('delete-attachment');
         $this->delete_attachment($attachment, 'contact', $user_id, 'attachment');
+
         // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
         return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $user_id);
     }
@@ -463,6 +464,7 @@ class AttachmentController extends Controller
     {
         $this->authorize('delete-attachment'); // TODO: for testing simplicity I am not implementing the use of delete-event-attachment
         $this->delete_attachment($attachment, 'event', $event_id, 'event-attachment');
+
         // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }

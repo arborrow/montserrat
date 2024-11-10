@@ -16,7 +16,7 @@ class UpdateUomRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateUomRequest();
+        $this->subject = new \App\Http\Requests\UpdateUomRequest;
     }
 
     /**

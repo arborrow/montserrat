@@ -5,33 +5,38 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Cashier\Billable;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Contact extends Model implements Auditable
 {
-    use HasFactory;
-    use SoftDeletes;
     use Billable;
+    use HasFactory;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'contact';
-
-    protected $casts = [
-        'birth_date' => 'datetime',
-        'deceased_date' => 'datetime',
-        'created_date' => 'datetime',
-        'modified_date' => 'datetime',
-        'contact_type' => 'integer',
-        'subcontact_type' => 'integer',
-    ];
 
     protected $appends = ['full_name_with_city', 'agc_household_name'];
 
     protected $with = ['prefix', 'suffix'];
+
+    protected function casts(): array
+    {
+        return [
+            'birth_date' => 'datetime',
+            'deceased_date' => 'datetime',
+            'created_date' => 'datetime',
+            'modified_date' => 'datetime',
+            'contact_type' => 'integer',
+            'subcontact_type' => 'integer',
+        ];
+    }
 
     public function generateTags(): array
     {
@@ -46,22 +51,22 @@ class Contact extends Model implements Auditable
             return $this->belongsToMany('\App\Retreat','retreatmasters','person_id','retreat_id');
         }
     */
-    public function a_relationships()
+    public function a_relationships(): HasMany
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id');
     }
 
-    public function b_relationships()
+    public function b_relationships(): HasMany
     {
         return $this->hasMany(Relationship::class, 'contact_id_b', 'id');
     }
 
-    public function addresses()
+    public function addresses(): HasMany
     {
         return $this->hasMany(Address::class, 'contact_id', 'id');
     }
 
-    public function address_primary()
+    public function address_primary(): HasOne
     {
         return $this->hasOne(Address::class, 'contact_id', 'id')->whereIsPrimary(1);
     }
@@ -129,78 +134,78 @@ class Contact extends Model implements Auditable
         }
     }
 
-    public function bishops()
+    public function bishops(): HasMany
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'));
     }
 
-    public function primary_bishop()
+    public function primary_bishop(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'))->whereIsActive(1);
     }
 
-    public function ambassador_events()
+    public function ambassador_events(): HasMany
     {
         return $this->hasMany(Registration::class, 'contact_id', 'id');
     }
 
-    public function contacttype()
+    public function contacttype(): HasOne
     {
         return $this->hasOne(ContactType::class, 'id', 'contact_type');
     }
 
-    public function subcontacttype()
+    public function subcontacttype(): HasOne
     {
         return $this->hasOne(ContactType::class, 'id', 'subcontact_type');
     }
 
-    public function diocese()
+    public function diocese(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
     }
 
-    public function donations()
+    public function donations(): HasMany
     {
         return $this->hasMany(Donation::class, 'contact_id', 'id');
     }
 
-    public function emails()
+    public function emails(): HasMany
     {
         return $this->hasMany(Email::class, 'contact_id', 'id');
     }
 
-    public function primaryEmail()
+    public function primaryEmail(): HasMany
     {
         return $this->hasMany(Email::class, 'contact_id', 'id')
             ->where('is_primary', 1);
     }
 
-    public function attachments()
+    public function attachments(): HasMany
     {
         return $this->hasMany(Attachment::class, 'entity_id', 'id')->whereEntity('contact');
     }
 
-    public function agc2019()
+    public function agc2019(): HasOne
     {
         return $this->hasOne(Agc2019::class, 'contact_id', 'id');
     }
 
-    public function avatar()
+    public function avatar(): HasOne
     {
         return $this->hasOne(Attachment::class, 'entity_id', 'id')->whereEntity('contact')->whereFileTypeId(config('polanco.file_type.contact_avatar'));
     }
 
-    public function email_primary()
+    public function email_primary(): HasOne
     {
         return $this->hasOne(Email::class, 'contact_id', 'id')->whereIsPrimary(1);
     }
 
-    public function emergency_contact()
+    public function emergency_contact(): HasOne
     {
         return $this->hasOne(EmergencyContact::class, 'contact_id', 'id');
     }
 
-    public function ethnicity()
+    public function ethnicity(): HasOne
     {
         return $this->hasOne(Ethnicity::class, 'id', 'ethnicity_id');
     }
@@ -614,18 +619,18 @@ class Contact extends Model implements Auditable
         }
     }
 
-/*
+    /*
 
 
-SELECT p.id, p.contact_id, p.event_id, e.title, e.idnumber, c.sort_name, d.donation_amount
-FROM participant as p
-LEFT JOIN event as e ON (p.event_id = e.id)
-LEFT JOIN Donations as d ON (d.contact_id = p.contact_id AND p.event_id = d.event_id)
-LEFT JOIN contact as c ON (p.contact_id = c.id)
-WHERE p.deleted_at IS NULL AND p.status_id=1 AND p.role_id = 5 AND p.canceled_at IS NULL
-AND e.deleted_at IS NULL AND e.event_type_id = 7 AND e.end_date < NOW() AND YEAR(e.start_date)>=2019
-AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="Retreat Funding";
-*/
+    SELECT p.id, p.contact_id, p.event_id, e.title, e.idnumber, c.sort_name, d.donation_amount
+    FROM participant as p
+    LEFT JOIN event as e ON (p.event_id = e.id)
+    LEFT JOIN Donations as d ON (d.contact_id = p.contact_id AND p.event_id = d.event_id)
+    LEFT JOIN contact as c ON (p.contact_id = c.id)
+    WHERE p.deleted_at IS NULL AND p.status_id=1 AND p.role_id = 5 AND p.canceled_at IS NULL
+    AND e.deleted_at IS NULL AND e.event_type_id = 7 AND e.end_date < NOW() AND YEAR(e.start_date)>=2019
+    AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="Retreat Funding";
+    */
     public function getIsFreeLoaderAttribute()
     {
         $is_free_loader = 0;
@@ -1042,167 +1047,167 @@ AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="R
         }
     }
 
-    public function gender()
+    public function gender(): HasOne
     {
         return $this->hasOne(Gender::class, 'id', 'gender_id');
     }
 
-    public function group_ambassador()
+    public function group_ambassador(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.ambassador'));
     }
 
-    public function group_hlm2017()
+    public function group_hlm2017(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.hlm2017'));
     }
 
-    public function group_volunteer()
+    public function group_volunteer(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.volunteer'));
     }
 
-    public function group_bishop()
+    public function group_bishop(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.bishop'));
     }
 
-    public function group_priest()
+    public function group_priest(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.priest'));
     }
 
-    public function group_deacon()
+    public function group_deacon(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.deacon'));
     }
 
-    public function group_pastor()
+    public function group_pastor(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.pastor'));
     }
 
-    public function group_jesuit()
+    public function group_jesuit(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.jesuit'));
     }
 
-    public function group_provincial()
+    public function group_provincial(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.provincial'));
     }
 
-    public function group_superior()
+    public function group_superior(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.superior'));
     }
 
-    public function group_board_member()
+    public function group_board_member(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.board'))->whereStatus('Added');
     }
 
-    public function group_staff()
+    public function group_staff(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.staff'));
     }
 
-    public function group_steward()
+    public function group_steward(): HasOne
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.steward'));
     }
 
-    public function groups()
+    public function groups(): HasMany
     {
         return $this->hasMany(GroupContact::class, 'contact_id', 'id')->whereStatus('Added');
     }
 
-    public function jobs_owned()
+    public function jobs_owned(): HasMany
     {
         return $this->hasMany(AssetJob::class, 'assigned_to_id', 'id');
     }
 
-    public function languages()
+    public function languages(): BelongsToMany
     {
         return $this->belongsToMany(Language::class, 'contact_languages', 'contact_id', 'language_id');
     }
 
-    public function language_pref()
+    public function language_pref(): HasOne
     {
         return $this->hasOne(Language::class, 'name', 'preferred_language');
     }
 
-    public function notes()
+    public function notes(): HasMany
     {
         return $this->hasMany(Note::class, 'entity_id', 'id')->whereEntityTable('contact');
     }
 
-    public function note_dietary()
+    public function note_dietary(): HasOne
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Dietary Note');
     }
 
-    public function note_health()
+    public function note_health(): HasOne
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Health Note');
     }
 
-    public function note_room_preference()
+    public function note_room_preference(): HasOne
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Room Preference');
     }
 
-    public function note_vendor()
+    public function note_vendor(): HasOne
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Vendor note');
     }
 
-    public function note_general()
+    public function note_general(): HasOne
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Contact Note');
     }
 
-    public function note_organization()
+    public function note_organization(): HasOne
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Organization Note');
     }
 
-    public function note_parish()
+    public function note_parish(): HasOne
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Parish Note');
     }
 
-    public function note_diocese()
+    public function note_diocese(): HasOne
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Diocese Note');
     }
 
-    public function note_registration()
+    public function note_registration(): HasOne
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Registration Note');
     }
 
-    public function occupation()
+    public function occupation(): HasOne
     {
         return $this->hasOne(Ppd_occupation::class, 'id', 'occupation_id');
     }
 
-    public function parish()
+    public function parish(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parishioner'));
     }
 
-    public function parishes()
+    public function parishes(): HasMany
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
     }
 
-    public function parishioners()
+    public function parishioners(): HasMany
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parishioner'));
     }
 
-    public function pastor()
+    public function pastor(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.pastor'));
     }
@@ -1216,156 +1221,156 @@ AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="R
         }
     }
 
-    public function phones()
+    public function phones(): HasMany
     {
         return $this->hasMany(Phone::class, 'contact_id', 'id');
     }
 
-    public function phone_primary()
+    public function phone_primary(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->whereIsPrimary(1);
     }
 
-    public function phone_main_phone()
+    public function phone_main_phone(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.main'));
     }
 
-    public function phone_main_mobile()
+    public function phone_main_mobile(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.main'));
     }
 
-    public function phone_main_fax()
+    public function phone_main_fax(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.main'));
     }
 
-    public function phone_home_phone()
+    public function phone_home_phone(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.home'));
     }
 
-    public function phone_home_mobile()
+    public function phone_home_mobile(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.home'));
     }
 
-    public function phone_home_fax()
+    public function phone_home_fax(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.home'));
     }
 
-    public function phone_work_phone()
+    public function phone_work_phone(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.work'));
     }
 
-    public function phone_work_mobile()
+    public function phone_work_mobile(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.work'));
     }
 
-    public function phone_work_fax()
+    public function phone_work_fax(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.work'));
     }
 
-    public function phone_other_phone()
+    public function phone_other_phone(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.other'));
     }
 
-    public function phone_other_mobile()
+    public function phone_other_mobile(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.other'));
     }
 
-    public function phone_other_fax()
+    public function phone_other_fax(): HasOne
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.other'));
     }
 
-    public function prefix()
+    public function prefix(): HasOne
     {
         return $this->hasOne(Prefix::class, 'id', 'prefix_id');
     }
 
-    public function referrals()
+    public function referrals(): BelongsToMany
     {
         return $this->belongsToMany(Referral::class, 'contact_referral', 'contact_id', 'referral_id');
     }
 
-    public function retreat_assistants()
+    public function retreat_assistants(): HasMany
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_assistant'))->whereIsActive(1);
     }
 
-    public function retreat_directors()
+    public function retreat_directors(): HasMany
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_director'));
     }
 
-    public function retreat_innkeepers()
+    public function retreat_innkeepers(): HasMany
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_innkeeper'));
     }
 
-    public function retreat_ambassadors()
+    public function retreat_ambassadors(): HasMany
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.ambassador'));
     }
 
-    public function event_registrations()
+    public function event_registrations(): HasMany
     {
         // the events (retreats) for which this contact has participated
         return $this->hasMany(Registration::class, 'contact_id', 'id');
     }
 
-    public function event_ambassadors()
+    public function event_ambassadors(): HasMany
     {
         // the events (retreats) for which this contact has been a retreatant
         return $this->hasMany(Registration::class, 'contact_id', 'id')->whereRoleId(config('polanco.participant_role_id.ambassador'));
     }
 
-    public function event_retreatants()
+    public function event_retreatants(): HasMany
     {
         // the events (retreats) for which this contact has been a retreatant
         return $this->hasMany(Registration::class, 'contact_id', 'id')->whereRoleId(config('polanco.participant_role_id.retreatant'));
     }
 
-    public function relationship_mjrh_former_board_member()
+    public function relationship_mjrh_former_board_member(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.board_member'))->whereNotNull('end_date');
     }
 
-    public function relationship_mjrh_donor()
+    public function relationship_mjrh_donor(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.donor'));
     }
 
-    public function relationship_mjrh_retreatant()
+    public function relationship_mjrh_retreatant(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreatant'))->whereIsActive(1)->whereContactIdA(config('polanco.contact.montserrat'));
     }
 
-    public function relationship_mjrh_retreat_assistant()
+    public function relationship_mjrh_retreat_assistant(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_assistant'))->whereContactIdA(config('polanco.contact.montserrat'))->whereIsActive(1);
     }
 
-    public function relationship_mjrh_retreat_director()
+    public function relationship_mjrh_retreat_director(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_director'))->whereContactIdA(config('polanco.contact.montserrat'))->whereIsActive(1);
     }
 
-    public function relationship_mjrh_retreat_innkeeper()
+    public function relationship_mjrh_retreat_innkeeper(): HasOne
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_innkeeper'))->whereContactIdA(config('polanco.contact.montserrat'))->whereIsActive(1);
     }
 
-    public function religion()
+    public function religion(): HasOne
     {
         return $this->hasOne(Religion::class, 'id', 'religion_id');
     }
@@ -1380,27 +1385,27 @@ AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="R
         $this->attributes['middle_name'] = trim($middle_name) !== '' ? $middle_name : null;
     }
 
-    public function suffix()
+    public function suffix(): HasOne
     {
         return $this->hasOne(Suffix::class, 'id', 'suffix_id');
     }
 
-    public function touchpoints()
+    public function touchpoints(): HasMany
     {
         return $this->hasMany(Touchpoint::class, 'person_id', 'id');
     }
 
-    public function touchpoints_owned()
+    public function touchpoints_owned(): HasMany
     {
         return $this->hasMany(Touchpoint::class, 'staff_id', 'id');
     }
 
-    public function websites()
+    public function websites(): HasMany
     {
         return $this->hasMany(Website::class, 'contact_id', 'id');
     }
 
-    public function website_main()
+    public function website_main(): HasOne
     {
         return $this->hasOne(Website::class, 'contact_id', 'id')->whereWebsiteType('Main');
     }
@@ -1635,18 +1640,18 @@ AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="R
 
     public function birthdayEmailReceivers()
     {
-        $birthdays = Contact::whereRaw("DAY(birth_date) = DAY(now())")
-            ->whereRaw("MONTH(birth_date) = MONTH(now())")
-            ->where('do_not_email','<>',1)
+        $birthdays = Contact::whereRaw('DAY(birth_date) = DAY(now())')
+            ->whereRaw('MONTH(birth_date) = MONTH(now())')
+            ->where('do_not_email', '<>', 1)
             ->whereIsDeceased(0)
             ->whereNull('deceased_date')
             ->with('email_primary')
-            ->select('id', 'display_name','birth_date','nick_name','first_name','preferred_language')
+            ->select('id', 'display_name', 'birth_date', 'nick_name', 'first_name', 'preferred_language')
             ->whereHas('email_primary', function ($query) {
                 return $query->whereNotNull('email')->select('email');
             })
             ->get();
-        
+
         return $birthdays;
     }
 }

@@ -16,7 +16,7 @@ class StoreAddressRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreAddressRequest();
+        $this->subject = new \App\Http\Requests\StoreAddressRequest;
     }
 
     /**

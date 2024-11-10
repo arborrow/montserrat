@@ -117,15 +117,15 @@ class GetMailgunMessages extends Command
                             // $message->body = str_replace("\r\n","\n", html_entity_decode(strip_tags($message_email->getBodyHtml())));
                             $message->body = $message_email->getBodyHtml();
 
-                            if (null !== $message_email->getSender()) {
+                            if ($message_email->getSender() !== null) {
                                 $message->from = $this->clean_email($message_email->getSender());
                             }
-                            if (null !== $message_email->getRecipients()) {
+                            if ($message_email->getRecipients() !== null) {
                                 $message->recipients = $this->clean_email($message_email->getRecipients());
                             }
                             $headers = $event_item->getMessage()['headers'];
 
-                            if (null !== $headers['to']) {
+                            if ($headers['to'] !== null) {
                                 $list_of_to_addresses = explode(',', $headers['to']);
                                 // dd($headers, $headers['to'],$list_of_to_addresses);
                                 // for now only take the first to address
@@ -167,10 +167,10 @@ class GetMailgunMessages extends Command
             // #TOUCHPOINT - if this is a touchpoint
             // if we have from and to ids for contacts go ahead and create a touchpoint
             // TODO: validate that from is from enforced domain (if applicable)
-		$clean_message = str_replace("\r\n", "\n", html_entity_decode(strip_tags($message->body)));
+            $clean_message = str_replace("\r\n", "\n", html_entity_decode(strip_tags($message->body)));
             if (($message->from_id > 0) && ($message->to_id > 0) && (str_contains($message->recipients, 'touchpoint'))) {
                 try {
-                    $touch = new Touchpoint();
+                    $touch = new Touchpoint;
                     $touch->person_id = $message->to_id;
                     $touch->staff_id = $message->from_id;
                     $touch->touched_at = $message->timestamp;
@@ -193,7 +193,7 @@ class GetMailgunMessages extends Command
             if (str_contains($message->recipients, 'donation')) {
                 // TODO: create touchpoint indicating that the user made a donation
                 try {
-                    $touch = new Touchpoint();
+                    $touch = new Touchpoint;
                     $touch->person_id = $message->to_id;
                     $touch->staff_id = $message->from_id;
                     $touch->touched_at = $message->timestamp;
@@ -203,11 +203,11 @@ class GetMailgunMessages extends Command
                         'message_id' => $message->id,
                     ]);
                     $donation = explode("\n", $clean_message);
-		    $donation = preg_replace('/\xc2\xa0/', '', $donation);
-		    $donation = array_map('trim', $donation);
-		    $donation = array_values(array_filter($donation));
-                    $address_start_row = array_search('BILLED TO', $donation)+1;
-                    $address_end_row = array_search('United States', $donation)+1;
+                    $donation = preg_replace('/\xc2\xa0/', '', $donation);
+                    $donation = array_map('trim', $donation);
+                    $donation = array_values(array_filter($donation));
+                    $address_start_row = array_search('BILLED TO', $donation) + 1;
+                    $address_end_row = array_search('United States', $donation) + 1;
                     /*
                     if ($address_end_row === false) { // if the phone number is not provided
                     $address_end_row = array_search('Additional Information:', $donation);
@@ -218,7 +218,7 @@ class GetMailgunMessages extends Command
                     $address_end_row = array_search('View My Donations', $donation);
                     }
                     */
-                    
+
                     $full_address = null;
                     for ($line = $address_start_row + 1; $line < $address_end_row; $line++) {
                         $full_address .= $donation[$line].' ';
@@ -238,10 +238,10 @@ class GetMailgunMessages extends Command
                         $ss_donation->address_state = trim($address_details[1]);
                         $ss_donation->address_zip = trim($address_details[2]);
                         $ss_donation->address_country = ucwords($donation[$address_end_row - 1]);
-		    }
-                    
+                    }
+
                     $ss_donation->message_id = $message->id;
-                    
+
                     $ss_donation->name = ucwords(strtolower($this->extract_data($donation, 'BILLED TO')));
                     $ss_donation->email = strtolower($this->extract_data($donation, 'United States', 1));
                     // validate that it at least has the @ sign in it
@@ -251,9 +251,9 @@ class GetMailgunMessages extends Command
                     // validate that it at least contains a number
                     $ss_donation->phone = (is_numeric(substr($ss_donation->phone, -1))) ? $ss_donation->phone : null;
                     $ss_donation->retreat_description = $this->extract_data($donation, 'Retreat:');
-                    
+
                     // it seems some of the emails had * characters and some do not so we will check for both
-                    $donation_amount = $this->extract_data($donation, 'SUBTOTAL',2);
+                    $donation_amount = $this->extract_data($donation, 'SUBTOTAL', 2);
                     $amount = $donation_amount;
                     // $amount = substr($donation_amount, strpos($donation_amount, '$'), strpos($donation_amount, '!') - strpos($donation_amount, '$'));
                     $amount = str_replace('$', '', $amount);
@@ -261,64 +261,64 @@ class GetMailgunMessages extends Command
                     $amount = str_replace('*', '', $amount);
                     $amount = str_replace(',', '', $amount);
                     $ss_donation->amount = $amount;
-                    
+
                     // dd($donation, $address_start_row, $address_end_row, $full_address, $ss_donation);
                     $ss_donation->fund = $this->extract_data($donation, 'Please Select a Fund:');
                     $year = substr($ss_donation->retreat_description, -5, 4);
-                    
-		    //dd($ss_donation,$donation);
-		    
-		    $retreat_number = trim(substr($ss_donation->retreat_description,
-                    	strpos($ss_donation->retreat_description, '#') + 1,
-		    	(strpos($ss_donation->retreat_description, ' ') - strpos($ss_donation->retreat_description, '#'))
+
+                    //dd($ss_donation,$donation);
+
+                    $retreat_number = trim(substr($ss_donation->retreat_description,
+                        strpos($ss_donation->retreat_description, '#') + 1,
+                        (strpos($ss_donation->retreat_description, ' ') - strpos($ss_donation->retreat_description, '#'))
                     ));
-                
-                $ss_donation->idnumber = ($ss_donation->retreat_description == 'Individual Private Retreat') ? null : trim($year.$retreat_number);
-                $ss_donation->comments = trim($this->extract_data($donation, 'Comments or Special Instructions:'));
-                $ss_donation->comments = str_replace('View My Donations', '', $ss_donation->comments);
-                
-                $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
-                $ss_donation->event_id = $event?->id;
-                
-                if (isset($ss_donation->idnumber) && isset($ss_donation->event_id)) { // if a particular event then based on end date of event if passed retreat funding, if upcoming then deposit
-                    $ss_donation->offering_type = ($event->end_date > now()) ? 'Pre-Retreat offering' : 'Post-Retreat offering';
-                }
-                
-                switch ($ss_donation->retreat_description) {
-                    case 'Saturday of Renewal': // if SOR then assume SOR has passed so post-retreat
-                        $ss_donation->offering_type = 'Post-Retreat offering';
-                        break;
-                    case 'Individual Private Retreat': // if Individual Private Retreat assume retreat deposit
-                        $ss_donation->offering_type = 'Pre-Retreat offering';
-                        break;
-                    default:
-                }
-                
-                // dd($donation, $ss_donation);
-                $ss_donation->save();
+
+                    $ss_donation->idnumber = ($ss_donation->retreat_description == 'Individual Private Retreat') ? null : trim($year.$retreat_number);
+                    $ss_donation->comments = trim($this->extract_data($donation, 'Comments or Special Instructions:'));
+                    $ss_donation->comments = str_replace('View My Donations', '', $ss_donation->comments);
+
+                    $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
+                    $ss_donation->event_id = $event?->id;
+
+                    if (isset($ss_donation->idnumber) && isset($ss_donation->event_id)) { // if a particular event then based on end date of event if passed retreat funding, if upcoming then deposit
+                        $ss_donation->offering_type = ($event->end_date > now()) ? 'Pre-Retreat offering' : 'Post-Retreat offering';
+                    }
+
+                    switch ($ss_donation->retreat_description) {
+                        case 'Saturday of Renewal': // if SOR then assume SOR has passed so post-retreat
+                            $ss_donation->offering_type = 'Post-Retreat offering';
+                            break;
+                        case 'Individual Private Retreat': // if Individual Private Retreat assume retreat deposit
+                            $ss_donation->offering_type = 'Pre-Retreat offering';
+                            break;
+                        default:
+                    }
+
+                    // dd($donation, $ss_donation);
+                    $ss_donation->save();
                 } catch (\Exception $exception) {
-                        $subject .= ': Creating Squarespace Contribution for Message Id #'.$message->id;
-                        // dd($exception, $subject);
-                        Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
+                    $subject .= ': Creating Squarespace Contribution for Message Id #'.$message->id;
+                    // dd($exception, $subject);
+                    Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
                         function ($m) {
                             $m->to(config('polanco.admin_email'))
-                            ->subject('Error Retrieving Mailgun Messages');
+                                ->subject('Error Retrieving Mailgun Messages');
                         });
-                    }
                 }
-                
-                // #ORDER - if this is an order for a retreat
-                if (str_contains($message->recipients, 'order')) {
-                    try {
-                        if (strpos($clean_message, 'Form Submission - Gift Certificate Registration') > 0) {
-                            // gift certificate registration
-                            
-                            $message_info = $this->extract_value_between($clean_message, 'Form Submission - Gift Certificate Registration', 'Does this submission look like spam?');
-                            
-                            $retreat = array_values(array_filter(explode("\n", $message_info)));
-                            $retreat = array_map('trim', $retreat);
-                            // remove blank lines
-                            $retreat = array_filter($retreat);
+            }
+
+            // #ORDER - if this is an order for a retreat
+            if (str_contains($message->recipients, 'order')) {
+                try {
+                    if (strpos($clean_message, 'Form Submission - Gift Certificate Registration') > 0) {
+                        // gift certificate registration
+
+                        $message_info = $this->extract_value_between($clean_message, 'Form Submission - Gift Certificate Registration', 'Does this submission look like spam?');
+
+                        $retreat = array_values(array_filter(explode("\n", $message_info)));
+                        $retreat = array_map('trim', $retreat);
+                        // remove blank lines
+                        $retreat = array_filter($retreat);
                         // remove line with only a space in it that was not removed from the trim above, grrr
                         $retreat = array_filter($retreat, function ($value) {
                             return $value !== "\xC2\xA0";
@@ -347,20 +347,20 @@ class GetMailgunMessages extends Command
 
                         $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
                         $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
-			$order->comments = (str_contains($order->comments, 'Sent via form submission')) ? null : $order->comments;
+                        $order->comments = (str_contains($order->comments, 'Sent via form submission')) ? null : $order->comments;
 
-			// TODO: DRY - refactor into a process_order_full_address method
+                        // TODO: DRY - refactor into a process_order_full_address method
                         if (isset($order->full_address)) {
-			    $address = explode(', ', $order->full_address);
+                            $address = explode(', ', $order->full_address);
 
                             if (count($address) == 4) {
                                 $order->address_street = trim($address[0]);
-//                                $order->address_supplemental = trim($address[1]);
+                                //                                $order->address_supplemental = trim($address[1]);
                                 $order->address_city = trim($address[1]);
                                 $address_detail = explode(' ', $address[2]);
                                 $order->address_state = trim($address_detail[0]);
-				$order->address_zip = trim($address_detail[1]);
-				$order->address_country = "United States";
+                                $order->address_zip = trim($address_detail[1]);
+                                $order->address_country = 'United States';
                                 // $order->address_country = (count($address_detail) == 4) ? trim($address_detail[2]).' '.trim($address_detail[3]) : trim($address_detail[2]);
                             }
 
@@ -383,8 +383,8 @@ class GetMailgunMessages extends Command
                                 }
                             }
                         } else {
-				// something is wrong with the address - leave it as null
-			}
+                            // something is wrong with the address - leave it as null
+                        }
                         $retreat_number = substr($order->retreat_description,
                             strpos($order->retreat_description, '#') + 1,
                             (strpos($order->retreat_description, ' ') - strpos($order->retreat_description, '#'))
@@ -451,7 +451,7 @@ class GetMailgunMessages extends Command
                             $order->unit_price = str_replace('$', '', end($retreat));
                             $order->save();
 
-                        // TODO: create gift certificate on processing order (not here but in edit after selecting or creating contacts)
+                            // TODO: create gift certificate on processing order (not here but in edit after selecting or creating contacts)
                         } else { // Retreat Registration Order
                             $order->retreat_sku = (array_key_exists(1, $retreat)) ? $retreat[1] : null;
 
@@ -613,8 +613,9 @@ class GetMailgunMessages extends Command
             if (isset($ss_donation)) {
                 $message->save();
             }
-            
+
         }
+
         return 0;
     }
 }

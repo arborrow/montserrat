@@ -16,7 +16,7 @@ class StoreRetreatRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreRetreatRequest();
+        $this->subject = new \App\Http\Requests\StoreRetreatRequest;
     }
 
     /**

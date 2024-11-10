@@ -16,7 +16,7 @@ class StoreLocationRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreLocationRequest();
+        $this->subject = new \App\Http\Requests\StoreLocationRequest;
     }
 
     /**

@@ -16,7 +16,7 @@ class StoreUomRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreUomRequest();
+        $this->subject = new \App\Http\Requests\StoreUomRequest;
     }
 
     /**

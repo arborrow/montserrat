@@ -16,7 +16,7 @@ class StoreRelationshipTypeRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreRelationshipTypeRequest();
+        $this->subject = new \App\Http\Requests\StoreRelationshipTypeRequest;
     }
 
     /**

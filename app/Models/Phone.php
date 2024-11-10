@@ -5,26 +5,27 @@ namespace App\Models;
 use App\Traits\PhoneTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Phone extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
     use PhoneTrait;
+    use SoftDeletes;
 
     protected $table = 'phone';
 
     protected $fillable = ['contact_id', 'location_type_id', 'is_primary', 'phone', 'phone_type'];
 
-    public function owner()
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
 
-    public function location()
+    public function location(): BelongsTo
     {
         return $this->belongsTo(LocationType::class, 'location_type_id', 'id');
     }

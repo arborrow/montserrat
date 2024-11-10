@@ -16,7 +16,7 @@ class StoreAssetTypeRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreAssetTypeRequest();
+        $this->subject = new \App\Http\Requests\StoreAssetTypeRequest;
     }
 
     /**

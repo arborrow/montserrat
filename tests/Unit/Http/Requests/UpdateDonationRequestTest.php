@@ -17,7 +17,7 @@ class UpdateDonationRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateDonationRequest();
+        $this->subject = new \App\Http\Requests\UpdateDonationRequest;
     }
 
     /**

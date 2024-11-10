@@ -4,21 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class AssetTask extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'asset_task';
 
-    protected $casts = [
-        'start_date' => 'datetime',
-        'scheduled_until_date' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'datetime',
+            'scheduled_until_date' => 'datetime',
+        ];
+    }
 
     // relations
     public function asset()
@@ -26,7 +30,7 @@ class AssetTask extends Model implements Auditable
         return $this->BelongsTo(Asset::class, 'asset_id');
     }
 
-    public function jobs()
+    public function jobs(): HasMany
     {
         return $this->hasMany(AssetJob::class, 'asset_task_id', 'id');
     }

@@ -16,7 +16,7 @@ class UpdateVendorRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateVendorRequest();
+        $this->subject = new \App\Http\Requests\UpdateVendorRequest;
     }
 
     /**
@@ -37,7 +37,7 @@ class UpdateVendorRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         // if Twilio is enabled then validate phone numbers otherwise allow strings
-        if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
+        if (config('settings.twilio_sid') !== null && config('settings.twilio_token') !== null) {
             $this->assertEquals([
                 'organization_name' => 'required',
                 'display_name' => 'required',

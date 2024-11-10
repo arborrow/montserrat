@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -14,9 +15,7 @@ class SquarespaceOrderControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         // emtpy slug redirects to squarespace.order.index
@@ -29,9 +28,7 @@ class SquarespaceOrderControllerTest extends TestCase
         $response->assertViewIs('squarespace.order.index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         // emtpy slug redirects to squarespace.order.index
@@ -47,9 +44,7 @@ class SquarespaceOrderControllerTest extends TestCase
         $response->assertViewIs('squarespace.order.index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-order');
@@ -140,9 +135,7 @@ class SquarespaceOrderControllerTest extends TestCase
         */
     }
 
-    /**
-     * @test
-     */
+    #[Test] 
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-order');
@@ -156,9 +149,7 @@ class SquarespaceOrderControllerTest extends TestCase
         $response->assertSeeText('Squarespace Orders');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-order');
@@ -172,9 +163,7 @@ class SquarespaceOrderControllerTest extends TestCase
         $response->assertSeeText($order->order_description);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         // emtpy slug redirects to squarespace.order.index
@@ -190,9 +179,7 @@ class SquarespaceOrderControllerTest extends TestCase
         $response->assertViewIs('squarespace.order.index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         // not a slug
@@ -230,9 +217,7 @@ class SquarespaceOrderControllerTest extends TestCase
         $this->assertNotEquals($updated->dietary, $old_dietary);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(

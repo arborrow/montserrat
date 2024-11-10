@@ -406,7 +406,7 @@ class RegistrationController extends Controller
 
         return redirect(url($contact->contact_url));
 
-//        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
+        //        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
     }
 
     /**
@@ -551,7 +551,7 @@ class RegistrationController extends Controller
                 }
 
                 // Setup touchpoint for this Registrations Confirmation Email
-                $touchpoint = new \App\Models\Touchpoint();
+                $touchpoint = new \App\Models\Touchpoint;
                 $touchpoint->person_id = $registration->contact_id;
                 $touchpoint->staff_id = (isset($current_user->contact_id)) ? $current_user->contact_id : config('polanco.self.id');
                 $touchpoint->touched_at = Carbon::now();

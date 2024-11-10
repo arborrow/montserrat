@@ -16,7 +16,7 @@ class UpdateLocationRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateLocationRequest();
+        $this->subject = new \App\Http\Requests\UpdateLocationRequest;
     }
 
     /**

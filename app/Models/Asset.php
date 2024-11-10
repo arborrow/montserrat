@@ -5,126 +5,132 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Asset extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'asset';
 
-    protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
-        'purchase_date' => 'datetime',
-        'warranty_start_date' => 'datetime',
-        'warranty_end_date' => 'datetime',
-        'depreciation_start_date' => 'datetime',
-        'depreciation_end_date' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'datetime',
+            'end_date' => 'datetime',
+            'purchase_date' => 'datetime',
+            'warranty_start_date' => 'datetime',
+            'warranty_end_date' => 'datetime',
+            'depreciation_start_date' => 'datetime',
+            'depreciation_end_date' => 'datetime',
+        ];
+    }
 
     // relations
 
-    public function tasks()
+    public function tasks(): HasMany
     {
         return $this->hasMany(AssetTask::class, 'asset_id', 'id');
     }
 
-    public function jobs()
+    public function jobs(): HasManyThrough
     {
         return $this->hasManyThrough(AssetJob::class, AssetTask::class, 'asset_id', 'asset_task_id', 'id', 'id');
     }
 
-    public function asset_type()
+    public function asset_type(): HasOne
     {
         return $this->hasOne(AssetType::class, 'id', 'asset_type_id');
     }
 
-    public function capacity_uom()
+    public function capacity_uom(): HasOne
     {
         return $this->hasOne(Uom::class, 'id', 'capacity_uom_id');
     }
 
-    public function depreciation_time_uom()
+    public function depreciation_time_uom(): HasOne
     {
         return $this->hasOne(Uom::class, 'id', 'depreciation_time_uom_id');
     }
 
-    public function department()
+    public function department(): HasOne
     {
         return $this->hasOne(Department::class, 'id', 'department_id');
     }
 
-    public function height_uom()
+    public function height_uom(): HasOne
     {
         return $this->hasOne(Uom::class, 'id', 'height_uom_id');
     }
 
-    public function length_uom()
+    public function length_uom(): HasOne
     {
         return $this->hasOne(Uom::class, 'id', 'length_uom_id');
     }
 
-    public function life_expectancy_uom()
+    public function life_expectancy_uom(): HasOne
     {
         return $this->hasOne(Uom::class, 'id', 'life_expectancy_uom_id');
     }
 
-    public function location()
+    public function location(): HasOne
     {
         return $this->hasOne(Location::class, 'id', 'location_id');
     }
 
     // normally would name simply manufacturer; however, there is an existing field with that name in it
-    public function manufacturer_contact()
+    public function manufacturer_contact(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'manufacturer_id');
     }
 
-    public function parent()
+    public function parent(): HasOne
     {
         return $this->hasOne(self::class, 'id', 'parent_id');
     }
 
-    public function power_amp_uom()
+    public function power_amp_uom(): HasOne
     {
         return $this->hasOne(Uom::class, 'id', 'power_amp_uom_id');
     }
 
-    public function power_line_voltage_uom()
+    public function power_line_voltage_uom(): HasOne
     {
         return $this->hasOne(Uom::class, 'id', 'power_line_voltage_uom_id');
     }
 
-    public function power_phase_voltage_uom()
+    public function power_phase_voltage_uom(): HasOne
     {
         return $this->hasOne(Uom::class, 'id', 'power_phase_voltage_uom_id');
     }
 
-    public function replacement()
+    public function replacement(): HasOne
     {
         return $this->hasOne(self::class, 'id', 'replacement_id');
     }
 
-    public function vendor()
+    public function vendor(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'vendor_id');
     }
 
-    public function websites()
+    public function websites(): HasMany
     {
         return $this->hasMany(Website::class, 'asset_id', 'id');
     }
 
-    public function weight_uom()
+    public function weight_uom(): HasOne
     {
         return $this->hasOne(Uom::class, 'id', 'weight_uom_id');
     }
 
-    public function width_uom()
+    public function width_uom(): HasOne
     {
         return $this->hasOne(Uom::class, 'id', 'width_uom_id');
     }

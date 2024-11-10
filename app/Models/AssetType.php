@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class AssetType extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'asset_type';
 
@@ -20,7 +21,7 @@ class AssetType extends Model implements Auditable
         return $query->whereIsActive(1);
     }
 
-    public function parent_asset_type()
+    public function parent_asset_type(): HasOne
     {
         return $this->hasOne(self::class, 'id', 'parent_asset_type_id');
     }

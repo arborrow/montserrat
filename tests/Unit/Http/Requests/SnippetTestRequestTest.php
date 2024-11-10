@@ -16,7 +16,7 @@ class SnippetTestRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\SnippetTestRequest();
+        $this->subject = new \App\Http\Requests\SnippetTestRequest;
     }
 
     /**

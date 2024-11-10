@@ -16,7 +16,7 @@ class StoreTouchpointRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreTouchpointRequest();
+        $this->subject = new \App\Http\Requests\StoreTouchpointRequest;
     }
 
     /**

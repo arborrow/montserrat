@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Relationship extends Model implements Auditable
 {
     use HasFactory;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'relationship';
 
@@ -19,17 +20,17 @@ class Relationship extends Model implements Auditable
 
     protected $appends = ['contact_a_address', 'contact_b_address'];
 
-    public function relationship_type()
+    public function relationship_type(): HasOne
     {
         return $this->hasOne(RelationshipType::class, 'id', 'relationship_type_id');
     }
 
-    public function contact_a()
+    public function contact_a(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'contact_id_a');
     }
 
-    public function contact_b()
+    public function contact_b(): HasOne
     {
         return $this->hasOne(Contact::class, 'id', 'contact_id_b');
     }

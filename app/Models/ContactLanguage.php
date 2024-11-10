@@ -8,8 +8,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class ContactLanguage extends Model implements Auditable
 {
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $table = 'contact_languages';
 

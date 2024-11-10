@@ -16,7 +16,7 @@ class DonationAgcRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\DonationAgcRequest();
+        $this->subject = new \App\Http\Requests\DonationAgcRequest;
     }
 
     /**

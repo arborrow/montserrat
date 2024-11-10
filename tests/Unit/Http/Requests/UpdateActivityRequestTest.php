@@ -16,7 +16,7 @@ class UpdateActivityRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateActivityRequest();
+        $this->subject = new \App\Http\Requests\UpdateActivityRequest;
     }
 
     /**

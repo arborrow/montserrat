@@ -157,7 +157,7 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function schedule(int|string $ymd = null)
+    public function schedule(int|string|null $ymd = null)
     {
         $this->authorize('show-room');
         if ((! isset($ymd)) or ($ymd == 0)) {
@@ -218,7 +218,7 @@ class RoomController extends Controller
         foreach ($registrations_start as $registration) {
             $start_time = $registration->retreat->start_date->hour + (($registration->retreat->start_date->minute / 100));
             $end_time = $registration->retreat->end_date->hour + (($registration->retreat->end_date->minute / 100));
-            $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date));
+            $numdays = ( (int) $registration->retreat->end_date->diffInDays($registration->retreat->start_date));
             $numdays = ($start_time > $end_time) ? $numdays + 1 : $numdays;
             for ($i = 0; $i <= $numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
@@ -243,7 +243,7 @@ class RoomController extends Controller
         foreach ($registrations_end as $registration) {
             $start_time = $registration->retreat->start_date->hour + (($registration->retreat->start_date->minute / 100));
             $end_time = $registration->retreat->end_date->hour + (($registration->retreat->end_date->minute / 100));
-            $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date));
+            $numdays = ( (int) $registration->retreat->end_date->diffInDays($registration->retreat->start_date));
             $numdays = ($start_time > $end_time) ? $numdays + 1 : $numdays;
             for ($i = 0; $i <= $numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
