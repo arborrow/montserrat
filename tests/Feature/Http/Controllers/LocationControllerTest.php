@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,14 +10,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\LocationController
  */
-class LocationControllerTest extends TestCase
+final class LocationControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-location');
@@ -31,9 +30,7 @@ class LocationControllerTest extends TestCase
         $response->assertViewHas('location_types');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-location');
@@ -46,9 +43,7 @@ class LocationControllerTest extends TestCase
         $this->assertSoftDeleted($location);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-location');
@@ -76,9 +71,7 @@ class LocationControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('notes', $location->notes, 'textarea', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-location');
@@ -92,9 +85,7 @@ class LocationControllerTest extends TestCase
         $response->assertSeeText('Locations');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-location');
@@ -118,9 +109,7 @@ class LocationControllerTest extends TestCase
         $this->assertGreaterThan($number_locations, $results->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-location');
@@ -135,9 +124,7 @@ class LocationControllerTest extends TestCase
         $response->assertSeeText('Location details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-location');
@@ -166,9 +153,7 @@ class LocationControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-location');

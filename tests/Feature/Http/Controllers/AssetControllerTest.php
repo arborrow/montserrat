@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,14 +10,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\AssetController
  */
-class AssetControllerTest extends TestCase
+final class AssetControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-asset');
@@ -39,9 +38,7 @@ class AssetControllerTest extends TestCase
         $response->assertSeeText('Create asset');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-asset');
@@ -53,9 +50,7 @@ class AssetControllerTest extends TestCase
         $this->assertSoftDeleted($asset);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-asset');
@@ -137,9 +132,7 @@ class AssetControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('depreciation_time_uom_id', $asset->depreciation_time_uom_id, 'select', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset');
@@ -154,9 +147,7 @@ class AssetControllerTest extends TestCase
         $response->assertSeeText('Assets');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset');
@@ -181,9 +172,7 @@ class AssetControllerTest extends TestCase
         $this->assertGreaterThan($number_assets, $results->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_location_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset');
@@ -208,9 +197,7 @@ class AssetControllerTest extends TestCase
         $this->assertGreaterThan($number_assets, $results->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset');
@@ -225,9 +212,7 @@ class AssetControllerTest extends TestCase
         $response->assertSeeText('Asset details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         //$this->withoutExceptionHandling();
@@ -255,9 +240,7 @@ class AssetControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
@@ -281,9 +264,7 @@ class AssetControllerTest extends TestCase
         $this->assertNotEquals($updated->manufacturer, $original_asset_manufacuturer);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function results_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset');
@@ -299,9 +280,7 @@ class AssetControllerTest extends TestCase
         $response->assertSeeText($asset->name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function search_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset');

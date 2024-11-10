@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -10,14 +11,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\DashboardController
  */
-class DashboardControllerTest extends TestCase
+final class DashboardControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
@@ -29,9 +28,7 @@ class DashboardControllerTest extends TestCase
         $response->assertSee('Dashboard Index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function agc_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
@@ -42,9 +39,7 @@ class DashboardControllerTest extends TestCase
         $response->assertSee('AGC Dashboard');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function agc_donations_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -57,9 +52,7 @@ class DashboardControllerTest extends TestCase
         $response->assertSee('result(s) found');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function agc_donations_returns_403_response(): void
     {   // requires show-donation permission, so ensure a 403 when that permission is missing
         $user = $this->createUserWithPermission('show-dashboard');
@@ -68,9 +61,7 @@ class DashboardControllerTest extends TestCase
         $response->assertStatus(403);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function agc_with_years_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
@@ -86,9 +77,7 @@ class DashboardControllerTest extends TestCase
         $response->assertSee($current_fiscal_year - $number_of_years);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function donation_description_chart_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
@@ -101,9 +90,7 @@ class DashboardControllerTest extends TestCase
         $response->assertSee('Donation Description Dashboard');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function donation_description_chart_with_donation_description_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
@@ -121,9 +108,7 @@ class DashboardControllerTest extends TestCase
         $response->assertSee($donation_type->name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function events_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
@@ -141,9 +126,7 @@ class DashboardControllerTest extends TestCase
         $response->assertSee('Event Dashboard');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function events_with_year_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
@@ -163,9 +146,7 @@ class DashboardControllerTest extends TestCase
         $response->assertSeeText('FY'.$last_year);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function drilldown_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');

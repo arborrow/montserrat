@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,14 +10,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\WebsiteController
  */
-class WebsiteControllerTest extends TestCase
+final class WebsiteControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-website');
@@ -28,9 +27,7 @@ class WebsiteControllerTest extends TestCase
         $response->assertSeeText('Create website');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-website');
@@ -43,9 +40,7 @@ class WebsiteControllerTest extends TestCase
         $this->assertSoftDeleted($website);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-website');
@@ -65,9 +60,7 @@ class WebsiteControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('website_type', $website->website_type, 'text', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-website');
@@ -80,9 +73,7 @@ class WebsiteControllerTest extends TestCase
         $response->assertSeeText('Websites');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-website');
@@ -96,9 +87,7 @@ class WebsiteControllerTest extends TestCase
         $response->assertSeeText('Website details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $this->withoutExceptionHandling();
@@ -131,9 +120,7 @@ class WebsiteControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-website');

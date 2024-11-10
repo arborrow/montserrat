@@ -2,12 +2,13 @@
 
 namespace Tests\Unit\Http\Requests;
 
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
  * @see \App\Http\Requests\UpdateRelationshipTypeRequest
  */
-class UpdateRelationshipTypeRequestTest extends TestCase
+final class UpdateRelationshipTypeRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\UpdateRelationshipTypeRequest */
     private $subject;
@@ -19,9 +20,7 @@ class UpdateRelationshipTypeRequestTest extends TestCase
         $this->subject = new \App\Http\Requests\UpdateRelationshipTypeRequest;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function authorize(): void
     {
         $actual = $this->subject->authorize();
@@ -29,9 +28,7 @@ class UpdateRelationshipTypeRequestTest extends TestCase
         $this->assertTrue($actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function rules(): void
     {
         $actual = $this->subject->rules();
@@ -47,9 +44,7 @@ class UpdateRelationshipTypeRequestTest extends TestCase
         ], $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function messages(): void
     {
         $actual = $this->subject->messages();

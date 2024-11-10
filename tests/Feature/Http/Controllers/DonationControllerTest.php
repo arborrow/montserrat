@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -10,14 +11,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\DonationController
  */
-class DonationControllerTest extends TestCase
+final class DonationControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function agc_returns_an_ok_response(): void
     {   // agc reports available from 2007 to 2020
         $user = $this->createUserWithPermission('show-donation');
@@ -30,9 +29,7 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('total');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function agc_returns_404(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -42,9 +39,7 @@ class DonationControllerTest extends TestCase
         $response->assertNotFound();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation');
@@ -59,9 +54,7 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('defaults');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_with_contact_id_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation');
@@ -80,9 +73,7 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('defaults');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_with_event_id_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation');
@@ -106,9 +97,7 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('defaults');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_with_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation');
@@ -135,9 +124,7 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('defaults');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-donation');
@@ -151,9 +138,7 @@ class DonationControllerTest extends TestCase
         $this->assertSoftDeleted($donation);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-donation');
@@ -182,9 +167,7 @@ class DonationControllerTest extends TestCase
         // TODO: clean up Donation.thank_you field so that it only contains Y or N and consider switching to boolean field
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -196,9 +179,7 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('donations');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -221,9 +202,7 @@ class DonationControllerTest extends TestCase
         $this->assertGreaterThan($number_donations, $results->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function overpaid_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -234,9 +213,7 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('overpaid');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function retreat_payments_update_returns_an_ok_response(): void
     {   // create a retreat with 1-10 participants
         // update retreatant payments
@@ -273,9 +250,7 @@ class DonationControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -288,9 +263,7 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('donation');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation');
@@ -320,9 +293,7 @@ class DonationControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -332,9 +303,7 @@ class DonationControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $this->withoutExceptionHandling();
@@ -369,9 +338,7 @@ class DonationControllerTest extends TestCase
         $this->assertNotEquals($updated_donation->donation_amount, $original_amount);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -381,9 +348,7 @@ class DonationControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function results_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -399,9 +364,7 @@ class DonationControllerTest extends TestCase
         $response->assertSeeText($donation->donation_amount);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function search_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');

@@ -2,12 +2,13 @@
 
 namespace Tests\Unit\Http\Requests;
 
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
  * @see \App\Http\Requests\UpdateDonationRequest
  */
-class UpdateDonationTypeRequestTest extends TestCase
+final class UpdateDonationTypeRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\UpdateDonationTypeRequest */
     private $subject;
@@ -19,9 +20,7 @@ class UpdateDonationTypeRequestTest extends TestCase
         $this->subject = new \App\Http\Requests\UpdateDonationTypeRequest;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function authorize(): void
     {
         $actual = $this->subject->authorize();
@@ -29,9 +28,7 @@ class UpdateDonationTypeRequestTest extends TestCase
         $this->assertTrue($actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function rules(): void
     {
         $actual = $this->subject->rules();
@@ -49,9 +46,7 @@ class UpdateDonationTypeRequestTest extends TestCase
         ], $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function messages(): void
     {
         $actual = $this->subject->messages();

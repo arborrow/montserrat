@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,14 +10,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\VendorController
  */
-class VendorControllerTest extends TestCase
+final class VendorControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
@@ -31,9 +30,7 @@ class VendorControllerTest extends TestCase
         $response->assertSeeText('Add a Vendor');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-contact');
@@ -46,9 +43,7 @@ class VendorControllerTest extends TestCase
         $this->assertSoftDeleted($vendor);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
@@ -147,9 +142,7 @@ class VendorControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -166,9 +159,7 @@ class VendorControllerTest extends TestCase
         $this->assertGreaterThanOrEqual('1', $vendors->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -184,9 +175,7 @@ class VendorControllerTest extends TestCase
         $response->assertSeeText($vendor->display_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
@@ -212,9 +201,7 @@ class VendorControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -224,9 +211,7 @@ class VendorControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
@@ -251,9 +236,7 @@ class VendorControllerTest extends TestCase
         $this->assertNotEquals($updated->sort_name, $original_sort_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(

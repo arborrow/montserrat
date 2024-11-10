@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,14 +10,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\PermissionController
  */
-class PermissionControllerTest extends TestCase
+final class PermissionControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-permission');
@@ -28,9 +27,7 @@ class PermissionControllerTest extends TestCase
         $response->assertSeeText('Create Permission');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-permission');
@@ -42,9 +39,7 @@ class PermissionControllerTest extends TestCase
         $this->assertSoftDeleted($permission);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-permission');
@@ -62,9 +57,7 @@ class PermissionControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('description', $permission->description, 'text', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-permission');
@@ -79,9 +72,7 @@ class PermissionControllerTest extends TestCase
         $response->assertSeeText('Permissions');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-permission');
@@ -96,9 +87,7 @@ class PermissionControllerTest extends TestCase
         $response->assertSeeText('Permission details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-permission');
@@ -121,9 +110,7 @@ class PermissionControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-permission');
@@ -145,9 +132,7 @@ class PermissionControllerTest extends TestCase
         $this->assertNotEquals($updated->name, $original_permission_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_roles_returns_an_ok_response(): void
     {
         $user = \App\Models\User::factory()->create();

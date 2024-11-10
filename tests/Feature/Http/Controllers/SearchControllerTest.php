@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,14 +10,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\SearchController
  */
-class SearchControllerTest extends TestCase
+final class SearchControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function autocomplete_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -42,9 +41,7 @@ class SearchControllerTest extends TestCase
         $response->assertSeeText($lastname);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getuser_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -54,9 +51,7 @@ class SearchControllerTest extends TestCase
         $response->assertRedirect($contact->contact_url);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getuser_with_no_response_returns_create_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -65,9 +60,7 @@ class SearchControllerTest extends TestCase
         $response->assertRedirect(route('person.create'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function results_returns_an_ok_response(): void
     {   // create a new user and then search for that user's last name and ensure that a result appears
         $user = $this->createUserWithPermission('show-contact');
@@ -83,9 +76,7 @@ class SearchControllerTest extends TestCase
         $response->assertSeeText($contact->last_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function search_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');

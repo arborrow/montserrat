@@ -4,19 +4,18 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 /**
  * @see \App\Http\Controllers\DonorController
  */
-class DonorControllerTest extends TestCase
+final class DonorControllerTest extends TestCase
 {
     // use DatabaseTransactions;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donor');
@@ -28,9 +27,7 @@ class DonorControllerTest extends TestCase
         $response->assertViewHas('donors');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donor');

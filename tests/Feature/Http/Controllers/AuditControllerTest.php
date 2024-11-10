@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,14 +10,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\AuditController
  */
-class AuditControllerTest extends TestCase
+final class AuditControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {   // no creating of audit records - redirect to index page
         $user = $this->createUserWithPermission('create-audit');
@@ -27,9 +26,7 @@ class AuditControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-audit');
@@ -41,9 +38,7 @@ class AuditControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {   // no editing of audit records - redirect to index
         $user = $this->createUserWithPermission('update-audit');
@@ -55,9 +50,7 @@ class AuditControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-audit');
@@ -71,9 +64,7 @@ class AuditControllerTest extends TestCase
         $response->assertSeeText('Audits');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-audit');
@@ -91,9 +82,7 @@ class AuditControllerTest extends TestCase
         $response->assertSeeText($audit->user_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function results_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
@@ -109,9 +98,7 @@ class AuditControllerTest extends TestCase
         $response->assertSeeText($audit->url);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function search_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-audit');
@@ -126,9 +113,7 @@ class AuditControllerTest extends TestCase
         $response->assertSeeText('Search Audit Logs');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-audit');
@@ -142,9 +127,7 @@ class AuditControllerTest extends TestCase
         $response->assertSeeText('Audit details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {   // no storing of audit records - redirect to audit.index
         // $this->withoutExceptionHandling();
@@ -158,9 +141,7 @@ class AuditControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {   // no updating of audit records - redirect to audit.index
         $user = $this->createUserWithPermission('update-audit');

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,14 +10,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\OrganizationController
  */
-class OrganizationControllerTest extends TestCase
+final class OrganizationControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
@@ -32,9 +31,7 @@ class OrganizationControllerTest extends TestCase
         $response->assertSeeText('Add an Organization');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-contact');
@@ -46,9 +43,7 @@ class OrganizationControllerTest extends TestCase
         $this->assertSoftDeleted($organization);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
@@ -150,9 +145,7 @@ class OrganizationControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -166,9 +159,7 @@ class OrganizationControllerTest extends TestCase
         $response->assertSeeText('Organizations');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -183,9 +174,7 @@ class OrganizationControllerTest extends TestCase
         $response->assertSeeText('Organizations');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -201,9 +190,7 @@ class OrganizationControllerTest extends TestCase
         $response->assertSeeText($organization->organization_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
@@ -226,9 +213,7 @@ class OrganizationControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -238,9 +223,7 @@ class OrganizationControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         //create original data
@@ -263,9 +246,7 @@ class OrganizationControllerTest extends TestCase
         $this->assertNotEquals($updated->organization_name, $original_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(

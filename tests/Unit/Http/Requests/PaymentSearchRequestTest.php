@@ -2,12 +2,13 @@
 
 namespace Tests\Unit\Http\Requests;
 
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
  * @see \App\Http\Requests\SearchRequest
  */
-class PaymentSearchRequestTest extends TestCase
+final class PaymentSearchRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\PaymentSearchRequest */
     private $subject;
@@ -19,9 +20,7 @@ class PaymentSearchRequestTest extends TestCase
         $this->subject = new \App\Http\Requests\PaymentSearchRequest;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function authorize(): void
     {
         $actual = $this->subject->authorize();
@@ -29,9 +28,7 @@ class PaymentSearchRequestTest extends TestCase
         $this->assertTrue($actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function rules(): void
     {
         $actual = $this->subject->rules();
@@ -48,9 +45,7 @@ class PaymentSearchRequestTest extends TestCase
         ], $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function messages(): void
     {
         $actual = $this->subject->messages();

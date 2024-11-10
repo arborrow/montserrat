@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -10,7 +11,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\RelationshipTypeController
  */
-class RelationshipTypeControllerTest extends TestCase
+final class RelationshipTypeControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
@@ -55,9 +56,7 @@ class RelationshipTypeControllerTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addme_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -67,9 +66,7 @@ class RelationshipTypeControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-relationshiptype');
@@ -82,9 +79,7 @@ class RelationshipTypeControllerTest extends TestCase
         $response->assertSeeText('Create Relationship Type');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-relationshiptype');
@@ -98,9 +93,7 @@ class RelationshipTypeControllerTest extends TestCase
         $this->assertSoftDeleted($relationship_type);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-relationshiptype');
@@ -133,9 +126,7 @@ class RelationshipTypeControllerTest extends TestCase
          */
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-relationshiptype');
@@ -181,9 +172,7 @@ class RelationshipTypeControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function make_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -193,9 +182,7 @@ class RelationshipTypeControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-relationshiptype');
@@ -210,9 +197,7 @@ class RelationshipTypeControllerTest extends TestCase
         $response->assertSeeText($relationship_type->description);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-relationshiptype');
@@ -245,9 +230,7 @@ class RelationshipTypeControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -257,9 +240,7 @@ class RelationshipTypeControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-relationshiptype');
@@ -288,9 +269,7 @@ class RelationshipTypeControllerTest extends TestCase
         $this->assertNotEquals($updated->description, $original_description);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(

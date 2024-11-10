@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -16,14 +17,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\PageController
  */
-class PageControllerTest extends TestCase
+final class PageControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function about_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -34,9 +33,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.about');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function bookstore_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -47,9 +44,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.bookstore');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
@@ -60,9 +55,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('admin.config.index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_index_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -71,9 +64,7 @@ class PageControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_application_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
@@ -84,9 +75,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('admin.config.application');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_application_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -95,9 +84,7 @@ class PageControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_mail_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
@@ -108,9 +95,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('admin.config.mail');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_mail_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -119,9 +104,7 @@ class PageControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_gate_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
@@ -132,9 +115,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('admin.config.gate');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_gate_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -143,9 +124,7 @@ class PageControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_google_calendar_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
@@ -156,9 +135,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('admin.config.google_calendar');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_google_calendar_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -167,9 +144,7 @@ class PageControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_google_client_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
@@ -180,9 +155,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('admin.config.google_client');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_google_client_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -191,9 +164,7 @@ class PageControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_mailgun_displays_view(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
@@ -204,9 +175,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('admin.config.mailgun');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_mailgun_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -216,9 +185,7 @@ class PageControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_twilio_displays_view(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');
@@ -229,9 +196,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('admin.config.twilio');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function config_twilio_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -241,9 +206,7 @@ class PageControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function contact_info_report_displays_view(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -256,9 +219,7 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('person', $contact);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function contact_info_returns_404(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -268,9 +229,7 @@ class PageControllerTest extends TestCase
         $response->assertNotFound();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_displays_view(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -281,9 +240,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.finance');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -293,9 +250,7 @@ class PageControllerTest extends TestCase
         $response->assertStatus(403);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_agc_acknowledge_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -318,11 +273,11 @@ class PageControllerTest extends TestCase
     }
 
     /**
-     * @test
      *
      * when there is no contact associated with the current authenticated user, the AGC Acknowledgement letter touchpoint cannot be created
      * the user is redirected back to the page they came from and a flash error message tells them to create a contact associated with their email address
      */
+    #[Test]
     public function finance_agc_acknowledge_no_email_returns_a_flash_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -353,9 +308,7 @@ class PageControllerTest extends TestCase
         // TODO: assert that the pdf file is created, consider making a seperate view for display and testing number of entries depending on start and end dates
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_agc_acknowledge_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -366,9 +319,7 @@ class PageControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function eoy_acknowledgment_returns_403(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -378,9 +329,7 @@ class PageControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_cash_deposit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -394,9 +343,7 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('grand_total');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_cash_deposit_with_hyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -419,9 +366,7 @@ class PageControllerTest extends TestCase
         $response->assertSeeText(number_format($payment->donation->donation_amount, 2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_cash_deposit_with_unhyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -447,9 +392,7 @@ class PageControllerTest extends TestCase
         $response->assertSeeText(number_format($payment->donation->donation_amount, 2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_cc_deposit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -463,9 +406,7 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('grand_total');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_cc_deposit_with_hyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -492,9 +433,7 @@ class PageControllerTest extends TestCase
         $response->assertSeeText(number_format($payment->donation->donation_amount, 2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_cc_deposit_with_unhyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -524,9 +463,7 @@ class PageControllerTest extends TestCase
         $response->assertSeeText(number_format($payment->donation->donation_amount, 2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_deposits_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -539,9 +476,7 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('payments');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_invoice_report_displays_view(): void
     {
         // $this->withoutExceptionHandling();
@@ -556,9 +491,7 @@ class PageControllerTest extends TestCase
         $response->assertSee('Invoice #'.$donation->donation_id);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_invoice_returns_404(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -568,9 +501,7 @@ class PageControllerTest extends TestCase
         $response->assertNotFound();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_reconcile_deposit_show_returns_an_ok_response(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -589,9 +520,7 @@ class PageControllerTest extends TestCase
         $response->assertSeeText(number_format($registration->deposit, 2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_reconcile_deposit_show_with_event_id_returns_an_ok_response(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -610,9 +539,7 @@ class PageControllerTest extends TestCase
         $response->assertSeeText(number_format($registration->deposit, 2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function finance_retreatdonations_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -639,9 +566,7 @@ class PageControllerTest extends TestCase
         $response->assertSeeText($retreat->idnumber);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function grounds_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -652,9 +577,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.grounds');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function housekeeping_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -665,9 +588,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.housekeeping');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function kitchen_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -678,9 +599,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.kitchen');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function maintenance_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -691,9 +610,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.maintenance');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reservation_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -704,9 +621,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.reservation');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function restricted_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -717,9 +632,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.restricted');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function retreat_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -730,9 +643,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.retreat');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function retreatantinforeport_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -752,9 +663,7 @@ class PageControllerTest extends TestCase
         $this->assertEquals($registrants->sortBy('id')->pluck('id'), $registrations->sortBy('id')->pluck('id'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function retreatlistingreport_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -773,9 +682,7 @@ class PageControllerTest extends TestCase
         $response->assertSee('Registered Retreatant');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function retreatrosterreport_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -788,9 +695,7 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('registrations');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function retreatregistrationsreport_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
@@ -803,9 +708,7 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('registrations');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function support_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -817,9 +720,7 @@ class PageControllerTest extends TestCase
         $response->assertSee('Support Page');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function user_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -830,9 +731,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.user');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function welcome_displays_view(): void
     {
         $user = \App\Models\User::factory()->create();

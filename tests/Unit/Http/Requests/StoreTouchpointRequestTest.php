@@ -2,12 +2,13 @@
 
 namespace Tests\Unit\Http\Requests;
 
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
  * @see \App\Http\Requests\StoreTouchpointRequest
  */
-class StoreTouchpointRequestTest extends TestCase
+final class StoreTouchpointRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\StoreTouchpointRequest */
     private $subject;
@@ -19,9 +20,7 @@ class StoreTouchpointRequestTest extends TestCase
         $this->subject = new \App\Http\Requests\StoreTouchpointRequest;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function authorize(): void
     {
         $actual = $this->subject->authorize();
@@ -29,9 +28,7 @@ class StoreTouchpointRequestTest extends TestCase
         $this->assertTrue($actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function rules(): void
     {
         $actual = $this->subject->rules();
@@ -45,9 +42,7 @@ class StoreTouchpointRequestTest extends TestCase
         ], $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function messages(): void
     {
         $actual = $this->subject->messages();

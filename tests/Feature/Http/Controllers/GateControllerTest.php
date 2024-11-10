@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\GateController
  */
-class GateControllerTest extends TestCase
+final class GateControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
@@ -17,9 +18,7 @@ class GateControllerTest extends TestCase
     // TODO: develop funcitonal tests
     // for now, I am not actually going to test the functionality but just ensure the controller methods function
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-gate');
@@ -32,9 +31,7 @@ class GateControllerTest extends TestCase
         $response->assertSeeText('Gate activity');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function close_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-gate');
@@ -49,9 +46,7 @@ class GateControllerTest extends TestCase
         $response->assertSeeText('CLOSE');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function open_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-gate');
@@ -67,9 +62,7 @@ class GateControllerTest extends TestCase
         $response->assertSeeText('OPEN');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function open_with_hours_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-gate');

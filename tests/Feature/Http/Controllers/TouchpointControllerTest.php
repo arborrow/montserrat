@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -11,14 +12,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\TouchpointController
  */
-class TouchpointControllerTest extends TestCase
+final class TouchpointControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function add_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
@@ -53,9 +52,7 @@ class TouchpointControllerTest extends TestCase
         $response->assertSeeText('Create Touchpoint');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function add_group_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
@@ -100,9 +97,7 @@ class TouchpointControllerTest extends TestCase
         $response->assertSeeText('Create Group Touchpoint');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function add_retreat_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
@@ -142,9 +137,7 @@ class TouchpointControllerTest extends TestCase
         $response->assertSeeText('Create Retreat Touchpoint');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function add_retreat_waitlist_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
@@ -178,9 +171,7 @@ class TouchpointControllerTest extends TestCase
         $response->assertViewHas('defaults');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
@@ -195,9 +186,7 @@ class TouchpointControllerTest extends TestCase
         $response->assertSeeText('Create Touchpoint');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-touchpoint');
@@ -209,9 +198,7 @@ class TouchpointControllerTest extends TestCase
         $this->assertSoftDeleted($touchpoint);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-touchpoint');
@@ -240,9 +227,7 @@ class TouchpointControllerTest extends TestCase
          */
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-touchpoint');
@@ -255,9 +240,7 @@ class TouchpointControllerTest extends TestCase
         $response->assertSeeText('Touchpoint Index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-touchpoint');
@@ -274,9 +257,7 @@ class TouchpointControllerTest extends TestCase
         $response->assertSeeText('Touchpoint Index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-touchpoint');
@@ -291,9 +272,7 @@ class TouchpointControllerTest extends TestCase
         $response->assertSeeText($touchpoint->description);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
@@ -329,9 +308,7 @@ class TouchpointControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -341,9 +318,7 @@ class TouchpointControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_group_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
@@ -393,9 +368,7 @@ class TouchpointControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_group_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -405,9 +378,7 @@ class TouchpointControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_retreat_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
@@ -465,9 +436,7 @@ class TouchpointControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_retreat_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -477,9 +446,7 @@ class TouchpointControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_retreat_waitlist_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-touchpoint');
@@ -536,9 +503,7 @@ class TouchpointControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_retreat_waitlist_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -548,9 +513,7 @@ class TouchpointControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-touchpoint');
@@ -587,9 +550,7 @@ class TouchpointControllerTest extends TestCase
         $this->AssertNotEquals($original_staff_id, $touchpoint->staff_id);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(

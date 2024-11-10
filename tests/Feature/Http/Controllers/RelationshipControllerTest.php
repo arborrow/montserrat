@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,14 +10,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\RelationshipController
  */
-class RelationshipControllerTest extends TestCase
+final class RelationshipControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {   //TODO: relationship creation currently handled by person controller; this is more of a stub
         $user = $this->createUserWithPermission('create-relationship');
@@ -26,9 +25,7 @@ class RelationshipControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'index']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-relationship');
@@ -41,9 +38,7 @@ class RelationshipControllerTest extends TestCase
         $this->assertSoftDeleted($relationship);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {   //TODO: relationship editing currently handled by person controller; this is more of a stub
         $user = $this->createUserWithPermission('update-relationship');
@@ -54,9 +49,7 @@ class RelationshipControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'show'], $relationship->id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-relationship');
@@ -69,9 +62,7 @@ class RelationshipControllerTest extends TestCase
         $response->assertSeeText('Relationship Index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-relationship');
@@ -85,9 +76,7 @@ class RelationshipControllerTest extends TestCase
         $response->assertSeeText($relationship->description);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {   //TODO: relationship creation/store currently handled by person controller; this is more of a stub
         $user = $this->createUserWithPermission('create-relationship');
@@ -101,9 +90,7 @@ class RelationshipControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'index']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {   //TODO: relationship creation currently handled by person controller; this is more of a stub
         $user = $this->createUserWithPermission('update-relationship');
@@ -118,9 +105,7 @@ class RelationshipControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'show'], $relationship->id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function disjoined_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
@@ -133,9 +118,7 @@ class RelationshipControllerTest extends TestCase
         $response->assertSeeText('Disjoined Couples Index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function rejoin_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');

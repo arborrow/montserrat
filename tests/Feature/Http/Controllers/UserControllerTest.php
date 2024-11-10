@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,7 +10,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\UserController
  */
-class UserControllerTest extends TestCase
+final class UserControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
@@ -62,9 +63,7 @@ class UserControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('description', $user->description, 'text', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-role');
@@ -77,9 +76,7 @@ class UserControllerTest extends TestCase
         $response->assertSeeText('Index of Users');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-role');

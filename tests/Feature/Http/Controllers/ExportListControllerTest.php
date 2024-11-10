@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,14 +10,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\ExportListController
  */
-class ExportListControllerTest extends TestCase
+final class ExportListControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-export-list');
@@ -29,9 +28,7 @@ class ExportListControllerTest extends TestCase
         $response->assertSeeText('Create export list');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-export-list');
@@ -44,9 +41,7 @@ class ExportListControllerTest extends TestCase
         $this->assertSoftDeleted($export_list);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-export-list');
@@ -62,9 +57,7 @@ class ExportListControllerTest extends TestCase
         //        $this->assertTrue($this->findFieldValueInResponseContent('unit_name', $export_list->unit_name, 'text', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-export-list');
@@ -76,9 +69,7 @@ class ExportListControllerTest extends TestCase
         $response->assertSeeText('Export list');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-export-list');
@@ -92,9 +83,7 @@ class ExportListControllerTest extends TestCase
         $response->assertSeeText('Export list details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $this->withoutExceptionHandling();
@@ -121,9 +110,7 @@ class ExportListControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-export-list');

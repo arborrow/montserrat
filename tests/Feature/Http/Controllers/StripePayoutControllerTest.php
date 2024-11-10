@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -10,14 +11,12 @@ use Tests\TestCase;
  * @see \App\Http\Controllers\StripePayoutController
  * TODO: copied from squarespace-inventory need to update tests to stripe-payout, disabling tests for now
  */
-class StripePayoutControllerTest extends TestCase
+final class StripePayoutControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stripe_payout_controller_has_test(): void
     {
         $this->assertTrue(true);

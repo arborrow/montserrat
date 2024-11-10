@@ -2,12 +2,13 @@
 
 namespace Tests\Unit\Http\Requests;
 
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
  * @see \App\Http\Requests\StoreUomRequest
  */
-class StoreAssetTaskRequestTest extends TestCase
+final class StoreAssetTaskRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\StoreAssetTaskRequest */
     private $subject;
@@ -19,9 +20,7 @@ class StoreAssetTaskRequestTest extends TestCase
         $this->subject = new \App\Http\Requests\StoreAssetTaskRequest;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function authorize(): void
     {
         $actual = $this->subject->authorize();
@@ -29,9 +28,7 @@ class StoreAssetTaskRequestTest extends TestCase
         $this->assertTrue($actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function rules(): void
     {
         $actual = $this->subject->rules();
@@ -58,9 +55,7 @@ class StoreAssetTaskRequestTest extends TestCase
         ], $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function messages(): void
     {
         $actual = $this->subject->messages();

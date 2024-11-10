@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,14 +10,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\ParishController
  */
-class ParishControllerTest extends TestCase
+final class ParishControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
@@ -33,9 +32,7 @@ class ParishControllerTest extends TestCase
         $response->assertSeeText('Add a Parish');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-contact');
@@ -48,9 +45,7 @@ class ParishControllerTest extends TestCase
         $this->assertSoftDeleted($parish);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
@@ -152,9 +147,7 @@ class ParishControllerTest extends TestCase
         // TODO: add note
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -172,9 +165,7 @@ class ParishControllerTest extends TestCase
         $this->assertGreaterThanOrEqual('1', $parishes->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function parish_index_by_diocese_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -202,9 +193,7 @@ class ParishControllerTest extends TestCase
         $this->assertGreaterThanOrEqual('1', $parishes->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -220,9 +209,7 @@ class ParishControllerTest extends TestCase
         $response->assertSeeText($parish->display_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
@@ -246,9 +233,7 @@ class ParishControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -258,9 +243,7 @@ class ParishControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
@@ -283,9 +266,7 @@ class ParishControllerTest extends TestCase
         $this->assertNotEquals($updated->sort_name, $original_sort_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(

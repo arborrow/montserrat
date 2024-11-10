@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -10,14 +11,12 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\AssetTaskController
  */
-class AssetTaskControllerTest extends TestCase
+final class AssetTaskControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-asset-task');
@@ -33,9 +32,7 @@ class AssetTaskControllerTest extends TestCase
         $response->assertSeeText('Create asset task');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_with_asset_task_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-asset-task');
@@ -53,9 +50,7 @@ class AssetTaskControllerTest extends TestCase
         $response->assertSeeText($asset->name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-asset-task');
@@ -67,9 +62,7 @@ class AssetTaskControllerTest extends TestCase
         $this->assertSoftDeleted($asset_task);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-asset-task');
@@ -108,9 +101,7 @@ class AssetTaskControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('tag', $asset_task->tag, 'text', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset-task');
@@ -123,9 +114,7 @@ class AssetTaskControllerTest extends TestCase
         $response->assertSeeText('Asset tasks');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset-task');
@@ -139,9 +128,7 @@ class AssetTaskControllerTest extends TestCase
         $response->assertSeeText('Asset task details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-asset-task');
@@ -178,9 +165,7 @@ class AssetTaskControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
@@ -211,9 +196,7 @@ class AssetTaskControllerTest extends TestCase
         $this->assertNotEquals($updated->title, $original_title);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function schedule_jobs_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-asset-task');
