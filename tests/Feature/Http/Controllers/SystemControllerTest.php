@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,9 +15,7 @@ class SystemControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function offeringdedup_index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-offeringdedup');
@@ -29,9 +28,7 @@ class SystemControllerTest extends TestCase
         $response->assertSee('Offering Dedup');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function offeringdedup_show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-offeringdedup');
@@ -60,9 +57,7 @@ class SystemControllerTest extends TestCase
         $response->assertSee('Offering Dedup Details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function phpinfo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-admin-menu');

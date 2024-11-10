@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -15,9 +16,7 @@ class AssetJobControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
@@ -33,9 +32,7 @@ class AssetJobControllerTest extends TestCase
         $response->assertSeeText('Create asset job');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_with_asset_task_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-asset-job');
@@ -52,9 +49,7 @@ class AssetJobControllerTest extends TestCase
         $response->assertSeeText($asset_task->title);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-asset-job');
@@ -66,9 +61,7 @@ class AssetJobControllerTest extends TestCase
         $this->assertSoftDeleted($asset_job);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
@@ -100,9 +93,7 @@ class AssetJobControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('tag', $asset_job->tag, 'text', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
@@ -116,9 +107,7 @@ class AssetJobControllerTest extends TestCase
         $response->assertSeeText('Asset jobs');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset-job');
@@ -132,9 +121,7 @@ class AssetJobControllerTest extends TestCase
         $response->assertSeeText('Asset job');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();
@@ -181,9 +168,7 @@ class AssetJobControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         // $this->withoutExceptionHandling();

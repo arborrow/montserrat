@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -16,9 +17,7 @@ class DonationTypeControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-donation-type');
@@ -30,9 +29,7 @@ class DonationTypeControllerTest extends TestCase
         $response->assertSeeText('Create donation type');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-donation-type');
@@ -45,9 +42,7 @@ class DonationTypeControllerTest extends TestCase
         $this->assertSoftDeleted($donation_type);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-donation-type');
@@ -67,9 +62,7 @@ class DonationTypeControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('is_active', $donation_type->is_active, 'checkbox', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation-type');
@@ -82,9 +75,7 @@ class DonationTypeControllerTest extends TestCase
         $response->assertSeeText('Donation types');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-donation-type');
@@ -98,9 +89,7 @@ class DonationTypeControllerTest extends TestCase
         $response->assertSeeText('Donation type details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $this->withoutExceptionHandling();
@@ -130,9 +119,7 @@ class DonationTypeControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-donation-type');

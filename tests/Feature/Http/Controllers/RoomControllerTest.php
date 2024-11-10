@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -15,9 +16,7 @@ class RoomControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-room');
@@ -31,9 +30,7 @@ class RoomControllerTest extends TestCase
         $response->assertSeeText('Add A Room');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-room');
@@ -46,9 +43,7 @@ class RoomControllerTest extends TestCase
         $this->assertSoftDeleted($room);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-room');
@@ -88,9 +83,7 @@ class RoomControllerTest extends TestCase
          */
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-room');
@@ -103,9 +96,7 @@ class RoomControllerTest extends TestCase
         $response->assertSeeText('Room Index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function schedule_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-room');
@@ -122,9 +113,7 @@ class RoomControllerTest extends TestCase
         $response->assertSeeText('Room Schedules');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function schedule_with_hyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-room');
@@ -142,9 +131,7 @@ class RoomControllerTest extends TestCase
         $response->assertSeeText('Room Schedules');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function schedule_with_unhyphenated_date_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-room');
@@ -164,9 +151,7 @@ class RoomControllerTest extends TestCase
         $response->assertSeeText('Room Schedules');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-room');
@@ -180,9 +165,7 @@ class RoomControllerTest extends TestCase
         $response->assertSeeText($room->description);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-room');
@@ -212,9 +195,7 @@ class RoomControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -224,9 +205,7 @@ class RoomControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-room');
@@ -251,9 +230,7 @@ class RoomControllerTest extends TestCase
         $this->assertNotEquals($original_description, $room->description);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(

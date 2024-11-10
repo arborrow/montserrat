@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,9 +15,7 @@ class RoleControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-role');
@@ -28,9 +27,7 @@ class RoleControllerTest extends TestCase
         $response->assertSeeText('Create Role');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-role');
@@ -43,9 +40,7 @@ class RoleControllerTest extends TestCase
         $this->assertSoftDeleted($role);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-role');
@@ -70,9 +65,7 @@ class RoleControllerTest extends TestCase
          */
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-role');
@@ -85,9 +78,7 @@ class RoleControllerTest extends TestCase
         $response->assertSeeText('Roles');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-role');
@@ -104,9 +95,7 @@ class RoleControllerTest extends TestCase
         $response->assertSeeText($role->description);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-role');
@@ -129,9 +118,7 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-role');
@@ -156,9 +143,7 @@ class RoleControllerTest extends TestCase
         $this->assertNotEquals($updated->description, $original_description);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_permissions_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-role');
@@ -178,9 +163,7 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_users_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-role');

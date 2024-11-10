@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use App\Models\Message;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -37,9 +38,7 @@ class MailgunControllerTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     { // emtpy slug redireting to mailgun.index
         $this->followingRedirects();
@@ -54,9 +53,7 @@ class MailgunControllerTest extends TestCase
         $response->assertSee('Index of Mailgun Messages');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {  // empty slug redirecting to mailgun.index
         $this->followingRedirects();
@@ -69,9 +66,7 @@ class MailgunControllerTest extends TestCase
         $response->assertViewIs('mailgun.index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {   // emtpy slug redireting to mailgun.index
         $this->followingRedirects();
@@ -87,9 +82,7 @@ class MailgunControllerTest extends TestCase
         $response->assertSee('Index of Mailgun Messages');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('admin-mailgun');
@@ -102,9 +95,7 @@ class MailgunControllerTest extends TestCase
         $response->assertSee('Index of Mailgun Messages');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('admin-mailgun');
@@ -118,9 +109,7 @@ class MailgunControllerTest extends TestCase
         $response->assertSee('Mailgun Message Details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         // emtpy slug redireting to mailgun.index
@@ -135,9 +124,7 @@ class MailgunControllerTest extends TestCase
         $response->assertViewIs('mailgun.index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         // emtpy slug redireting to mailgun.index

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -16,9 +17,7 @@ class RegistrationControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function add_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
@@ -41,9 +40,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertSeeText('Add A Registration');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function add_group_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
@@ -63,9 +60,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertSeeText($group->title);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function arrive_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -86,9 +81,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function attend_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -107,9 +100,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function cancel_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -129,9 +120,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function confirm_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -150,9 +139,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function confirm_attendance_returns_an_ok_response(): void
     {
         $registration = \App\Models\Registration::factory()->create([
@@ -172,9 +159,7 @@ class RegistrationControllerTest extends TestCase
         $this->assertNotEquals($registration->registration_confirm_date, null);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
@@ -190,9 +175,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertSeeText('Add A Registration');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function depart_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -209,9 +192,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-registration');
@@ -223,9 +204,7 @@ class RegistrationControllerTest extends TestCase
         $this->assertSoftDeleted($registration);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -272,9 +251,7 @@ class RegistrationControllerTest extends TestCase
 
      */
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
@@ -289,9 +266,7 @@ class RegistrationControllerTest extends TestCase
         $this->assertGreaterThanOrEqual('1', $registrations->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function offwaitlist_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -307,9 +282,7 @@ class RegistrationControllerTest extends TestCase
         $this->assertEquals(config('polanco.registration_status_id.registered'), $updated->status_id);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function register_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
@@ -338,9 +311,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertSeeText($contact->sort_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function registration_email_returns_an_ok_response(): void
     {
         $registration = \App\Models\Registration::factory()->create([
@@ -369,9 +340,7 @@ class RegistrationControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function send_confirmation_email_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -383,9 +352,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
@@ -399,9 +366,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertSeeText($registration->contact->full_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
@@ -432,9 +397,7 @@ class RegistrationControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -444,9 +407,7 @@ class RegistrationControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_group_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-registration');
@@ -471,9 +432,7 @@ class RegistrationControllerTest extends TestCase
         $this->assertEquals($registrations->count(), $group_contacts->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_group_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -483,9 +442,7 @@ class RegistrationControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -517,9 +474,7 @@ class RegistrationControllerTest extends TestCase
         $this->assertNotEquals($registration->deposit, $original_deposit);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -529,9 +484,7 @@ class RegistrationControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function waitlist_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');

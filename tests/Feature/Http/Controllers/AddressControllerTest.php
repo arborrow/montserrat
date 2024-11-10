@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,9 +15,7 @@ class AddressControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response() //create method empty - nothing to test
     {
         $user = $this->createUserWithPermission('create-address');
@@ -31,9 +30,7 @@ class AddressControllerTest extends TestCase
         $response->assertSeeText('Create address');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $address = \App\Models\Address::factory()->create();
@@ -46,9 +43,7 @@ class AddressControllerTest extends TestCase
         $this->assertSoftDeleted($address);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $address = \App\Models\Address::factory()->create([
@@ -78,9 +73,7 @@ class AddressControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('is_primary', $address->is_primary, 'checkbox', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-address');
@@ -93,9 +86,7 @@ class AddressControllerTest extends TestCase
         $response->assertSeeText('Addresses');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $address = \App\Models\Address::factory()->create();
@@ -110,9 +101,7 @@ class AddressControllerTest extends TestCase
         $response->assertSeeText($address->street_address);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $this->withoutExceptionHandling();
@@ -142,9 +131,7 @@ class AddressControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -154,9 +141,7 @@ class AddressControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-address');
@@ -178,9 +163,7 @@ class AddressControllerTest extends TestCase
         $this->assertNotEquals($updated_address->street_address, $original_street_address);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(

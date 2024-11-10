@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,9 +15,7 @@ class PersonControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assistants_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -30,9 +29,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Assistant');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function bishops_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -46,9 +43,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Bishop');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function boardmembers_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -62,9 +57,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Board member');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function ambassadors_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -78,9 +71,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Ambassador');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
@@ -108,9 +99,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Create Person');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function deacons_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -124,9 +113,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Deacon');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-contact');
@@ -141,9 +128,7 @@ class PersonControllerTest extends TestCase
         $this->assertSoftDeleted($person);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function directors_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -157,9 +142,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Director');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function duplicates_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
@@ -172,9 +155,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('List of duplicated');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
@@ -473,9 +454,7 @@ class PersonControllerTest extends TestCase
         // TODO: add some groups and relationships
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function envelope_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -490,9 +469,7 @@ class PersonControllerTest extends TestCase
         $response->assertSee($person->agc_household_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_displays_paginated_contacts_contacts(): void
     {
         $person = \App\Models\Contact::factory()->create([
@@ -516,9 +493,7 @@ class PersonControllerTest extends TestCase
         $this->assertGreaterThanOrEqual('1', $count_persons);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_403_without_proper_permission(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -528,9 +503,7 @@ class PersonControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function innkeepers_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -544,9 +517,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Innkeeper');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function jesuits_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -560,9 +531,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Jesuit');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function lastnames_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -582,9 +551,7 @@ class PersonControllerTest extends TestCase
         $this->assertGreaterThanOrEqual('1', $persons->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function merge_returns_an_ok_response(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -617,9 +584,7 @@ class PersonControllerTest extends TestCase
         // TODO: perform additional assertions and create additional tests to ensure that the merging functionality actually works
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function merge_staff_returns_fail_response(): void
     {
         $user = \App\Models\User::factory()->create();
@@ -648,9 +613,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Staff members with touchpoints or assigned jobs cannot be merged');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function merge_destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-duplicate');
@@ -671,9 +634,7 @@ class PersonControllerTest extends TestCase
         $this->assertSoftDeleted($duplicate_person);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function pastors_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -687,9 +648,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Pastor');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function priests_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -703,9 +662,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Priest');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function provincials_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -719,9 +676,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Provincial');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -742,9 +697,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText($person->display_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function staff_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -758,9 +711,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Staff');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stewards_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -774,9 +725,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Steward');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
@@ -823,9 +772,7 @@ class PersonControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $person->id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -835,9 +782,7 @@ class PersonControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function superiors_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -851,9 +796,7 @@ class PersonControllerTest extends TestCase
         $response->assertSeeText('Superior');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
@@ -879,9 +822,7 @@ class PersonControllerTest extends TestCase
         $this->assertNotEquals($updated->sort_name, $original_sort_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -891,9 +832,7 @@ class PersonControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function volunteers_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');

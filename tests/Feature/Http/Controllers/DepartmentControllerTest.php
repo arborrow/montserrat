@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,9 +15,7 @@ class DepartmentControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-department');
@@ -29,9 +28,7 @@ class DepartmentControllerTest extends TestCase
         $response->assertViewHas('parents');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-department');
@@ -44,9 +41,7 @@ class DepartmentControllerTest extends TestCase
         $this->assertSoftDeleted($department);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-department');
@@ -68,9 +63,7 @@ class DepartmentControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('is_active', $department->is_active, 'checkbox', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-department');
@@ -83,9 +76,7 @@ class DepartmentControllerTest extends TestCase
         $response->assertSeeText('Departments');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-department');
@@ -100,9 +91,7 @@ class DepartmentControllerTest extends TestCase
         $response->assertSeeText('Department details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-department');
@@ -125,9 +114,7 @@ class DepartmentControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-department');

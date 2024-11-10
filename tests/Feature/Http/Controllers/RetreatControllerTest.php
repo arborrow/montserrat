@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -15,9 +16,7 @@ class RetreatControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assign_rooms_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -45,9 +44,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText('Save Room Assignments');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function calendar_returns_an_ok_response(): void
     {   //TODO: atm this is a pretty weak test assuming Google calendar is not implemented, could be stronger if we simulate creating such events
         $user = $this->createUserWithPermission('show-retreat');
@@ -60,9 +57,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText('Index of Google Master Calendar Events');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function checkin_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -86,9 +81,7 @@ class RetreatControllerTest extends TestCase
         $this->assertNotEquals(null, $registration->arrived_at);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function checkout_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -119,9 +112,7 @@ class RetreatControllerTest extends TestCase
         $this->assertNotEquals(null, $registration->departed_at);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-retreat');
@@ -138,9 +129,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText('Create Retreat');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-retreat');
@@ -153,9 +142,7 @@ class RetreatControllerTest extends TestCase
         $this->assertSoftDeleted($retreat);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-retreat');
@@ -201,9 +188,7 @@ class RetreatControllerTest extends TestCase
 
      */
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_payments_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-payment');
@@ -224,9 +209,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText('Retreat Offerings for '.e($retreat->title));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function get_event_by_id_number_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
@@ -242,9 +225,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->title);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
@@ -260,9 +241,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText('Previous Retreat');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
@@ -288,9 +267,7 @@ class RetreatControllerTest extends TestCase
         // TODO: not particularly well written test as it may be influenced by other tests so there may be cases where there are more upcoming events than created by this test
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function room_update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-registration');
@@ -321,9 +298,7 @@ class RetreatControllerTest extends TestCase
         $this->assertNotEquals(null, $updated_registration->notes);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function room_update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -333,9 +308,7 @@ class RetreatControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
@@ -351,9 +324,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->title);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_with_status_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
@@ -369,9 +340,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->title);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_payments_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');
@@ -388,9 +357,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->idnumber);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_waitlist_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');
@@ -408,9 +375,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->idnumber);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-retreat');
@@ -434,9 +399,7 @@ class RetreatControllerTest extends TestCase
         $this->assertEquals($retreat->idnumber, $idnumber);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -446,9 +409,7 @@ class RetreatControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-retreat');
@@ -481,9 +442,7 @@ class RetreatControllerTest extends TestCase
         // TODO: write tests for uploading of files (schedule, evaluations, contracts, group pictures, etc.)
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -493,9 +452,7 @@ class RetreatControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function event_room_list_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
@@ -520,9 +477,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->title);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function event_namebadges_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
@@ -547,9 +502,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($name.' '.$retreatant->last_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function event_namebadges_with_role_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
@@ -581,9 +534,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($name.' '.$retreatant->last_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function event_tableplacards_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-registration');
@@ -605,9 +556,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function results_returns_an_ok_response(): void
     {   // create a new user and then search for that user's last name and ensure that a result appears
         $user = $this->createUserWithPermission('show-retreat');
@@ -623,9 +572,7 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->idnumber);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function search_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-retreat');

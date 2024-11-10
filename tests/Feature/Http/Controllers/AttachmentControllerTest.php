@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -15,9 +16,7 @@ class AttachmentControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function delete_asset_photo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -41,9 +40,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\AssetController::class, 'show'], $asset->id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function delete_avatar_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -68,9 +65,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $person->id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function delete_asset_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -95,9 +90,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\AssetController::class, 'show'], $asset->id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function delete_contact_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -123,9 +116,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $person->id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function delete_event_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -151,9 +142,7 @@ class AttachmentControllerTest extends TestCase
         // TODO: perform additional assertions such as verify that the deleted file has been renamed to name-deleted-time.extension
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function delete_event_contract_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -177,9 +166,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function delete_event_evaluations_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -203,9 +190,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function delete_event_group_photo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -229,9 +214,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function delete_event_schedule_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -255,9 +238,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function get_asset_photo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-asset');
@@ -280,9 +261,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertOk();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function get_avatar_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-avatar');
@@ -307,9 +286,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertOk();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function get_event_contract_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-attachment');
@@ -333,9 +310,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertOk();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function get_event_evaluations_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-evaluation');
@@ -359,9 +334,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertOk();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function get_event_group_photo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-group-photo');
@@ -385,9 +358,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertOk();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function get_event_schedule_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-schedule');
@@ -411,9 +382,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertOk();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_contact_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-attachment');
@@ -439,9 +408,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertOk();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_event_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-attachment');
@@ -467,9 +434,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertOk();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_asset_attachment_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-attachment');
@@ -495,9 +460,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertOk();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_back_with_flash_response(): void
     {
         $user = $this->createUserWithPermission('create-attachment');
@@ -508,9 +471,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(route('attachment.index'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -530,9 +491,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(route('attachment.index'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-attachment');
@@ -557,9 +516,7 @@ class AttachmentControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('description', $attachment->description, 'textarea', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-attachment');
@@ -572,9 +529,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertSeeText('Attachments');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-attachment');
@@ -597,9 +552,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertSeeText('Attachment details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-attachment');
@@ -617,9 +570,7 @@ class AttachmentControllerTest extends TestCase
         // $response->assertSeeText('Storing attachment');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-attachment');

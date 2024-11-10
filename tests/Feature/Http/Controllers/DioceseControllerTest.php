@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,9 +15,7 @@ class DioceseControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
@@ -32,9 +31,7 @@ class DioceseControllerTest extends TestCase
         $response->assertSee('Add a Diocese');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $diocese = \App\Models\Diocese::factory()->create();
@@ -47,9 +44,7 @@ class DioceseControllerTest extends TestCase
         $this->assertSoftDeleted($diocese);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
@@ -151,9 +146,7 @@ class DioceseControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-contact');
@@ -169,9 +162,7 @@ class DioceseControllerTest extends TestCase
         $this->assertGreaterThanOrEqual('1', $dioceses->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $diocese = \App\Models\Diocese::factory()->create();
@@ -187,9 +178,7 @@ class DioceseControllerTest extends TestCase
         $response->assertSeeText($diocese->display_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-contact');
@@ -219,9 +208,7 @@ class DioceseControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -231,9 +218,7 @@ class DioceseControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-contact');
@@ -259,9 +244,7 @@ class DioceseControllerTest extends TestCase
         $this->assertEquals($diocese->note_diocese_text, $diocese_note);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(

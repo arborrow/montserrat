@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,9 +15,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-squarespace-inventory');
@@ -29,9 +28,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
         $response->assertViewHas('custom_forms');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-squarespace-inventory');
@@ -44,9 +41,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
         $this->assertSoftDeleted($inventory);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-inventory');
@@ -65,9 +60,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('variant_options', $inventory->variant_options, 'number', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-inventory');
@@ -80,9 +73,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
         $response->assertSeeText('Squarespace Inventory Index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-inventory');
@@ -96,9 +87,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
         $response->assertSeeText('Squarespace Inventory details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {   //$this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-squarespace-inventory');
@@ -122,9 +111,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -134,9 +121,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-inventory');
@@ -162,9 +147,7 @@ class StripeBalanceTransactionControllerTest extends TestCase
         $this->assertNotEquals($updated->name, $original_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(

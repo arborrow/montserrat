@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,9 +15,7 @@ class SnippetControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-snippet');
@@ -29,9 +28,7 @@ class SnippetControllerTest extends TestCase
         $response->assertViewHas('locales');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-snippet');
@@ -44,9 +41,7 @@ class SnippetControllerTest extends TestCase
         $this->assertSoftDeleted($snippet);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-snippet');
@@ -66,9 +61,7 @@ class SnippetControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('snippet', $snippet->snippet, 'textarea', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-snippet');
@@ -82,9 +75,7 @@ class SnippetControllerTest extends TestCase
         $response->assertSeeText('Snippets');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_type_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-snippet');
@@ -108,9 +99,7 @@ class SnippetControllerTest extends TestCase
         $this->assertGreaterThan($number_snippets, $results->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-snippet');
@@ -124,9 +113,7 @@ class SnippetControllerTest extends TestCase
         $response->assertSeeText('Snippet details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-snippet');
@@ -152,9 +139,7 @@ class SnippetControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function snippet_test_returns_an_ok_response()
     // this test is a bit of a happy path and a fail path to ensure no emails are sent
     // we begin using a bogus title which should produce a flash session warning that the snippet was not found; however, we still wind up at the index page
@@ -171,9 +156,7 @@ class SnippetControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -183,9 +166,7 @@ class SnippetControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function test_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-snippet');
@@ -202,9 +183,7 @@ class SnippetControllerTest extends TestCase
         $response->assertViewHas('language');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function test_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -214,9 +193,7 @@ class SnippetControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-snippet');
@@ -243,9 +220,7 @@ class SnippetControllerTest extends TestCase
         $this->assertNotEquals($updated->title, $original_title);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -15,9 +16,7 @@ class PaymentControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-payment');
@@ -32,9 +31,7 @@ class PaymentControllerTest extends TestCase
         $response->assertSeeText('Create payment');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-payment');
@@ -46,9 +43,7 @@ class PaymentControllerTest extends TestCase
         $this->assertSoftDeleted($payment);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-payment');
@@ -69,9 +64,7 @@ class PaymentControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('note', $payment->note, 'text', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');
@@ -86,9 +79,7 @@ class PaymentControllerTest extends TestCase
         $this->assertGreaterThanOrEqual('1', $payments->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');
@@ -102,9 +93,7 @@ class PaymentControllerTest extends TestCase
         $response->assertSeeText('Payment Details');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('create-payment');
@@ -126,9 +115,7 @@ class PaymentControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -138,9 +125,7 @@ class PaymentControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-payment');
@@ -161,9 +146,7 @@ class PaymentControllerTest extends TestCase
         $this->assertNotEquals($updated->payment_amount, $original_payment_amount);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_returns_403_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');
@@ -180,9 +163,7 @@ class PaymentControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
@@ -192,9 +173,7 @@ class PaymentControllerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function results_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');
@@ -210,9 +189,7 @@ class PaymentControllerTest extends TestCase
         $response->assertSeeText($payment->payment_amount);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function search_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-payment');

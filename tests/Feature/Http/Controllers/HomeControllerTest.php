@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -11,9 +12,7 @@ use Tests\TestCase;
 class HomeControllerTest extends TestCase
 {
     // use DatabaseTransactions;
-    /**
-     * @test
-     */
+    #[Test]
     public function goodbye_returns_an_ok_response(): void
     {
         $response = $this->get('goodbye');
@@ -22,9 +21,7 @@ class HomeControllerTest extends TestCase
         $response->assertViewIs('pages.goodbye');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $response = $this->get(route('home'));

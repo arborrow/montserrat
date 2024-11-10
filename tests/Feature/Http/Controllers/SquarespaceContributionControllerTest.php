@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,9 +15,7 @@ class SquarespaceContributionControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_returns_an_ok_response(): void
     {
         // emtpy slug redirects to squarespace.contribution.index
@@ -29,9 +28,7 @@ class SquarespaceContributionControllerTest extends TestCase
         $response->assertViewIs('squarespace.contribution.index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function destroy_returns_an_ok_response(): void
     {
         // emtpy slug redirects to squarespace.contribution.index
@@ -47,9 +44,7 @@ class SquarespaceContributionControllerTest extends TestCase
         $response->assertViewIs('squarespace.contribution.index');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function edit_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('update-squarespace-contribution');
@@ -112,9 +107,7 @@ class SquarespaceContributionControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('comments', $contribution->comments, 'text', $response->getContent()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-contribution');
@@ -128,9 +121,7 @@ class SquarespaceContributionControllerTest extends TestCase
         $response->assertSeeText('Index of Squarespace Contributions');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function show_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-contribution');
@@ -144,9 +135,7 @@ class SquarespaceContributionControllerTest extends TestCase
         $response->assertSeeText('Squarespace Contribution #'.$contribution->id);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function store_returns_an_ok_response(): void
     {
         // emtpy slug redirects to squarespace.contribution.index
@@ -187,9 +176,7 @@ class SquarespaceContributionControllerTest extends TestCase
         $this->assertNotEquals($updated->name, $original_name);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
