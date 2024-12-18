@@ -213,7 +213,7 @@ class StripeBalanceTransactionController extends Controller
                     $charge = StripeBalanceTransaction::whereChargeId($balance_transaction->charge_id)->whereType('charge')->first();
                     $charge_payments = Payment::whereStripeBalanceTransactionId($charge->id)->get();
 
-                    if ($charge_payments->count() > 1) {
+		    if ($charge_payments->count() > 1) {
                         flash('Refund for Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> associated with more than one payment. Please process the refund manually.')->warning()->important();
 
                         return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'], $balance_transaction->payout_id);
@@ -524,8 +524,8 @@ class StripeBalanceTransactionController extends Controller
 
         $this->store_balance_transactions($payout, $stripe_balance_transactions);
         $this->store_balance_transactions($payout, $stripe_refunds);
-
-        return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'], $payout->payout_id);
+    
+	return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'], $payout->payout_id);
     }
 
     public function store_balance_transactions($payout, $stripe_balance_transactions)
@@ -533,13 +533,20 @@ class StripeBalanceTransactionController extends Controller
         $this->authorize('import-stripe-balance_transaction');
 
         $stripe = new StripeClient(config('services.stripe.secret'));
-
         foreach ($stripe_balance_transactions->autoPagingIterator() as $stripe_balance_transaction) {
             $balance_transaction = StripeBalanceTransaction::firstOrNew([
                 'balance_transaction_id' => $stripe_balance_transaction->id,
             ]);
 
-            $stripe_charge = $stripe->charges->retrieve($stripe_balance_transaction->source, []);
+	    if ($stripe_balance_transaction->type == "refund") {
+		    // dd($stripe_balance_transaction);
+		$stripe_refund = $stripe->refunds->retrieve($stripe_balance_transaction->source, []);
+	        $stripe_charge = $stripe->charges->retrieve($stripe_refund->charge, []);
+		// dd($stripe_refund,$stripe_charge);
+	    } 
+	    if ($stripe_balance_transaction->type == "charge") {
+		$stripe_charge = $stripe->charges->retrieve($stripe_balance_transaction->source, []);
+	    }
 
             $stripe_customer = ! is_null($stripe_charge->customer) ? $stripe->customers->retrieve($stripe_charge->customer) : null;
             $receipt_email = $stripe_charge->receipt_email;
@@ -553,7 +560,7 @@ class StripeBalanceTransactionController extends Controller
 
             $balance_transaction->payout_id = $payout->payout_id;
             $balance_transaction->customer_id = $stripe_customer?->id;
-            $balance_transaction->charge_id = $stripe_balance_transaction->source;
+            $balance_transaction->charge_id = $stripe_charge->id;
             $balance_transaction->payout_date = $payout->arrival_date;
             $balance_transaction->description = $stripe_balance_transaction->description;
             $balance_transaction->name = $stripe_charge->billing_details->name;
