@@ -24,7 +24,7 @@ class DashboardController extends Controller
     {
         $this->authorize('show-dashboard');
 
-        $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+        $current_year = (int) (date('m') > 6) ? date('Y') + 1 : date('Y');
 
         $years = [];
         $agc_descriptions = [];
@@ -33,7 +33,7 @@ class DashboardController extends Controller
             $today = \Carbon\Carbon::now();
             $today->day = 1;
             $today->month = 1;
-            $today->year = $current_year;
+            $today->year = (int) $current_year;
             $years[$x] = $today->addYear($x);
         }
 
@@ -156,14 +156,14 @@ class DashboardController extends Controller
         }
 
         if (isset($donation_type)) { //validate donation_description
-            $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+            $current_year = (int) (date('m') > 6) ? date('Y') + 1 : date('Y');
             $number_of_years = 5;
             $years = [];
             for ($x = -$number_of_years; $x <= 0; $x++) {
                 $today = \Carbon\Carbon::now();
                 $today->day = 1;
                 $today->month = 1;
-                $today->year = $current_year;
+                $today->year = (int) $current_year;
                 $years[$x] = $today->addYear($x);
             }
 
@@ -210,7 +210,7 @@ class DashboardController extends Controller
             $year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         }
 
-        $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+        $current_year = (int) (date('m') > 6) ? date('Y') + 1 : date('Y');
         $prev_year = $year - 1;
         $begin_date = $prev_year.'-07-01';
         $end_date = $year.'-07-01';
@@ -221,7 +221,7 @@ class DashboardController extends Controller
             $today = \Carbon\Carbon::now();
             $today->day = 1;
             $today->month = 1;
-            $today->year = $current_year;
+            $today->year = (int) $current_year;
             $years[$x] = $today->subYear($x);
         }
 

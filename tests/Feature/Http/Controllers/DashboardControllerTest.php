@@ -130,7 +130,7 @@ final class DashboardControllerTest extends TestCase
     public function events_with_year_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-dashboard');
-        $last_year = Carbon::now()->subYear()->year;
+        (int) $last_year = Carbon::now()->subYear()->year;
 
         $response = $this->actingAs($user)->get('/dashboard/events/'.$last_year);
 
