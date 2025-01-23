@@ -16,7 +16,7 @@
     </div>
     <div class="col-lg-12">
         @can('manage-permission')
-            {{ html()->form('GET', route('admin.permission', ))->class('form-inline')->open() }}
+            {{ html()->form('GET', route('permission.index', ))->class('form-inline')->open() }}
                 <div class="form-group mb-2 mx-2">
                     {{ html()->label('Action', 'action') }}
                     {{ html()->select('action', $actions, 0)->id('action')->class('form-control mx-1') }}
