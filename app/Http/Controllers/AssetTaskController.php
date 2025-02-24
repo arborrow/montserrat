@@ -283,9 +283,9 @@ class AssetTaskController extends Controller
                             }
                             if (isset($asset_task->scheduled_time)) {
                                 $time = explode(':', $asset_task->scheduled_time);
-                                $job_date->hour = $time[0];
-                                $job_date->minute = $time[1];
-                                $job_date->second = $time[2];
+                                $job_date->hour = (int) $time[0];
+                                $job_date->minute = (int) $time[1];
+                                $job_date->second = (int) $time[2];
                             }
 
                             $new_job = new \App\Models\AssetJob;
