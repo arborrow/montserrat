@@ -38,7 +38,7 @@ class DonationController extends Controller
         // dd($donation_descriptions);
         $donations = Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix', 'retreat')->paginate(25, ['*'], 'donations');
 
-        //dd($donations);
+        // dd($donations);
         return view('donations.index', compact('donations', 'donation_descriptions'));
     }
 
@@ -100,7 +100,7 @@ class DonationController extends Controller
         return view('donations.overpaid', compact('overpaid'));
     }
 
-    //TODO: add docs code here and create unit tests
+    // TODO: add docs code here and create unit tests
     public function mergeable(): View
     {   // contact id 5847 hardcoded for anonymous user
         $this->authorize('show-donation');
@@ -116,7 +116,7 @@ class DonationController extends Controller
         return view('donations.mergeable', compact('mergeable'));
     }
 
-    //TODO: add docs code here and create unit tests
+    // TODO: add docs code here and create unit tests
     public function merge($first_donation_id = 0, $second_donation_id = 0): RedirectResponse
     {
         $this->authorize('update-donation');
@@ -244,7 +244,7 @@ class DonationController extends Controller
             $retreats->prepend('Unassigned', 0);
         }
 
-        //dd($donors);
+        // dd($donors);
         $payment_methods = config('polanco.payment_method');
         $descriptions = DonationType::active()->orderby('name')->pluck('name', 'name');
         $dt_today = \Carbon\Carbon::today();
@@ -294,7 +294,7 @@ class DonationController extends Controller
         }
         if ($request->input('payment_description') == 'Check') {
             $payment->cknumber = $request->input('payment_idnumber');
-        }        //dd($payment, $donation);
+        }        // dd($payment, $donation);
         $payment->save();
 
         flash('Donation ID#: <a href="'.url('/donation/'.$donation->donation_id).'">'.$donation->donation_id.'</a> added')->success();
@@ -319,7 +319,7 @@ class DonationController extends Controller
     public function edit(int $id): View
     {
         $this->authorize('update-donation');
-        //get this retreat's information
+        // get this retreat's information
         $donation = Donation::with('payments', 'contact')->findOrFail($id);
         $descriptions = DonationType::active()->orderby('name')->pluck('name', 'name');
 
@@ -334,7 +334,7 @@ class DonationController extends Controller
         $retreats->prepend('Unassigned', 0);
         $defaults['event_id'] = $donation->event_id;
         // $descriptions->prepend('Unassigned', 0); // no longer needed since all donations have an active donation description
-        //$descriptions->toArray();
+        // $descriptions->toArray();
         // $defaults['description_key'] = $descriptions->search($donation->donation_description); // no longer needed to lookup donation type key, just use the existing value
 
         // check if current event is further in the past and if so add it
@@ -360,7 +360,7 @@ class DonationController extends Controller
         $donation->donation_date = $request->input('donation_date') ? $request->input('donation_date') : null;
         $donation->donation_amount = $request->input('donation_amount');
         $donation->donation_description = $request->input('donation_description');
-        $donation->notes1 = $request->input('notes1'); //primary_contact
+        $donation->notes1 = $request->input('notes1'); // primary_contact
         $donation->notes = $request->input('notes');
         $donation->terms = $request->input('terms');
         $donation->start_date = $request->input('start_date');
@@ -368,7 +368,7 @@ class DonationController extends Controller
         $donation->donation_install = $request->input('donation_install');
         $donation->stripe_invoice = $request->input('stripe_invoice');
         if ($request->input('donation_thank_you') == 'Y') {
-            $donation['Thank You'] = $request->input('donation_thank_you'); //field has space in database and should be changed at some point
+            $donation['Thank You'] = $request->input('donation_thank_you'); // field has space in database and should be changed at some point
         } else {
             $donation['Thank You'] = null;
         }
@@ -387,7 +387,7 @@ class DonationController extends Controller
         $this->authorize('delete-donation');
         $donation = Donation::findOrFail($id);
         $contact = Contact::findOrFail($donation->contact_id);
-        //deletion of payments implied on the model
+        // deletion of payments implied on the model
         Donation::destroy($id);
         // disassociate registration with a donation that is being deleted - there should only be one
         $registration = Registration::whereDonationId($id)->first();
@@ -419,7 +419,7 @@ class DonationController extends Controller
             foreach ($request->input('donations') as $key => $value) {
                 $registration = Registration::findOrFail($key);
                 // if there is not already an existing donation and there is a pledge
-                if (is_null($registration->donation_id)) { //create a new donation
+                if (is_null($registration->donation_id)) { // create a new donation
                     if ($value['pledge'] > 0) {
                         $donation = new Donation;
                         $donation->contact_id = $registration->contact_id;
@@ -455,7 +455,7 @@ class DonationController extends Controller
                         if ($value['method'] == 'Check') {
                             $payment->cknumber = $value['idnumber'];
                         }
-                        //dd($payment, $donation);
+                        // dd($payment, $donation);
                         $payment->save();
                     }
                 } else {

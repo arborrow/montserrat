@@ -28,7 +28,7 @@ class OrganizationController extends Controller
         $organizations = \App\Models\Contact::with('addresses', 'phone_main_phone', 'email_primary', 'websites', 'subcontacttype')->organizations_generic()->orderBy('organization_name', 'asc')->paginate(25, ['*'], 'organizations');
         $subcontact_types = \App\Models\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
 
-        //dd($subcontact_types);
+        // dd($subcontact_types);
         return view('organizations.index', compact('organizations', 'subcontact_types'));   //
     }
 
@@ -114,7 +114,7 @@ class OrganizationController extends Controller
         $organization_email_main->email = $request->input('email_main');
         $organization_email_main->save();
 
-        //TODO: add contact_id which is the id of the creator of the note
+        // TODO: add contact_id which is the id of the creator of the note
         if (! empty($request->input('note'))) {
         }
 
@@ -232,7 +232,7 @@ class OrganizationController extends Controller
         $subcontact_types = \App\Models\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
         $subcontact_types->prepend('N/A', 0);
 
-        //dd($organization);
+        // dd($organization);
 
         return view('organizations.edit', compact('organization', 'states', 'countries', 'defaults', 'subcontact_types'));
     }
@@ -389,7 +389,7 @@ class OrganizationController extends Controller
         \App\Models\Relationship::whereContactIdA($id)->delete();
         \App\Models\Relationship::whereContactIdB($id)->delete();
         \App\Models\GroupContact::whereContactId($id)->delete();
-        //delete address, email, phone, website, emergency contact, notes for deleted users
+        // delete address, email, phone, website, emergency contact, notes for deleted users
         \App\Models\Address::whereContactId($id)->delete();
         \App\Models\Email::whereContactId($id)->delete();
         \App\Models\Phone::whereContactId($id)->delete();
@@ -397,7 +397,7 @@ class OrganizationController extends Controller
         \App\Models\EmergencyContact::whereContactId($id)->delete();
         \App\Models\Note::whereContactId($id)->delete();
         \App\Models\Touchpoint::wherePersonId($id)->delete();
-        //delete registrations
+        // delete registrations
         \App\Models\Registration::whereContactId($id)->delete();
         // delete donations
         \App\Models\Donation::whereContactId($id)->delete();

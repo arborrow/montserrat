@@ -241,7 +241,7 @@ class StripePayoutController extends Controller
             $stripe_payout->date = Carbon::parse($payout->arrival_date);
             $stripe_payout->status = $payout->status;
 
-            $fees = 0; //initialize
+            $fees = 0; // initialize
             $transactions = $stripe->balanceTransactions->all(
                 ['payout' => $stripe_payout->payout_id,
                     'type' => 'charge',
@@ -283,9 +283,9 @@ class StripePayoutController extends Controller
             $stripe_payout->date = Carbon::parse($payout->arrival_date);
             $stripe_payout->status = $payout->status;
             // TODO: import payment fees and sum together to calculate total_fee_amount for each payout
-            //$stripe_payout->total_fee_amount = 0;
+            // $stripe_payout->total_fee_amount = 0;
             $stripe_payout->save();
-            //dd($stripe_payout,$payout->id);
+            // dd($stripe_payout,$payout->id);
         }
 
         return Redirect::action([self::class, 'index']);

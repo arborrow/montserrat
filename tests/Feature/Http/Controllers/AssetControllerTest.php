@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -215,7 +215,7 @@ final class AssetControllerTest extends TestCase
     #[Test]
     public function store_returns_an_ok_response(): void
     {
-        //$this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
 
         $user = $this->createUserWithPermission('create-asset');
 

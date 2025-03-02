@@ -60,7 +60,7 @@ class DashboardController extends Controller
                 $agc_donations[$description] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
             }
 
-            //unique donors
+            // unique donors
             $donors[$label]['count'] = $agc_donors['All']->count();
             foreach (config('polanco.agc_donation_descriptions') as $description) {
                 $donors[$label]['count_'.$description] = $agc_donors[$description]->count();
@@ -109,7 +109,7 @@ class DashboardController extends Controller
         $this->authorize('show-donation');
 
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
-        $fiscal_year = (! isset($request->fiscal_year)) ? $current_year : $request->fiscal_year; //fiscal_year 4-digit year
+        $fiscal_year = (! isset($request->fiscal_year)) ? $current_year : $request->fiscal_year; // fiscal_year 4-digit year
 
         $donation_type_id = (! isset($request->donation_type_id)) ? '0' : $request->donation_type_id;
         switch ($donation_type_id) {
@@ -155,7 +155,7 @@ class DashboardController extends Controller
             $donation_type = \App\Models\DonationType::findOrFail($category_id);
         }
 
-        if (isset($donation_type)) { //validate donation_description
+        if (isset($donation_type)) { // validate donation_description
             $current_year = (int) (date('m') > 6) ? date('Y') + 1 : date('Y');
             $number_of_years = 5;
             $years = [];

@@ -81,7 +81,7 @@ class AttachmentController extends Controller
                 $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
         }
-        //dd($path);
+        // dd($path);
         if (! File::exists($path)) {
             abort(404);
         }
@@ -154,7 +154,7 @@ class AttachmentController extends Controller
                 break;
         }
         $attachment->save();
-        //write file to filesystem (attachments seems to be missing attachments path - evaluate when implementing generic event attachments)
+        // write file to filesystem (attachments seems to be missing attachments path - evaluate when implementing generic event attachments)
         switch ($type) {
             case 'avatar':
                 Storage::disk('local')->put($entity.'/'.$entity_id.'/'.'avatar.png', $avatar->stream('png'));
@@ -171,11 +171,11 @@ class AttachmentController extends Controller
     public function update_attachment($file, $entity = 'event', $entity_id = 0, $type = null, $description = null)
     {
         $path = $entity.'/'.$entity_id.'/';
-        //dd($file->extension());
+        // dd($file->extension());
 
         switch ($type) {
             case 'avatar':
-                $this->authorize('create-avatar'); //if you can create it you can update it
+                $this->authorize('create-avatar'); // if you can create it you can update it
                 $file_type_id = config('polanco.file_type.contact_avatar');
                 $file_name = 'avatar.png';
                 $updated_file_name = 'avatar-updated-'.time().'.png';
@@ -589,7 +589,7 @@ class AttachmentController extends Controller
     {
         $this->authorize('show-attachment');
         $attachment = \App\Models\Attachment::findOrFail($id);
-        //$this->authorize('show-'.$attachment->entity);
+        // $this->authorize('show-'.$attachment->entity);
 
         return view('attachments.show', compact('attachment')); //
     }

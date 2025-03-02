@@ -74,7 +74,7 @@ class Address extends Model implements Auditable
 
     public function getGoogleMapAttribute()
     {
-        //dd($this);
+        // dd($this);
         if (isset($this->state->abbreviation)) {
             $gmap = '<a href="http://maps.google.com/?q='.$this->street_address.' '.$this->supplemental_address_1.' '.$this->city.' '.$this->state->abbreviation.' '.$this->postal_code.'" target="_blank">'.
                     $this->street_address.' '.$this->supplemental_address_1.' '.$this->city.', '.$this->state->abbreviation.' '.$this->postal_code.'</a>';

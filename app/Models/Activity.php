@@ -51,7 +51,7 @@ class Activity extends Model implements Auditable
 
     public function getActivityTypeLabelAttribute()
     {
-        //dd($this->activity_type);
+        // dd($this->activity_type);
         return $this->activity_type->label;
     }
 
@@ -62,7 +62,7 @@ class Activity extends Model implements Auditable
         foreach ($targets as $target) {
             if ($targets->last() === $target) {
                 $target_list .= $target->contact->contact_link_full_name;
-                //$target_list .= $target->contact_id;
+                // $target_list .= $target->contact_id;
             } else {
                 $target_list .= $target->contact->contact_link_full_name.', ';
             }

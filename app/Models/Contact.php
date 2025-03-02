@@ -46,7 +46,7 @@ class Contact extends Model implements Auditable
     }
 
     // TODO: refactor to lookup based on relationship
-    //TODO: rename person_id to contact_id
+    // TODO: rename person_id to contact_id
     /*    public function retreatmasters() {
             return $this->belongsToMany('\App\Retreat','retreatmasters','person_id','retreat_id');
         }

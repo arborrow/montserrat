@@ -26,7 +26,7 @@ trait PhoneTrait
 
         if (strlen($phone_numeric) == 10) { // if US number then format
             $phone_formatted = '('.substr($phone_numeric, 0, 3).') '.substr($phone_numeric, 3, 3).'-'.substr($phone_numeric, 6, 4);
-        } else { //if International then store as all numbers
+        } else { // if International then store as all numbers
             $phone_formatted = $phone_numeric;
         }
 

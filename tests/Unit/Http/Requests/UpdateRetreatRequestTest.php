@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Http\Requests;
 
-use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Validation\Rule;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -19,7 +19,7 @@ final class UpdateRetreatRequestTest extends TestCase
         parent::setUp();
 
         $this->subject = new \App\Http\Requests\UpdateRetreatRequest;
-        $this->id = null; //set arbitrary value of retreat->id to ignore
+        $this->id = null; // set arbitrary value of retreat->id to ignore
     }
 
     #[Test]

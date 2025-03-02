@@ -157,7 +157,7 @@ class TouchpointController extends Controller
     {
         $this->authorize('create-touchpoint');
 
-        //lookup the contact type of the touchpoint being added and show similar ones in drop down (persons, parishes, etc.)
+        // lookup the contact type of the touchpoint being added and show similar ones in drop down (persons, parishes, etc.)
         $contact = \App\Models\Contact::findOrFail($id);
         if (isset($contact->subcontact_type)) {
             $persons = \App\Models\Contact::whereSubcontactType($contact->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -299,7 +299,7 @@ class TouchpointController extends Controller
             }
         }
 
-        //consider renaming touchpoint table's person_id field to contact_id
+        // consider renaming touchpoint table's person_id field to contact_id
         $contact = \App\Models\Contact::findOrFail($touchpoint->person_id);
         if (isset($contact->subcontact_type)) {
             $persons = \App\Models\Contact::whereSubcontactType($contact->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -307,7 +307,7 @@ class TouchpointController extends Controller
             $persons = \App\Models\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
 
-        //$persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name','id');
+        // $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name','id');
         // check contact type and if parish get list of parishes if individual get list of persons
         return view('touchpoints.edit', compact('touchpoint', 'staff', 'persons')); //
     }

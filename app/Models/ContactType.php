@@ -15,7 +15,7 @@ class ContactType extends Model implements Auditable
 
     protected $table = 'contact_type';
 
-    //generic organizations that are not dioceses, parishes, etc.
+    // generic organizations that are not dioceses, parishes, etc.
     public function scopeGeneric($query)
     {
         return $query->where([

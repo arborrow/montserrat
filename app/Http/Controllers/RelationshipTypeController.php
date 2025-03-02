@@ -155,8 +155,8 @@ class RelationshipTypeController extends Controller
         $relationship_type_name = $request->input('relationship_type_name');
         $relationship_filter_alternate_name = ($request->input('relationship_filter_alternate_name') == null) ? null : $request->input('relationship_filter_alternate_name');
         $contact_id = $request->input('contact_id');
-        $a = null; //initialize
-        $b = null; //initialize
+        $a = null; // initialize
+        $b = null; // initialize
 
         switch ($relationship_type_name) {
             case 'Child':
@@ -210,11 +210,11 @@ class RelationshipTypeController extends Controller
                 break;
             case 'Parish':
                 $relationship_type_id = config('polanco.relationship_type.parish');
-                $a = $contact_id; //Diocese
+                $a = $contact_id; // Diocese
                 break;
 
             default:
-                abort(404); //unknown relationship type
+                abort(404); // unknown relationship type
         }
 
         $relationship_type = \App\Models\RelationshipType::findOrFail($relationship_type_id);
@@ -337,7 +337,7 @@ class RelationshipTypeController extends Controller
 
                         return $foundations;
                         break;
-                        //default NULL (generic organization)
+                        // default NULL (generic organization)
 
                     default:
                         if (isset($relationship_filter_alternate_name)) {

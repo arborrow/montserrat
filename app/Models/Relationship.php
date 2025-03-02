@@ -38,13 +38,13 @@ class Relationship extends Model implements Auditable
     public function getContactADisplayNameAttribute()
     {
         if (isset($this->contact_a) && $this->contact_a > 0) {
-            //default is individual person
+            // default is individual person
             $display_name = '<a href="'.$this->contact_a->id.'">'.$this->contact_a->display_name.'</a>';
-            //diocese
+            // diocese
             if ($this->contact_a->contact_type == config('polanco.contact_type.organization') && $this->contact_a->subcontact_type == config('polanco.contact_type.diocese')) {
                 $display_name = '<a href="../diocese/'.$this->contact_a->id.'">'.$this->contact_a->display_name.'</a>';
             }
-            //parish
+            // parish
             if ($this->contact_a->contact_type == config('polanco.contact_type.organization') && $this->contact_a->subcontact_type == config('polanco.contact_type.parish')) {
                 $display_name = '<a href="../parish/'.$this->contact_a->id.'">'.$this->contact_a->display_name.'</a>';
             }
@@ -58,13 +58,13 @@ class Relationship extends Model implements Auditable
     public function getContactBDisplayNameAttribute()
     {
         if (isset($this->contact_b) && $this->contact_b > 0) {
-            //default is individual person
+            // default is individual person
             $display_name = '<a href="'.$this->contact_b->id.'">'.$this->contact_b->display_name.'</a>';
-            //diocese
+            // diocese
             if ($this->contact_b->contact_type == config('polanco.contact_type.organization') && $this->contact_b->subcontact_type == config('polanco.contact_type.diocese')) {
                 $display_name = '<a href="../diocese'.$this->contact_b->id.'">'.$this->contact_b->display_name.'</a>';
             }
-            //parish
+            // parish
             if ($this->contact_b->contact_type == config('polanco.contact_type.organization') && $this->contact_b->subcontact_type == config('polanco.contact_type.parish')) {
                 $display_name = '<a href="../parish/'.$this->contact_b->id.'">'.$this->contact_b->display_name.'</a>';
             }

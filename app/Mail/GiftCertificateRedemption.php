@@ -35,7 +35,7 @@ class GiftCertificateRedemption extends Mailable
      * Build the message.
      */
     public function build(): static
-    {   //TODO: consider looking up the preferred language of the contact with the finance email address and send message in preferred language - English is OK for now
+    {   // TODO: consider looking up the preferred language of the contact with the finance email address and send message in preferred language - English is OK for now
         return $this->subject('Redemption Notification for Gift Certificate #'.$this->gift_certificate->certificate_number)
             ->replyTo('registration@montserratretreat.org')
             ->view('emails.en_US.gift-certificate-redepmtion');

@@ -49,7 +49,7 @@ class SquarespaceContributionController extends Controller
      */
     public function create(): RedirectResponse
     {
-        //use permisson of target, namely squarespace.contribution.index
+        // use permisson of target, namely squarespace.contribution.index
         $this->authorize('show-squarespace-contribution');
 
         return Redirect::action([self::class, 'index']);
@@ -60,7 +60,7 @@ class SquarespaceContributionController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        //use permisson of target, namely squarespace.contribution.index
+        // use permisson of target, namely squarespace.contribution.index
         $this->authorize('show-squarespace-contribution');
 
         return Redirect::action([self::class, 'index']);
@@ -255,7 +255,7 @@ class SquarespaceContributionController extends Controller
             $ss_contribution->donation_id = $donation->donation_id;
 
             // TODO: carefully consider possible impact of overwriting data, currently set to avoid overwriting most data
-            //create registration if it does not exist for a
+            // create registration if it does not exist for a
             if (isset($event_id) && config('polanco.donation_descriptions.'.$request->input('donation_description')) == 'Retreat Deposits') {
                 $registration = Registration::firstOrNew([
                     'contact_id' => $contact_id,
@@ -285,7 +285,7 @@ class SquarespaceContributionController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        //use permisson of target, namely squarespace.contribution.index
+        // use permisson of target, namely squarespace.contribution.index
         $this->authorize('show-squarespace-contribution');
 
         return Redirect::action([self::class, 'index']);

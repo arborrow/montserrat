@@ -430,7 +430,7 @@ class ParishController extends Controller
         \App\Models\Relationship::whereContactIdA($id)->delete();
         \App\Models\Relationship::whereContactIdB($id)->delete();
         \App\Models\GroupContact::whereContactId($id)->delete();
-        //delete address, email, phone, website, emergency contact, notes for deleted users
+        // delete address, email, phone, website, emergency contact, notes for deleted users
         \App\Models\Address::whereContactId($id)->delete();
         \App\Models\Email::whereContactId($id)->delete();
         \App\Models\Phone::whereContactId($id)->delete();
@@ -438,7 +438,7 @@ class ParishController extends Controller
         \App\Models\EmergencyContact::whereContactId($id)->delete();
         \App\Models\Note::whereEntityId($id)->whereEntityTable('contact')->whereSubject('Parish Note')->delete();
         \App\Models\Touchpoint::wherePersonId($id)->delete();
-        //delete registrations
+        // delete registrations
         \App\Models\Registration::whereContactId($id)->delete();
         // delete donations
         \App\Models\Donation::whereContactId($id)->delete();
