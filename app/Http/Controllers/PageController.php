@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use Carbon\Carbon;
 use DateTime;
@@ -13,11 +15,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use PDF;
 
-class PageController extends Controller
+class PageController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function about(): View

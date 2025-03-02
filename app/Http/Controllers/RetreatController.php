@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\EventSearchRequest;
 use App\Http\Requests\RoomUpdateRetreatRequest;
@@ -16,11 +18,13 @@ use Illuminate\View\View;
 use Spatie\GoogleCalendar\Event;
 use Storage;
 
-class RetreatController extends Controller
+class RetreatController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**

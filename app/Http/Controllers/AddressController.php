@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
@@ -15,11 +17,13 @@ use Illuminate\View\View;
  * In testing, the address controller uses CRUD-style permissions which are theoretical rather than the contact CRUD permissions used in production
  * In other words, in production, the create-contact permission is used rather than create-address.
  */
-class AddressController extends Controller
+class AddressController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
