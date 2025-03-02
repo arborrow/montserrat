@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +20,7 @@ class LocationController extends Controller
 
     public function index(): View
     {
-        $this->authorize('show-location');
+        Gate::authorize('show-location');
 
         $location_types = config('polanco.locations_type');
         $location_types = Arr::sort($location_types);
@@ -31,7 +32,7 @@ class LocationController extends Controller
 
     public function index_type($type = null): View
     {
-        $this->authorize('show-location');
+        Gate::authorize('show-location');
 
         $location_types = config('polanco.locations_type');
         $location_types = Arr::sort($location_types);
@@ -46,7 +47,7 @@ class LocationController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-location');
+        Gate::authorize('create-location');
 
         $location_types = config('polanco.locations_type');
         $location_types = Arr::sort($location_types);
@@ -65,7 +66,7 @@ class LocationController extends Controller
      */
     public function store(StoreLocationRequest $request): RedirectResponse
     {
-        $this->authorize('create-location');
+        Gate::authorize('create-location');
 
         $location = new \App\Models\Location;
         $location->name = $request->input('name');
@@ -91,7 +92,7 @@ class LocationController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-location');
+        Gate::authorize('show-location');
 
         $location = \App\Models\Location::findOrFail($id);
         $children = \App\Models\Location::whereParentId($id)->orderBy('name')->get();
@@ -104,7 +105,7 @@ class LocationController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-location');
+        Gate::authorize('update-location');
 
         $location = \App\Models\Location::findOrFail($id);
 
@@ -125,7 +126,7 @@ class LocationController extends Controller
      */
     public function update(UpdateLocationRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-location');
+        Gate::authorize('update-location');
 
         $location = \App\Models\Location::findOrFail($id);
 
@@ -152,7 +153,7 @@ class LocationController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-location');
+        Gate::authorize('delete-location');
 
         $location = \App\Models\Location::findOrFail($id);
         \App\Models\Location::destroy($id);

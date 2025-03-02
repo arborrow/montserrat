@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -17,7 +18,7 @@ class SquarespaceController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-squarespace');
+        Gate::authorize('show-squarespace');
 
         return view('squarespace.index');
     }
@@ -27,7 +28,7 @@ class SquarespaceController extends Controller
      */
     public function contribution_index(): View
     {
-        $this->authorize('show-squarespace');
+        Gate::authorize('show-squarespace');
 
         return view('squarespace.contribution');
     }
@@ -37,7 +38,7 @@ class SquarespaceController extends Controller
      */
     public function order_index(): View
     {
-        $this->authorize('show-squarespace');
+        Gate::authorize('show-squarespace');
 
         return view('squarespace.order');
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Models\Message;
 use App\Traits\MailgunTrait;
 use Illuminate\Http\RedirectResponse;
@@ -36,7 +37,7 @@ class MailgunController extends Controller
         // TODO: evaluate whether gift certificate retreat field is necessary in ss_order table or if it is better just to use the retreat field
         // TODO: for the address, attempt to normalize the state data (TX to Texas - may always be two state from squarespace - double check if that is the case)
 
-        $this->authorize('admin-mailgun');
+        Gate::authorize('admin-mailgun');
 
         $fail = Artisan::call('mailgun:get'); // because commands return 0 when successful the logic is somewhat reversed as 1 is failure and 0 is success
         if ($fail) {
@@ -51,7 +52,7 @@ class MailgunController extends Controller
     public function index(): View
     {
         // TODO: consider adding processed/unprocessed/all drowdown selector to filter results and combine processed and index blades into one
-        $this->authorize('admin-mailgun');
+        Gate::authorize('admin-mailgun');
         $messages = Message::whereIsProcessed(0)->orderBy('mailgun_timestamp', 'desc')->paginate(25, ['*'], 'messages');
         $messages_processed = Message::whereIsProcessed(1)->orderBy('mailgun_timestamp', 'desc')->paginate(25, ['*'], 'messages_processed');
 
@@ -60,7 +61,7 @@ class MailgunController extends Controller
 
     public function show($id): View
     {
-        $this->authorize('admin-mailgun');
+        Gate::authorize('admin-mailgun');
 
         $message = Message::with('contact_from', 'contact_to')->findOrFail($id);
         $body = explode("\n", $message->body);
@@ -77,7 +78,7 @@ class MailgunController extends Controller
      */
     public function edit(int $id)
     {
-        $this->authorize('admin-mailgun');
+        Gate::authorize('admin-mailgun');
 
         // $message = Message::with('contact_from','contact_to')->findOrFail($id);
         // return view('mailgun.edit', compact('message'));
@@ -86,7 +87,7 @@ class MailgunController extends Controller
 
     public function unprocess($id)
     {
-        $this->authorize('admin-mailgun');
+        Gate::authorize('admin-mailgun');
         $message = Message::findOrFail($id);
         $message->is_processed = 0;
         $message->save();
@@ -102,7 +103,7 @@ class MailgunController extends Controller
      */
     public function create(): RedirectResponse
     {
-        $this->authorize('admin-mailgun');
+        Gate::authorize('admin-mailgun');
 
         return Redirect::action([MailgunController::class, 'index']);
     }
@@ -114,7 +115,7 @@ class MailgunController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->authorize('admin-mailgun');
+        Gate::authorize('admin-mailgun');
 
         return Redirect::action([MailgunController::class, 'index']);
     }
@@ -129,7 +130,7 @@ class MailgunController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $this->authorize('admin-mailgun');
+        Gate::authorize('admin-mailgun');
 
         return Redirect::action([MailgunController::class, 'index']);
     }
@@ -142,7 +143,7 @@ class MailgunController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('admin-mailgun');
+        Gate::authorize('admin-mailgun');
 
         // $message = Message::findOrFail($id);
         // Message::destroy($id);

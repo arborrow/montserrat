@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Models\SquarespaceContribution;
 use App\Models\StripeBalanceTransaction;
 use App\Models\StripePayout;
@@ -24,7 +25,7 @@ class StripePayoutController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-stripe-payout');
+        Gate::authorize('show-stripe-payout');
 
         $stripe = new StripeClient(config('services.stripe.secret'));
 
@@ -84,7 +85,7 @@ class StripePayoutController extends Controller
      */
     public function show($payout_id): View
     {
-        $this->authorize('show-stripe-payout');
+        Gate::authorize('show-stripe-payout');
 
         $stripe = new StripeClient(config('services.stripe.secret'));
         $stripe_payout = $stripe->payouts->retrieve($payout_id, []);
@@ -128,7 +129,7 @@ class StripePayoutController extends Controller
      */
     public function show_date($date = null)
     {
-        $this->authorize('show-stripe-payout');
+        Gate::authorize('show-stripe-payout');
         $payout_date = \Carbon\Carbon::parse($date);
         if (empty($payout_date)) {
             return redirect()->back();
@@ -175,7 +176,7 @@ class StripePayoutController extends Controller
      */
     public function process_fees(?int $id = null): RedirectResponse
     {
-        $this->authorize('update-stripe-payout');
+        Gate::authorize('update-stripe-payout');
 
         $stripe_vendor_id = config('polanco.contact.stripe');
         $payout = StripePayout::findOrFail($id);
@@ -224,7 +225,7 @@ class StripePayoutController extends Controller
      */
     public function import(): RedirectResponse
     {
-        $this->authorize('import-stripe-payout');
+        Gate::authorize('import-stripe-payout');
         // dd('Stripe Payout Import');
         $latest_payout = StripePayout::orderByDesc('date')->first();
         $stripe = new StripeClient(config('services.stripe.secret'));
@@ -265,7 +266,7 @@ class StripePayoutController extends Controller
      */
     public function process($id): RedirectResponse
     {
-        $this->authorize('import-stripe-payout');
+        Gate::authorize('import-stripe-payout');
         // dd('Stripe Payout Import');
         $stripe = new StripeClient(config('services.stripe.secret'));
         $payouts = $stripe->payouts->all([]);

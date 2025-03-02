@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +25,7 @@ class OrganizationController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $organizations = \App\Models\Contact::with('addresses', 'phone_main_phone', 'email_primary', 'websites', 'subcontacttype')->organizations_generic()->orderBy('organization_name', 'asc')->paginate(25, ['*'], 'organizations');
         $subcontact_types = \App\Models\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
 
@@ -34,7 +35,7 @@ class OrganizationController extends Controller
 
     public function index_type($subcontact_type_id): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $subcontact_types = \App\Models\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
         $subcontact_type = \App\Models\ContactType::findOrFail($subcontact_type_id);
         $defaults = [];
@@ -49,7 +50,7 @@ class OrganizationController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
         $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
 
@@ -70,7 +71,7 @@ class OrganizationController extends Controller
      */
     public function store(StoreOrganizationRequest $request): RedirectResponse
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
 
         $organization = new \App\Models\Contact;
         $organization->organization_name = $request->input('organization_name');
@@ -177,7 +178,7 @@ class OrganizationController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $organization = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'phone_main_phone.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
         $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
         $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at', 'DESC')->paginate(25, ['*'], 'touchpoints');
@@ -205,7 +206,7 @@ class OrganizationController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
         $organization = \App\Models\Contact::with('address_primary.state', 'address_primary.location', 'phone_main_phone.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
 
         $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
@@ -242,7 +243,7 @@ class OrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
 
         $organization = \App\Models\Contact::with('address_primary.state', 'address_primary.location', 'phone_main_phone.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'note_organization')->findOrFail($id);
         $organization->organization_name = $request->input('organization_name');
@@ -384,7 +385,7 @@ class OrganizationController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-contact');
+        Gate::authorize('delete-contact');
         $organization = \App\Models\Organization::findOrFail($id);
         \App\Models\Relationship::whereContactIdA($id)->delete();
         \App\Models\Relationship::whereContactIdB($id)->delete();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\UpdateStripeBalanceTransactionRequest;
 use App\Models\Contact;
 use App\Models\Donation;
@@ -33,7 +34,7 @@ class StripeBalanceTransactionController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-stripe-balance-transaction');
+        Gate::authorize('show-stripe-balance-transaction');
 
         $processed_balance_transactions = StripeBalanceTransaction::whereNotNull('reconcile_date')->orderBy('created_at')->paginate(25, ['*'], 'processed_balance_transactions');
         $unprocessed_balance_transactions = StripeBalanceTransaction::whereNull('reconcile_date')->orderByDesc('created_at')->paginate(25, ['*'], 'unprocessed_balance_transactions');
@@ -48,7 +49,7 @@ class StripeBalanceTransactionController extends Controller
      */
     public function create()
     {
-        $this->authorize('create-stripe-balance-transaction');
+        Gate::authorize('create-stripe-balance-transaction');
         // unused empty shell - records are imported from stripe payouts
     }
 
@@ -59,7 +60,7 @@ class StripeBalanceTransactionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create-stripe-balance-transaction');
+        Gate::authorize('create-stripe-balance-transaction');
 
         // unused empty shell - balance transactions are imported from stripe payouts
     }
@@ -69,7 +70,7 @@ class StripeBalanceTransactionController extends Controller
      */
     public function show($stripe_balance_transaction_id): View
     {
-        $this->authorize('show-stripe-balance-transaction');
+        Gate::authorize('show-stripe-balance-transaction');
 
         $balance_transaction = StripeBalanceTransaction::whereBalanceTransactionId($stripe_balance_transaction_id)->with('payments')->first();
         // dd($balance_transaction);
@@ -85,7 +86,7 @@ class StripeBalanceTransactionController extends Controller
      */
     public function show_id(int $id): View
     {
-        $this->authorize('show-stripe-balance-transaction');
+        Gate::authorize('show-stripe-balance-transaction');
 
         $balance_transaction = StripeBalanceTransaction::with('payments')->findOrFail($id);
         // dd($balance_transaction);
@@ -103,7 +104,7 @@ class StripeBalanceTransactionController extends Controller
      */
     public function edit(int $id)
     {
-        $this->authorize('update-stripe-balance-transaction');
+        Gate::authorize('update-stripe-balance-transaction');
         $unprocessed_squarespace_contributions = collect();
         $donations = collect();
         // TODO: determine type of transaction order, donation, manual
@@ -264,7 +265,7 @@ class StripeBalanceTransactionController extends Controller
      */
     public function update(UpdateStripeBalanceTransactionRequest $request, int $id)
     {
-        $this->authorize('update-stripe-balance-transaction');
+        Gate::authorize('update-stripe-balance-transaction');
 
         $balance_transaction = StripeBalanceTransaction::findOrFail($id);
 
@@ -503,7 +504,7 @@ class StripeBalanceTransactionController extends Controller
      */
     public function import($payout_id): RedirectResponse
     {
-        $this->authorize('import-stripe-balance_transaction');
+        Gate::authorize('import-stripe-balance_transaction');
         $payout = StripePayout::findOrFail($payout_id);
 
         $stripe = new StripeClient(config('services.stripe.secret'));
@@ -530,7 +531,7 @@ class StripeBalanceTransactionController extends Controller
 
     public function store_balance_transactions($payout, $stripe_balance_transactions)
     {
-        $this->authorize('import-stripe-balance_transaction');
+        Gate::authorize('import-stripe-balance_transaction');
 
         $stripe = new StripeClient(config('services.stripe.secret'));
         foreach ($stripe_balance_transactions->autoPagingIterator() as $stripe_balance_transaction) {
@@ -613,7 +614,7 @@ class StripeBalanceTransactionController extends Controller
      */
     public function reset(int $id): RedirectResponse
     {
-        $this->authorize('update-stripe-balance-transaction');
+        Gate::authorize('update-stripe-balance-transaction');
 
         $balance_transaction = StripeBalanceTransaction::findOrFail($id);
         $balance_transaction->contact_id = null;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreAssetTaskRequest;
 use App\Http\Requests\UpdateAssetTaskRequest;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +18,7 @@ class AssetTaskController extends Controller
 
     public function index(): View
     {
-        $this->authorize('show-asset-task');
+        Gate::authorize('show-asset-task');
 
         $asset_tasks = \App\Models\AssetTask::with('asset')->orderBy('title')->get();
 
@@ -29,7 +30,7 @@ class AssetTaskController extends Controller
      */
     public function create($asset_id = 0): View
     {
-        $this->authorize('create-asset-task');
+        Gate::authorize('create-asset-task');
 
         // if creating a task for a particular asset (default behavior from asset.show blade) then no need to get long list of assets to choose from
         if (isset($asset_id) && $asset_id > 0) {
@@ -54,7 +55,7 @@ class AssetTaskController extends Controller
      */
     public function store(StoreAssetTaskRequest $request): RedirectResponse
     {
-        $this->authorize('create-asset-task');
+        Gate::authorize('create-asset-task');
 
         $asset_task = new \App\Models\AssetTask;
 
@@ -89,7 +90,7 @@ class AssetTaskController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-asset-task');
+        Gate::authorize('show-asset-task');
 
         $asset_task = \App\Models\AssetTask::with('jobs')->findOrFail($id);
         $jobs_scheduled = \App\Models\AssetJob::whereAssetTaskId($id)->where('scheduled_date', '>=', now())->orderBy('scheduled_date')->get();
@@ -103,7 +104,7 @@ class AssetTaskController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-asset-task');
+        Gate::authorize('update-asset-task');
 
         $asset_task = \App\Models\AssetTask::findOrFail($id);
 
@@ -124,7 +125,7 @@ class AssetTaskController extends Controller
      */
     public function update(UpdateAssetTaskRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-asset-task');
+        Gate::authorize('update-asset-task');
 
         $asset_task = \App\Models\AssetTask::findOrFail($id);
 
@@ -159,7 +160,7 @@ class AssetTaskController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-asset-task');
+        Gate::authorize('delete-asset-task');
         $asset_task = \App\Models\AssetTask::findOrFail($id);
 
         \App\Models\AssetTask::destroy($id);
@@ -181,7 +182,7 @@ class AssetTaskController extends Controller
      */
     public function schedule_jobs(int $id): RedirectResponse
     {
-        $this->authorize('update-asset-task');
+        Gate::authorize('update-asset-task');
         $asset_task = \App\Models\AssetTask::findOrFail($id);
         $jobs_created = 0;
 

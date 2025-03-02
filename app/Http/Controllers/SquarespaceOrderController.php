@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\UpdateSquarespaceOrderRequest;
 use App\Mail\GiftCertificateRedemption;
 use App\Mail\SquarespaceOrderFulfillment;
@@ -47,7 +48,7 @@ class SquarespaceOrderController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-squarespace-order');
+        Gate::authorize('show-squarespace-order');
         $unprocessed_orders = SquarespaceOrder::whereIsProcessed(0)->orderBy('order_number')->paginate(25, ['*'], 'unprocessed_orders');
         $processed_orders = SquarespaceOrder::whereIsProcessed(1)->orderByDesc('order_number')->paginate(25, ['*'], 'processed_orders');
 
@@ -61,7 +62,7 @@ class SquarespaceOrderController extends Controller
     public function create(): RedirectResponse
     {
         // use permisson of target, namely squarespace.order.index
-        $this->authorize('show-squarespace-order');
+        Gate::authorize('show-squarespace-order');
 
         return Redirect::action([self::class, 'index']);
     }
@@ -73,7 +74,7 @@ class SquarespaceOrderController extends Controller
     public function store(Request $request): RedirectResponse
     {
         // use permisson of target, namely squarespace.order.index
-        $this->authorize('show-squarespace-order');
+        Gate::authorize('show-squarespace-order');
 
         return Redirect::action([self::class, 'index']);
     }
@@ -83,7 +84,7 @@ class SquarespaceOrderController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-squarespace-order');
+        Gate::authorize('show-squarespace-order');
         $order = SquarespaceOrder::findOrFail($id);
 
         return view('squarespace.order.show', compact('order'));
@@ -96,7 +97,7 @@ class SquarespaceOrderController extends Controller
      */
     public function show_order_number($order_number): View
     {
-        $this->authorize('show-squarespace-order');
+        Gate::authorize('show-squarespace-order');
         $order = SquarespaceOrder::whereOrderNumber($order_number)->first();
 
         return view('squarespace.order.show', compact('order'));
@@ -107,7 +108,7 @@ class SquarespaceOrderController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-squarespace-order');
+        Gate::authorize('update-squarespace-order');
         $order = SquarespaceOrder::findOrFail($id);
         $gift_certificate = (empty($order->gift_certificate_id)) ? null : GiftCertificate::findOrFail($order->gift_certificate_id);
         $prefixes = Prefix::orderBy('name')->pluck('name', 'id');
@@ -727,7 +728,7 @@ class SquarespaceOrderController extends Controller
     public function destroy(int $id): RedirectResponse
     {
         // use permisson of target, namely squarespace.order.index
-        $this->authorize('show-squarespace-order');
+        Gate::authorize('show-squarespace-order');
 
         return Redirect::action([self::class, 'index']);
     }
@@ -737,7 +738,7 @@ class SquarespaceOrderController extends Controller
      */
     public function reset(int $id): RedirectResponse
     {
-        $this->authorize('update-squarespace-order');
+        Gate::authorize('update-squarespace-order');
 
         $order = SquarespaceOrder::findOrFail($id);
         $order->contact_id = null;

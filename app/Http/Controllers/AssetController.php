@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\AssetSearchRequest;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
@@ -18,7 +19,7 @@ class AssetController extends Controller
 
     public function index(): View
     {
-        $this->authorize('show-asset');
+        Gate::authorize('show-asset');
 
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
@@ -30,7 +31,7 @@ class AssetController extends Controller
 
     public function index_type($type = null): View
     {
-        $this->authorize('show-asset');
+        Gate::authorize('show-asset');
 
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
@@ -42,7 +43,7 @@ class AssetController extends Controller
 
     public function index_location($location_id = null): View
     {
-        $this->authorize('show-asset');
+        Gate::authorize('show-asset');
 
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
@@ -54,7 +55,7 @@ class AssetController extends Controller
 
     public function search(): View
     {
-        $this->authorize('show-asset');
+        Gate::authorize('show-asset');
 
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', '');
@@ -94,7 +95,7 @@ class AssetController extends Controller
 
     public function results(AssetSearchRequest $request): View
     {
-        $this->authorize('show-asset');
+        Gate::authorize('show-asset');
         if (! empty($request)) {
             $assets = \App\Models\Asset::filtered($request)->orderBy('name')->paginate(25, ['*'], 'assets');
             $assets->appends($request->except('page'));
@@ -110,7 +111,7 @@ class AssetController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-asset');
+        Gate::authorize('create-asset');
 
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', '');
@@ -148,7 +149,7 @@ class AssetController extends Controller
      */
     public function store(StoreAssetRequest $request): RedirectResponse
     {
-        $this->authorize('create-asset');
+        Gate::authorize('create-asset');
 
         $asset = new \App\Models\Asset;
         // General info
@@ -233,7 +234,7 @@ class AssetController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-asset');
+        Gate::authorize('show-asset');
 
         $asset = \App\Models\Asset::with('tasks.jobs')->findOrFail($id);
         $files = \App\Models\Attachment::whereEntity('asset')->whereEntityId($asset->id)->whereFileTypeId(config('polanco.file_type.asset_attachment'))->get();
@@ -246,7 +247,7 @@ class AssetController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-asset');
+        Gate::authorize('update-asset');
 
         $asset = \App\Models\Asset::findOrFail($id);
 
@@ -286,7 +287,7 @@ class AssetController extends Controller
      */
     public function update(UpdateAssetRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-asset');
+        Gate::authorize('update-asset');
 
         $asset = \App\Models\Asset::findOrFail($id);
 
@@ -378,7 +379,7 @@ class AssetController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-asset');
+        Gate::authorize('delete-asset');
         $asset = \App\Models\Asset::findOrFail($id);
 
         \App\Models\Asset::destroy($id);

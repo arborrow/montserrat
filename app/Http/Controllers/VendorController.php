@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreVendorRequest;
 use App\Http\Requests\UpdateVendorRequest;
 use Illuminate\Http\RedirectResponse;
@@ -20,7 +21,7 @@ class VendorController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $vendors = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->paginate(25, ['*'], 'vendors');
 
         return view('vendors.index', compact('vendors'));   //
@@ -31,7 +32,7 @@ class VendorController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
 
         $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
@@ -48,7 +49,7 @@ class VendorController extends Controller
      */
     public function store(StoreVendorRequest $request): RedirectResponse
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
 
         $vendor = new \App\Models\Contact;
         $vendor->organization_name = $request->input('organization_name');
@@ -154,7 +155,7 @@ class VendorController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $vendor = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes')->findOrFail($id);
         $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
         $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at', 'DESC')->paginate(25, ['*'], 'touchpoints');
@@ -175,7 +176,7 @@ class VendorController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
 
         $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
@@ -206,7 +207,7 @@ class VendorController extends Controller
      */
     public function update(UpdateVendorRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
 
         $vendor = \App\Models\Contact::with('address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
         $vendor->organization_name = $request->input('organization_name');
@@ -338,7 +339,7 @@ class VendorController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-contact');
+        Gate::authorize('delete-contact');
 
         $vendor = \App\Models\Vendor::findOrFail($id);
         \App\Models\Relationship::whereContactIdA($id)->delete();

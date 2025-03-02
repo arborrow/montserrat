@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreParishRequest;
 use App\Http\Requests\UpdateParishRequest;
 use Illuminate\Http\RedirectResponse;
@@ -23,7 +24,7 @@ class ParishController extends Controller
      */
     public function index()
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $diocese = null;
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops', 'primary_bishop')->get();
         $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b.prefix', 'pastor.contact_b.suffix', 'diocese.contact_a')->get();
@@ -40,7 +41,7 @@ class ParishController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
         $pastors = \App\Models\Contact::whereHas('b_relationships', function ($query) {
             $query->whereRelationshipTypeId(config('polanco.relationship_type.pastor'))->whereIsActive(1);
@@ -61,7 +62,7 @@ class ParishController extends Controller
      */
     public function store(StoreParishRequest $request): RedirectResponse
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
         $parish = new \App\Models\Contact;
         $parish->organization_name = $request->input('organization_name');
         $parish->display_name = $request->input('organization_name');
@@ -181,7 +182,7 @@ class ParishController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'note_parish', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a')->findOrFail($id);
         $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at', 'DESC')->paginate(25, ['*'], 'touchpoints');
         $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'registrations');
@@ -200,7 +201,7 @@ class ParishController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
 
         $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'note_parish')->findOrFail($id);
 
@@ -257,7 +258,7 @@ class ParishController extends Controller
      */
     public function update(UpdateParishRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
 
         $parish = \App\Models\Contact::with('pastor.contact_a', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
         $parish->organization_name = $request->input('organization_name');
@@ -425,7 +426,7 @@ class ParishController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-contact');
+        Gate::authorize('delete-contact');
         $parish = \App\Models\Parish::findOrFail($id);
         \App\Models\Relationship::whereContactIdA($id)->delete();
         \App\Models\Relationship::whereContactIdB($id)->delete();
@@ -452,7 +453,7 @@ class ParishController extends Controller
 
     public function parish_index_by_diocese($diocese_id): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $diocese = \App\Models\Contact::findOrFail($diocese_id);
         // dd($diocese);
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops', 'primary_bishop')->get();

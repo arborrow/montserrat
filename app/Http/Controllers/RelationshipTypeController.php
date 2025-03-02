@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\AddmeRelationshipTypeRequest;
 use App\Http\Requests\MakeRelationshipTypeRequest;
 use App\Http\Requests\StoreRelationshipTypeRequest;
@@ -26,7 +27,7 @@ class RelationshipTypeController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-relationshiptype');
+        Gate::authorize('show-relationshiptype');
         $relationship_types = \App\Models\RelationshipType::whereIsActive(1)->orderBy('description')->get();
 
         return view('relationships.types.index', compact('relationship_types'));   //
@@ -37,7 +38,7 @@ class RelationshipTypeController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-relationshiptype');
+        Gate::authorize('create-relationshiptype');
         $contact_types = \App\Models\ContactType::OrderBy('name')->pluck('name', 'name');
 
         return view('relationships.types.create', compact('contact_types'));
@@ -48,7 +49,7 @@ class RelationshipTypeController extends Controller
      */
     public function store(StoreRelationshipTypeRequest $request): RedirectResponse
     {
-        $this->authorize('create-relationshiptype');
+        Gate::authorize('create-relationshiptype');
 
         $relationship_type = new \App\Models\RelationshipType;
         $relationship_type->description = $request->input('description');
@@ -93,7 +94,7 @@ class RelationshipTypeController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-relationshiptype');
+        Gate::authorize('show-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::findOrFail($id);
         $relationships = \App\Models\Relationship::whereRelationshipTypeId($id)->orderBy('contact_id_a')->with('contact_a', 'contact_b')->paginate(25, ['*'], 'relationships');
 
@@ -105,7 +106,7 @@ class RelationshipTypeController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-relationshiptype');
+        Gate::authorize('update-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::findOrFail($id);
 
         return view('relationships.types.edit', compact('relationship_type'));
@@ -116,7 +117,7 @@ class RelationshipTypeController extends Controller
      */
     public function update(UpdateRelationshipTypeRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-relationshiptype');
+        Gate::authorize('update-relationshiptype');
 
         $relationship_type = \App\Models\RelationshipType::findOrFail($request->input('id'));
         $relationship_type->description = $request->input('description');
@@ -139,7 +140,7 @@ class RelationshipTypeController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-relationshiptype');
+        Gate::authorize('delete-relationshiptype');
 
         $relationship_type = \App\Models\RelationshipType::findOrFail($id);
         \App\Models\RelationshipType::destroy($id);
@@ -151,7 +152,7 @@ class RelationshipTypeController extends Controller
 
     public function addme(AddmeRelationshipTypeRequest $request): View
     {
-        $this->authorize('create-relationship');
+        Gate::authorize('create-relationship');
         $relationship_type_name = $request->input('relationship_type_name');
         $relationship_filter_alternate_name = ($request->input('relationship_filter_alternate_name') == null) ? null : $request->input('relationship_filter_alternate_name');
         $contact_id = $request->input('contact_id');
@@ -252,7 +253,7 @@ class RelationshipTypeController extends Controller
 
     public function make(MakeRelationshipTypeRequest $request): RedirectResponse
     {
-        $this->authorize('create-relationship');
+        Gate::authorize('create-relationship');
         // a very hacky way to get the contact_id of the user that we are creating a relationship for
         // this allows the ability to redirect back to that user
         $contact_id = ($request->input('direction') == 'a') ? $request->input('contact_a_id') : $request->input('contact_b_id');
@@ -270,7 +271,7 @@ class RelationshipTypeController extends Controller
 
     public function get_contact_type_list($contact_type = 'Individual', $contact_subtype = null, $contact_id = null, $relationship_filter_alternate_name = null)
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         // dd($contact_type, $contact_subtype);
         switch ($contact_type) {
             case 'Household':
