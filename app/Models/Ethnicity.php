@@ -13,9 +13,12 @@ class Ethnicity extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
-    protected $casts = [
-        'disabled_at' => 'datetime',
-    ];  //
-
     //
+
+    protected function casts(): array
+    {
+        return [
+            'disabled_at' => 'datetime',
+        ];
+    }
 }
