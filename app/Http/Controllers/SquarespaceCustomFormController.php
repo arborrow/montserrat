@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreSquarespaceCustomFormFieldRequest;
 use App\Http\Requests\StoreSquarespaceCustomFormRequest;
 use App\Http\Requests\UpdateSquarespaceCustomFormFieldRequest;
 use App\Http\Requests\UpdateSquarespaceCustomFormRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 

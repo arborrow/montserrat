@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 

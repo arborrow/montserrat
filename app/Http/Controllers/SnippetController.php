@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\SnippetTestRequest;
 use App\Http\Requests\StoreSnippetRequest;
 use App\Http\Requests\UpdateSnippetRequest;
@@ -14,6 +11,8 @@ use App\Mail\SquarespaceOrderFulfillment;
 use Auth;
 use Faker;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
