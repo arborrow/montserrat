@@ -2,7 +2,7 @@
 A retreat management application written in Laravel based in part on CiviCRM
 
 ## Getting Started with Development
-We will be setting up our development envrionment in `Laravel Homestead`, a virtual machine provided by `Laravel` that meets all the system requirements needed for the Laravel framework. This will make setting up for development a breeze 💨.
+We will be setting up our development environment in `Laravel Homestead`, a virtual machine provided by `Laravel` that meets all the system requirements needed for the Laravel framework. This will make setting up for development a breeze 💨.
 
 ### Step 1: Clone the repo
 ```
