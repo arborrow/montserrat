@@ -151,7 +151,7 @@ class AssetController extends Controller
         $this->authorize('create-asset');
 
         $asset = new \App\Models\Asset;
-        //General info
+        // General info
         $asset->name = $request->input('name');
         $asset->asset_type_id = $request->input('asset_type_id');
         $asset->description = $request->input('description');
@@ -168,11 +168,11 @@ class AssetController extends Controller
         $asset->remarks = $request->input('remarks');
         $asset->is_active = $request->input('is_active');
 
-        //Service information
+        // Service information
         $asset->manufacturer_id = ($request->input('manufacturer_id') > 0) ? $request->input('manufacturer_id') : null;
         $asset->vendor_id = ($request->input('vendor_id') > 0) ? $request->input('vendor_id') : null;
 
-        //Power specs
+        // Power specs
         $asset->power_line_voltage = $request->input('power_line_voltage');
         $asset->power_line_voltage_uom_id = ($request->input('power_line_voltage_uom_id') > 0) ? $request->input('power_line_voltage_uom_id') : null;
         $asset->power_phase_voltage = $request->input('power_phase_voltage');
@@ -181,7 +181,7 @@ class AssetController extends Controller
         $asset->power_amp = $request->input('power_amp');
         $asset->power_amp_uom_id = ($request->input('power_amp_uom_id') > 0) ? $request->input('power_amp_uom_id') : null;
 
-        //Physical specs
+        // Physical specs
         $asset->length = $request->input('length');
         $asset->length_uom_id = ($request->input('length_uom_id') > 0) ? $request->input('length_uom_id') : null;
         $asset->width = $request->input('width');
@@ -193,7 +193,7 @@ class AssetController extends Controller
         $asset->capacity = $request->input('capacity');
         $asset->capacity_uom_id = ($request->input('capacity_uom_id') > 0) ? $request->input('capacity_uom_id') : null;
 
-        //Purchase info
+        // Purchase info
         $asset->purchase_date = $request->input('purchase_date');
         $asset->purchase_price = $request->input('purchase_price');
         $asset->life_expectancy = $request->input('life_expectancy');
@@ -202,11 +202,11 @@ class AssetController extends Controller
         $asset->end_date = $request->input('end_date');
         $asset->replacement_id = ($request->input('replacement_id') > 0) ? $request->input('replacement_id') : null;
 
-        //Warranty info
+        // Warranty info
         $asset->warranty_start_date = $request->input('warranty_start_date');
         $asset->warranty_end_date = $request->input('warranty_end_date');
 
-        //Depreciation info
+        // Depreciation info
         $asset->depreciation_start_date = $request->input('depreciation_start_date');
         $asset->depreciation_end_date = $request->input('depreciation_end_date');
         $asset->depreciation_type_id = ($request->input('depreciation_type_id') > 0) ? $request->input('depreciation_type_id') : null;
@@ -290,7 +290,7 @@ class AssetController extends Controller
 
         $asset = \App\Models\Asset::findOrFail($id);
 
-        //General info
+        // General info
         $asset->name = $request->input('name');
         $asset->asset_type_id = $request->input('asset_type_id');
         $asset->description = $request->input('description');
@@ -307,11 +307,11 @@ class AssetController extends Controller
         $asset->remarks = $request->input('remarks');
         $asset->is_active = $request->input('is_active');
 
-        //Service information
+        // Service information
         $asset->manufacturer_id = ($request->input('manufacturer_id') > 0) ? $request->input('manufacturer_id') : null;
         $asset->vendor_id = ($request->input('vendor_id') > 0) ? $request->input('vendor_id') : null;
 
-        //Power specs
+        // Power specs
         $asset->power_line_voltage = $request->input('power_line_voltage');
         $asset->power_line_voltage_uom_id = ($request->input('power_line_voltage_uom_id') > 0) ? $request->input('power_line_voltage_uom_id') : null;
         $asset->power_phase_voltage = $request->input('power_phase_voltage');
@@ -320,7 +320,7 @@ class AssetController extends Controller
         $asset->power_amp = $request->input('power_amp');
         $asset->power_amp_uom_id = ($request->input('power_amp_uom_id') > 0) ? $request->input('power_amp_uom_id') : null;
 
-        //Physical specs
+        // Physical specs
         $asset->length = $request->input('length');
         $asset->length_uom_id = ($request->input('length_uom_id') > 0) ? $request->input('length_uom_id') : null;
         $asset->width = $request->input('width');
@@ -332,7 +332,7 @@ class AssetController extends Controller
         $asset->capacity = $request->input('capacity');
         $asset->capacity_uom_id = ($request->input('capacity_uom_id') > 0) ? $request->input('capacity_uom_id') : null;
 
-        //Purchase info
+        // Purchase info
         $asset->purchase_date = $request->input('purchase_date');
         $asset->purchase_price = $request->input('purchase_price');
         $asset->life_expectancy = $request->input('life_expectancy');
@@ -341,11 +341,11 @@ class AssetController extends Controller
         $asset->end_date = $request->input('end_date');
         $asset->replacement_id = ($request->input('replacement_id') > 0) ? $request->input('replacement_id') : null;
 
-        //Warranty info
+        // Warranty info
         $asset->warranty_start_date = $request->input('warranty_start_date');
         $asset->warranty_end_date = $request->input('warranty_end_date');
 
-        //Depreciation info
+        // Depreciation info
         $asset->depreciation_start_date = $request->input('depreciation_start_date');
         $asset->depreciation_end_date = $request->input('depreciation_end_date');
         $asset->depreciation_type_id = ($request->input('depreciation_type_id') > 0) ? $request->input('depreciation_type_id') : null;

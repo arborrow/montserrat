@@ -128,7 +128,7 @@ class StripeBalanceTransactionController extends Controller
                 case 'Donation':
                     $transaction_types = 'Donation';
                     $unprocessed_squarespace_contributions = SquarespaceContribution::whereNull('stripe_charge_id')->whereNotNull('donation_id')->get()->pluck('FullDescription', 'id');
-                    //dd($unprocessed_squarespace_contributions);
+                    // dd($unprocessed_squarespace_contributions);
                     break;
                 case 'Invoice':
                     $transaction_types = 'Invoice';
@@ -213,7 +213,7 @@ class StripeBalanceTransactionController extends Controller
                     $charge = StripeBalanceTransaction::whereChargeId($balance_transaction->charge_id)->whereType('charge')->first();
                     $charge_payments = Payment::whereStripeBalanceTransactionId($charge->id)->get();
 
-		    if ($charge_payments->count() > 1) {
+                    if ($charge_payments->count() > 1) {
                         flash('Refund for Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> associated with more than one payment. Please process the refund manually.')->warning()->important();
 
                         return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'], $balance_transaction->payout_id);
@@ -331,7 +331,7 @@ class StripeBalanceTransactionController extends Controller
                     if (! $proceed) {
                         return Redirect::action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'], $balance_transaction->id);
                     }
-                    //dd(($couple_contact_id == 0 && !isset($order->couple_contact_id)),$order->is_couple, $couple_contact_id, !isset($order->couple_contact_id), $contact, $request);
+                    // dd(($couple_contact_id == 0 && !isset($order->couple_contact_id)),$order->is_couple, $couple_contact_id, !isset($order->couple_contact_id), $contact, $request);
                 }
 
                 // validation - ensure the total of the distribution amounts is equal to the total amount of the Stripe balance transaction
@@ -524,8 +524,8 @@ class StripeBalanceTransactionController extends Controller
 
         $this->store_balance_transactions($payout, $stripe_balance_transactions);
         $this->store_balance_transactions($payout, $stripe_refunds);
-    
-	return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'], $payout->payout_id);
+
+        return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'], $payout->payout_id);
     }
 
     public function store_balance_transactions($payout, $stripe_balance_transactions)
@@ -538,15 +538,15 @@ class StripeBalanceTransactionController extends Controller
                 'balance_transaction_id' => $stripe_balance_transaction->id,
             ]);
 
-	    if ($stripe_balance_transaction->type == "refund") {
-		    // dd($stripe_balance_transaction);
-		$stripe_refund = $stripe->refunds->retrieve($stripe_balance_transaction->source, []);
-	        $stripe_charge = $stripe->charges->retrieve($stripe_refund->charge, []);
-		// dd($stripe_refund,$stripe_charge);
-	    } 
-	    if ($stripe_balance_transaction->type == "charge") {
-		$stripe_charge = $stripe->charges->retrieve($stripe_balance_transaction->source, []);
-	    }
+            if ($stripe_balance_transaction->type == 'refund') {
+                // dd($stripe_balance_transaction);
+                $stripe_refund = $stripe->refunds->retrieve($stripe_balance_transaction->source, []);
+                $stripe_charge = $stripe->charges->retrieve($stripe_refund->charge, []);
+                // dd($stripe_refund,$stripe_charge);
+            }
+            if ($stripe_balance_transaction->type == 'charge') {
+                $stripe_charge = $stripe->charges->retrieve($stripe_balance_transaction->source, []);
+            }
 
             $stripe_customer = ! is_null($stripe_charge->customer) ? $stripe->customers->retrieve($stripe_charge->customer) : null;
             $receipt_email = $stripe_charge->receipt_email;

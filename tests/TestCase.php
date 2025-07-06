@@ -11,12 +11,12 @@ abstract class TestCase extends BaseTestCase
 
     protected function stristrarray($array, $str)
     {
-        //This array will hold the indexes of every
-        //element that contains our substring.
+        // This array will hold the indexes of every
+        // element that contains our substring.
         $indexes = [];
         foreach ($array as $k => $v) {
-            //If stristr, add the index to our
-            //$indexes array.
+            // If stristr, add the index to our
+            // $indexes array.
             if (stristr($v, $str)) {
                 $indexes[] = $k;
             }
@@ -122,7 +122,7 @@ abstract class TestCase extends BaseTestCase
                     }
                     // dd($value_found, strpos($contents_array[$line_number], $field_value_string),  )
                     break;
-                case 'multiselect': //count the number of selected options on the line & count the number of selected default field values - then compare that they are the same
+                case 'multiselect': // count the number of selected options on the line & count the number of selected default field values - then compare that they are the same
                     $results = [];
                     if (is_null($field_value)) {
                         $value_found = (! (strpos($contents_array[$line_number], 'selected="selected"')) || strpos($contents_array[$line_number], $field_zero_value_string));
@@ -146,7 +146,7 @@ abstract class TestCase extends BaseTestCase
                     return ($options_count == $results_count) && (count($field_value) == $results_count);
                     break;
                 case 'text':
-                    if (is_null($field_value)) { //if there is no value there shouldn't be a default value
+                    if (is_null($field_value)) { // if there is no value there shouldn't be a default value
                         $value_found = ! (strpos($contents_array[$line_number], 'value="'));
                     } else { // if there is a value it should be set as the default
                         $value_found = strpos($contents_array[$line_number], $field_value_string);

@@ -135,7 +135,7 @@ class Asset extends Model implements Auditable
         return $this->hasOne(Uom::class, 'id', 'width_uom_id');
     }
 
-    //attributes
+    // attributes
     public function getAssetTypeNameAttribute()
     {
         if (isset($this->asset_type->name)) {
@@ -352,7 +352,7 @@ class Asset extends Model implements Auditable
         }
     }
 
-    //scopes
+    // scopes
     public function scopeActive($query)
     {
         return $query->whereIsActive(1);

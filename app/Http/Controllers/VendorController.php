@@ -92,7 +92,7 @@ class VendorController extends Controller
         $vendor_email_main->email = $request->input('email_main');
         $vendor_email_main->save();
 
-        //TODO: add contact_id which is the id of the creator of the note
+        // TODO: add contact_id which is the id of the creator of the note
         if (! empty($request->input('note'))) {
             $vendor_note = new \App\Models\Note;
             $vendor_note->entity_table = 'contact';
@@ -344,7 +344,7 @@ class VendorController extends Controller
         \App\Models\Relationship::whereContactIdA($id)->delete();
         \App\Models\Relationship::whereContactIdB($id)->delete();
         \App\Models\GroupContact::whereContactId($id)->delete();
-        //delete address, email, phone, website, emergency contact, notes for deleted users
+        // delete address, email, phone, website, emergency contact, notes for deleted users
         \App\Models\Address::whereContactId($id)->delete();
         \App\Models\Email::whereContactId($id)->delete();
         \App\Models\Phone::whereContactId($id)->delete();
@@ -352,7 +352,7 @@ class VendorController extends Controller
         \App\Models\EmergencyContact::whereContactId($id)->delete();
         \App\Models\Note::whereEntityId($id)->whereEntityTable('contact')->whereSubject('Vendor note')->delete();
         \App\Models\Touchpoint::wherePersonId($id)->delete();
-        //delete registrations
+        // delete registrations
         \App\Models\Registration::whereContactId($id)->delete();
         // delete donations
         \App\Models\Donation::whereContactId($id)->delete();

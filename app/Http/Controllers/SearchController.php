@@ -32,7 +32,7 @@ class SearchController extends Controller
     }
 
     public function getuser(Request $request): RedirectResponse
-    {   //dd($request);
+    {   // dd($request);
         $this->authorize('show-contact');
         if (empty($request->get('response'))) {
             $id = 0;

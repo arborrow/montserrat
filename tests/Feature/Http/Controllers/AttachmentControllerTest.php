@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -20,7 +20,7 @@ final class AttachmentControllerTest extends TestCase
     public function delete_asset_photo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
-        //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
+        // create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
         $asset = \App\Models\Asset::factory()->create();
         $file = UploadedFile::fake()->image('asset_photo.jpg', 200, 300)->storeAs('asset/'.$asset->id, 'asset_photo.jpg');
         $description = 'Photo of '.$asset->name;
@@ -45,7 +45,7 @@ final class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-attachment');
 
-        //create a person, create a fake avatar for that person, see if you can delete the avatar
+        // create a person, create a fake avatar for that person, see if you can delete the avatar
         $person = \App\Models\Contact::factory()->create();
         $file = UploadedFile::fake()->image('avatar.png', 150, 150)->storeAs('contact/'.$person->id, 'avatar.png');
         $description = 'Avatar for '.$person->full_name;
@@ -95,7 +95,7 @@ final class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-attachment');
 
-        //create a person, create a fake attachment for that person, see if you can display the attachment
+        // create a person, create a fake attachment for that person, see if you can display the attachment
         $person = \App\Models\Contact::factory()->create();
         $file_name = $this->faker->isbn10().'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('contact/'.$person->id.'/attachments', $file_name);
@@ -121,7 +121,7 @@ final class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-attachment');
 
-        //create a person, create a fake attachment for that person, see if you can display the attachment
+        // create a person, create a fake attachment for that person, see if you can display the attachment
         $event = \App\Models\Retreat::factory()->create();
         $file_name = $this->faker->isbn10().'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('event/'.$event->id.'/attachments', $file_name);
@@ -146,7 +146,7 @@ final class AttachmentControllerTest extends TestCase
     public function delete_event_contract_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
-        //create a retreat, create a fake contract for that retreat, see if you can delete the contract
+        // create a retreat, create a fake contract for that retreat, see if you can delete the contract
         $retreat = \App\Models\Retreat::factory()->create();
         $file = UploadedFile::fake()->create('contract.pdf')->storeAs('event/'.$retreat->id, 'contract.pdf');
         $description = 'Contract for '.$retreat->idnumber.'-'.$retreat->title;
@@ -170,7 +170,7 @@ final class AttachmentControllerTest extends TestCase
     public function delete_event_evaluations_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
-        //create a retreat, create a fake evaluation for that retreat, see if you can delete the evaluation
+        // create a retreat, create a fake evaluation for that retreat, see if you can delete the evaluation
         $retreat = \App\Models\Retreat::factory()->create();
         $file = UploadedFile::fake()->create('evaluations.pdf')->storeAs('event/'.$retreat->id, 'evaluations.pdf');
         $description = 'Evaluations for '.$retreat->idnumber.'-'.$retreat->title;
@@ -194,7 +194,7 @@ final class AttachmentControllerTest extends TestCase
     public function delete_event_group_photo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
-        //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
+        // create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
         $retreat = \App\Models\Retreat::factory()->create();
         $file = UploadedFile::fake()->image('group_photo.jpg', 200, 300)->storeAs('event/'.$retreat->id, 'group_photo.jpg');
         $description = 'Group photo for '.$retreat->idnumber.'-'.$retreat->title;
@@ -218,7 +218,7 @@ final class AttachmentControllerTest extends TestCase
     public function delete_event_schedule_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('delete-attachment');
-        //create a retreat, create a fake schedule for that retreat, see if you can display the schedule
+        // create a retreat, create a fake schedule for that retreat, see if you can display the schedule
         $retreat = \App\Models\Retreat::factory()->create();
         $file = UploadedFile::fake()->create('schedule.pdf')->storeAs('event/'.$retreat->id, 'schedule.pdf');
         $description = 'Schedule for '.$retreat->idnumber.'-'.$retreat->title;
@@ -266,7 +266,7 @@ final class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-avatar');
 
-        //create a person, create a fake avatar for that person, see if you can display the avatar
+        // create a person, create a fake avatar for that person, see if you can display the avatar
         $person = \App\Models\Contact::factory()->create();
         $file = UploadedFile::fake()->image('avatar.png', 150, 150)->storeAs('contact/'.$person->id, 'avatar.png');
         $description = 'Avatar for '.$person->full_name;
@@ -290,7 +290,7 @@ final class AttachmentControllerTest extends TestCase
     public function get_event_contract_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-attachment');
-        //create a retreat, create a fake contract for that retreat, see if you can display the contract
+        // create a retreat, create a fake contract for that retreat, see if you can display the contract
         $retreat = \App\Models\Retreat::factory()->create();
         $file = UploadedFile::fake()->create('contract.pdf')->storeAs('event/'.$retreat->id, 'contract.pdf');
         $description = 'Contract for '.$retreat->idnumber.'-'.$retreat->title;
@@ -314,7 +314,7 @@ final class AttachmentControllerTest extends TestCase
     public function get_event_evaluations_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-evaluation');
-        //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
+        // create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
         $retreat = \App\Models\Retreat::factory()->create();
         $file = UploadedFile::fake()->create('evaluations.pdf')->storeAs('event/'.$retreat->id, 'evaluations.pdf');
         $description = 'Evaluations for '.$retreat->idnumber.'-'.$retreat->title;
@@ -338,7 +338,7 @@ final class AttachmentControllerTest extends TestCase
     public function get_event_group_photo_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-group-photo');
-        //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
+        // create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
         $retreat = \App\Models\Retreat::factory()->create();
         $file = UploadedFile::fake()->image('group_photo.jpg', 200, 300)->storeAs('event/'.$retreat->id, 'group_photo.jpg');
         $description = 'Group photo for '.$retreat->idnumber.'-'.$retreat->title;
@@ -362,7 +362,7 @@ final class AttachmentControllerTest extends TestCase
     public function get_event_schedule_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-event-schedule');
-        //create a retreat, create a fake schedule for that retreat, see if you can display the schedule
+        // create a retreat, create a fake schedule for that retreat, see if you can display the schedule
         $retreat = \App\Models\Retreat::factory()->create();
         $file = UploadedFile::fake()->create('schedule.pdf')->storeAs('event/'.$retreat->id, 'schedule.pdf');
         $description = 'Schedule for '.$retreat->idnumber.'-'.$retreat->title;
@@ -387,7 +387,7 @@ final class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-attachment');
 
-        //create a person, create a fake attachment for that person, see if you can display the attachment
+        // create a person, create a fake attachment for that person, see if you can display the attachment
         $person = \App\Models\Contact::factory()->create();
         $file_name = $this->faker->isbn10().'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('contact/'.$person->id.'/attachments', $file_name);
@@ -413,7 +413,7 @@ final class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-event-attachment');
 
-        //create a person, create a fake attachment for that person, see if you can display the attachment
+        // create a person, create a fake attachment for that person, see if you can display the attachment
         $event = \App\Models\Retreat::factory()->create();
         $file_name = $this->faker->isbn10().'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('event/'.$event->id.'/attachments', $file_name);
@@ -439,7 +439,7 @@ final class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-attachment');
 
-        //create a person, create a fake attachment for that person, see if you can display the attachment
+        // create a person, create a fake attachment for that person, see if you can display the attachment
         $asset = \App\Models\Asset::factory()->create();
         $file_name = $this->faker->isbn10().'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('asset/'.$asset->id.'/attachments', $file_name);

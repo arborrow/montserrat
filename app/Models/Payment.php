@@ -71,11 +71,11 @@ class Payment extends Model implements Auditable
     }
 
     public function scopeFiltered($query, $filters)
-    {   //initialize comparison operators to equals
+    {   // initialize comparison operators to equals
         $payment_date_operator = '=';
         $payment_amount_operator = '=';
 
-        //while not the most efficient - I want to get the comparison operators first so I can assign them to variables to use
+        // while not the most efficient - I want to get the comparison operators first so I can assign them to variables to use
         foreach ($filters->query as $filter => $value) {
             switch ($filter) {
                 case 'payment_date_operator':

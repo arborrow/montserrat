@@ -42,7 +42,7 @@ class RegistrationController extends Controller
             })->orderBy('register_date', 'desc')->with('retreatant', 'retreat', 'room')
             ->paginate(25, ['*'], 'registrations');
 
-        //dd($registrations);
+        // dd($registrations);
         return view('registrations.index', compact('registrations'));
     }
 
@@ -121,7 +121,7 @@ class RegistrationController extends Controller
         $defaults['participant_status_type'] = \App\Models\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
 
         return view('registrations.add_group', compact('retreats', 'groups', 'rooms', 'defaults'));
-        //dd($retreatants);
+        // dd($retreatants);
     }
 
     public function register($retreat_id = 0, $contact_id = 0): View
@@ -165,7 +165,7 @@ class RegistrationController extends Controller
         $defaults['participant_status_type'] = \App\Models\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
 
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
-        //dd($retreatants);
+        // dd($retreatants);
     }
 
     /**
@@ -176,7 +176,7 @@ class RegistrationController extends Controller
         $this->authorize('create-registration');
         $rooms = $request->input('rooms');
         $num_registrants = $request->input('num_registrants');
-        //TODO: Should we check and verify that the contact type is an organization to allow multiselect or just allow any registration to book multiple rooms?
+        // TODO: Should we check and verify that the contact type is an organization to allow multiselect or just allow any registration to book multiple rooms?
         $retreat = \App\Models\Retreat::findOrFail($request->input('event_id'));
         $contact = \App\Models\Contact::findOrFail($request->input('contact_id'));
         /*
@@ -213,7 +213,7 @@ class RegistrationController extends Controller
             }
         } else {
             foreach ($rooms as $room) {
-                //ensure that it is a valid room (not N/A)
+                // ensure that it is a valid room (not N/A)
                 $registration = new \App\Models\Registration;
                 $registration->event_id = $request->input('event_id');
                 $registration->contact_id = $request->input('contact_id');
@@ -237,7 +237,7 @@ class RegistrationController extends Controller
                 $registration->notes = $request->input('notes');
                 $registration->remember_token = Str::random(60);
                 $registration->save();
-                //TODO: verify that the newly created room assignment does not conflict with an existing one
+                // TODO: verify that the newly created room assignment does not conflict with an existing one
             }
         }
 
@@ -255,7 +255,7 @@ class RegistrationController extends Controller
         $group = \App\Models\Group::findOrFail($request->input('group_id'));
         $group_members = \App\Models\GroupContact::whereGroupId($group->id)->whereStatus('Added')->get();
         foreach ($group_members as $group_member) {
-            //ensure that it is a valid room (not N/A)
+            // ensure that it is a valid room (not N/A)
             $registration = new \App\Models\Registration;
             $registration->event_id = $retreat->id;
             $registration->contact_id = $group_member->contact_id;
@@ -277,7 +277,7 @@ class RegistrationController extends Controller
             $registration->deposit = $request->input('deposit');
             $registration->notes = $request->input('notes');
             $registration->save();
-            //TODO: verify that the newly created room assignment does not conflict with an existing one
+            // TODO: verify that the newly created room assignment does not conflict with an existing one
         }
         flash('Registration(s) added to '.$retreat->title.'for members of group: <a href="'.url('/group/'.$group->id).'">'.$group->name.'</a>')->success();
 
@@ -306,7 +306,7 @@ class RegistrationController extends Controller
         $retreatant = \App\Models\Contact::findOrFail($registration->contact_id);
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today())->orderBy('start_date')->pluck('description', 'id');
 
-        //TODO: we will want to be able to switch between types when going from a group registration to individual room assignment
+        // TODO: we will want to be able to switch between types when going from a group registration to individual room assignment
         if ($retreatant->contact_type == config('polanco.contact_type.individual')) {
             $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
         }
@@ -353,9 +353,9 @@ class RegistrationController extends Controller
 
         $registration->event_id = $request->input('event_id');
         // TODO: pull this from the retreat's start_date and end_date
-        //$registration->start = $retreat->start;
-        //$registration->end = $retreat->end;
-        //$registration->contact_id= $request->input('contact_id');
+        // $registration->start = $retreat->start;
+        // $registration->end = $retreat->end;
+        // $registration->contact_id= $request->input('contact_id');
         $registration->status_id = $request->input('status_id');
         $registration->register_date = $request->input('register_date');
         $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
@@ -380,7 +380,7 @@ class RegistrationController extends Controller
                 // return view('emails.registration-event-change', compact('registration', 'retreat', 'original_event'));
                 try {
                     Mail::to($finance_email)->send(new RegistrationEventChange($registration, $retreat, $original_event));
-                } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
+                } catch (\Exception $e) { // failed to send finance notification of event_id change on registration
                     flash('Email notification NOT sent to finance regarding event change to Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->warning();
                 }
                 flash('Email notification sent to finance regarding event change to Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->success();
@@ -389,7 +389,7 @@ class RegistrationController extends Controller
             if (($registration->deposit > 0) && ($registration->status_id == config('polanco.registration_status_id.canceled')) && $registration->isDirty('status_id')) {
                 try {
                     Mail::to($finance_email)->send(new RegistrationCanceledChange($registration, $retreat));
-                } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
+                } catch (\Exception $e) { // failed to send finance notification of event_id change on registration
                     dd($e);
                 }
                 flash('Email notification sent to finance regarding cancelation (with deposit) of Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->success();
@@ -421,7 +421,7 @@ class RegistrationController extends Controller
 
         \App\Models\Registration::destroy($id);
         $countregistrations = \App\Models\Registration::where('event_id', '=', $registration->event_id)->count();
-        //$retreat->attending = $countregistrations;
+        // $retreat->attending = $countregistrations;
         $retreat->save();
 
         flash('Registration #: '.$registration->id.' deleted')->warning()->important();

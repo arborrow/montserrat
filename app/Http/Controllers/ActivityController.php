@@ -52,7 +52,7 @@ class ActivityController extends Controller
         $medium = array_flip(config('polanco.medium'));
         $medium[0] = 'Unspecified';
         $medium = array_map('ucfirst', $medium);
-        //$medium->prepend('N/A', 0);
+        // $medium->prepend('N/A', 0);
 
         return view('activities.create', compact('staff', 'persons', 'defaults', 'status', 'activity_type', 'medium'));
     }

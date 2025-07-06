@@ -18,7 +18,7 @@ class MailgunController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        //dd(SystemController::is_mailgun_enabled());
+        // dd(SystemController::is_mailgun_enabled());
         if (! SystemController::is_mailgun_enabled()) {
             Redirect('admin/config/mailgun')->send();
         }
@@ -38,7 +38,7 @@ class MailgunController extends Controller
 
         $this->authorize('admin-mailgun');
 
-        $fail = Artisan::call('mailgun:get'); //because commands return 0 when successful the logic is somewhat reversed as 1 is failure and 0 is success
+        $fail = Artisan::call('mailgun:get'); // because commands return 0 when successful the logic is somewhat reversed as 1 is failure and 0 is success
         if ($fail) {
             flash('Error: Mailgun messages were not successfully retrieved and processed. The site admin has been notified.')->error()->important();
         } else {

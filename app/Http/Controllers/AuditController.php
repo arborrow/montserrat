@@ -121,7 +121,7 @@ class AuditController extends Controller
 
         $models = Audit::where('auditable_type', 'LIKE', '%Models%')->groupBy('auditable_type')->orderBy('auditable_type')->get()->pluck('model_name', 'auditable_type');
         $models->prepend('N/A', '');
-        //dd($models);
+        // dd($models);
         $actions = [null => 'N/A', 'created' => 'created', 'deleted' => 'deleted', 'updated' => 'updated'];
 
         return view('admin.audits.search', compact('users', 'models', 'actions'));

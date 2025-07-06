@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -143,7 +143,7 @@ final class SnippetControllerTest extends TestCase
     public function snippet_test_returns_an_ok_response()
     // this test is a bit of a happy path and a fail path to ensure no emails are sent
     // we begin using a bogus title which should produce a flash session warning that the snippet was not found; however, we still wind up at the index page
-    {   //$this->withoutExceptionHandling();
+    {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-snippet');
 
         $response = $this->actingAs($user)->post(route('snippet.snippet_test'), [

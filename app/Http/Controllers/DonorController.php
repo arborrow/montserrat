@@ -21,7 +21,7 @@ class DonorController extends Controller
     public function index(): View
     {
         $this->authorize('show-donor');
-        //only show donors that do not have a contact_id
+        // only show donors that do not have a contact_id
         $donors = \App\Models\Donor::whereContactId(null)->orderBy('sort_name')->paginate(25, ['*'], 'donors');
 
         return view('donors.index', compact('donors'));   //
@@ -115,7 +115,7 @@ class DonorController extends Controller
         $this->authorize('create-contact');
         $person = new \App\Models\Contact;
         $donor = \App\Models\Donor::findOrFail($donor_id);
-        //dd($donor);
+        // dd($donor);
 
         if (isset($donor->FName)) {
             $person->first_name = $donor->FName;

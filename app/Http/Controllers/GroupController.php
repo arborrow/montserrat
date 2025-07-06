@@ -107,7 +107,7 @@ class GroupController extends Controller
 
         return Redirect::action([self::class, 'show'], $id);
 
-        //return Redirect::action([\App\Http\Controllers\GroupController::class, 'index']);//
+        // return Redirect::action([\App\Http\Controllers\GroupController::class, 'index']);//
     }
 
     /**

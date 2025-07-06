@@ -51,7 +51,7 @@ final class SquarespaceOrderControllerTest extends TestCase
         $retreatant = \App\Models\Contact::factory()->create();
         $retreat = \App\Models\Retreat::factory()->create();
         $order = \App\Models\SquarespaceOrder::factory()->create(['contact_id' => $retreatant->id, 'event_id' => $retreat->id]);
-        $order->retreat_quantity = 2; //manually set because normally it is not visible on the edit form
+        $order->retreat_quantity = 2; // manually set because normally it is not visible on the edit form
         $order->additional_names_and_phone_numbers = $this->faker->name().' '.$this->faker->phoneNumber();
         $order->gift_certificate_number = $this->faker->numberBetween(100, 999);
         $order->save();
@@ -135,7 +135,7 @@ final class SquarespaceOrderControllerTest extends TestCase
         */
     }
 
-    #[Test] 
+    #[Test]
     public function index_returns_an_ok_response(): void
     {
         $user = $this->createUserWithPermission('show-squarespace-order');
@@ -205,7 +205,7 @@ final class SquarespaceOrderControllerTest extends TestCase
         ]);
         $updated = \App\Models\SquarespaceOrder::findOrFail($order->id);
 
-        //$response->assertSessionHas('flash_notification');
+        // $response->assertSessionHas('flash_notification');
         // TODO: currently assuming couple order so not testing if it properly returns to squarespace.order.edit
         if (! isset($order->participant_id) && (! isset($order->contact_id) || ($order->is_couple && ! isset($order->couple_contact_id)))) {
             $response->assertRedirect(action([\App\Http\Controllers\SquarespaceOrderController::class, 'edit'], $order->id));

@@ -133,7 +133,7 @@ class PageController extends Controller
         $this->authorize('show-donation');
         if (is_null($day)) {
             $day = Carbon::now();
-        } else { //ensures that we are adding dashes to string prior to parsing in response to issue #448
+        } else { // ensures that we are adding dashes to string prior to parsing in response to issue #448
             $day = $this->hyphenate_date($day);
         }
 
@@ -196,7 +196,7 @@ class PageController extends Controller
         //        dd($current_user->contact_id,  $donation->donation_thank_you_sent);
 
         if (! empty($current_user->contact_id)) {
-            if ($donation->donation_thank_you_sent == 'N') { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
+            if ($donation->donation_thank_you_sent == 'N') { // avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
                 $agc_touchpoint = new \App\Models\Touchpoint;
                 $agc_touchpoint->person_id = $donation->contact_id;
                 $agc_touchpoint->staff_id = $current_user->contact_id;
@@ -285,8 +285,8 @@ class PageController extends Controller
         $registrations = \App\Models\Registration::whereEventId($event_id)->whereCanceledAt(null)->orderBy('contact_id')->get();
         $pg = $payments->groupBy('donation.contact_id')->sortBy('donation.contact_id');
         $rg = $registrations->groupBy('contact_id')->sortBy('contact_id');
-        $diffpg = $pg->diffKeys($rg); //payments with no registration
-        $diffrg = $rg->diffKeys($pg); //regisrations with no payments
+        $diffpg = $pg->diffKeys($rg); // payments with no registration
+        $diffrg = $rg->diffKeys($pg); // regisrations with no payments
 
         return view('reports.finance.reconcile_deposits', compact('diffpg', 'diffrg'));
     }
@@ -513,7 +513,7 @@ class PageController extends Controller
 
             return $hyphenated_date;
         } else {
-            if ($this->validateDate($unhyphenated_date)) { //already hyphenated
+            if ($this->validateDate($unhyphenated_date)) { // already hyphenated
                 $hyphenated_date = $unhyphenated_date;
 
                 return $hyphenated_date;

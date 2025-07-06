@@ -39,7 +39,7 @@ class GiftCertificateController extends Controller
     public function create(Request $request): View
     {
         $this->authorize('create-gift-certificate');
-        //dd($request);
+        // dd($request);
         $purchaser = collect();
         $purchaser->name = ($request->filled('purchaser_name')) ? $request->input('purchaser_name') : null;
         $purchaser->full_address = null;
@@ -50,7 +50,7 @@ class GiftCertificateController extends Controller
         $recipient->full_address = null;
         $recipient->email = null;
 
-        //dd($purchaser, $recipient);
+        // dd($purchaser, $recipient);
         $purchasers = ($request->filled('purchaser_name')) ? $this->matched_contacts($purchaser) : null;
         $recipients = ($request->filled('recipient_name')) ? $this->matched_contacts($recipient) : null;
 
@@ -161,7 +161,7 @@ class GiftCertificateController extends Controller
 
         return $pdf->inline($gift_certificate->certificate_number.'.pdf');
 
-        //return view('gift_certificates.certificate', compact('gift_certificate'));
+        // return view('gift_certificates.certificate', compact('gift_certificate'));
     }
 
     /**

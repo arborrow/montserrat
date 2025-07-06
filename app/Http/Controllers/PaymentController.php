@@ -24,7 +24,7 @@ class PaymentController extends Controller
         $this->authorize('show-payment');
         $payments = \App\Models\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(25, ['*'], 'payments');
 
-        //dd($donations);
+        // dd($donations);
         return view('payments.index', compact('payments'));
     }
 
@@ -116,7 +116,7 @@ class PaymentController extends Controller
         $this->authorize('show-payment');
         $payment = \App\Models\Payment::with('donation.retreat', 'donation.contact', 'balance_transaction')->findOrFail($id);
 
-        //dd($payment);
+        // dd($payment);
         return view('payments.show', compact('payment')); //
     }
 
@@ -126,7 +126,7 @@ class PaymentController extends Controller
     public function edit(int $id): View
     {
         $this->authorize('update-payment');
-        //get this retreat's information
+        // get this retreat's information
         $payment = \App\Models\Payment::with('donation.contact', 'donation.retreat')->findOrFail($id);
         $payment_methods = config('polanco.payment_method');
 

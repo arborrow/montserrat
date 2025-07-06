@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Http\Requests;
 
-use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Validation\Rule;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**

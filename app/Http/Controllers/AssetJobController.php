@@ -158,7 +158,7 @@ class AssetJobController extends Controller
 
         $asset_job->save();
 
-        //TODO: implement on asset_job edit blade
+        // TODO: implement on asset_job edit blade
         if ($request->file('attachment') !== null) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentController;
