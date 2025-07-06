@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreAttachmentRequest;
 use App\Http\Requests\UpdateAttachmentRequest;
@@ -13,15 +15,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 
-class AttachmentController extends Controller
+class AttachmentController extends Controller implements HasMiddleware
 {
-    /* used to manage file attachments for contacts, events, etc.
-     * every attachment should have a record in the files table
-     * attachments are stored in the storage/app folder according to entity/entity_id
-     */
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function sanitize_filename($filename)

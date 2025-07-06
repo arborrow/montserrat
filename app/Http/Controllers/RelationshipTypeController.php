@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\AddmeRelationshipTypeRequest;
 use App\Http\Requests\MakeRelationshipTypeRequest;
@@ -13,13 +15,15 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class RelationshipTypeController extends Controller
+class RelationshipTypeController extends Controller implements HasMiddleware
 {
     use SquareSpaceTrait;
 
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**

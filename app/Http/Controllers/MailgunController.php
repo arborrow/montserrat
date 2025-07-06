@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Message;
 use App\Traits\MailgunTrait;
@@ -12,17 +14,24 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Mailgun\Mailgun;
 
-class MailgunController extends Controller
+class MailgunController extends Controller implements HasMiddleware
 {
     use MailgunTrait;
 
     public function __construct()
     {
-        $this->middleware('auth');
+
         // dd(SystemController::is_mailgun_enabled());
         if (! SystemController::is_mailgun_enabled()) {
             Redirect('admin/config/mailgun')->send();
         }
+    }
+
+    public static function middleware(): array
+    {
+        return [
+            'auth',
+        ];
     }
 
     /*

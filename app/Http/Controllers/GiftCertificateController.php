@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Contact;
 use App\Traits\SquareSpaceTrait;
@@ -12,13 +14,15 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use PDF;
 
-class GiftCertificateController extends Controller
+class GiftCertificateController extends Controller implements HasMiddleware
 {
     use SquareSpaceTrait;
 
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
