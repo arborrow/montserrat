@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -178,7 +179,8 @@ class Donation extends Model implements Auditable
         }
     }
 
-    public function scopeFiltered($query, $filters)
+    #[Scope]
+    protected function filtered($query, $filters)
     {   // initialize comparison operators to equals
         $donation_date_operator = '=';
         $donation_amount_operator = '=';

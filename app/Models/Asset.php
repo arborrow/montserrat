@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -353,12 +354,14 @@ class Asset extends Model implements Auditable
     }
 
     // scopes
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->whereIsActive(1);
     }
 
-    public function scopeFiltered($query, $filters)
+    #[Scope]
+    protected function filtered($query, $filters)
     {
         foreach ($filters->query as $filter => $value) {
             if ($filter == 'name' && ! empty($value)) {

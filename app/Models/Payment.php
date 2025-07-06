@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -70,7 +71,8 @@ class Payment extends Model implements Auditable
         }
     }
 
-    public function scopeFiltered($query, $filters)
+    #[Scope]
+    protected function filtered($query, $filters)
     {   // initialize comparison operators to equals
         $payment_date_operator = '=';
         $payment_amount_operator = '=';

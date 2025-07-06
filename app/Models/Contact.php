@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -1410,7 +1411,8 @@ class Contact extends Model implements Auditable
         return $this->hasOne(Website::class, 'contact_id', 'id')->whereWebsiteType('Main');
     }
 
-    public function scopeOrganizations_Generic($query)
+    #[Scope]
+    protected function organizations_Generic($query)
     {
         return $query->where([
             ['contact_type', '>=', config('polanco.contact_type.organization')],
@@ -1418,12 +1420,14 @@ class Contact extends Model implements Auditable
         ]);
     }
 
-    public function scopeVendors($query)
+    #[Scope]
+    protected function vendors($query)
     {
         return $query->whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType(config('polanco.contact_type.vendor'));
     }
 
-    public function scopeFiltered($query, $filters)
+    #[Scope]
+    protected function filtered($query, $filters)
     {
         foreach ($filters->query as $filter => $value) {
             if ($filter == 'prefix_id' && $value > 0) {

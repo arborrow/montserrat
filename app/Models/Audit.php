@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -46,7 +47,8 @@ class Audit extends Model
         }
     }
 
-    public function scopeFiltered($query, $filters)
+    #[Scope]
+    protected function filtered($query, $filters)
     {   // initialize comparison operators to equals
         $created_at_operator = '=';
         // while not the most efficient - I want to get the comparison operators first so I can assign them to variables to use

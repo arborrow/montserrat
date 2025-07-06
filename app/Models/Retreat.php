@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -338,12 +339,14 @@ class Retreat extends Model implements Auditable
         return $attendees;
     }
 
-    public function scopeType($query, $event_type_id)
+    #[Scope]
+    protected function type($query, $event_type_id)
     {
         return $query->where('event_type_id', $event_type_id);
     }
 
-    public function scopeFiltered($query, $filters)
+    #[Scope]
+    protected function filtered($query, $filters)
     {
         foreach ($filters->query as $filter => $value) {
             if ($filter == 'begin_date' && ! empty($value)) {
