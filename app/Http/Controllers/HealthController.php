@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Gate;
 use DB;
-// use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Collection;
+// use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class HealthController extends Controller implements HasMiddleware

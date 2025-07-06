@@ -14,7 +14,6 @@ class Roomstate extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
-
     protected function casts(): array
     {
         return [

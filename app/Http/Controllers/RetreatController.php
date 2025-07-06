@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\EventSearchRequest;
 use App\Http\Requests\RoomUpdateRetreatRequest;
 use App\Http\Requests\StoreRetreatRequest;
@@ -12,7 +9,9 @@ use App\Http\Requests\UpdateRetreatRequest;
 use App\Models\Registration;
 use Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Spatie\GoogleCalendar\Event;
