@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -46,7 +46,7 @@ final class RetreatControllerTest extends TestCase
 
     #[Test]
     public function calendar_returns_an_ok_response(): void
-    {   //TODO: atm this is a pretty weak test assuming Google calendar is not implemented, could be stronger if we simulate creating such events
+    {   // TODO: atm this is a pretty weak test assuming Google calendar is not implemented, could be stronger if we simulate creating such events
         $user = $this->createUserWithPermission('show-retreat');
 
         $response = $this->actingAs($user)->get(route('calendar'));

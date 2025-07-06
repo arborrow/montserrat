@@ -5,20 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUomRequest;
 use App\Http\Requests\UpdateUomRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class UomController extends Controller
+class UomController extends Controller implements HasMiddleware
 {
-    //
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function index(): View
     {
-        $this->authorize('show-uom');
+        Gate::authorize('show-uom');
         $uoms = \App\Models\Uom::orderBy('unit_name')->get();
 
         return view('admin.uoms.index', compact('uoms'));
@@ -29,7 +32,7 @@ class UomController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-uom');
+        Gate::authorize('create-uom');
         $uom_types = config('polanco.uom_types');
 
         return view('admin.uoms.create', compact('uom_types'));
@@ -40,7 +43,7 @@ class UomController extends Controller
      */
     public function store(StoreUomRequest $request): RedirectResponse
     {
-        $this->authorize('create-uom');
+        Gate::authorize('create-uom');
 
         $uom = new \App\Models\Uom;
         $uom->type = $request->input('type');
@@ -61,7 +64,7 @@ class UomController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-uom');
+        Gate::authorize('show-uom');
 
         $uom = \App\Models\Uom::findOrFail($id);
 
@@ -73,7 +76,7 @@ class UomController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-uom');
+        Gate::authorize('update-uom');
 
         $uom = \App\Models\Uom::findOrFail($id);
         $uom_types = config('polanco.uom_types');
@@ -86,7 +89,7 @@ class UomController extends Controller
      */
     public function update(UpdateUomRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-uom');
+        Gate::authorize('update-uom');
 
         $uom = \App\Models\Uom::findOrFail($id);
 
@@ -108,7 +111,7 @@ class UomController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-uom');
+        Gate::authorize('delete-uom');
         $uom = \App\Models\Uom::findOrFail($id);
 
         \App\Models\Uom::destroy($id);

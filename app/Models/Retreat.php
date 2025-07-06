@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -70,7 +71,7 @@ class Retreat extends Model implements Auditable
 
     public function getPercentPaidAttribute()
     {
-        if ($this->donations_pledged_sum > 0) { //avoid divide by 0 cases
+        if ($this->donations_pledged_sum > 0) { // avoid divide by 0 cases
             return number_format((($this->payments_paid_sum / $this->donations_pledged_sum) * 100), 0);
         } else {
             return 0;
@@ -79,7 +80,7 @@ class Retreat extends Model implements Auditable
 
     public function getAveragePaidPerNightAttribute()
     {
-        if ($this->people_nights > 0) { //avoid divide by 0 cases
+        if ($this->people_nights > 0) { // avoid divide by 0 cases
             return $this->payments_paid_sum / $this->people_nights;
         } else {
             return 0;
@@ -225,7 +226,7 @@ class Retreat extends Model implements Auditable
 
     public function getRetreatTypeAttribute()
     {
-        //dd($this->event_type);
+        // dd($this->event_type);
         if (isset($this->event_type)) {
             return $this->event_type->name;
         } else {
@@ -235,7 +236,7 @@ class Retreat extends Model implements Auditable
 
     public function getRetreatNameAttribute()
     {
-        //dd($this->event_type);
+        // dd($this->event_type);
         if (isset($this->title)) {
             return $this->title;
         } else {
@@ -319,14 +320,14 @@ class Retreat extends Model implements Auditable
     {
         $attendees = [];
         $directors = $this->retreatmasters()->get();
-        //dd($directors);
+        // dd($directors);
         foreach ($directors as $director) {
             if (! empty($director->email_primary->email)) {
                 array_push($attendees, ['email' => $director->email_primary->email]);
             }
         }
         $innkeeper = $this->innkeeper()->first();
-        //dd($innkeeper->last_name);
+        // dd($innkeeper->last_name);
         if (! empty($innkeeper->email_primary->email)) {
             array_push($attendees, ['email' => $innkeeper->email_primary->email]);
         }
@@ -338,12 +339,14 @@ class Retreat extends Model implements Auditable
         return $attendees;
     }
 
-    public function scopeType($query, $event_type_id)
+    #[Scope]
+    protected function type($query, $event_type_id)
     {
         return $query->where('event_type_id', $event_type_id);
     }
 
-    public function scopeFiltered($query, $filters)
+    #[Scope]
+    protected function filtered($query, $filters)
     {
         foreach ($filters->query as $filter => $value) {
             if ($filter == 'begin_date' && ! empty($value)) {

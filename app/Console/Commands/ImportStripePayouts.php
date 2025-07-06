@@ -54,7 +54,7 @@ class ImportStripePayouts extends Command
             $stripe_payout->date = Carbon::parse($payout->arrival_date);
             $stripe_payout->status = $payout->status;
 
-            $fees = 0; //initialize
+            $fees = 0; // initialize
             $transactions = $stripe->balanceTransactions->all(
                 ['payout' => $stripe_payout->payout_id,
                     'type' => 'charge',
@@ -76,7 +76,7 @@ class ImportStripePayouts extends Command
                 ]
             );
 
-            //TODO: figure out how best to import and process stripe refunds
+            // TODO: figure out how best to import and process stripe refunds
             $stripe_refunds = $stripe->balanceTransactions->all(
                 ['payout' => $stripe_payout->payout_id,
                     'type' => 'refund',
@@ -85,7 +85,7 @@ class ImportStripePayouts extends Command
             );
 
             foreach ($stripe_balance_transactions->autoPagingIterator() as $stripe_balance_transaction) {
-                //dd($balance_transaction->balance_transaction_id);
+                // dd($balance_transaction->balance_transaction_id);
                 $balance_transaction = StripeBalanceTransaction::firstOrNew([
                     'balance_transaction_id' => $stripe_balance_transaction->id,
                 ]);

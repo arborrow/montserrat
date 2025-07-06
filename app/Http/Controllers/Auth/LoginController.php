@@ -6,15 +6,17 @@ use App\AuthenticateUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\Request;
 
-//use Illuminate\Support\Facades\Session;
+// use Illuminate\Support\Facades\Session;
 
 // use Illuminate\Support\Facades\Redirect;
 
-class LoginController extends Controller
+class LoginController extends Controller implements HasMiddleware
 {
     /*
     |--------------------------------------------------------------------------
@@ -36,14 +38,11 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('guest')->except('logout');
+        return [
+            new Middleware('guest', except: ['logout']),
+        ];
     }
 
     /**
@@ -70,7 +69,7 @@ class LoginController extends Controller
                     Auth::login($currentuser, true);
 
                     return redirect()->intended('/welcome');
-                    //return $this->userHasLoggedIn($currentuser);
+                    // return $this->userHasLoggedIn($currentuser);
                 } else { // the user has a domain but it does not match the socialite restrict domain so do not authenticate
                     return redirect()->to('restricted');
                 }

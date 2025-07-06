@@ -6,13 +6,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class DonorController extends Controller
+class DonorController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -20,8 +24,8 @@ class DonorController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-donor');
-        //only show donors that do not have a contact_id
+        Gate::authorize('show-donor');
+        // only show donors that do not have a contact_id
         $donors = \App\Models\Donor::whereContactId(null)->orderBy('sort_name')->paginate(25, ['*'], 'donors');
 
         return view('donors.index', compact('donors'));   //
@@ -35,7 +39,7 @@ class DonorController extends Controller
     public function create()
     {
         // will not be creating any PPD donor records
-        $this->authorize('create-donor');
+        Gate::authorize('create-donor');
 
         return $this->index();
     }
@@ -48,7 +52,7 @@ class DonorController extends Controller
     public function store(Request $request)
     {
         // will not be creating any PPD donor records
-        $this->authorize('create-donor');
+        Gate::authorize('create-donor');
     }
 
     /**
@@ -56,7 +60,7 @@ class DonorController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-donor');
+        Gate::authorize('show-donor');
         $donor = \App\Models\Donor::whereDonorId($id)->first();
         // dd($donor,$id);
         $sortnames = \App\Models\Contact::whereSortName($donor->sort_name)->get();
@@ -72,7 +76,7 @@ class DonorController extends Controller
      */
     public function edit(int $id)
     {
-        $this->authorize('update-donor');
+        Gate::authorize('update-donor');
 
         return $this->index();
     }
@@ -84,7 +88,7 @@ class DonorController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $this->authorize('update-donor');
+        Gate::authorize('update-donor');
     }
 
     /**
@@ -94,13 +98,13 @@ class DonorController extends Controller
      */
     public function destroy(int $id)
     {
-        $this->authorize('delete-donor');
+        Gate::authorize('delete-donor');
     }
 
     public function assign($donor_id, $contact_id): RedirectResponse
     {
         // dd($donor_id, $contact_id);
-        $this->authorize('update-donor');
+        Gate::authorize('update-donor');
         $donor = \App\Models\Donor::whereDonorId($donor_id)->first();
         if (empty($donor->contact_id)) {
             $donor->contact_id = $contact_id;
@@ -112,10 +116,10 @@ class DonorController extends Controller
 
     public function add($donor_id): RedirectResponse
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
         $person = new \App\Models\Contact;
         $donor = \App\Models\Donor::findOrFail($donor_id);
-        //dd($donor);
+        // dd($donor);
 
         if (isset($donor->FName)) {
             $person->first_name = $donor->FName;

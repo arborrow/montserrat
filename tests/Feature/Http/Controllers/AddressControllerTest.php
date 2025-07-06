@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -16,7 +16,7 @@ final class AddressControllerTest extends TestCase
     use withFaker;
 
     #[Test]
-    public function create_returns_an_ok_response() //create method empty - nothing to test
+    public function create_returns_an_ok_response() // create method empty - nothing to test
     {
         $user = $this->createUserWithPermission('create-address');
 

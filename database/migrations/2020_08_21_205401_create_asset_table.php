@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('model')->nullable();
             $table->string('serial_number')->nullable();
             $table->integer('year')->nullable();
-            $table->string('status')->nullable(); //TODO: evaluate making possible enum or coming up with a status_id list
+            $table->string('status')->nullable(); // TODO: evaluate making possible enum or coming up with a status_id list
 
             $table->integer('asset_type_id')->required();
             $table->integer('location_id')->nullable();
@@ -64,7 +64,7 @@ return new class extends Migration
             $table->dateTime('depreciation_end_date')->nullable();
             $table->integer('depreciation_type_id')->nullable();
             $table->integer('depreciation_time')->nullable();
-            $table->integer('depreciation_time_uom_id')->nullable(); //typcially months
+            $table->integer('depreciation_time_uom_id')->nullable(); // typcially months
             $table->decimal('depreciation_rate', 13, 2)->default('0.00')->nullable();
             $table->decimal('depreciation_value', 13, 2)->default('0.00')->nullable();
             $table->decimal('life_expectancy', 8, 2)->nullable();

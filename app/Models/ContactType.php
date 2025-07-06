@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,8 +16,9 @@ class ContactType extends Model implements Auditable
 
     protected $table = 'contact_type';
 
-    //generic organizations that are not dioceses, parishes, etc.
-    public function scopeGeneric($query)
+    // generic organizations that are not dioceses, parishes, etc.
+    #[Scope]
+    protected function generic($query)
     {
         return $query->where([
             ['id', '>=', config('polanco.contact_type.province')],

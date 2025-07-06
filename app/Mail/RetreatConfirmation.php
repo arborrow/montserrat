@@ -36,7 +36,7 @@ class RetreatConfirmation extends Mailable
                         .$this->participant->retreat_start_date->format('l F jS'))
                 ->replyTo('registration@montserratretreat.org')
                 ->view('emails.es_ES.event-confirmation');
-        } else { //en_US is the default locale/language
+        } else { // en_US is the default locale/language
             return $this->subject('Preparing for your Upcoming Retreat #'
                         .$this->participant->retreat->idnumber.' starting on '
                         .$this->participant->retreat_start_date->format('l F jS'))

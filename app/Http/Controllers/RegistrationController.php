@@ -13,20 +13,25 @@ use App\Traits\SquareSpaceTrait;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class RegistrationController extends Controller
+class RegistrationController extends Controller implements HasMiddleware
 {
     use SquareSpaceTrait;
 
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth')->except('confirmAttendance');
+        return [
+            new Middleware('auth', except: ['confirmAttendance']),
+        ];
     }
 
     /**
@@ -34,7 +39,7 @@ class RegistrationController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-registration');
+        Gate::authorize('show-registration');
 
         $registrations = \App\Models\Registration::with('contact.suffix')->with('contact.prefix')
             ->whereHas('retreat', function ($query) {
@@ -42,7 +47,7 @@ class RegistrationController extends Controller
             })->orderBy('register_date', 'desc')->with('retreatant', 'retreat', 'room')
             ->paginate(25, ['*'], 'registrations');
 
-        //dd($registrations);
+        // dd($registrations);
         return view('registrations.index', compact('registrations'));
     }
 
@@ -51,7 +56,7 @@ class RegistrationController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-registration');
+        Gate::authorize('create-registration');
 
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
@@ -72,7 +77,7 @@ class RegistrationController extends Controller
 
     public function add($id = null): View
     {
-        $this->authorize('create-registration');
+        Gate::authorize('create-registration');
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
         $retreatant = \App\Models\Contact::findOrFail($id);
@@ -101,7 +106,7 @@ class RegistrationController extends Controller
 
     public function add_group($id): View
     {
-        $this->authorize('create-registration');
+        Gate::authorize('create-registration');
 
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today()->subWeek())->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
@@ -121,12 +126,12 @@ class RegistrationController extends Controller
         $defaults['participant_status_type'] = \App\Models\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
 
         return view('registrations.add_group', compact('retreats', 'groups', 'rooms', 'defaults'));
-        //dd($retreatants);
+        // dd($retreatants);
     }
 
     public function register($retreat_id = 0, $contact_id = 0): View
     {
-        $this->authorize('create-registration');
+        Gate::authorize('create-registration');
 
         if ($retreat_id > 0) {
             $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->whereId($retreat_id)->orderBy('start_date')->pluck('description', 'id');
@@ -165,7 +170,7 @@ class RegistrationController extends Controller
         $defaults['participant_status_type'] = \App\Models\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
 
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
-        //dd($retreatants);
+        // dd($retreatants);
     }
 
     /**
@@ -173,10 +178,10 @@ class RegistrationController extends Controller
      */
     public function store(StoreRegistrationRequest $request): RedirectResponse
     {
-        $this->authorize('create-registration');
+        Gate::authorize('create-registration');
         $rooms = $request->input('rooms');
         $num_registrants = $request->input('num_registrants');
-        //TODO: Should we check and verify that the contact type is an organization to allow multiselect or just allow any registration to book multiple rooms?
+        // TODO: Should we check and verify that the contact type is an organization to allow multiselect or just allow any registration to book multiple rooms?
         $retreat = \App\Models\Retreat::findOrFail($request->input('event_id'));
         $contact = \App\Models\Contact::findOrFail($request->input('contact_id'));
         /*
@@ -213,7 +218,7 @@ class RegistrationController extends Controller
             }
         } else {
             foreach ($rooms as $room) {
-                //ensure that it is a valid room (not N/A)
+                // ensure that it is a valid room (not N/A)
                 $registration = new \App\Models\Registration;
                 $registration->event_id = $request->input('event_id');
                 $registration->contact_id = $request->input('contact_id');
@@ -237,7 +242,7 @@ class RegistrationController extends Controller
                 $registration->notes = $request->input('notes');
                 $registration->remember_token = Str::random(60);
                 $registration->save();
-                //TODO: verify that the newly created room assignment does not conflict with an existing one
+                // TODO: verify that the newly created room assignment does not conflict with an existing one
             }
         }
 
@@ -249,13 +254,13 @@ class RegistrationController extends Controller
 
     public function store_group(StoreGroupRegistrationRequest $request): RedirectResponse
     {
-        $this->authorize('create-registration');
+        Gate::authorize('create-registration');
 
         $retreat = \App\Models\Retreat::findOrFail($request->input('event_id'));
         $group = \App\Models\Group::findOrFail($request->input('group_id'));
         $group_members = \App\Models\GroupContact::whereGroupId($group->id)->whereStatus('Added')->get();
         foreach ($group_members as $group_member) {
-            //ensure that it is a valid room (not N/A)
+            // ensure that it is a valid room (not N/A)
             $registration = new \App\Models\Registration;
             $registration->event_id = $retreat->id;
             $registration->contact_id = $group_member->contact_id;
@@ -277,7 +282,7 @@ class RegistrationController extends Controller
             $registration->deposit = $request->input('deposit');
             $registration->notes = $request->input('notes');
             $registration->save();
-            //TODO: verify that the newly created room assignment does not conflict with an existing one
+            // TODO: verify that the newly created room assignment does not conflict with an existing one
         }
         flash('Registration(s) added to '.$retreat->title.'for members of group: <a href="'.url('/group/'.$group->id).'">'.$group->name.'</a>')->success();
 
@@ -289,7 +294,7 @@ class RegistrationController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-registration');
+        Gate::authorize('show-registration');
         $registration = \App\Models\Registration::with('retreat', 'retreatant', 'room')->findOrFail($id);
 
         return view('registrations.show', compact('registration')); //
@@ -300,13 +305,13 @@ class RegistrationController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-registration');
+        Gate::authorize('update-registration');
 
         $registration = \App\Models\Registration::with('retreatant', 'retreat', 'room')->findOrFail($id);
         $retreatant = \App\Models\Contact::findOrFail($registration->contact_id);
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today())->orderBy('start_date')->pluck('description', 'id');
 
-        //TODO: we will want to be able to switch between types when going from a group registration to individual room assignment
+        // TODO: we will want to be able to switch between types when going from a group registration to individual room assignment
         if ($retreatant->contact_type == config('polanco.contact_type.individual')) {
             $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
         }
@@ -345,7 +350,7 @@ class RegistrationController extends Controller
      */
     public function update(UpdateRegistrationRequest $request, int $id)
     {
-        $this->authorize('update-registration');
+        Gate::authorize('update-registration');
 
         $registration = \App\Models\Registration::findOrFail($request->input('id'));
         $retreat = \App\Models\Retreat::findOrFail($request->input('event_id'));
@@ -353,9 +358,9 @@ class RegistrationController extends Controller
 
         $registration->event_id = $request->input('event_id');
         // TODO: pull this from the retreat's start_date and end_date
-        //$registration->start = $retreat->start;
-        //$registration->end = $retreat->end;
-        //$registration->contact_id= $request->input('contact_id');
+        // $registration->start = $retreat->start;
+        // $registration->end = $retreat->end;
+        // $registration->contact_id= $request->input('contact_id');
         $registration->status_id = $request->input('status_id');
         $registration->register_date = $request->input('register_date');
         $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
@@ -380,7 +385,7 @@ class RegistrationController extends Controller
                 // return view('emails.registration-event-change', compact('registration', 'retreat', 'original_event'));
                 try {
                     Mail::to($finance_email)->send(new RegistrationEventChange($registration, $retreat, $original_event));
-                } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
+                } catch (\Exception $e) { // failed to send finance notification of event_id change on registration
                     flash('Email notification NOT sent to finance regarding event change to Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->warning();
                 }
                 flash('Email notification sent to finance regarding event change to Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->success();
@@ -389,7 +394,7 @@ class RegistrationController extends Controller
             if (($registration->deposit > 0) && ($registration->status_id == config('polanco.registration_status_id.canceled')) && $registration->isDirty('status_id')) {
                 try {
                     Mail::to($finance_email)->send(new RegistrationCanceledChange($registration, $retreat));
-                } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
+                } catch (\Exception $e) { // failed to send finance notification of event_id change on registration
                     dd($e);
                 }
                 flash('Email notification sent to finance regarding cancelation (with deposit) of Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->success();
@@ -414,14 +419,14 @@ class RegistrationController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-registration');
+        Gate::authorize('delete-registration');
 
         $registration = \App\Models\Registration::findOrFail($id);
         $retreat = \App\Models\Retreat::findOrFail($registration->event_id);
 
         \App\Models\Registration::destroy($id);
         $countregistrations = \App\Models\Registration::where('event_id', '=', $registration->event_id)->count();
-        //$retreat->attending = $countregistrations;
+        // $retreat->attending = $countregistrations;
         $retreat->save();
 
         flash('Registration #: '.$registration->id.' deleted')->warning()->important();
@@ -431,7 +436,7 @@ class RegistrationController extends Controller
 
     public function confirm($id): RedirectResponse
     {
-        $this->authorize('update-registration');
+        Gate::authorize('update-registration');
 
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->registration_confirm_date = Carbon::now();
@@ -442,7 +447,7 @@ class RegistrationController extends Controller
 
     public function attend($id): RedirectResponse
     {
-        $this->authorize('update-registration');
+        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->attendance_confirm_date = Carbon::now();
         $registration->save();
@@ -452,7 +457,7 @@ class RegistrationController extends Controller
 
     public function arrive($id): RedirectResponse
     {
-        $this->authorize('update-registration');
+        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->arrived_at = Carbon::now();
         $registration->save();
@@ -462,7 +467,7 @@ class RegistrationController extends Controller
 
     public function depart($id): RedirectResponse
     {
-        $this->authorize('update-registration');
+        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->departed_at = Carbon::now();
         $registration->save();
@@ -472,7 +477,7 @@ class RegistrationController extends Controller
 
     public function cancel($id): RedirectResponse
     {
-        $this->authorize('update-registration');
+        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->canceled_at = Carbon::now();
         $registration->save();
@@ -482,7 +487,7 @@ class RegistrationController extends Controller
 
     public function waitlist($id): RedirectResponse
     {
-        $this->authorize('update-registration');
+        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->status_id = config('polanco.registration_status_id.waitlist');
         $registration->save();
@@ -492,7 +497,7 @@ class RegistrationController extends Controller
 
     public function offwaitlist($id): RedirectResponse
     {
-        $this->authorize('update-registration');
+        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->status_id = config('polanco.registration_status_id.registered');
         $registration->save();
@@ -502,7 +507,7 @@ class RegistrationController extends Controller
 
     public function registrationEmail(Registration $participant): RedirectResponse
     {
-        $this->authorize('show-registration');
+        Gate::authorize('show-registration');
 
         // 1. Get a primary email address for participant.
         $primaryEmail = $participant->contact->primaryEmail()->first();
@@ -534,7 +539,7 @@ class RegistrationController extends Controller
 
     public function send_confirmation_email($id): RedirectResponse
     {
-        $this->authorize('update-registration');
+        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $current_user = Auth::user();
         $primary_email = $registration->retreatant->email_primary_text;

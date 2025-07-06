@@ -63,13 +63,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        $mailable = 0; //initialize to false
+        $mailable = 0; // initialize to false
         $subject = 'Error Detected on '.config('polanco.site_name');
         $fullurl = $request->fullUrl();
         (isset(Auth::User()->name) ? $username = Auth::User()->name : $username = 'Unknown user');
         (! empty($request->ip()) ? $ip_address = $request->ip() : $ip_address = 'Unspecified IP Address');
 
-        //403
+        // 403
         if ($exception instanceof AuthorizationException) {
             $mailable = 1;
             $subject = '403 '.$subject.': ('.$username.') '.$fullurl;

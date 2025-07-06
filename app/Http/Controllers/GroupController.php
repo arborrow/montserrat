@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class GroupController extends Controller
+class GroupController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -20,7 +24,7 @@ class GroupController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-group');
+        Gate::authorize('show-group');
         $groups = \App\Models\Group::whereIsActive(1)->orderBy('name')->with('members')->get();
         foreach ($groups as $group) {
             $group->count = $group->members()->count();
@@ -34,7 +38,7 @@ class GroupController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-group');
+        Gate::authorize('create-group');
 
         return view('groups.create');
     }
@@ -44,7 +48,7 @@ class GroupController extends Controller
      */
     public function store(StoreGroupRequest $request): RedirectResponse
     {
-        $this->authorize('create-group');
+        Gate::authorize('create-group');
 
         $group = new \App\Models\Group;
         $group->name = $request->input('name');
@@ -66,7 +70,7 @@ class GroupController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-group');
+        Gate::authorize('show-group');
         $group = \App\Models\Group::findOrFail($id);
         $members = \App\Models\Contact::whereHas('groups', function ($query) use ($id) {
             $query->whereGroupId($id)->whereStatus('Added');
@@ -80,7 +84,7 @@ class GroupController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-group');
+        Gate::authorize('update-group');
         $group = \App\Models\Group::findOrFail($id);
 
         return view('groups.edit', compact('group'));
@@ -91,7 +95,7 @@ class GroupController extends Controller
      */
     public function update(UpdateGroupRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-group');
+        Gate::authorize('update-group');
 
         $group = \App\Models\Group::findOrFail($id);
         $group->name = $request->input('name');
@@ -107,7 +111,7 @@ class GroupController extends Controller
 
         return Redirect::action([self::class, 'show'], $id);
 
-        //return Redirect::action([\App\Http\Controllers\GroupController::class, 'index']);//
+        // return Redirect::action([\App\Http\Controllers\GroupController::class, 'index']);//
     }
 
     /**
@@ -115,7 +119,7 @@ class GroupController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-group');
+        Gate::authorize('delete-group');
 
         $group = \App\Models\Group::findOrFail($id);
 

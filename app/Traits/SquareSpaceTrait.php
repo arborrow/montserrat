@@ -80,8 +80,8 @@ trait SquareSpaceTrait
             $dob_score = 0;
             $name_found = 0;
             $address_found = 0;
-            $name_size = (count($name_parts) > 0) ? count($name_parts) : 1; //avoid division by 0
-            $address_size = (count($address_parts) > 0) ? count($address_parts) : 1; //avoid division by 0
+            $name_size = (count($name_parts) > 0) ? count($name_parts) : 1; // avoid division by 0
+            $address_size = (count($address_parts) > 0) ? count($address_parts) : 1; // avoid division by 0
 
             foreach ($name_parts as $name_part) {
                 $name_found = (strpos(strtolower($ln->full_name_with_city), strtolower($name_part)) === false) ? $name_found : $name_found + 1;
@@ -112,7 +112,7 @@ trait SquareSpaceTrait
 
         foreach ($emails as $email) {
             $email_score = 20;
-            if (isset($email->owner)) { //ignore cases where the parent contact may have been deleted and thus the owner is null
+            if (isset($email->owner)) { // ignore cases where the parent contact may have been deleted and thus the owner is null
                 $contacts[$email->contact_id]['contact_id'] = $email->contact_id;
                 $contacts[$email->contact_id]['lastname'] = $email->owner->last_name;
                 $contacts[$email->contact_id]['firstname'] = $email->owner->first_name;

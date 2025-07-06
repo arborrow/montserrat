@@ -5,20 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAssetJobRequest;
 use App\Http\Requests\UpdateAssetJobRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class AssetJobController extends Controller
+class AssetJobController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function index(): View
     {
-        $this->authorize('show-asset-job');
+        Gate::authorize('show-asset-job');
 
         $asset_jobs = \App\Models\AssetJob::with('asset_task.asset', 'assigned_to')->orderBy('scheduled_date')->get();
 
@@ -30,7 +34,7 @@ class AssetJobController extends Controller
      */
     public function create($asset_task_id = 0): View
     {
-        $this->authorize('create-asset-job');
+        Gate::authorize('create-asset-job');
 
         // if creating a task for a particular asset (default behavior from asset.show blade) then no need to get long list of assets to choose from
         if (isset($asset_task_id) && $asset_task_id > 0) {
@@ -56,7 +60,7 @@ class AssetJobController extends Controller
      */
     public function store(StoreAssetJobRequest $request): RedirectResponse
     {
-        $this->authorize('create-asset-job');
+        Gate::authorize('create-asset-job');
 
         $asset_job = new \App\Models\AssetJob;
 
@@ -93,7 +97,7 @@ class AssetJobController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-asset-job');
+        Gate::authorize('show-asset-job');
 
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
@@ -105,7 +109,7 @@ class AssetJobController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-asset-job');
+        Gate::authorize('update-asset-job');
 
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
@@ -132,7 +136,7 @@ class AssetJobController extends Controller
      */
     public function update(UpdateAssetJobRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-asset-job');
+        Gate::authorize('update-asset-job');
 
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
@@ -158,7 +162,7 @@ class AssetJobController extends Controller
 
         $asset_job->save();
 
-        //TODO: implement on asset_job edit blade
+        // TODO: implement on asset_job edit blade
         if ($request->file('attachment') !== null) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentController;
@@ -175,7 +179,7 @@ class AssetJobController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-asset-job');
+        Gate::authorize('delete-asset-job');
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
         \App\Models\AssetJob::destroy($id);

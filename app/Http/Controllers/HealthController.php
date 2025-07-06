@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use DB;
-// use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Collection;
+// use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class HealthController extends Controller
+class HealthController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -19,7 +23,7 @@ class HealthController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
         $results->put('primary_address', $this->check_primary_address());
         $results->put('primary_email', $this->check_primary_email());
@@ -41,7 +45,7 @@ class HealthController extends Controller
      */
     public function check_primary_address(): Collection
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
         $address_primary = DB::table('address')->whereIsPrimary(1)->whereNull('deleted_at')->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id', 'street_address')->get();
 
@@ -53,7 +57,7 @@ class HealthController extends Controller
      */
     public function check_primary_email(): Collection
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
         $email_primary = DB::table('email')->whereIsPrimary(1)->whereNull('deleted_at')->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id', 'email')->get();
 
@@ -65,7 +69,7 @@ class HealthController extends Controller
      */
     public function check_primary_phone(): Collection
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
         $phone_primary = DB::table('phone')->whereIsPrimary(1)->whereNull('deleted_at')->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id', 'phone')->get();
 
@@ -77,7 +81,7 @@ class HealthController extends Controller
      */
     public function check_abandoned_donations(): Collection
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $abandoned_donations = DB::table('Donations')
@@ -96,7 +100,7 @@ class HealthController extends Controller
      */
     public function check_donations_with_zero_event_id(): Collection
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $donations_with_zero_event_id = DB::table('Donations')
@@ -115,7 +119,7 @@ class HealthController extends Controller
      */
     public function check_abandoned_payments(): Collection
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $abandoned_payments = DB::table('Donations_payment')
@@ -134,7 +138,7 @@ class HealthController extends Controller
      */
     public function check_abandoned_registrations(): Collection
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $abandoned_registrations = DB::table('participant')
@@ -153,7 +157,7 @@ class HealthController extends Controller
      */
     public function check_duplicate_relationships(): Collection
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $duplicate_relationships = DB::table('relationship')
@@ -173,7 +177,7 @@ class HealthController extends Controller
      */
     public function check_address_with_no_country(): Collection
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $address_with_no_country = DB::table('address')
@@ -193,7 +197,7 @@ class HealthController extends Controller
      */
     public function check_polygamy(): Collection
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $husbands = DB::table('relationship')
@@ -223,7 +227,7 @@ class HealthController extends Controller
      */
     public function check_anonymous_balance_transactions(): Collection
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $anonymous_balance_transactions = DB::table('stripe_balance_transaction')

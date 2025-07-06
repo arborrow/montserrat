@@ -36,7 +36,7 @@ class Touchpoint extends Model implements Auditable
         return $this->belongsTo(Contact::class, 'person_id', 'id');
     }
 
-    //alias for person
+    // alias for person
     public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'person_id', 'id');

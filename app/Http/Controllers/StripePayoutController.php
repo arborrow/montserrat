@@ -8,15 +8,19 @@ use App\Models\StripePayout;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Stripe\StripeClient;
 
-class StripePayoutController extends Controller
+class StripePayoutController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -24,7 +28,7 @@ class StripePayoutController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-stripe-payout');
+        Gate::authorize('show-stripe-payout');
 
         $stripe = new StripeClient(config('services.stripe.secret'));
 
@@ -84,7 +88,7 @@ class StripePayoutController extends Controller
      */
     public function show($payout_id): View
     {
-        $this->authorize('show-stripe-payout');
+        Gate::authorize('show-stripe-payout');
 
         $stripe = new StripeClient(config('services.stripe.secret'));
         $stripe_payout = $stripe->payouts->retrieve($payout_id, []);
@@ -128,7 +132,7 @@ class StripePayoutController extends Controller
      */
     public function show_date($date = null)
     {
-        $this->authorize('show-stripe-payout');
+        Gate::authorize('show-stripe-payout');
         $payout_date = \Carbon\Carbon::parse($date);
         if (empty($payout_date)) {
             return redirect()->back();
@@ -175,7 +179,7 @@ class StripePayoutController extends Controller
      */
     public function process_fees(?int $id = null): RedirectResponse
     {
-        $this->authorize('update-stripe-payout');
+        Gate::authorize('update-stripe-payout');
 
         $stripe_vendor_id = config('polanco.contact.stripe');
         $payout = StripePayout::findOrFail($id);
@@ -224,7 +228,7 @@ class StripePayoutController extends Controller
      */
     public function import(): RedirectResponse
     {
-        $this->authorize('import-stripe-payout');
+        Gate::authorize('import-stripe-payout');
         // dd('Stripe Payout Import');
         $latest_payout = StripePayout::orderByDesc('date')->first();
         $stripe = new StripeClient(config('services.stripe.secret'));
@@ -241,7 +245,7 @@ class StripePayoutController extends Controller
             $stripe_payout->date = Carbon::parse($payout->arrival_date);
             $stripe_payout->status = $payout->status;
 
-            $fees = 0; //initialize
+            $fees = 0; // initialize
             $transactions = $stripe->balanceTransactions->all(
                 ['payout' => $stripe_payout->payout_id,
                     'type' => 'charge',
@@ -265,7 +269,7 @@ class StripePayoutController extends Controller
      */
     public function process($id): RedirectResponse
     {
-        $this->authorize('import-stripe-payout');
+        Gate::authorize('import-stripe-payout');
         // dd('Stripe Payout Import');
         $stripe = new StripeClient(config('services.stripe.secret'));
         $payouts = $stripe->payouts->all([]);
@@ -283,9 +287,9 @@ class StripePayoutController extends Controller
             $stripe_payout->date = Carbon::parse($payout->arrival_date);
             $stripe_payout->status = $payout->status;
             // TODO: import payment fees and sum together to calculate total_fee_amount for each payout
-            //$stripe_payout->total_fee_amount = 0;
+            // $stripe_payout->total_fee_amount = 0;
             $stripe_payout->save();
-            //dd($stripe_payout,$payout->id);
+            // dd($stripe_payout,$payout->id);
         }
 
         return Redirect::action([self::class, 'index']);

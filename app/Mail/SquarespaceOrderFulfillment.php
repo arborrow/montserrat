@@ -33,7 +33,7 @@ class SquarespaceOrderFulfillment extends Mailable
             return $this->replyTo('registration@montserratretreat.org')
                 ->subject($subject->snippet)
                 ->view('emails.es_ES.squarespace_order_fulfillment');
-        } else { //en_US is the default language
+        } else { // en_US is the default language
             $subject = \App\Models\Snippet::whereTitle('squarespace_order_fulfillment')->whereLocale('en_US')->whereLabel('subject')->firstOrFail();
 
             return $this->replyTo('registration@montserratretreat.org')

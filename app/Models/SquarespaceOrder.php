@@ -67,9 +67,10 @@ class SquarespaceOrder extends Model implements Auditable
     public function getIsCoupleAttribute()
     {
         $is_couple = $this->retreat_couple == 'Couple' || $this->retreat_couple == 'Pareja';
-        if (!empty($this->couple_name)) {
+        if (! empty($this->couple_name)) {
             $is_couple = 1;
         }
+
         return $is_couple;
     }
 

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -17,7 +17,7 @@ final class RelationshipControllerTest extends TestCase
 
     #[Test]
     public function create_returns_an_ok_response(): void
-    {   //TODO: relationship creation currently handled by person controller; this is more of a stub
+    {   // TODO: relationship creation currently handled by person controller; this is more of a stub
         $user = $this->createUserWithPermission('create-relationship');
 
         $response = $this->actingAs($user)->get(route('relationship.create'));
@@ -40,7 +40,7 @@ final class RelationshipControllerTest extends TestCase
 
     #[Test]
     public function edit_returns_an_ok_response(): void
-    {   //TODO: relationship editing currently handled by person controller; this is more of a stub
+    {   // TODO: relationship editing currently handled by person controller; this is more of a stub
         $user = $this->createUserWithPermission('update-relationship');
         $relationship = \App\Models\Relationship::factory()->create();
 
@@ -78,7 +78,7 @@ final class RelationshipControllerTest extends TestCase
 
     #[Test]
     public function store_returns_an_ok_response(): void
-    {   //TODO: relationship creation/store currently handled by person controller; this is more of a stub
+    {   // TODO: relationship creation/store currently handled by person controller; this is more of a stub
         $user = $this->createUserWithPermission('create-relationship');
 
         $response = $this->actingAs($user)->post(route('relationship.store'), [
@@ -92,7 +92,7 @@ final class RelationshipControllerTest extends TestCase
 
     #[Test]
     public function update_returns_an_ok_response(): void
-    {   //TODO: relationship creation currently handled by person controller; this is more of a stub
+    {   // TODO: relationship creation currently handled by person controller; this is more of a stub
         $user = $this->createUserWithPermission('update-relationship');
         $relationship = \App\Models\Relationship::factory()->create();
 

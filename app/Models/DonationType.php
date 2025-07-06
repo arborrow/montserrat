@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,7 +25,8 @@ class DonationType extends Model implements Auditable
 
     protected $table = 'donation_type';
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->whereIsActive(1);
     }

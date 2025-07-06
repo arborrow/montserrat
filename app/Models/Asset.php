@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -135,7 +136,7 @@ class Asset extends Model implements Auditable
         return $this->hasOne(Uom::class, 'id', 'width_uom_id');
     }
 
-    //attributes
+    // attributes
     public function getAssetTypeNameAttribute()
     {
         if (isset($this->asset_type->name)) {
@@ -352,13 +353,15 @@ class Asset extends Model implements Auditable
         }
     }
 
-    //scopes
-    public function scopeActive($query)
+    // scopes
+    #[Scope]
+    protected function active($query)
     {
         return $query->whereIsActive(1);
     }
 
-    public function scopeFiltered($query, $filters)
+    #[Scope]
+    protected function filtered($query, $filters)
     {
         foreach ($filters->query as $filter => $value) {
             if ($filter == 'name' && ! empty($value)) {

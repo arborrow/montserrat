@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -226,11 +226,11 @@ final class OrganizationControllerTest extends TestCase
     #[Test]
     public function update_returns_an_ok_response(): void
     {
-        //create original data
+        // create original data
         $user = $this->createUserWithPermission('update-contact');
         $organization = \App\Models\Contact::factory()->create();
         $original_name = $organization->organization_name;
-        //create updated data
+        // create updated data
         $organization_name = $this->faker->company();
         $response = $this->actingAs($user)->put(route('organization.update', ['organization' => $organization]), [
             'organization_name' => $organization_name,

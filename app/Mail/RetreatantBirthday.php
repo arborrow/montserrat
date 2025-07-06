@@ -33,7 +33,7 @@ class RetreatantBirthday extends Mailable
             return $this->replyTo('director@montserratretreat.org')
                 ->subject('Feliz Cumpleaños '.$nameToUse.'!')
                 ->view('emails.es_ES.birthday');
-        } else { //en_US is the default language
+        } else { // en_US is the default language
             return $this->replyTo('director@montserratretreat.org')
                 ->subject('Happy Birthday '.$nameToUse.'!')
                 ->view('emails.en_US.birthday');

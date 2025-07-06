@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-//use Illuminate\Database\Eloquent\SoftDeletes;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TmpOfferingDedup extends Model
 {
     use HasFactory;
 
-    //use SoftDeletes;
+    // use SoftDeletes;
     protected $table = 'tmp_offering_dedup';
 
     protected $fillable = ['contact_id', 'event_id'];

@@ -5,20 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDonationTypeRequest;
 use App\Http\Requests\UpdateDonationTypeRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class DonationTypeController extends Controller
+class DonationTypeController extends Controller implements HasMiddleware
 {
-    //
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function index(): View
     {
-        $this->authorize('show-donation-type');
+        Gate::authorize('show-donation-type');
         $donation_types = \App\Models\DonationType::orderBy('label')->get();
 
         return view('admin.donation_types.index', compact('donation_types'));
@@ -29,7 +32,7 @@ class DonationTypeController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-donation-type');
+        Gate::authorize('create-donation-type');
 
         return view('admin.donation_types.create');
     }
@@ -39,7 +42,7 @@ class DonationTypeController extends Controller
      */
     public function store(StoreDonationTypeRequest $request): RedirectResponse
     {
-        $this->authorize('create-donation-type');
+        Gate::authorize('create-donation-type');
 
         $donation_type = new \App\Models\DonationType;
         $donation_type->label = $request->input('label');
@@ -60,7 +63,7 @@ class DonationTypeController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-donation-type');
+        Gate::authorize('show-donation-type');
 
         $donation_type = \App\Models\DonationType::findOrFail($id);
 
@@ -72,7 +75,7 @@ class DonationTypeController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-donation-type');
+        Gate::authorize('update-donation-type');
 
         $donation_type = \App\Models\DonationType::findOrFail($id);
 
@@ -84,7 +87,7 @@ class DonationTypeController extends Controller
      */
     public function update(UpdateDonationTypeRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-donation-type');
+        Gate::authorize('update-donation-type');
 
         $donation_type = \App\Models\DonationType::findOrFail($request->input('id'));
         $donation_type->name = $request->input('name');
@@ -104,7 +107,7 @@ class DonationTypeController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-donation-type');
+        Gate::authorize('delete-donation-type');
 
         $donation_type = \App\Models\DonationType::findOrFail($id);
 

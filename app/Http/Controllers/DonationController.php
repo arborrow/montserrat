@@ -15,15 +15,19 @@ use App\Models\Retreat;
 use App\Models\SquarespaceContribution;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class DonationController extends Controller
+class DonationController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -31,20 +35,20 @@ class DonationController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
 
         // rather than using the active donation_descriptions from DonationType model, let's continue to show all of the existing donation_descriptions in the Donations table so that any that are not in the DonationType table can be cleaned up
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
         // dd($donation_descriptions);
         $donations = Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix', 'retreat')->paginate(25, ['*'], 'donations');
 
-        //dd($donations);
+        // dd($donations);
         return view('donations.index', compact('donations', 'donation_descriptions'));
     }
 
     public function index_type($donation_id = null): View
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
         $donation = Donation::findOrFail($donation_id);
         $donation_description = $donation->donation_description;
@@ -59,7 +63,7 @@ class DonationController extends Controller
 
     public function search(): View
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
 
         $descriptions = DonationType::active()->orderby('name')->pluck('name', 'name');
         $descriptions->prepend('N/A', '');
@@ -72,7 +76,7 @@ class DonationController extends Controller
 
     public function results(DonationSearchRequest $request): View
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
         if (! empty($request)) {
             $all_donations = Donation::filtered($request)->orderBy('donation_date')->get();
             $donations = Donation::filtered($request)->orderBy('donation_date')->paginate(25, ['*'], 'donations');
@@ -87,7 +91,7 @@ class DonationController extends Controller
 
     public function overpaid(): View
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
         $overpaid = DB::table('Donations_payment as p')
             ->select(DB::raw('d.contact_id, c.sort_name, d.donation_id, d.donation_date, ROUND(SUM(p.payment_amount),2) as paid, ROUND(d.donation_amount,2) as pledged'))
             ->leftjoin('Donations as d', 'd.donation_id', '=', 'p.donation_id')
@@ -100,10 +104,10 @@ class DonationController extends Controller
         return view('donations.overpaid', compact('overpaid'));
     }
 
-    //TODO: add docs code here and create unit tests
+    // TODO: add docs code here and create unit tests
     public function mergeable(): View
     {   // contact id 5847 hardcoded for anonymous user
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
         $mergeable = DB::table('Donations as d')
             ->select(DB::raw('CONCAT(d.contact_id,"-",d.event_id,"-",d.donation_description) as unique_value, COUNT(*) as donation_count, MAX(d.donation_date) as donation_date, MIN(d.donation_id) as min_donation_id, MAX(d.donation_id) as max_donation_id, MIN(c.sort_name) as sort_name, MIN(e.idnumber) as idnumber, MIN(e.title) as event_title, MIN(d.donation_description) as donation_description, MIN(d.contact_id) as contact_id'))
             ->leftjoin('event as e', 'd.event_id', '=', 'e.id')
@@ -116,10 +120,10 @@ class DonationController extends Controller
         return view('donations.mergeable', compact('mergeable'));
     }
 
-    //TODO: add docs code here and create unit tests
+    // TODO: add docs code here and create unit tests
     public function merge($first_donation_id = 0, $second_donation_id = 0): RedirectResponse
     {
-        $this->authorize('update-donation');
+        Gate::authorize('update-donation');
         $first_donation = Donation::findOrFail($first_donation_id); // target or destination donation
         $second_donation = Donation::findOrFail($second_donation_id); // source or donation being merged
         $second_donation_payments = Payment::whereDonationId($second_donation_id)->get();
@@ -176,7 +180,7 @@ class DonationController extends Controller
 
     public function agc($year, DonationAgcRequest $request): View
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
 
         if (! isset($year)) {
             $year = (date('m') > 6) ? date('Y') + 1 : date('Y');
@@ -221,7 +225,7 @@ class DonationController extends Controller
      */
     public function create($id = null, $event_id = null, $type = null): View
     {
-        $this->authorize('create-donation');
+        Gate::authorize('create-donation');
 
         $subcontact_type_id = (isset($type)) ? config('polanco.contact_type.'.$type) : null;
 
@@ -244,7 +248,7 @@ class DonationController extends Controller
             $retreats->prepend('Unassigned', 0);
         }
 
-        //dd($donors);
+        // dd($donors);
         $payment_methods = config('polanco.payment_method');
         $descriptions = DonationType::active()->orderby('name')->pluck('name', 'name');
         $dt_today = \Carbon\Carbon::today();
@@ -266,7 +270,7 @@ class DonationController extends Controller
      */
     public function store(StoreDonationRequest $request): RedirectResponse
     {
-        $this->authorize('create-donation');
+        Gate::authorize('create-donation');
 
         $donation = new Donation;
         $donation->contact_id = $request->input('donor_id');
@@ -294,7 +298,7 @@ class DonationController extends Controller
         }
         if ($request->input('payment_description') == 'Check') {
             $payment->cknumber = $request->input('payment_idnumber');
-        }        //dd($payment, $donation);
+        }        // dd($payment, $donation);
         $payment->save();
 
         flash('Donation ID#: <a href="'.url('/donation/'.$donation->donation_id).'">'.$donation->donation_id.'</a> added')->success();
@@ -307,7 +311,7 @@ class DonationController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
         $donation = Donation::with('payments', 'contact')->findOrFail($id);
 
         return view('donations.show', compact('donation')); //
@@ -318,8 +322,8 @@ class DonationController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-donation');
-        //get this retreat's information
+        Gate::authorize('update-donation');
+        // get this retreat's information
         $donation = Donation::with('payments', 'contact')->findOrFail($id);
         $descriptions = DonationType::active()->orderby('name')->pluck('name', 'name');
 
@@ -334,7 +338,7 @@ class DonationController extends Controller
         $retreats->prepend('Unassigned', 0);
         $defaults['event_id'] = $donation->event_id;
         // $descriptions->prepend('Unassigned', 0); // no longer needed since all donations have an active donation description
-        //$descriptions->toArray();
+        // $descriptions->toArray();
         // $defaults['description_key'] = $descriptions->search($donation->donation_description); // no longer needed to lookup donation type key, just use the existing value
 
         // check if current event is further in the past and if so add it
@@ -350,7 +354,7 @@ class DonationController extends Controller
      */
     public function update(UpdateDonationRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-donation');
+        Gate::authorize('update-donation');
 
         $donation = Donation::findOrFail($id);
         $donation->contact_id = $request->input('donor_id');
@@ -360,7 +364,7 @@ class DonationController extends Controller
         $donation->donation_date = $request->input('donation_date') ? $request->input('donation_date') : null;
         $donation->donation_amount = $request->input('donation_amount');
         $donation->donation_description = $request->input('donation_description');
-        $donation->notes1 = $request->input('notes1'); //primary_contact
+        $donation->notes1 = $request->input('notes1'); // primary_contact
         $donation->notes = $request->input('notes');
         $donation->terms = $request->input('terms');
         $donation->start_date = $request->input('start_date');
@@ -368,7 +372,7 @@ class DonationController extends Controller
         $donation->donation_install = $request->input('donation_install');
         $donation->stripe_invoice = $request->input('stripe_invoice');
         if ($request->input('donation_thank_you') == 'Y') {
-            $donation['Thank You'] = $request->input('donation_thank_you'); //field has space in database and should be changed at some point
+            $donation['Thank You'] = $request->input('donation_thank_you'); // field has space in database and should be changed at some point
         } else {
             $donation['Thank You'] = null;
         }
@@ -384,10 +388,10 @@ class DonationController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-donation');
+        Gate::authorize('delete-donation');
         $donation = Donation::findOrFail($id);
         $contact = Contact::findOrFail($donation->contact_id);
-        //deletion of payments implied on the model
+        // deletion of payments implied on the model
         Donation::destroy($id);
         // disassociate registration with a donation that is being deleted - there should only be one
         $registration = Registration::whereDonationId($id)->first();
@@ -411,7 +415,7 @@ class DonationController extends Controller
      */
     public function retreat_payments_update(Request $request): RedirectResponse
     {   // I removed the permission check for update-payment as it seemed redundant to update-donation and it makes testing a little easier
-        $this->authorize('update-donation');
+        Gate::authorize('update-donation');
         if ($request->input('event_id')) {
             $event_id = $request->input('event_id');
         }
@@ -419,7 +423,7 @@ class DonationController extends Controller
             foreach ($request->input('donations') as $key => $value) {
                 $registration = Registration::findOrFail($key);
                 // if there is not already an existing donation and there is a pledge
-                if (is_null($registration->donation_id)) { //create a new donation
+                if (is_null($registration->donation_id)) { // create a new donation
                     if ($value['pledge'] > 0) {
                         $donation = new Donation;
                         $donation->contact_id = $registration->contact_id;
@@ -455,7 +459,7 @@ class DonationController extends Controller
                         if ($value['method'] == 'Check') {
                             $payment->cknumber = $value['idnumber'];
                         }
-                        //dd($payment, $donation);
+                        // dd($payment, $donation);
                         $payment->save();
                     }
                 } else {
@@ -473,7 +477,7 @@ class DonationController extends Controller
     // TODO:: add unit test for this method
     public function process_deposits($event_id): RedirectResponse
     {
-        $this->authorize('update-donation');
+        Gate::authorize('update-donation');
         $event = Retreat::findOrFail($event_id);
         $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription('Retreat Deposits')->get();
         foreach ($event_deposits as $event_deposit) {
@@ -494,7 +498,7 @@ class DonationController extends Controller
     // TODO:: add unit test for this method; creating method as proof of concept - need to come back and test
     public function unprocess_deposits($event_id): RedirectResponse
     {
-        $this->authorize('update-donation');
+        Gate::authorize('update-donation');
         $event = Retreat::findOrFail($event_id);
         $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription('Retreat Funding')->get();
         foreach ($event_deposits as $event_deposit) {

@@ -6,14 +6,18 @@ use App\Http\Requests\PaymentSearchRequest;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class PaymentController extends Controller
+class PaymentController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -21,10 +25,10 @@ class PaymentController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-payment');
+        Gate::authorize('show-payment');
         $payments = \App\Models\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(25, ['*'], 'payments');
 
-        //dd($donations);
+        // dd($donations);
         return view('payments.index', compact('payments'));
     }
 
@@ -39,7 +43,7 @@ class PaymentController extends Controller
     public function create($donation_id = 0)
     {
         if ($donation_id > 0) {
-            $this->authorize('create-payment');
+            Gate::authorize('create-payment');
             $donation = \App\Models\Donation::findOrFail($donation_id);
             $payment_methods = config('polanco.payment_method');
 
@@ -53,7 +57,7 @@ class PaymentController extends Controller
 
     public function search(): View
     {
-        $this->authorize('show-payment');
+        Gate::authorize('show-payment');
 
         $payment_methods = config('polanco.payment_method');
         $payment_methods[''] = 'N/A';
@@ -66,7 +70,7 @@ class PaymentController extends Controller
 
     public function results(PaymentSearchRequest $request): View
     {
-        $this->authorize('show-payment');
+        Gate::authorize('show-payment');
         if (! empty($request)) {
             $all_payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->get();
             $payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->paginate(25, ['*'], 'payments');
@@ -84,7 +88,7 @@ class PaymentController extends Controller
      */
     public function store(StorePaymentRequest $request): RedirectResponse
     {
-        $this->authorize('create-payment');
+        Gate::authorize('create-payment');
         // dd($request);
 
         $donation = \App\Models\Donation::findOrFail($request->input('donation_id'));
@@ -113,10 +117,10 @@ class PaymentController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-payment');
+        Gate::authorize('show-payment');
         $payment = \App\Models\Payment::with('donation.retreat', 'donation.contact', 'balance_transaction')->findOrFail($id);
 
-        //dd($payment);
+        // dd($payment);
         return view('payments.show', compact('payment')); //
     }
 
@@ -125,8 +129,8 @@ class PaymentController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-payment');
-        //get this retreat's information
+        Gate::authorize('update-payment');
+        // get this retreat's information
         $payment = \App\Models\Payment::with('donation.contact', 'donation.retreat')->findOrFail($id);
         $payment_methods = config('polanco.payment_method');
 
@@ -138,7 +142,7 @@ class PaymentController extends Controller
      */
     public function update(UpdatePaymentRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-payment');
+        Gate::authorize('update-payment');
 
         $payment = \App\Models\Payment::findOrFail($id);
         $payment->payment_amount = $request->input('payment_amount');
@@ -165,7 +169,7 @@ class PaymentController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-payment');
+        Gate::authorize('delete-payment');
         $payment = \App\Models\Payment::findOrFail($id);
 
         \App\Models\Payment::destroy($id);

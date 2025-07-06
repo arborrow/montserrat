@@ -5,20 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAssetTypeRequest;
 use App\Http\Requests\UpdateAssetTypeRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class AssetTypeController extends Controller
+class AssetTypeController extends Controller implements HasMiddleware
 {
-    //
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function index(): View
     {
-        $this->authorize('show-asset-type');
+        Gate::authorize('show-asset-type');
         $asset_types = \App\Models\AssetType::orderBy('label')->get();
 
         return view('admin.asset_types.index', compact('asset_types'));
@@ -29,7 +32,7 @@ class AssetTypeController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-asset-type');
+        Gate::authorize('create-asset-type');
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', 0);
 
@@ -41,7 +44,7 @@ class AssetTypeController extends Controller
      */
     public function store(StoreAssetTypeRequest $request): RedirectResponse
     {
-        $this->authorize('create-asset-type');
+        Gate::authorize('create-asset-type');
 
         $asset_type = new \App\Models\AssetType;
         $asset_type->label = $request->input('label');
@@ -62,7 +65,7 @@ class AssetTypeController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-asset-type');
+        Gate::authorize('show-asset-type');
 
         $asset_type = \App\Models\AssetType::findOrFail($id);
 
@@ -74,7 +77,7 @@ class AssetTypeController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-asset-type');
+        Gate::authorize('update-asset-type');
 
         $asset_type = \App\Models\AssetType::findOrFail($id);
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
@@ -88,7 +91,7 @@ class AssetTypeController extends Controller
      */
     public function update(UpdateAssetTypeRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-asset-type');
+        Gate::authorize('update-asset-type');
 
         $asset_type = \App\Models\AssetType::findOrFail($request->input('id'));
         $asset_type->name = $request->input('name');
@@ -108,7 +111,7 @@ class AssetTypeController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-asset-type');
+        Gate::authorize('delete-asset-type');
         $asset_type = \App\Models\AssetType::findOrFail($id);
 
         \App\Models\AssetType::destroy($id);

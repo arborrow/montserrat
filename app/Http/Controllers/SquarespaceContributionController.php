@@ -19,17 +19,21 @@ use App\Traits\SquareSpaceTrait;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class SquarespaceContributionController extends Controller
+class SquarespaceContributionController extends Controller implements HasMiddleware
 {
     use SquareSpaceTrait;
 
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -37,7 +41,7 @@ class SquarespaceContributionController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-squarespace-contribution');
+        Gate::authorize('show-squarespace-contribution');
         $ss_contributions = SquarespaceContribution::whereIsProcessed(0)->orderBy('created_at')->paginate(25, ['*'], 'ss_contributions');
         $processed_ss_contributions = SquarespaceContribution::whereIsProcessed(1)->orderByDesc('created_at')->paginate(25, ['*'], 'ss_unprocessed_contributions');
 
@@ -49,8 +53,8 @@ class SquarespaceContributionController extends Controller
      */
     public function create(): RedirectResponse
     {
-        //use permisson of target, namely squarespace.contribution.index
-        $this->authorize('show-squarespace-contribution');
+        // use permisson of target, namely squarespace.contribution.index
+        Gate::authorize('show-squarespace-contribution');
 
         return Redirect::action([self::class, 'index']);
     }
@@ -60,8 +64,8 @@ class SquarespaceContributionController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        //use permisson of target, namely squarespace.contribution.index
-        $this->authorize('show-squarespace-contribution');
+        // use permisson of target, namely squarespace.contribution.index
+        Gate::authorize('show-squarespace-contribution');
 
         return Redirect::action([self::class, 'index']);
     }
@@ -71,7 +75,7 @@ class SquarespaceContributionController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-squarespace-contribution');
+        Gate::authorize('show-squarespace-contribution');
         $ss_contribution = SquarespaceContribution::findOrFail($id);
 
         return view('squarespace.contribution.show', compact('ss_contribution'));
@@ -82,7 +86,7 @@ class SquarespaceContributionController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-squarespace-contribution');
+        Gate::authorize('update-squarespace-contribution');
 
         $ss_contribution = SquarespaceContribution::findOrFail($id);
         $descriptions = DonationType::active()->orderby('name')->pluck('name', 'name');
@@ -255,7 +259,7 @@ class SquarespaceContributionController extends Controller
             $ss_contribution->donation_id = $donation->donation_id;
 
             // TODO: carefully consider possible impact of overwriting data, currently set to avoid overwriting most data
-            //create registration if it does not exist for a
+            // create registration if it does not exist for a
             if (isset($event_id) && config('polanco.donation_descriptions.'.$request->input('donation_description')) == 'Retreat Deposits') {
                 $registration = Registration::firstOrNew([
                     'contact_id' => $contact_id,
@@ -285,8 +289,8 @@ class SquarespaceContributionController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        //use permisson of target, namely squarespace.contribution.index
-        $this->authorize('show-squarespace-contribution');
+        // use permisson of target, namely squarespace.contribution.index
+        Gate::authorize('show-squarespace-contribution');
 
         return Redirect::action([self::class, 'index']);
     }
@@ -296,7 +300,7 @@ class SquarespaceContributionController extends Controller
      */
     public function reset(int $id): RedirectResponse
     {
-        $this->authorize('update-squarespace-contribution');
+        Gate::authorize('update-squarespace-contribution');
 
         $ss_contribution = SquarespaceContribution::findOrFail($id);
         $ss_contribution->contact_id = null;

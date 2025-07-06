@@ -46,7 +46,7 @@ class GetMailgunMessages extends Command
     {
         if (isset($full_address)) {
             $address = []; // init array
-            $address_partials = explode(', ', $full_address); //split up string by commas
+            $address_partials = explode(', ', $full_address); // split up string by commas
 
             if (count($address_partials) == 3) {
                 $address['street'] = trim($address_partials[0]);
@@ -145,7 +145,7 @@ class GetMailgunMessages extends Command
                             $message->from_id = isset($contact_from->id) ? $contact_from->id : null;
                             $message->to_id = isset($contact_to->id) ? $contact_to->id : null;
                             $message->save();
-                            //dd($message);
+                            // dd($message);
                         }
                     } catch (\Exception $exception) {
                         // Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject, 'mailgun_url' => $mailgun_url],
@@ -266,7 +266,7 @@ class GetMailgunMessages extends Command
                     $ss_donation->fund = $this->extract_data($donation, 'Please Select a Fund:');
                     $year = substr($ss_donation->retreat_description, -5, 4);
 
-                    //dd($ss_donation,$donation);
+                    // dd($ss_donation,$donation);
 
                     $retreat_number = trim(substr($ss_donation->retreat_description,
                         strpos($ss_donation->retreat_description, '#') + 1,
@@ -464,7 +464,7 @@ class GetMailgunMessages extends Command
                             $order->retreat_description = trim(substr($product_variation, 0, strpos($product_variation, '(')));
                             $order->retreat_dates = substr($product_variation, strpos($product_variation, '(') + 1, strpos($product_variation, ')') - (strpos($product_variation, '(') + 1));
 
-                            //TODO: rather than trying to determine if the date in the message are in English or Spanish
+                            // TODO: rather than trying to determine if the date in the message are in English or Spanish
                             // get the year, retreat number and create the idnumber, lookup the event, and get the retreat start date from the actual event
                             $year = substr($order->retreat_dates, strpos($order->retreat_dates, ', ') + 2);
 
@@ -480,7 +480,7 @@ class GetMailgunMessages extends Command
                             $order->retreat_start_date = $event?->start_date;
                             $order->event_id = $event?->id;
 
-                            //$order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
+                            // $order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
                             // a bit hacky but TOTAL was being flakey possibly because of SUBTOTAL so Tax was more unique
                             $deposit_amount = str_replace('$', '', trim(str_replace('TOTAL', '', $this->extract_value_between($clean_message, "Tax\n", '$0.00'))));
                             $deposit_amount = array_values(array_filter(explode("\n", $deposit_amount)));

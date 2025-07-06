@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -16,7 +17,8 @@ class Department extends Model implements Auditable
 
     protected $table = 'departments';
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->whereIsActive(1);
     }
