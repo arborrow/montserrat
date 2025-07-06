@@ -35,50 +35,50 @@ class AttachmentController extends Controller implements HasMiddleware
         switch ($type) {
             case 'attachment':
                 Gate::authorize('show-attachment');
-                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/attachments/'.$file_name;
+                $path = storage_path().'/app/private/'.$entity.'/'.$entity_id.'/attachments/'.$file_name;
                 break;
             case 'avatar':
                 Gate::authorize('show-avatar');
                 $file_name = 'avatar.png';
-                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
+                $path = storage_path().'/app/private/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
             case 'event-attachment':
                 Gate::authorize('show-event-attachment');
-                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/attachments/'.$file_name;
+                $path = storage_path().'/app/private/'.$entity.'/'.$entity_id.'/attachments/'.$file_name;
                 break;
             case 'schedule':
                 Gate::authorize('show-event-schedule');
                 $file_name = 'schedule.pdf';
-                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
+                $path = storage_path().'/app/private/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
             case 'contract':
                 Gate::authorize('show-event-attachment');
                 $file_name = 'contract.pdf';
-                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
+                $path = storage_path().'/app/private/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
             case 'evaluations':
                 Gate::authorize('show-event-evaluation');
                 $file_name = 'evaluations.pdf';
-                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
+                $path = storage_path().'/app/private/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
             case 'group_photo':
                 Gate::authorize('show-event-group-photo');
                 $file_name = 'group_photo.jpg';
-                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
+                $path = storage_path().'/app/private/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
             case 'asset_photo':
                 Gate::authorize('show-asset');
                 $file_name = 'asset_photo.jpg';
-                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
+                $path = storage_path().'/app/private/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
             case 'signature':
                 Gate::authorize('show-signature');
                 $file_name = 'signature.png';
-                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
+                $path = storage_path().'/app/private/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
             default:
                 Gate::authorize('show-attachment');
-                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
+                $path = storage_path().'/app/private/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
         }
         // dd($path);
@@ -182,7 +182,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 $mime_type = $file->getClientMimeType();
                 $avatar = Image::make($file->getRealPath())->fit(150, 150)->orientate();
 
-                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                if (File::exists(storage_path().'/app/private/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::put($path.$file_name, $avatar->stream('png'));
                 } else {
@@ -199,7 +199,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 $mime_type = $file->getClientMimeType();
                 $file_extension = '$file->extension()';
                 $updated_file_name = basename($file_name, '.'.$file_extension).'-updated-'.time().'.'.$file_extension;
-                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                if (File::exists(storage_path().'/app/private/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, File::get($file));
                 } else {
@@ -215,7 +215,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 $file_name = $this->sanitize_filename($filename);
                 $updated_file_name = basename($file_name, '.pdf').'-updated-'.time().'.pdf';
                 $mime_type = 'application/pdf';
-                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                if (File::exists(storage_path().'/app/private/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, $file);
                 } else {
@@ -232,7 +232,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 $file_name = $this->sanitize_filename($filename);
                 $updated_file_name = basename($file_name, '.pdf').'-updated-'.time().'.pdf';
                 $mime_type = 'application/pdf';
-                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                if (File::exists(storage_path().'/app/private/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, $file);
                 } else {
@@ -248,7 +248,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 $file_extension = $file->extension();
                 $updated_file_name = basename($file_name, '.'.$file_extension).'-updated-'.time().'.'.$file_extension;
 
-                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                if (File::exists(storage_path().'/app/private/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, File::get($file));
                 } else {
@@ -263,7 +263,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 $mime_type = $file->getClientMimeType();
                 $updated_file_name = 'schedule-updated-'.time().'.pdf';
 
-                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                if (File::exists(storage_path().'/app/private/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, File::get($file));
                 } else {
@@ -278,7 +278,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 $mime_type = $file->getClientMimeType();
                 $updated_file_name = 'contract-updated-'.time().'.pdf';
 
-                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                if (File::exists(storage_path().'/app/private/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, File::get($file));
                 } else {
@@ -293,7 +293,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 $mime_type = $file->getClientMimeType();
                 $updated_file_name = 'evaluations-updated-'.time().'.pdf';
 
-                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                if (File::exists(storage_path().'/app/private/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, File::get($file));
                 } else {
@@ -308,7 +308,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 $updated_file_name = 'group_photo-updated-'.time().'.jpg';
                 $group_photo = Image::make($file->getRealPath());
                 $mime_type = $group_photo->mime();
-                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                if (File::exists(storage_path().'/app/private/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, $group_photo->stream('jpg'));
                 } else {
@@ -323,7 +323,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 $updated_file_name = 'asset_photo-updated-'.time().'.jpg';
                 $asset_photo = Image::make($file->getRealPath());
                 $mime_type = $asset_photo->mime();
-                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                if (File::exists(storage_path().'/app/private/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, $asset_photo->stream('jpg'));
                 } else {
@@ -338,7 +338,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 $mime_type = $file->getClientMimeType();
                 $updated_file_name = 'signature-updated-'.time().'.png';
                 $signature = Image::make($file->getRealPath());
-                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                if (File::exists(storage_path().'/app/private/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, $signature->stream('png'));
                 } else {
@@ -425,7 +425,7 @@ class AttachmentController extends Controller implements HasMiddleware
                 break;
         }
 
-        if (! File::exists(storage_path().'/app/'.$path.$file_name)) {
+        if (! File::exists(storage_path().'/app/private/'.$path.$file_name)) {
             abort(404);
         }
         if (Storage::move($path.$file_name, $path.$updated_file_name)) {
