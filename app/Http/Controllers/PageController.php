@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
@@ -62,7 +63,7 @@ class PageController extends Controller
 
     public function finance(): View
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
         $current_fiscal_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
 
         return view('pages.finance', compact('current_fiscal_year'));
@@ -102,8 +103,8 @@ class PageController extends Controller
 
     public function retreatantinforeport($idnumber): View
     {
-        $this->authorize('show-contact');
-        $this->authorize('show-registration');
+        Gate::authorize('show-contact');
+        Gate::authorize('show-registration');
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
 
         $registrations = \App\Models\Registration::select(DB::raw('participant.*', 'contact.*'))
@@ -121,7 +122,7 @@ class PageController extends Controller
 
     public function contact_info_report($id): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
         $person = \App\Models\Contact::findOrFail($id);
 
@@ -130,7 +131,7 @@ class PageController extends Controller
 
     public function finance_cash_deposit($day = null)
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
         if (is_null($day)) {
             $day = Carbon::now();
         } else { // ensures that we are adding dashes to string prior to parsing in response to issue #448
@@ -151,7 +152,7 @@ class PageController extends Controller
 
     public function finance_cc_deposit($day = null)
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
 
         if (is_null($day)) {
             $day = Carbon::now();
@@ -173,7 +174,7 @@ class PageController extends Controller
     // TODO: why allow an empty donation id?
     public function finance_invoice($donation_id = null): View
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
 
         $donation = \App\Models\Donation::with('payments', 'contact', 'retreat')->findOrFail($donation_id);
 
@@ -182,7 +183,7 @@ class PageController extends Controller
 
     public function finance_agc_acknowledge(Request $request, $donation_id = null)
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
 
         $donation = \App\Models\Donation::with('payments', 'contact', 'retreat')->findOrFail($donation_id);
 
@@ -226,7 +227,7 @@ class PageController extends Controller
 
     public function finance_retreatdonations($idnumber = null)
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
 
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
         if (isset($retreat)) {
@@ -241,7 +242,7 @@ class PageController extends Controller
 
     public function finance_deposits()
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
         $donations = \App\Models\Donation::where('donation_description', 'Retreat Deposits')->whereDeletedAt(null)->where('donation_amount', '>', 0)->with('contact', 'payments', 'retreat')->get();
         $payments = \App\Models\Payment::whereHas('donation', function ($query) {
             $query->where('donation_description', '=', 'Retreat Deposits');
@@ -260,8 +261,8 @@ class PageController extends Controller
 
     public function finance_reconcile_deposit_show($event_id = null)
     {
-        $this->authorize('show-donation');
-        $this->authorize('show-registration');
+        Gate::authorize('show-donation');
+        Gate::authorize('show-registration');
 
         if (! isset($event_id)) {
             $event_id = config('polanco.event.open_deposit');
@@ -293,7 +294,7 @@ class PageController extends Controller
 
     public function retreatlistingreport($idnumber): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
 
@@ -317,7 +318,7 @@ class PageController extends Controller
 
     public function retreatrosterreport($idnumber): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
         $retreatants = \App\Models\Registration::whereCanceledAt(null)
@@ -340,7 +341,7 @@ class PageController extends Controller
 
     public function retreatrosterphonereport($idnumber): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
         $retreatants = \App\Models\Registration::whereCanceledAt(null)
@@ -363,7 +364,7 @@ class PageController extends Controller
 
     public function retreatregistrations($idnumber): View
     {
-        $this->authorize('show-registration');
+        Gate::authorize('show-registration');
 
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
         $registrations = \App\Models\Registration::whereCanceledAt(null)
@@ -379,7 +380,7 @@ class PageController extends Controller
 
     public function eoy_acknowledgment($contact_id = null, $start_date = null, $end_date = null)
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
 
         if (! is_null($start_date)) {
             $start_date = $this->hyphenate_date($start_date);
@@ -444,56 +445,56 @@ class PageController extends Controller
 
     public function config_index(): View
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
 
         return view('admin.config.index');
     }
 
     public function config_application(): View
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
 
         return view('admin.config.application');
     }
 
     public function config_mail(): View
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
 
         return view('admin.config.mail');
     }
 
     public function config_gate(): View
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
 
         return view('admin.config.gate');
     }
 
     public function config_google_calendar(): View
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
 
         return view('admin.config.google_calendar');
     }
 
     public function config_google_client(): View
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
 
         return view('admin.config.google_client');
     }
 
     public function config_mailgun(): View
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
 
         return view('admin.config.mailgun');
     }
 
     public function config_twilio(): View
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
 
         return view('admin.config.twilio');
     }

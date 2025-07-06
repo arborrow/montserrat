@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
 use Carbon\Carbon;
@@ -25,7 +26,7 @@ class PersonController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
         $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('address_primary.state', 'phones', 'emails', 'websites', 'parish.contact_a.address_primary', 'prefix', 'suffix')->paginate(25, ['*'], 'persons');
 
@@ -34,7 +35,7 @@ class PersonController extends Controller
 
     public function lastnames($letter = null): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $letter.'%')->paginate(25, ['*'], 'persons');
 
         return view('persons.index', compact('persons'));
@@ -45,7 +46,7 @@ class PersonController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
         $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         $parish_list[0] = 'N/A';
         // while probably not the most efficient way of doing this it gets me the result
@@ -106,7 +107,7 @@ class PersonController extends Controller
      */
     public function store(StorePersonRequest $request): RedirectResponse
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
         $person = new \App\Models\Contact;
 
         $person->contact_type = $request->input('contact_type');
@@ -628,7 +629,7 @@ class PersonController extends Controller
      */
     public function show(int $id)
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $person = \App\Models\Contact::with(
             'addresses.country',
             'addresses.location',
@@ -721,7 +722,7 @@ class PersonController extends Controller
      */
     public function envelope(int $id, Request $request)
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
         // default size = 10; logo = false
         $size = (string) '10';
@@ -771,7 +772,7 @@ class PersonController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
         $person = \App\Models\Contact::with('prefix', 'suffix', 'addresses.location', 'emails.location', 'phones.location', 'websites', 'parish', 'emergency_contact', 'notes')->findOrFail($id);
         // dd($person);
 
@@ -928,7 +929,7 @@ class PersonController extends Controller
      */
     public function update(UpdatePersonRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
 
         $person = \App\Models\Contact::with('addresses.location', 'emails.location', 'phones.location', 'websites', 'emergency_contact', 'parish')->findOrFail($id);
 
@@ -1560,7 +1561,7 @@ class PersonController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-contact');
+        Gate::authorize('delete-contact');
 
         // TODO: consider creating a restore/{id} or undelete/{id}
         $person = \App\Models\Contact::findOrFail($id);
@@ -1590,7 +1591,7 @@ class PersonController extends Controller
     public function merge_destroy($id, $return_id): RedirectResponse
     {
         // TODO: consider creating a restore/{id} or undelete/{id}
-        $this->authorize('delete-duplicate');
+        Gate::authorize('delete-duplicate');
 
         $person = \App\Models\Contact::findOrFail($id);
 
@@ -1692,7 +1693,7 @@ class PersonController extends Controller
 
     public function role($group_id): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
         $persons = \App\Models\Contact::with('groups', 'address_primary', 'ambassador_events')->whereHas('groups', function ($query) use ($group_id) {
             $query->where('group_id', '=', $group_id)->whereStatus('Added');
@@ -1756,8 +1757,8 @@ class PersonController extends Controller
 
     public function save_relationship($field, $contact_id_a, $contact_id_b, $relationship_type)
     {
-        $this->authorize('update-contact');
-        $this->authorize('update-relationship');
+        Gate::authorize('update-contact');
+        Gate::authorize('update-relationship');
 
         if ($field > 0) {
             $relationship = new \App\Models\Relationship;
@@ -1771,7 +1772,7 @@ class PersonController extends Controller
 
     public function duplicates(): View
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
 
         $duplicates = \App\Models\Contact::whereIn('id', function ($query) {
             $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(null)->havingRaw('count(*)>1');
@@ -1783,10 +1784,10 @@ class PersonController extends Controller
 
     public function merge($contact_id, $merge_id = null)
     {
-        $this->authorize('update-contact');
-        $this->authorize('update-relationship');
-        $this->authorize('update-attachment');
-        $this->authorize('update-touchpoint');
+        Gate::authorize('update-contact');
+        Gate::authorize('update-relationship');
+        Gate::authorize('update-attachment');
+        Gate::authorize('update-touchpoint');
 
         $contact = \App\Models\Contact::findOrFail($contact_id);
         $similar = \App\Models\Contact::whereSortName($contact->sort_name)->get();

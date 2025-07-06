@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -17,7 +18,7 @@ class PermissionController extends Controller
 
     public function index(Request $request): View
     {
-        $this->authorize('show-permission');
+        Gate::authorize('show-permission');
         $actions = [
             '' => 'N/A',
             'create' => 'create',
@@ -84,7 +85,7 @@ class PermissionController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-permission');
+        Gate::authorize('create-permission');
 
         return view('admin.permissions.create');
     }
@@ -94,7 +95,7 @@ class PermissionController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->authorize('create-permission');
+        Gate::authorize('create-permission');
         $permission = new \App\Models\Permission;
         $permission->name = $request->input('name');
         $permission->display_name = $request->input('display_name');
@@ -111,7 +112,7 @@ class PermissionController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-permission');
+        Gate::authorize('show-permission');
         $permission = \App\Models\Permission::with('roles.users')->findOrFail($id);
         $roles = \App\Models\Role::orderBy('name')->pluck('name', 'id');
 
@@ -123,7 +124,7 @@ class PermissionController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-permission');
+        Gate::authorize('update-permission');
         $permission = \App\Models\Permission::findOrFail($id);
 
         return view('admin.permissions.edit', compact('permission'));
@@ -134,7 +135,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $this->authorize('update-permission');
+        Gate::authorize('update-permission');
         $permission = \App\Models\Permission::findOrFail($request->input('id'));
         $permission->name = $request->input('name');
         $permission->display_name = $request->input('display_name');
@@ -151,7 +152,7 @@ class PermissionController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-permission');
+        Gate::authorize('delete-permission');
 
         $permission = \App\Models\Permission::findOrFail($id);
 
@@ -164,8 +165,8 @@ class PermissionController extends Controller
 
     public function update_roles(Request $request): RedirectResponse
     {
-        $this->authorize('update-permission');
-        $this->authorize('update-role');
+        Gate::authorize('update-permission');
+        Gate::authorize('update-role');
         $permission = \App\Models\Permission::findOrFail($request->input('id'));
         $permission->roles()->detach();
         $permission->roles()->sync($request->input('roles'));

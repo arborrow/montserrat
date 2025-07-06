@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use Carbon\Carbon;
@@ -24,7 +25,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $this->authorize('show-room');
+        Gate::authorize('show-room');
         // TODO: consider eager loading building name and sorting on room.location.name
         $rooms = \App\Models\Room::with('location')->get();
         $roomsort = $rooms->sortBy(function ($building) {
@@ -39,7 +40,7 @@ class RoomController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-room');
+        Gate::authorize('create-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
         $floors = $this->get_floors();
 
@@ -51,7 +52,7 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request): RedirectResponse
     {
-        $this->authorize('create-room');
+        Gate::authorize('create-room');
 
         $room = new \App\Models\Room;
         $room->location_id = $request->input('location_id');
@@ -75,7 +76,7 @@ class RoomController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-room');
+        Gate::authorize('show-room');
         $room = \App\Models\Room::findOrFail($id);
         $building = \App\Models\Room::findOrFail($id)->location;
         $room->building = $building->name;
@@ -88,7 +89,7 @@ class RoomController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-room');
+        Gate::authorize('update-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
         $floors = $this->get_floors();
         $room = \App\Models\Room::findOrFail($id);
@@ -101,7 +102,7 @@ class RoomController extends Controller
      */
     public function update(UpdateRoomRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-room');
+        Gate::authorize('update-room');
 
         $room = \App\Models\Room::findOrFail($request->input('id'));
         $room->location_id = $request->input('location_id');
@@ -125,7 +126,7 @@ class RoomController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-room');
+        Gate::authorize('delete-room');
         $room = \App\Models\Room::findOrFail($id);
 
         \App\Models\Room::destroy($id);
@@ -159,7 +160,7 @@ class RoomController extends Controller
      */
     public function schedule(int|string|null $ymd = null)
     {
-        $this->authorize('show-room');
+        Gate::authorize('show-room');
         if ((! isset($ymd)) or ($ymd == 0)) {
             $dt = Carbon::now();
         } else {

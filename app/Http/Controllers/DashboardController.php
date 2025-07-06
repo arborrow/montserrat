@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\AgcDonationsRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -15,14 +16,14 @@ class DashboardController extends Controller
 
     public function index(): View
     {
-        $this->authorize('show-dashboard');
+        Gate::authorize('show-dashboard');
 
         return view('dashboard.index');
     }
 
     public function agc($number_of_years = 5): View
     {
-        $this->authorize('show-dashboard');
+        Gate::authorize('show-dashboard');
 
         $current_year = (int) (date('m') > 6) ? date('Y') + 1 : date('Y');
 
@@ -106,7 +107,7 @@ class DashboardController extends Controller
 
     public function agc_donations(AgcDonationsRequest $request): View
     {
-        $this->authorize('show-donation');
+        Gate::authorize('show-donation');
 
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         $fiscal_year = (! isset($request->fiscal_year)) ? $current_year : $request->fiscal_year; // fiscal_year 4-digit year
@@ -147,7 +148,7 @@ class DashboardController extends Controller
 
     public function donation_description_chart(?int $category_id = null): View
     {
-        $this->authorize('show-dashboard');
+        Gate::authorize('show-dashboard');
         $descriptions = \App\Models\DonationType::active()->orderBy('name')->pluck('id', 'name');
         if (! isset($category_id)) {
             $donation_type = \App\Models\DonationType::whereName('Retreat Funding')->first();
@@ -203,7 +204,7 @@ class DashboardController extends Controller
     public function events($year = null): View
     {
         // TODO: Create donut chart for average number of retreatants per event (get count of event_type_id) partipants/count(event_type_id) //useful for Ambassador goal of 40 (draw goal line)
-        $this->authorize('show-dashboard');
+        Gate::authorize('show-dashboard');
 
         // default to current fiscal year
         if (! isset($year)) {

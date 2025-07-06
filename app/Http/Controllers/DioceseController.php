@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreDioceseRequest;
 use App\Http\Requests\UpdateDioceseRequest;
 use Illuminate\Http\RedirectResponse;
@@ -21,7 +22,7 @@ class DioceseController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops.contact_b', 'parishes.contact_a')->paginate(25, ['*'], 'dioceses');
 
@@ -34,7 +35,7 @@ class DioceseController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
         $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
 
@@ -57,7 +58,7 @@ class DioceseController extends Controller
      */
     public function store(StoreDioceseRequest $request): RedirectResponse
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
 
         $diocese = new \App\Models\Contact;
         $diocese->organization_name = $request->input('organization_name');
@@ -169,7 +170,7 @@ class DioceseController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $diocese = \App\Models\Contact::with('bishops.contact_b', 'parishes.contact_b', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'note_diocese', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a')->findOrFail($id);
         $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at', 'DESC')->paginate(25, ['*'], 'touchpoints');
         $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'registrations');
@@ -197,7 +198,7 @@ class DioceseController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
         $diocese = \App\Models\Contact::with('primary_bishop.contact_b', 'bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'note_diocese')->findOrFail($id);
         if (empty($diocese->primary_bishop)) {
             $diocese->bishop_id = 0;
@@ -253,7 +254,7 @@ class DioceseController extends Controller
      */
     public function update(UpdateDioceseRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
 
         $diocese = \App\Models\Contact::with('bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         $diocese->organization_name = $request->input('organization_name');
@@ -403,7 +404,7 @@ class DioceseController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-contact');
+        Gate::authorize('delete-contact');
 
         $diocese = \App\Models\Contact::findOrFail($id);
         \App\Models\Relationship::whereContactIdA($id)->delete();

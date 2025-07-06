@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Models\Contact;
 use App\Traits\SquareSpaceTrait;
 use Illuminate\Http\RedirectResponse;
@@ -25,7 +26,7 @@ class GiftCertificateController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-gift-certificate');
+        Gate::authorize('show-gift-certificate');
         $gift_certificates = \App\Models\GiftCertificate::active()->orderBy('issue_date')->with(['purchaser', 'recipient'])->get();
         $applied_gift_certificates = \App\Models\GiftCertificate::applied()->orderBy('issue_date')->with(['purchaser', 'recipient'])->get();
         $expired_gift_certificates = \App\Models\GiftCertificate::expired()->orderBy('expiration_date')->with(['purchaser', 'recipient'])->get();
@@ -38,7 +39,7 @@ class GiftCertificateController extends Controller
      */
     public function create(Request $request): View
     {
-        $this->authorize('create-gift-certificate');
+        Gate::authorize('create-gift-certificate');
         // dd($request);
         $purchaser = collect();
         $purchaser->name = ($request->filled('purchaser_name')) ? $request->input('purchaser_name') : null;
@@ -63,7 +64,7 @@ class GiftCertificateController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->authorize('create-gift-certificate');
+        Gate::authorize('create-gift-certificate');
 
         $purchaser = $request->input('purchaser_name');
         $recipient = $request->input('recipient_name');
@@ -147,7 +148,7 @@ class GiftCertificateController extends Controller
      */
     public function show_pdf(int $id)
     {
-        $this->authorize('show-gift-certificate');
+        Gate::authorize('show-gift-certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
 
         $pdf = PDF::loadView('gift_certificates.certificate', compact('gift_certificate'));
@@ -169,7 +170,7 @@ class GiftCertificateController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-gift-certificate');
+        Gate::authorize('show-gift-certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
 
         return view('gift_certificates.show', compact('gift_certificate'));
@@ -180,7 +181,7 @@ class GiftCertificateController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-gift-certificate');
+        Gate::authorize('update-gift-certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
 
         return view('gift_certificates.edit', compact('gift_certificate'));
@@ -191,7 +192,7 @@ class GiftCertificateController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $this->authorize('update-gift-certificate');
+        Gate::authorize('update-gift-certificate');
 
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
 
@@ -219,7 +220,7 @@ class GiftCertificateController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-gift_certificate');
+        Gate::authorize('delete-gift_certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
 
         \App\Models\GiftCertificate::destroy($id);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\AuditSearchRequest;
 use App\Models\Audit;
 use App\Models\User;
@@ -22,7 +23,7 @@ class AuditController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-audit');
+        Gate::authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
         $audits = \App\Models\Audit::with('user')->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'audits');
 
@@ -31,7 +32,7 @@ class AuditController extends Controller
 
     public function index_type($user_id = null): View
     {
-        $this->authorize('show-audit');
+        Gate::authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
         $audits = \App\Models\Audit::with('user')->whereUserId($user_id)->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'audits');
 
@@ -44,7 +45,7 @@ class AuditController extends Controller
     public function create(): RedirectResponse
     {
         // cannot manually create audits
-        $this->authorize('create-audit');
+        Gate::authorize('create-audit');
         flash('Manually creating an audit record is not allowed')->warning();
 
         return Redirect::action([self::class, 'index']);
@@ -56,7 +57,7 @@ class AuditController extends Controller
     public function store(Request $request): RedirectResponse
     {
         // cannot manually create audits
-        $this->authorize('create-audit');
+        Gate::authorize('create-audit');
         flash('Manually storing an audit record is not allowed')->warning();
 
         return Redirect::action([self::class, 'index']);
@@ -67,7 +68,7 @@ class AuditController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-audit');
+        Gate::authorize('show-audit');
 
         $audit = \App\Models\Audit::findOrFail($id);
         $old_values = collect($audit->old_values);
@@ -82,7 +83,7 @@ class AuditController extends Controller
     public function edit(int $id): RedirectResponse
     {
         // cannot manually edit audits
-        $this->authorize('update-audit');
+        Gate::authorize('update-audit');
         flash('Manually editing an audit record is not allowed')->warning();
 
         return Redirect::action([self::class, 'index']);
@@ -94,7 +95,7 @@ class AuditController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         // cannot manually edit audits
-        $this->authorize('update-audit');
+        Gate::authorize('update-audit');
         flash('Manually updating an audit record is not allowed')->warning();
 
         return Redirect::action([self::class, 'index']);
@@ -106,7 +107,7 @@ class AuditController extends Controller
     public function destroy(int $id): RedirectResponse
     {
         // cannot manually destroy audits
-        $this->authorize('delete-audit');
+        Gate::authorize('delete-audit');
         flash('Manually destroying an audit record is not allowed')->warning();
 
         return Redirect::action([self::class, 'index']);
@@ -114,7 +115,7 @@ class AuditController extends Controller
 
     public function search(): View
     {
-        $this->authorize('show-audit');
+        Gate::authorize('show-audit');
 
         $users = User::whereProvider('google')->pluck('name', 'id');
         $users->prepend('N/A', '');
@@ -129,7 +130,7 @@ class AuditController extends Controller
 
     public function results(AuditSearchRequest $request): View
     {
-        $this->authorize('show-audit');
+        Gate::authorize('show-audit');
         if (! empty($request)) {
             $audits = Audit::filtered($request)->orderByDesc('created_at')->paginate(25, ['*'], 'audits');
             $audits->appends($request->except('page'));

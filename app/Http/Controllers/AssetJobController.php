@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreAssetJobRequest;
 use App\Http\Requests\UpdateAssetJobRequest;
 use Illuminate\Http\RedirectResponse;
@@ -18,7 +19,7 @@ class AssetJobController extends Controller
 
     public function index(): View
     {
-        $this->authorize('show-asset-job');
+        Gate::authorize('show-asset-job');
 
         $asset_jobs = \App\Models\AssetJob::with('asset_task.asset', 'assigned_to')->orderBy('scheduled_date')->get();
 
@@ -30,7 +31,7 @@ class AssetJobController extends Controller
      */
     public function create($asset_task_id = 0): View
     {
-        $this->authorize('create-asset-job');
+        Gate::authorize('create-asset-job');
 
         // if creating a task for a particular asset (default behavior from asset.show blade) then no need to get long list of assets to choose from
         if (isset($asset_task_id) && $asset_task_id > 0) {
@@ -56,7 +57,7 @@ class AssetJobController extends Controller
      */
     public function store(StoreAssetJobRequest $request): RedirectResponse
     {
-        $this->authorize('create-asset-job');
+        Gate::authorize('create-asset-job');
 
         $asset_job = new \App\Models\AssetJob;
 
@@ -93,7 +94,7 @@ class AssetJobController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-asset-job');
+        Gate::authorize('show-asset-job');
 
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
@@ -105,7 +106,7 @@ class AssetJobController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-asset-job');
+        Gate::authorize('update-asset-job');
 
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
@@ -132,7 +133,7 @@ class AssetJobController extends Controller
      */
     public function update(UpdateAssetJobRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-asset-job');
+        Gate::authorize('update-asset-job');
 
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
@@ -175,7 +176,7 @@ class AssetJobController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-asset-job');
+        Gate::authorize('delete-asset-job');
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
         \App\Models\AssetJob::destroy($id);

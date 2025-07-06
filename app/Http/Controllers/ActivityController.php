@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
 use Illuminate\Http\RedirectResponse;
@@ -21,7 +22,7 @@ class ActivityController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-activity');
+        Gate::authorize('show-activity');
         $activities = \App\Models\Activity::orderBy('activity_date_time', 'desc')->paginate(25, ['*'], 'activities');
 
         return view('activities.index', compact('activities'));
@@ -32,7 +33,7 @@ class ActivityController extends Controller
      */
     public function create(Request $request): View
     {
-        $this->authorize('create-activity');
+        Gate::authorize('create-activity');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -62,7 +63,7 @@ class ActivityController extends Controller
      */
     public function store(StoreActivityRequest $request): RedirectResponse
     {
-        $this->authorize('create-activity');
+        Gate::authorize('create-activity');
         $activity_type = \App\Models\ActivityType::findOrFail($request->input('activity_type_id'));
         $activity = new \App\Models\Activity;
         $activity->activity_type_id = $request->input('activity_type_id');
@@ -103,7 +104,7 @@ class ActivityController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-activity');
+        Gate::authorize('show-activity');
         $activity = \App\Models\Activity::with('assignees', 'creators', 'targets')->findOrFail($id);
 
         return view('activities.show', compact('activity')); //
@@ -114,7 +115,7 @@ class ActivityController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-activity');
+        Gate::authorize('update-activity');
         $activity = \App\Models\Activity::findOrFail($id);
         $target = $activity->targets->first();
         $assignee = $activity->assignees->first();
@@ -149,7 +150,7 @@ class ActivityController extends Controller
      */
     public function update(UpdateActivityRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-activity');
+        Gate::authorize('update-activity');
         $activity_type = \App\Models\ActivityType::findOrFail($request->input('activity_type_id'));
         $activity = \App\Models\Activity::findOrFail($id);
 
@@ -187,7 +188,7 @@ class ActivityController extends Controller
     {
         // delete activity contacts and then the activity (could be handled in model with cascading deletes)
 
-        $this->authorize('delete-activity');
+        Gate::authorize('delete-activity');
         \App\Models\ActivityContact::whereActivityId($id)->delete();
         \App\Models\Activity::destroy($id);
 
