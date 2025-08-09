@@ -1,4 +1,5 @@
 {
+    "$schema": "https://getcomposer.org/schema.json",
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
@@ -49,8 +50,7 @@
         "orangehill/iseed": "^3.1",
         "phpunit/phpunit": "^11.5.3",
         "symfony/css-selector": "^7.2",
-        "symfony/dom-crawler": "^7.2",
-        "laravel/pail": "^1.2.2"
+        "symfony/dom-crawler": "^7.2"
     },
     "autoload": {
         "files": [

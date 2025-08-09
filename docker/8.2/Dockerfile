@@ -16,7 +16,7 @@ RUN apt-get update \
     && apt-get install -y language-pack-en-base \
     && export LC_ALL=en_US.UTF-8 \
     && export LANG=en_US.UTF-8 \
-    && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 dnsutils\
+    && apt-get install -y gnupg gosu software-properties-common curl ca-certificates lsb-release apt-transport-https zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 dnsutils\
     && curl -sS 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xB8DC7E53946656EFBCE4C1DD71DAEAAB4AD4CAB6' | gpg --dearmor | tee /usr/share/keyrings/ppa_ondrej_php.gpg > /dev/null \
     && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
     && apt-get update \

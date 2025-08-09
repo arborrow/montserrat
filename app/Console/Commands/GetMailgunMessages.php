@@ -253,7 +253,7 @@ class GetMailgunMessages extends Command
                     $ss_donation->retreat_description = $this->extract_data($donation, 'Retreat:');
 
                     // it seems some of the emails had * characters and some do not so we will check for both
-                    $donation_amount = $this->extract_data($donation, 'SUBTOTAL', 2);
+                    $donation_amount = $this->extract_data($donation, 'SUBTOTAL', 3);
                     $amount = $donation_amount;
                     // $amount = substr($donation_amount, strpos($donation_amount, '$'), strpos($donation_amount, '!') - strpos($donation_amount, '$'));
                     $amount = str_replace('$', '', $amount);
