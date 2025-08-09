@@ -5,20 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class DepartmentController extends Controller
+class DepartmentController extends Controller implements HasMiddleware
 {
-    //
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function index(): View
     {
-        $this->authorize('show-department');
+        Gate::authorize('show-department');
 
         $departments = \App\Models\Department::orderBy('name')->get();
 
@@ -30,7 +33,7 @@ class DepartmentController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-department');
+        Gate::authorize('create-department');
 
         $parents = \App\Models\Department::orderBy('name')->pluck('name', 'id');
         $parents->prepend('N/A', 0);
@@ -43,7 +46,7 @@ class DepartmentController extends Controller
      */
     public function store(StoreDepartmentRequest $request): RedirectResponse
     {
-        $this->authorize('create-department');
+        Gate::authorize('create-department');
 
         $department = new \App\Models\Department;
         $department->name = $request->input('name');
@@ -65,7 +68,7 @@ class DepartmentController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-department');
+        Gate::authorize('show-department');
 
         $department = \App\Models\Department::findOrFail($id);
         $children = \App\Models\Department::whereParentId($id)->get();
@@ -78,7 +81,7 @@ class DepartmentController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-department');
+        Gate::authorize('update-department');
 
         $department = \App\Models\Department::findOrFail($id);
 
@@ -93,7 +96,7 @@ class DepartmentController extends Controller
      */
     public function update(UpdateDepartmentRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-department');
+        Gate::authorize('update-department');
 
         $department = \App\Models\Department::findOrFail($id);
 
@@ -115,7 +118,7 @@ class DepartmentController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-department');
+        Gate::authorize('delete-department');
         $department = \App\Models\Department::findOrFail($id);
 
         \App\Models\Department::destroy($id);

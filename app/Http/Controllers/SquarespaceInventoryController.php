@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSquarespaceInventoryRequest;
 use App\Http\Requests\UpdateSquarespaceInventoryRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class SquarespaceInventoryController extends Controller
+class SquarespaceInventoryController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -20,7 +24,7 @@ class SquarespaceInventoryController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-squarespace-inventory');
+        Gate::authorize('show-squarespace-inventory');
 
         $inventory_items = \App\Models\SquarespaceInventory::orderBy('name')->with('custom_form')->get();
 
@@ -32,7 +36,7 @@ class SquarespaceInventoryController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-squarespace-inventory');
+        Gate::authorize('create-squarespace-inventory');
         $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->pluck('name', 'id');
 
         return view('admin.squarespace.inventory.create', compact(['custom_forms']));
@@ -43,7 +47,7 @@ class SquarespaceInventoryController extends Controller
      */
     public function store(StoreSquarespaceInventoryRequest $request): RedirectResponse
     {
-        $this->authorize('create-squarespace-inventory');
+        Gate::authorize('create-squarespace-inventory');
 
         $inventory = new \App\Models\SquarespaceInventory;
         $inventory->name = $request->input('name');
@@ -61,7 +65,7 @@ class SquarespaceInventoryController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-squarespace-inventory');
+        Gate::authorize('show-squarespace-inventory');
 
         $inventory = \App\Models\SquarespaceInventory::with('custom_form')->findOrFail($id);
 
@@ -73,7 +77,7 @@ class SquarespaceInventoryController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-squarespace-inventory');
+        Gate::authorize('update-squarespace-inventory');
 
         $inventory = \App\Models\SquarespaceInventory::findOrFail($id);
         $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->pluck('name', 'id');
@@ -86,7 +90,7 @@ class SquarespaceInventoryController extends Controller
      */
     public function update(UpdateSquarespaceInventoryRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-squarespace-inventory');
+        Gate::authorize('update-squarespace-inventory');
 
         $inventory = \App\Models\SquarespaceInventory::findOrFail($id);
 
@@ -105,7 +109,7 @@ class SquarespaceInventoryController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-squarespace-inventory');
+        Gate::authorize('delete-squarespace-inventory');
         $inventory = \App\Models\SquarespaceInventory::findOrFail($id);
 
         \App\Models\SquarespaceInventory::destroy($id);

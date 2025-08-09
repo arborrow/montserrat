@@ -12,7 +12,7 @@
     "devDependencies": {
         "@alexbinary/glob": "^1.0.1",
         "@fortawesome/fontawesome-free": "^5.15.1",
-	"autoprefixer": "^10.4.20",
+        "autoprefixer": "^10.4.20",
         "axios": "^1.7.4",
         "bootstrap": "^4.4.1",
         "concurrently": "^9.0.1",
@@ -35,7 +35,6 @@
         "vue-template-compiler": "^2.6.10",
         "webpack": "^5.9.0",
         "webpack-cli": "^4.3.1"
-
     },
     "dependencies": {
         "@babel/core": "^7.15.8",
@@ -44,5 +43,6 @@
         "@babel/plugin-transform-runtime": "^7.15.8",
         "@babel/preset-env": "^7.15.8",
         "font-awesome": "^4.7.0"
-    }
+    },
+    "version": "0.0.0"
 }

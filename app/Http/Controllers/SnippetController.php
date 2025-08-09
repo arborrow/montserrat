@@ -11,22 +11,25 @@ use App\Mail\SquarespaceOrderFulfillment;
 use Auth;
 use Faker;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
-class SnippetController extends Controller
+class SnippetController extends Controller implements HasMiddleware
 {
-    //
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function index(): View
     {
-        $this->authorize('show-snippet');
+        Gate::authorize('show-snippet');
 
         $titles = \App\Models\Snippet::groupBy('title')->with('language')->orderBy('title')->pluck('title', 'title');
         $snippets = \App\Models\Snippet::orderBy('title')->with('language')->orderBy('locale')->orderBy('label')->get();
@@ -36,7 +39,7 @@ class SnippetController extends Controller
 
     public function index_type($title = null): View
     {
-        $this->authorize('show-snippet');
+        Gate::authorize('show-snippet');
 
         $titles = \App\Models\Snippet::groupBy('title')->with('language')->orderBy('title')->pluck('title', 'title');
         $snippets = \App\Models\Snippet::whereTitle($title)->with('language')->orderBy('title')->orderBy('locale')->orderBy('label')->get();
@@ -49,7 +52,7 @@ class SnippetController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-snippet');
+        Gate::authorize('create-snippet');
         $locales = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
 
         return view('admin.snippets.create', compact('locales'));
@@ -60,7 +63,7 @@ class SnippetController extends Controller
      */
     public function store(StoreSnippetRequest $request): RedirectResponse
     {
-        $this->authorize('create-snippet');
+        Gate::authorize('create-snippet');
 
         $snippet = new \App\Models\Snippet;
         $snippet->title = $request->input('title');
@@ -80,7 +83,7 @@ class SnippetController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-snippet');
+        Gate::authorize('show-snippet');
 
         $snippet = \App\Models\Snippet::findOrFail($id);
 
@@ -92,7 +95,7 @@ class SnippetController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-snippet');
+        Gate::authorize('update-snippet');
 
         $snippet = \App\Models\Snippet::findOrFail($id);
         $locales = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
@@ -105,7 +108,7 @@ class SnippetController extends Controller
      */
     public function update(UpdateSnippetRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-snippet');
+        Gate::authorize('update-snippet');
 
         $snippet = \App\Models\Snippet::findOrFail($id);
 
@@ -126,7 +129,7 @@ class SnippetController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-snippet');
+        Gate::authorize('delete-snippet');
         $snippet = \App\Models\Snippet::findOrFail($id);
 
         \App\Models\Snippet::destroy($id);
@@ -138,7 +141,7 @@ class SnippetController extends Controller
 
     public function snippet_test(SnippetTestRequest $request): RedirectResponse
     {
-        $this->authorize('show-snippet');
+        Gate::authorize('show-snippet');
 
         $title = $request->input('title');
         $email = $request->input('email');
@@ -273,7 +276,7 @@ class SnippetController extends Controller
      */
     public function test($title = null, $email = null, $language = 'en_US'): View
     {
-        $this->authorize('show-snippet');
+        Gate::authorize('show-snippet');
         $titles = \App\Models\Snippet::groupBy('title')->orderBy('title')->pluck('title', 'title');
         $languages = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
         if (empty($email)) {

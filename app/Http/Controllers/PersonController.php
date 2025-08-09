@@ -7,17 +7,21 @@ use App\Http\Requests\UpdatePersonRequest;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-class PersonController extends Controller
+class PersonController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -25,7 +29,7 @@ class PersonController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
         $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('address_primary.state', 'phones', 'emails', 'websites', 'parish.contact_a.address_primary', 'prefix', 'suffix')->paginate(25, ['*'], 'persons');
 
@@ -34,7 +38,7 @@ class PersonController extends Controller
 
     public function lastnames($letter = null): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $letter.'%')->paginate(25, ['*'], 'persons');
 
         return view('persons.index', compact('persons'));
@@ -45,7 +49,7 @@ class PersonController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
         $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         $parish_list[0] = 'N/A';
         // while probably not the most efficient way of doing this it gets me the result
@@ -88,7 +92,7 @@ class PersonController extends Controller
 
         $primary_phone_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->whereNotIn('id', [config('polanco.location_type.main')])->get();
         $primary_phones = [];
-        //dd($primary_phone_locations);
+        // dd($primary_phone_locations);
         foreach ($primary_phone_locations as $phone_location) {
             // for simpler UI syntax, using the terminology of the main phone number for home, work and other for consistency
             // however, this creates ambiguity/confusion as it is not intended to be the location type of main used for a main office location
@@ -97,7 +101,7 @@ class PersonController extends Controller
             $primary_phones[$phone_location->id.':Mobile'] = $phone_location->name.':Mobile';
         }
 
-        //dd($subcontact_types);
+        // dd($subcontact_types);
         return view('persons.create', compact('parish_list', 'ethnicities', 'states', 'countries', 'suffixes', 'prefixes', 'languages', 'genders', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals', 'preferred_communication_methods', 'primary_address_locations', 'primary_email_locations', 'primary_phones'));
     }
 
@@ -106,7 +110,7 @@ class PersonController extends Controller
      */
     public function store(StorePersonRequest $request): RedirectResponse
     {
-        $this->authorize('create-contact');
+        Gate::authorize('create-contact');
         $person = new \App\Models\Contact;
 
         $person->contact_type = $request->input('contact_type');
@@ -317,7 +321,7 @@ class PersonController extends Controller
             $group_board->save();
         }
 
-        //groups: deacon, priest, bishop, pastor, jesuit, provincial, superior, ambassador, board, innkeeper, director, assistant, staff
+        // groups: deacon, priest, bishop, pastor, jesuit, provincial, superior, ambassador, board, innkeeper, director, assistant, staff
 
         if ($request->input('is_bishop') > 0) {
             $group_bishop = new \App\Models\GroupContact;
@@ -618,7 +622,7 @@ class PersonController extends Controller
 
         return Redirect::action([self::class, 'show'], $person->id); //
 
-        //return Redirect::action([\App\Http\Controllers\PersonController::class, 'index']);//
+        // return Redirect::action([\App\Http\Controllers\PersonController::class, 'index']);//
     }
 
     /**
@@ -628,7 +632,7 @@ class PersonController extends Controller
      */
     public function show(int $id)
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $person = \App\Models\Contact::with(
             'addresses.country',
             'addresses.location',
@@ -664,8 +668,8 @@ class PersonController extends Controller
         $relationship_types['Sibling'] = 'Sibling';
         $relationship_types['Wife'] = 'Wife';
 
-        //dd($files);
-        //not at all elegant but this prepares notes for easy display and use in the edit blade
+        // dd($files);
+        // not at all elegant but this prepares notes for easy display and use in the edit blade
         $person->note_health = '';
         $person->note_dietary = '';
         $person->note_contact = '';
@@ -709,7 +713,7 @@ class PersonController extends Controller
         */
         $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->with('staff')->orderBy('touched_at', 'DESC')->paginate(15, ['*'], 'touchpoints');
 
-        //dd($registrations);
+        // dd($registrations);
         return view('persons.show', compact('person', 'donations', 'files', 'relationship_types', 'touchpoints', 'registrations')); //
     }
 
@@ -721,9 +725,9 @@ class PersonController extends Controller
      */
     public function envelope(int $id, Request $request)
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
-        //default size = 10; logo = false
+        // default size = 10; logo = false
         $size = (string) '10';
         $logo = (bool) 0;
         $name = (string) 'household';
@@ -771,9 +775,9 @@ class PersonController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
         $person = \App\Models\Contact::with('prefix', 'suffix', 'addresses.location', 'emails.location', 'phones.location', 'websites', 'parish', 'emergency_contact', 'notes')->findOrFail($id);
-        //dd($person);
+        // dd($person);
 
         $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         $parish_list[0] = 'N/A';
@@ -790,7 +794,7 @@ class PersonController extends Controller
             $person->parish_id = 0;
         }
 
-        //again not at all elegant but this prepares the notes for easy display and use in the edit blade
+        // again not at all elegant but this prepares the notes for easy display and use in the edit blade
         $person->note_health = '';
         $person->note_dietary = '';
         $person->note_contact = '';
@@ -815,7 +819,7 @@ class PersonController extends Controller
                 }
             }
         }
-        //dd($person);
+        // dd($person);
         $countries = \App\Models\Country::orderBy('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
         $ethnicities = \App\Models\Ethnicity::orderBy('ethnicity')->pluck('ethnicity', 'id');
@@ -848,13 +852,13 @@ class PersonController extends Controller
         $primary_phone_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->whereNotIn('id', [config('polanco.location_type.main')])->get();
         $primary_phones = [];
         $primary_phones['0:0'] = 'N/A';
-        //dd($primary_phone_locations);
+        // dd($primary_phone_locations);
         foreach ($primary_phone_locations as $phone_location) {
             $primary_phones[$phone_location->id.':Phone'] = $phone_location->name.':Main';
             $primary_phones[$phone_location->id.':Mobile'] = $phone_location->name.':Mobile';
         }
 
-        //create defaults array for easier pre-populating of default values on edit/update blade
+        // create defaults array for easier pre-populating of default values on edit/update blade
         // initialize defaults to avoid undefined index errors
         $defaults = [];
         $defaults['Home']['street_address'] = '';
@@ -918,7 +922,7 @@ class PersonController extends Controller
         foreach ($person->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }
-        //dd($person);
+        // dd($person);
 
         return view('persons.edit', compact('prefixes', 'suffixes', 'person', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'defaults', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals', 'preferred_communication_methods', 'primary_address_locations', 'primary_email_locations', 'primary_phones'));
     }
@@ -928,7 +932,7 @@ class PersonController extends Controller
      */
     public function update(UpdatePersonRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
 
         $person = \App\Models\Contact::with('addresses.location', 'emails.location', 'phones.location', 'websites', 'emergency_contact', 'parish')->findOrFail($id);
 
@@ -949,7 +953,7 @@ class PersonController extends Controller
             $person->sort_name = $request->input('sort_name');
         } // if no sort_name is sent in the request, leave the existing data
 
-        //demographic info
+        // demographic info
         $person->gender_id = $request->input('gender_id');
         $person->birth_date = $request->input('birth_date');
         $person->ethnicity_id = $request->input('ethnicity_id');
@@ -1010,7 +1014,7 @@ class PersonController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $person->id, 'attachment', $description);
         }
 
-        //emergency contact info
+        // emergency contact info
         $emergency_contact = \App\Models\EmergencyContact::firstOrNew(['contact_id' => $person->id]);
         $emergency_contact->contact_id = $person->id;
         $emergency_contact->name = $request->input('emergency_contact_name');
@@ -1019,7 +1023,7 @@ class PersonController extends Controller
         $emergency_contact->phone_alternate = $request->input('emergency_contact_phone_alternate');
         $emergency_contact->save();
 
-        //dd($person);
+        // dd($person);
         // save parishioner relationship
         // TEST: does unset work?
         if ($request->input('parish_id') > 0) {
@@ -1363,7 +1367,7 @@ class PersonController extends Controller
             $relationship_board->save();
         }
 
-        //groups:
+        // groups:
         $group_ambassador = \App\Models\GroupContact::withTrashed()->firstOrNew(['contact_id' => $person->id, 'group_id' => config('polanco.group_id.ambassador'), 'status' => 'Added']);
         if ($request->input('is_ambassador') == 0) {
             $group_ambassador->delete();
@@ -1560,15 +1564,15 @@ class PersonController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-contact');
+        Gate::authorize('delete-contact');
 
         // TODO: consider creating a restore/{id} or undelete/{id}
         $person = \App\Models\Contact::findOrFail($id);
-        //delete existing groups and relationships when deleting user
+        // delete existing groups and relationships when deleting user
         \App\Models\Relationship::whereContactIdA($id)->delete();
         \App\Models\Relationship::whereContactIdB($id)->delete();
         \App\Models\GroupContact::whereContactId($id)->delete();
-        //delete address, email, phone, website, emergency contact, notes for deleted users
+        // delete address, email, phone, website, emergency contact, notes for deleted users
         \App\Models\Address::whereContactId($id)->delete();
         \App\Models\Email::whereContactId($id)->delete();
         \App\Models\Phone::whereContactId($id)->delete();
@@ -1576,7 +1580,7 @@ class PersonController extends Controller
         \App\Models\EmergencyContact::whereContactId($id)->delete();
         \App\Models\Note::whereEntityId($id)->whereEntityTable('contact')->delete();
         \App\Models\Touchpoint::wherePersonId($id)->delete();
-        //delete registrations
+        // delete registrations
         \App\Models\Registration::whereContactId($id)->delete();
         // delete donations
         \App\Models\Donation::whereContactId($id)->delete();
@@ -1590,15 +1594,15 @@ class PersonController extends Controller
     public function merge_destroy($id, $return_id): RedirectResponse
     {
         // TODO: consider creating a restore/{id} or undelete/{id}
-        $this->authorize('delete-duplicate');
+        Gate::authorize('delete-duplicate');
 
         $person = \App\Models\Contact::findOrFail($id);
 
-        //delete existing groups and relationships when deleting user
+        // delete existing groups and relationships when deleting user
         \App\Models\Relationship::whereContactIdA($id)->delete();
         \App\Models\Relationship::whereContactIdB($id)->delete();
         \App\Models\GroupContact::whereContactId($id)->delete();
-        //delete address, email, phone, website, emergency contact, notes for deleted users
+        // delete address, email, phone, website, emergency contact, notes for deleted users
         \App\Models\Address::whereContactId($id)->delete();
         \App\Models\Email::whereContactId($id)->delete();
         \App\Models\Phone::whereContactId($id)->delete();
@@ -1606,7 +1610,7 @@ class PersonController extends Controller
         \App\Models\EmergencyContact::whereContactId($id)->delete();
         \App\Models\Note::whereContactId($id)->delete();
         \App\Models\Touchpoint::wherePersonId($id)->delete();
-        //delete registrations
+        // delete registrations
         \App\Models\Registration::whereContactId($id)->delete();
         \App\Models\Contact::destroy($id);
 
@@ -1692,7 +1696,7 @@ class PersonController extends Controller
 
     public function role($group_id): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
         $persons = \App\Models\Contact::with('groups', 'address_primary', 'ambassador_events')->whereHas('groups', function ($query) use ($group_id) {
             $query->where('group_id', '=', $group_id)->whereStatus('Added');
@@ -1756,8 +1760,8 @@ class PersonController extends Controller
 
     public function save_relationship($field, $contact_id_a, $contact_id_b, $relationship_type)
     {
-        $this->authorize('update-contact');
-        $this->authorize('update-relationship');
+        Gate::authorize('update-contact');
+        Gate::authorize('update-relationship');
 
         if ($field > 0) {
             $relationship = new \App\Models\Relationship;
@@ -1771,7 +1775,7 @@ class PersonController extends Controller
 
     public function duplicates(): View
     {
-        $this->authorize('update-contact');
+        Gate::authorize('update-contact');
 
         $duplicates = \App\Models\Contact::whereIn('id', function ($query) {
             $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(null)->havingRaw('count(*)>1');
@@ -1783,10 +1787,10 @@ class PersonController extends Controller
 
     public function merge($contact_id, $merge_id = null)
     {
-        $this->authorize('update-contact');
-        $this->authorize('update-relationship');
-        $this->authorize('update-attachment');
-        $this->authorize('update-touchpoint');
+        Gate::authorize('update-contact');
+        Gate::authorize('update-relationship');
+        Gate::authorize('update-attachment');
+        Gate::authorize('update-touchpoint');
 
         $contact = \App\Models\Contact::findOrFail($contact_id);
         $similar = \App\Models\Contact::whereSortName($contact->sort_name)->get();
@@ -1794,7 +1798,7 @@ class PersonController extends Controller
         $duplicates = $similar->keyBy('id');
         $duplicates->forget($contact->id);
 
-        //if there are no duplicates for the user go back to duplicates list
+        // if there are no duplicates for the user go back to duplicates list
         if (! $duplicates->count()) {
             flash('There currently are no duplicates for Contact ID#: '.$contact_id)->success();
 
@@ -1813,7 +1817,7 @@ class PersonController extends Controller
                 // show error flash if failing because of staff member merge attempt
                 flash('Contact ID#: '.$merge_id.' cannot be merged with Contact ID#: '.$contact_id.'. Staff members with touchpoints or assigned jobs cannot be merged.')->error()->important();
             } else { // not a staff member with existing touchpoints or assigned jobs; safe to merge
-                //attachments - including avatar
+                // attachments - including avatar
                 foreach ($merge->attachments as $attachment) {
                     $attachment_controller = new AttachmentController;
                     $path = 'contact/'.$merge_id.'/attachments/'.$attachment->uri;
@@ -1835,13 +1839,13 @@ class PersonController extends Controller
                     if (Storage::exists($newpath)) {
                         $path_lastModified_date = Carbon::createFromTimestamp(Storage::lastModified($path));
                         $newpath_lastModified_date = Carbon::createFromTimestamp(Storage::lastModified($newpath));
-                        if ($newpath_lastModified_date > $path_lastModified_date) { //newpath is the latest file
+                        if ($newpath_lastModified_date > $path_lastModified_date) { // newpath is the latest file
                             if ($entity == 'avatar') {
                                 $attachment_controller->delete_avatar($merge_id);
                             } else {
                                 $attachment_controller->delete_contact_attachment($merge_id, $attachment->uri);
                             }
-                        } else { //path is the latest file
+                        } else { // path is the latest file
                             if ($entity == 'avatar') {
                                 $attachment_controller->delete_avatar($contact_id);
                             } else {
@@ -1858,7 +1862,7 @@ class PersonController extends Controller
                     }
                 }
 
-                //dd($merge);
+                // dd($merge);
                 if ((empty($contact->prefix_id)) && (! empty($merge->prefix_id))) {
                     $contact->prefix_id = $merge->prefix_id;
                 }
@@ -1897,7 +1901,7 @@ class PersonController extends Controller
                 }
                 $contact->save();
 
-                //addresses
+                // addresses
                 if ($contact->address_primary === null) {
                     $contact->address_primary = new \App\Models\Address;
                     $contact->address_primary->contact_id = $contact->id;
@@ -1926,7 +1930,7 @@ class PersonController extends Controller
                 }
                 $contact->address_primary->save();
 
-                //emergency_contact_info
+                // emergency_contact_info
                 if ($contact->emergency_contact === null) {
                     $contact->emergency_contact = new \App\Models\EmergencyContact;
                     $contact->emergency_contact->contact_id = $contact->id;
@@ -1946,45 +1950,45 @@ class PersonController extends Controller
                 }
                 $contact->emergency_contact->save();
 
-                //emails
+                // emails
                 foreach ($merge->emails as $email) {
                     $contact_email = \App\Models\Email::firstOrNew(['contact_id' => $contact->id, 'location_type_id' => $email->location_type_id]);
                     $contact_email->contact_id = $contact->id;
                     $contact_email->location_type_id = $email->location_type_id;
                     $contact_email->is_primary = $email->is_primary;
-                    //only create or overwrite if the current email address for the location is empty
+                    // only create or overwrite if the current email address for the location is empty
                     if (empty($contact_email->email)) {
                         $contact_email->email = $email->email;
                         $contact_email->save();
                     }
                 }
 
-                //phones
+                // phones
                 foreach ($merge->phones as $phone) {
                     $contact_phone = \App\Models\Phone::firstOrNew(['contact_id' => $contact->id, 'location_type_id' => $phone->location_type_id, 'phone_type' => $phone->phone_type]);
                     $contact_phone->contact_id = $contact->id;
                     $contact_phone->location_type_id = $phone->location_type_id;
                     $contact_phone->phone_type = $phone->phone_type;
                     $contact_phone->is_primary = $phone->is_primary;
-                    //only create or overwrite if the current email address for the location is empty
+                    // only create or overwrite if the current email address for the location is empty
                     if (empty($contact_phone->phone)) {
                         $contact_phone->phone = $phone->phone;
                         $contact_phone->save();
                     }
                 }
 
-                //notes - move all notes from merge to contact
+                // notes - move all notes from merge to contact
                 foreach ($merge->notes as $note) {
                     $contact_note = \App\Models\Note::firstOrNew(['entity_id' => $contact->id, 'entity_table' => 'contact', 'subject' => $note->subject]);
-                    if (isset($note->note)) { //if there is no note to move skip it
-                        if ((! isset($contact_note->note)) || ($note->modified_date > $contact_note->modified_date)) { //overwrite note if blank or older
+                    if (isset($note->note)) { // if there is no note to move skip it
+                        if ((! isset($contact_note->note)) || ($note->modified_date > $contact_note->modified_date)) { // overwrite note if blank or older
                             $contact_note->note = $note->note;
                         }
                     }
                     $contact_note->save();
                 }
 
-                //groups - move all from merge to contact
+                // groups - move all from merge to contact
                 foreach ($merge->groups as $group) {
                     $group_exist = \App\Models\GroupContact::whereContactId($contact_id)->whereGroupId($group->group_id)->first();
                     if (! isset($group_exist)) {
@@ -1992,7 +1996,7 @@ class PersonController extends Controller
                         $group->save();
                     }
                 }
-                //relationships
+                // relationships
                 foreach ($merge->a_relationships as $a_relationship) {
                     $a_relationship_exist = \App\Models\Relationship::whereContactIdA($contact_id)->whereContactIdB($a_relationship->contact_id_b)->whereRelationshipTypeId($a_relationship->relationship_type_id)->first();
                     if (! isset($a_relationship_exist)) {
@@ -2007,17 +2011,17 @@ class PersonController extends Controller
                         $b_relationship->save();
                     }
                 }
-                //touchpoints
+                // touchpoints
                 foreach ($merge->touchpoints as $touchpoint) {
                     $touchpoint->person_id = $contact_id;
                     $touchpoint->save();
                 }
-                //event registrations
+                // event registrations
                 foreach ($merge->event_registrations as $registration) {
                     $registration->contact_id = $contact_id;
                     $registration->save();
                 }
-                //donations
+                // donations
                 foreach ($merge->donations as $donation) {
                     $donation->contact_id = $contact_id;
                     $donation->save();

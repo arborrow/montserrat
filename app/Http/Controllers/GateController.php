@@ -4,19 +4,23 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Twilio\Rest\Client;
 
-class GateController extends Controller
+class GateController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function index(): View
     {
-        $this->authorize('show-gate');
+        Gate::authorize('show-gate');
         $touchpoints = \App\Models\Touchpoint::whereType('Gate activity')->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(25, ['*'], 'touchpoints');
 
         return view('gate.index', compact('touchpoints'));
@@ -24,7 +28,7 @@ class GateController extends Controller
 
     public function open(Request $request, $hours = null): View
     {
-        $this->authorize('show-gate'); // Check to see if the user has permissions
+        Gate::authorize('show-gate'); // Check to see if the user has permissions
 
         $account_sid = config('settings.twilio_sid');
         $auth_token = config('settings.twilio_token');
@@ -77,7 +81,7 @@ class GateController extends Controller
 
     public function close(Request $request): View
     {
-        $this->authorize('show-gate'); // Check to see if the user has permissions
+        Gate::authorize('show-gate'); // Check to see if the user has permissions
 
         $account_sid = config('settings.twilio_sid');
         $auth_token = config('settings.twilio_token');

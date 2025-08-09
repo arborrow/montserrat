@@ -7,14 +7,18 @@ use App\Http\Requests\UpdateRoomRequest;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class RoomController extends Controller
+class RoomController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -24,7 +28,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $this->authorize('show-room');
+        Gate::authorize('show-room');
         // TODO: consider eager loading building name and sorting on room.location.name
         $rooms = \App\Models\Room::with('location')->get();
         $roomsort = $rooms->sortBy(function ($building) {
@@ -39,7 +43,7 @@ class RoomController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-room');
+        Gate::authorize('create-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
         $floors = $this->get_floors();
 
@@ -51,7 +55,7 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request): RedirectResponse
     {
-        $this->authorize('create-room');
+        Gate::authorize('create-room');
 
         $room = new \App\Models\Room;
         $room->location_id = $request->input('location_id');
@@ -75,7 +79,7 @@ class RoomController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-room');
+        Gate::authorize('show-room');
         $room = \App\Models\Room::findOrFail($id);
         $building = \App\Models\Room::findOrFail($id)->location;
         $room->building = $building->name;
@@ -88,7 +92,7 @@ class RoomController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-room');
+        Gate::authorize('update-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
         $floors = $this->get_floors();
         $room = \App\Models\Room::findOrFail($id);
@@ -101,7 +105,7 @@ class RoomController extends Controller
      */
     public function update(UpdateRoomRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-room');
+        Gate::authorize('update-room');
 
         $room = \App\Models\Room::findOrFail($request->input('id'));
         $room->location_id = $request->input('location_id');
@@ -125,7 +129,7 @@ class RoomController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-room');
+        Gate::authorize('delete-room');
         $room = \App\Models\Room::findOrFail($id);
 
         \App\Models\Room::destroy($id);
@@ -159,7 +163,7 @@ class RoomController extends Controller
      */
     public function schedule(int|string|null $ymd = null)
     {
-        $this->authorize('show-room');
+        Gate::authorize('show-room');
         if ((! isset($ymd)) or ($ymd == 0)) {
             $dt = Carbon::now();
         } else {
@@ -174,7 +178,7 @@ class RoomController extends Controller
         $prev_path = url('rooms/'.$previous_dt->subDays(31)->format('Ymd'));
         $previous_link = '<a href="'.$prev_path.'">&#171;</a>';
         $dts[0] = $dt;
-        //dd($dts);
+        // dd($dts);
         for ($i = 1; $i <= 31; $i++) {
             $dts[$i] = clone $upcoming->addDay();
         }
@@ -193,12 +197,12 @@ class RoomController extends Controller
         $registrations_end = \App\Models\Registration::with('room', 'room.location', 'retreatant', 'retreat')->whereNull('canceled_at')->where('room_id', '>', 0)->whereHas('retreat', function ($query) use ($dts) {
             $query->where('end_date', '>=', $dts[0])->where('start_date', '<=', $dts[0]);
         })->get();
-	
-#	dd($registrations_start,$registrations_end);
-	// create matrix of rooms and dates
+
+        //	dd($registrations_start,$registrations_end);
+        // create matrix of rooms and dates
         foreach ($rooms as $room) {
             foreach ($dts as $dt) {
-                //dd($dt);
+                // dd($dt);
                 $m[$room->id][$dt->toDateString()]['status'] = 'A';
                 $m[$room->id][$dt->toDateString()]['registration_id'] = null;
                 $m[$room->id][$dt->toDateString()]['retreatant_id'] = null;
@@ -219,7 +223,7 @@ class RoomController extends Controller
         foreach ($registrations_start as $registration) {
             $start_time = $registration->retreat->start_date->hour + (($registration->retreat->start_date->minute / 100));
             $end_time = $registration->retreat->end_date->hour + (($registration->retreat->end_date->minute / 100));
-            $numdays = ( (int) $registration->retreat->start_date->diffInDays($registration->retreat->end_date));
+            $numdays = ((int) $registration->retreat->start_date->diffInDays($registration->retreat->end_date));
             $numdays = ($start_time > $end_time) ? $numdays + 1 : $numdays;
             for ($i = 0; $i <= $numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
@@ -244,7 +248,7 @@ class RoomController extends Controller
         foreach ($registrations_end as $registration) {
             $start_time = $registration->retreat->start_date->hour + (($registration->retreat->start_date->minute / 100));
             $end_time = $registration->retreat->end_date->hour + (($registration->retreat->end_date->minute / 100));
-            $numdays = ( (int) $registration->retreat->start_date->diffInDays($registration->retreat->end_date));
+            $numdays = ((int) $registration->retreat->start_date->diffInDays($registration->retreat->end_date));
             $numdays = ($start_time > $end_time) ? $numdays + 1 : $numdays;
             for ($i = 0; $i <= $numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
@@ -264,8 +268,8 @@ class RoomController extends Controller
                      * Occupied will be the same link to the registration.
                      */
                 }
-	    }
-#	    dd($start_time, $end_time, $numdays, $matrixdate, $m);
+            }
+            //	    dd($start_time, $end_time, $numdays, $matrixdate, $m);
         }
 
         return view('rooms.sched2', compact('dts', 'roomsort', 'm', 'previous_link', 'next_link'));
@@ -286,7 +290,7 @@ class RoomController extends Controller
 
             return $hyphenated_date;
         } else {
-            if ($this->validateDate($unhyphenated_date)) { //already hyphenated
+            if ($this->validateDate($unhyphenated_date)) { // already hyphenated
                 $hyphenated_date = $unhyphenated_date;
 
                 return $hyphenated_date;

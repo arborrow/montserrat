@@ -6,21 +6,24 @@ use App\Http\Requests\StoreExportListRequest;
 use App\Http\Requests\UpdateExportListRequest;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class ExportListController extends Controller
+class ExportListController extends Controller implements HasMiddleware
 {
-    //
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function index(): View
     {
-        $this->authorize('show-export-list');
+        Gate::authorize('show-export-list');
         $export_lists = \App\Models\ExportList::orderBy('label')->get();
 
         return view('admin.export_lists.index', compact('export_lists'));
@@ -31,7 +34,7 @@ class ExportListController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-export-list');
+        Gate::authorize('create-export-list');
         $export_list_types = config('polanco.export_list_types');
 
         return view('admin.export_lists.create', compact('export_list_types'));
@@ -42,7 +45,7 @@ class ExportListController extends Controller
      */
     public function store(StoreExportListRequest $request): RedirectResponse
     {
-        $this->authorize('create-export-list');
+        Gate::authorize('create-export-list');
 
         $export_list = new \App\Models\ExportList;
         $export_list->title = $request->input('title');
@@ -67,7 +70,7 @@ class ExportListController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-export-list');
+        Gate::authorize('show-export-list');
 
         $export_list = \App\Models\ExportList::findOrFail($id);
 
@@ -79,7 +82,7 @@ class ExportListController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-export-list');
+        Gate::authorize('update-export-list');
 
         $export_list = \App\Models\ExportList::findOrFail($id);
         $export_list_types = config('polanco.export_list_types');
@@ -92,7 +95,7 @@ class ExportListController extends Controller
      */
     public function update(UpdateExportListRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-export-list');
+        Gate::authorize('update-export-list');
 
         $export_list = \App\Models\ExportList::findOrFail($id);
 
@@ -118,7 +121,7 @@ class ExportListController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-export-list');
+        Gate::authorize('delete-export-list');
         $export_list = \App\Models\ExportList::findOrFail($id);
 
         \App\Models\ExportList::destroy($id);
@@ -136,7 +139,7 @@ class ExportListController extends Controller
     //    public function agc(ExportListAGCRequest $request)
     public function agc(): RedirectResponse
     {
-        $this->authorize('show-export-list');
+        Gate::authorize('show-export-list');
         // $id = $request->input('id');
         // $export_list = \App\Models\ExportList::findOrFail($id);
         // $start_date = $request->input('start_date');

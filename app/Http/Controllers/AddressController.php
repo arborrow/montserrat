@@ -6,6 +6,8 @@ use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 use App\Models\Address;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -14,11 +16,13 @@ use Illuminate\View\View;
  * In testing, the address controller uses CRUD-style permissions which are theoretical rather than the contact CRUD permissions used in production
  * In other words, in production, the create-contact permission is used rather than create-address.
  */
-class AddressController extends Controller
+class AddressController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -26,7 +30,7 @@ class AddressController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-address');
+        Gate::authorize('show-address');
         $addresses = \App\Models\Address::orderBy('postal_code', 'asc')->with('addressee')->paginate(25, ['*'], 'addresses');
 
         return view('addresses.index', compact('addresses'));
@@ -37,7 +41,7 @@ class AddressController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-address');
+        Gate::authorize('create-address');
         $countries = \App\Models\Country::orderBy('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', '');
         $states = \App\Models\StateProvince::orderBy('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
@@ -53,7 +57,7 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request): RedirectResponse
     {
-        $this->authorize('create-address');
+        Gate::authorize('create-address');
         $address = new \App\Models\Address;
         $address->contact_id = $request->input('contact_id');
         $address->location_type_id = $request->input('location_type_id');
@@ -76,7 +80,7 @@ class AddressController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-address');
+        Gate::authorize('show-address');
         $address = \App\Models\Address::with('addressee')->findOrFail($id);
 
         return view('addresses.show', compact('address'));
@@ -87,7 +91,7 @@ class AddressController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-address');
+        Gate::authorize('update-address');
 
         $countries = \App\Models\Country::orderBy('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', '');
@@ -105,7 +109,7 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-address');
+        Gate::authorize('update-address');
         $address = \App\Models\Address::findOrFail($id);
         $address->contact_id = $request->input('contact_id');
         $address->location_type_id = $request->input('location_type_id');
@@ -128,7 +132,7 @@ class AddressController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-address');
+        Gate::authorize('delete-address');
         $address = \App\Models\Address::findOrFail($id);
         $contact_id = $address->contact_id;
         \App\Models\Address::destroy($id);

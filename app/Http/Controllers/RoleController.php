@@ -4,20 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class RoleController extends Controller
+class RoleController extends Controller implements HasMiddleware
 {
-    //
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function index(): View
     {
-        $this->authorize('show-role');
+        Gate::authorize('show-role');
         $roles = \App\Models\Role::orderBy('name')->get();
 
         return view('admin.roles.index', compact('roles'));
@@ -28,7 +31,7 @@ class RoleController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-role');
+        Gate::authorize('create-role');
 
         return view('admin.roles.create');
     }
@@ -38,7 +41,7 @@ class RoleController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->authorize('create-role');
+        Gate::authorize('create-role');
 
         $role = new \App\Models\Role;
         $role->name = $request->input('name');
@@ -57,7 +60,7 @@ class RoleController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-role');
+        Gate::authorize('show-role');
 
         $role = \App\Models\Role::with('users', 'permissions')->findOrFail($id);
         $permissions = \App\Models\Permission::orderBy('name')->pluck('name', 'id');
@@ -71,7 +74,7 @@ class RoleController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-role');
+        Gate::authorize('update-role');
 
         $role = \App\Models\Role::findOrFail($id);
 
@@ -83,7 +86,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $this->authorize('update-role');
+        Gate::authorize('update-role');
 
         $role = \App\Models\Role::findOrFail($request->input('id'));
         $role->name = $request->input('name');
@@ -101,7 +104,7 @@ class RoleController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-role');
+        Gate::authorize('delete-role');
 
         $role = \App\Models\Role::findOrFail($id);
         \App\Models\Role::destroy($id);
@@ -113,7 +116,7 @@ class RoleController extends Controller
 
     public function update_permissions(Request $request): RedirectResponse
     {
-        $this->authorize('update-role');
+        Gate::authorize('update-role');
         $role = \App\Models\Role::findOrFail($request->input('id'));
         $role->permissions()->detach();
         $role->permissions()->sync($request->input('permissions'));
@@ -125,7 +128,7 @@ class RoleController extends Controller
 
     public function update_users(Request $request): RedirectResponse
     {
-        $this->authorize('update-role');
+        Gate::authorize('update-role');
         $role = \App\Models\Role::findOrFail($request->input('id'));
         $role->users()->detach();
         $role->users()->sync($request->input('users'));

@@ -4,20 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class UserController extends Controller
+class UserController extends Controller implements HasMiddleware
 {
-    //
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function index(): View
     {
-        $this->authorize('show-role');
+        Gate::authorize('show-role');
         $users = \App\Models\User::orderBy('name')->with('roles.permissions')->paginate(25, ['*'], 'users');
 
         return view('admin.users.index', compact('users'));
@@ -28,7 +31,7 @@ class UserController extends Controller
      */
     public function create(): RedirectResponse
     {
-        $this->authorize('create-role');
+        Gate::authorize('create-role');
         flash('Users cannot be created directly by the controller. Users are only created after successful authentication')->error();
 
         return Redirect::action([self::class, 'index']);
@@ -39,7 +42,7 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->authorize('create-role');
+        Gate::authorize('create-role');
         flash('Users cannot be stored directly by the controller. Users are only created after successful authentication.')->error();
 
         return Redirect::action([self::class, 'index']);
@@ -50,7 +53,7 @@ class UserController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-role');
+        Gate::authorize('show-role');
 
         $user = \App\Models\User::with('roles')->findOrFail($id);
 
@@ -62,7 +65,7 @@ class UserController extends Controller
      */
     public function edit(int $id): RedirectResponse
     {
-        $this->authorize('update-role');
+        Gate::authorize('update-role');
         flash('Users cannot be edited directly by the controller. Users are managed by Google authentication.')->error();
 
         return Redirect::action([self::class, 'show'], $id);
@@ -73,7 +76,7 @@ class UserController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $this->authorize('update-role');
+        Gate::authorize('update-role');
         flash('Users cannot be updated directly by the controller. User profiles are managed by Google authentication.')->error();
 
         return Redirect::action([self::class, 'show'], $id);
@@ -84,7 +87,7 @@ class UserController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-role');
+        Gate::authorize('delete-role');
         flash('Users cannot be deleted directly by the controller. Users are managed by Google authentication.')->error();
 
         return Redirect::action([self::class, 'show'], $id);

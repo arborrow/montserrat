@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -74,19 +75,22 @@ class GiftCertificate extends Model implements Auditable
     }
 
     // active gift certificates are those that have not been applied to a particular registration that have not yet expired
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         $query->whereNull('participant_id')->where('expiration_date', '>=', now());
     }
 
     // applied gift certificates have been applied to be used as a credit for a particular registration
-    public function scopeApplied($query)
+    #[Scope]
+    protected function applied($query)
     {
         $query->whereNotNull('participant_id');
     }
 
     // applied gift certificates have been applied to be used as a credit for a particular registration
-    public function scopeExpired($query)
+    #[Scope]
+    protected function expired($query)
     {
         $query->whereNull('participant_id')->where('expiration_date', '<', now());
     }

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use PHPUnit\Framework\Attributes\Test;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -10,9 +9,10 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-//TODO: Create unit tests for new admin.config pages (index, mail, google_calendar, etc.)
+// TODO: Create unit tests for new admin.config pages (index, mail, google_calendar, etc.)
 
 /**
  * @see \App\Http\Controllers\PageController
@@ -273,7 +273,6 @@ final class PageControllerTest extends TestCase
     }
 
     /**
-     *
      * when there is no contact associated with the current authenticated user, the AGC Acknowledgement letter touchpoint cannot be created
      * the user is redirected back to the page they came from and a flash error message tells them to create a contact associated with their email address
      */
@@ -291,7 +290,7 @@ final class PageControllerTest extends TestCase
 
     public function eoy_acknowledgment_returns_an_ok_response()
     {
-        //$this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-donation');
         $email = \App\Models\Email::factory()->create([
             'email' => $user->email,
@@ -355,7 +354,7 @@ final class PageControllerTest extends TestCase
             'payment_description' => $description,
         ]);
 
-        //test with hyphens
+        // test with hyphens
         $response = $this->actingAs($user)->get('report/finance/cash_deposit/'.$yesterday);
         $response->assertOk();
         $response->assertViewIs('reports.finance.cash_deposit');

@@ -9,17 +9,21 @@ use App\Http\Requests\UpdateRetreatRequest;
 use App\Models\Registration;
 use Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Spatie\GoogleCalendar\Event;
 use Storage;
 
-class RetreatController extends Controller
+class RetreatController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -27,7 +31,7 @@ class RetreatController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-retreat');
+        Gate::authorize('show-retreat');
         // do once in controller to reduce excessive number of checks on blade
         $permission_checks = ['show-retreat', 'show-event-contract', 'show-event-schedule', 'show-event-evaluation'];
         foreach ($permission_checks as $permission_check => $permission) {
@@ -46,7 +50,7 @@ class RetreatController extends Controller
 
     public function index_type($event_type_id): View
     {
-        $this->authorize('show-retreat');
+        Gate::authorize('show-retreat');
         $permission_checks = ['show-retreat', 'show-event-contract', 'show-event-schedule', 'show-event-evaluation'];
         foreach ($permission_checks as $permission_check => $permission) {
             $results[$permission] = Auth::user()->can($permission);
@@ -67,7 +71,7 @@ class RetreatController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create-retreat');
+        Gate::authorize('create-retreat');
 
         $retreat_house = \App\Models\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_ambassadors.contact_b')->findOrFail(config('polanco.self.id'));
         $event_types = \App\Models\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
@@ -120,7 +124,7 @@ class RetreatController extends Controller
      */
     public function store(StoreRetreatRequest $request): RedirectResponse
     {
-        $this->authorize('create-retreat');
+        Gate::authorize('create-retreat');
 
         $retreat = new \App\Models\Retreat;
 
@@ -134,12 +138,12 @@ class RetreatController extends Controller
         $retreat->max_participants = $request->input('max_participants');
 
         // TODO: find a way to tag silent retreats, perhaps with event_type_id - for now disabled
-        //$retreat->silent = $request->input('silent');
+        // $retreat->silent = $request->input('silent');
         // amount will be related to default_fee_id?
-        //$retreat->amount = $request->input('amount');
+        // $retreat->amount = $request->input('amount');
         // attending should be calculated based on retreat participants
-        //$retreat->attending = $request->input('attending');
-        //$retreat->year = $request->input('year');
+        // $retreat->attending = $request->input('attending');
+        // $retreat->year = $request->input('year');
 
         $directors = $request->input('directors');
         $innkeepers = $request->input('innkeepers');
@@ -213,7 +217,7 @@ class RetreatController extends Controller
      */
     public function add_participant(int $contact_id, int $event_id, int $participant_role_id)
     {
-        if ($contact_id > 0 && $event_id > 0) { //avoid inserting bad data
+        if ($contact_id > 0 && $event_id > 0) { // avoid inserting bad data
             $participant = \App\Models\Registration::updateOrCreate([
                 'contact_id' => $contact_id,
                 'event_id' => $event_id,
@@ -239,7 +243,7 @@ class RetreatController extends Controller
      */
     public function show(int $id, $status = null): View
     {
-        $this->authorize('show-retreat');
+        Gate::authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
         $attachments = \App\Models\Attachment::whereEntity('event')->whereEntityId($id)->whereFileTypeId(config('polanco.file_type.event_attachment'))->get();
 
@@ -316,7 +320,7 @@ class RetreatController extends Controller
                   withCount('retreatant_events')->
                   paginate(50);
                 break;
-            default: //all
+            default: // all
                 $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
                   leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
                   orderBy('contact.sort_name')->
@@ -327,7 +331,7 @@ class RetreatController extends Controller
         }
 
         if ($this->is_google_calendar_enabled()) {
-            if (! empty($retreat->calendar_id)) { //there is already a calendar_id so try to find the existing Google calendar event
+            if (! empty($retreat->calendar_id)) { // there is already a calendar_id so try to find the existing Google calendar event
                 try { // if successful the calendar_event will be the existing Google calendar event
                     $calendar_event = Event::find($retreat->calendar_id);
                     $retreat->google_calendar_html = $calendar_event->htmlLink;
@@ -342,7 +346,7 @@ class RetreatController extends Controller
 
     public function show_waitlist($id): View
     {
-        $this->authorize('show-retreat');
+        Gate::authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
         $registrations = \App\Models\Registration::where('event_id', '=', $id)->whereStatusId(config('polanco.registration_status_id.waitlist'))->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
 
@@ -351,7 +355,7 @@ class RetreatController extends Controller
 
     public function get_event_by_id_number($id_number, $status = null)
     {
-        $this->authorize('show-retreat');
+        Gate::authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->whereIdnumber($id_number)->firstOrFail();
 
         return $this->show($retreat->id, $status);
@@ -360,21 +364,21 @@ class RetreatController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    //public function edit($id)
-    //{
+    // public function edit($id)
+    // {
     //   $retreats = \App\Models\Retreat::();
     //   return view('retreats.edit',compact('retreats'));
     //  }
     public function edit(int $id): View
     {
-        $this->authorize('update-retreat');
-        //get this retreat's information
+        Gate::authorize('update-retreat');
+        // get this retreat's information
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'assistants.contact', 'innkeepers.contact', 'ambassadors.contact')->findOrFail($id);
         $event_types = \App\Models\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
         $is_active[0] = 'Canceled';
         $is_active[1] = 'Active';
 
-        //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house
+        // create lists of retreat directors, innkeepers, and assistants from relationship to retreat house
         $retreat_house = \App\Models\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_ambassadors.contact_b')->findOrFail(config('polanco.self.id'));
 
         // initialize null arrays for innkeeper, assistant, director and ambassador dropdowns
@@ -456,7 +460,7 @@ class RetreatController extends Controller
      */
     public function update(UpdateRetreatRequest $request, int $id): RedirectResponse
     {
-        $this->authorize('update-retreat');
+        Gate::authorize('update-retreat');
 
         $retreat = \App\Models\Retreat::findOrFail($request->input('id'));
         $retreat->idnumber = $request->input('idnumber');
@@ -555,7 +559,7 @@ class RetreatController extends Controller
         * in the event of calendar change, it is recommended to manually clear all calendar_id data from the event table
         */
         if ($this->is_google_calendar_enabled()) {
-            if (! empty($retreat->calendar_id)) { //there is already a calendar_id so try to find the existing Google calendar event
+            if (! empty($retreat->calendar_id)) { // there is already a calendar_id so try to find the existing Google calendar event
                 try { // if successful the calendar_event will be the existing Google calendar event
                     $calendar_event = Event::find($retreat->calendar_id);
                 } catch (\Exception $e) { // if successful the calendar_event will be a new Google calendar event
@@ -623,7 +627,7 @@ class RetreatController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->authorize('delete-retreat');
+        Gate::authorize('delete-retreat');
         $retreat = \App\Models\Retreat::findOrFail($id);
         // if there is a calendar id for the event then find the Google Calendar event, mark it as canceled and then remove it from the calendar (soft delete)
         if (! empty($retreat->calendar_id)) {
@@ -646,8 +650,8 @@ class RetreatController extends Controller
 
     public function assign_rooms($id): View
     {
-        $this->authorize('update-registration');
-        //get this retreat's information
+        Gate::authorize('update-registration');
+        // get this retreat's information
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'assistants.contact', 'innkeepers.contact', 'ambassadors.contact')->findOrFail($id);
         $registrations = \App\Models\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->whereStatusId(config('polanco.registration_status_id.registered'))->get();
         $rooms = \App\Models\Room::orderby('name')->pluck('name', 'id');
@@ -658,8 +662,8 @@ class RetreatController extends Controller
 
     public function edit_payments($id): View
     {
-        $this->authorize('update-payment');
-        //get this retreat's information
+        Gate::authorize('update-payment');
+        // get this retreat's information
         $retreat = \App\Models\Retreat::findOrFail($id);
         $registrations = \App\Models\Registration::where('event_id', '=', $id)->whereCanceledAt(null)->with('retreatant.parish', 'donation')->orderBy('register_date', 'DESC')->get();
         $payment_description = config('polanco.payment_method');
@@ -671,7 +675,7 @@ class RetreatController extends Controller
 
     public function show_payments($id): View
     {
-        $this->authorize('show-payment');
+        Gate::authorize('show-payment');
         $retreat = \App\Models\Retreat::findOrFail($id);
         $registrations = \App\Models\Registration::where('event_id', '=', $id)->whereCanceledAt(null)->with('retreatant.parish', 'donation')->orderBy('register_date', 'DESC')->get();
 
@@ -682,8 +686,8 @@ class RetreatController extends Controller
     {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
         // TODO: consider also checking to see if the arrived_at time is empty and if it is put in the retreat start time
-        $this->authorize('update-registration');
-        $retreat = \App\Models\Retreat::findOrFail($id); //verifies that it is a valid retreat id
+        Gate::authorize('update-registration');
+        $retreat = \App\Models\Retreat::findOrFail($id); // verifies that it is a valid retreat id
         $registrations = \App\Models\Registration::whereEventId($id)->whereCanceledAt(null)->whereDepartedAt(null)->whereNotNull('arrived_at')->get();
         foreach ($registrations as $registration) {
             $registration->departed_at = $registration->retreat_end_date;
@@ -698,8 +702,8 @@ class RetreatController extends Controller
     public function checkin($id): RedirectResponse
     {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
-        $this->authorize('update-registration');
-        $retreat = \App\Models\Retreat::findOrFail($id); //verifies that it is a valid retreat id
+        Gate::authorize('update-registration');
+        $retreat = \App\Models\Retreat::findOrFail($id); // verifies that it is a valid retreat id
         $registrations = \App\Models\Registration::whereEventId($id)->whereCanceledAt(null)->whereDepartedAt(null)->whereNull('arrived_at')->get();
         foreach ($registrations as $registration) {
             $registration->arrived_at = $registration->retreat_start_date;
@@ -713,7 +717,7 @@ class RetreatController extends Controller
 
     public function room_update(RoomUpdateRetreatRequest $request): RedirectResponse
     {
-        $this->authorize('update-registration');
+        Gate::authorize('update-registration');
 
         if ($request->input('registrations') !== null) {
             foreach ($request->input('registrations') as $key => $value) {
@@ -747,7 +751,7 @@ class RetreatController extends Controller
 
     public function calendar(): View
     {
-        $this->authorize('show-retreat');
+        Gate::authorize('show-retreat');
         if ($this->is_google_calendar_enabled()) {
             $calendar_events = \Spatie\GoogleCalendar\Event::get();
         } else {
@@ -764,7 +768,7 @@ class RetreatController extends Controller
         // for each registration add contact sort_name to room
         // view room_lists
         // TODO: write unit tests for this method
-        $this->authorize('show-registration');
+        Gate::authorize('show-registration');
         $event = \App\Models\Retreat::findOrFail($event_id);
         $registrations = \App\Models\Registration::whereEventId($event_id)->whereNull('canceled_at')->with('room')->get();
         $room_ids = \App\Models\Registration::whereEventId($event_id)->whereNull('canceled_at')->pluck('room_id');
@@ -809,7 +813,7 @@ class RetreatController extends Controller
     {
         // for each registration add contact sort_name to namebadge
         // TODO: write unit tests for this method
-        $this->authorize('show-registration');
+        Gate::authorize('show-registration');
         $event = \App\Models\Retreat::findOrFail($event_id);
         switch ($role) {
             case 'retreatant': $role = config('polanco.participant_role_id.retreatant');
@@ -862,7 +866,7 @@ class RetreatController extends Controller
     {
         // for each registration add contact sort_name to namebadge
         // TODO: write unit tests for this method
-        $this->authorize('show-registration');
+        Gate::authorize('show-registration');
         $event = \App\Models\Retreat::findOrFail($event_id);
         $registrations = \App\Models\Registration::whereEventId($event_id)->whereNull('canceled_at')->whereStatusId(config('polanco.registration_status_id.registered'))->get();
 
@@ -892,7 +896,7 @@ class RetreatController extends Controller
 
     public function search(): View
     {
-        $this->authorize('show-retreat');
+        Gate::authorize('show-retreat');
         $event_types = \App\Models\EventType::whereIsActive(true)->orderBy('label')->pluck('label', 'id');
         $event_types->prepend('N/A', '');
 
@@ -901,7 +905,7 @@ class RetreatController extends Controller
 
     public function results(EventSearchRequest $request): View
     {
-        $this->authorize('show-retreat');
+        Gate::authorize('show-retreat');
 
         if (! empty($request)) {
             $events = \App\Models\Retreat::filtered($request)->orderBy('idnumber')->paginate(25, ['*'], 'events');
@@ -916,7 +920,7 @@ class RetreatController extends Controller
     public function is_google_calendar_enabled()
     {
         $file = 'google-calendar/service-account-credentials.json';
-        //dd(config('settings.google_calendar_id'));
+        // dd(config('settings.google_calendar_id'));
         if (config('settings.google_calendar_id') !== null && Storage::exists($file)) {
             return true;
         } else {

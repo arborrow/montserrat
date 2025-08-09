@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,7 +16,8 @@ class Uom extends Model implements Auditable
 
     protected $table = 'uom';
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->whereIsActive(1);
     }
@@ -23,53 +25,63 @@ class Uom extends Model implements Auditable
     // scopes for various uom types based on uom.type enum
     //  $table->enum('type', ['Data', 'Time', 'Electric current','Length','Area','Volume','Mass','Temperature','Luminosity']);
 
-    public function scopeTime($query)
+    #[Scope]
+    protected function time($query)
     {
         return $query->whereType('Time');
     }
 
-    public function scopeData($query)
+    #[Scope]
+    protected function data($query)
     {
         return $query->whereType('Data');
     }
 
-    public function scopeElectric($query)
+    #[Scope]
+    protected function electric($query)
     {
         return $query->whereType('Electric current');
     }
 
-    public function scopeLength($query)
+    #[Scope]
+    protected function length($query)
     {
         return $query->whereType('Length');
     }
 
-    public function scopeArea($query)
+    #[Scope]
+    protected function area($query)
     {
         return $query->whereType('Area');
     }
 
-    public function scopeVolume($query)
+    #[Scope]
+    protected function volume($query)
     {
         return $query->whereType('Volume');
     }
 
-    public function scopeMass($query)
+    #[Scope]
+    protected function mass($query)
     {
         return $query->whereType('Mass');
     }
 
     // alias of scopeMass
-    public function scopeWeight($query)
+    #[Scope]
+    protected function weight($query)
     {
         return $query->whereType('Mass');
     }
 
-    public function scopeTemperature($query)
+    #[Scope]
+    protected function temperature($query)
     {
         return $query->whereType('Temperature');
     }
 
-    public function scopeLuminosity($query)
+    #[Scope]
+    protected function luminosity($query)
     {
         return $query->whereType('Luminosity');
     }

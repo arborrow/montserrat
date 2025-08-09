@@ -6,18 +6,22 @@ use App\Http\Requests\SearchRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class SearchController extends Controller
+class SearchController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     public function autocomplete(Request $request): JsonResponse
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         $term = $request->get('term');
         $results = [];
         $queries = \App\Models\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
@@ -32,8 +36,8 @@ class SearchController extends Controller
     }
 
     public function getuser(Request $request): RedirectResponse
-    {   //dd($request);
-        $this->authorize('show-contact');
+    {   // dd($request);
+        Gate::authorize('show-contact');
         if (empty($request->get('response'))) {
             $id = 0;
         } else {
@@ -52,7 +56,7 @@ class SearchController extends Controller
 
     public function results(SearchRequest $request): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
         if (! empty($request)) {
             $persons = \App\Models\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(25, ['*'], 'persons');
             $persons->appends($request->except('page'));
@@ -66,7 +70,7 @@ class SearchController extends Controller
 
     public function search(): View
     {
-        $this->authorize('show-contact');
+        Gate::authorize('show-contact');
 
         $contact_types = \App\Models\ContactType::whereIsReserved(true)->pluck('label', 'id');
         $contact_types->prepend('N/A', '');

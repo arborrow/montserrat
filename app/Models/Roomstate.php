@@ -14,9 +14,12 @@ class Roomstate extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
-    protected $casts = [
-        'statechange_at' => 'datetime',
-    ];  //
+    protected function casts(): array
+    {
+        return [
+            'statechange_at' => 'datetime',
+        ];
+    }
 
     //
     public function room(): BelongsTo

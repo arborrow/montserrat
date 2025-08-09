@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class SystemController extends Controller
+class SystemController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -26,7 +30,7 @@ class SystemController extends Controller
      */
     public function phpinfo(): View
     {
-        $this->authorize('show-admin-menu');
+        Gate::authorize('show-admin-menu');
 
         return view('admin.config.phpinfo');
     }
@@ -60,7 +64,7 @@ class SystemController extends Controller
 
     public function offeringdedup_index(): View
     {
-        $this->authorize('show-offeringdedup');
+        Gate::authorize('show-offeringdedup');
 
         $offeringdedup = \App\Models\TmpOfferingDedup::orderBy('count', 'desc')->paginate(50);
 
@@ -70,7 +74,7 @@ class SystemController extends Controller
 
     public function offeringdedup_show($contact_id = null, $event_id = null): View
     {
-        $this->authorize('show-offeringdedup');
+        Gate::authorize('show-offeringdedup');
         $donations = \App\Models\Donation::whereEventId($event_id)->whereContactId($contact_id)->whereDonationDescription('Retreat Funding')->get();
         $combo = $contact_id.'-'.$event_id;
 

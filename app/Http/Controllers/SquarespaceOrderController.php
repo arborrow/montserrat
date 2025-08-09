@@ -28,18 +28,22 @@ use App\Traits\SquareSpaceTrait;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class SquarespaceOrderController extends Controller
+class SquarespaceOrderController extends Controller implements HasMiddleware
 {
     use SquareSpaceTrait;
 
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -47,7 +51,7 @@ class SquarespaceOrderController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-squarespace-order');
+        Gate::authorize('show-squarespace-order');
         $unprocessed_orders = SquarespaceOrder::whereIsProcessed(0)->orderBy('order_number')->paginate(25, ['*'], 'unprocessed_orders');
         $processed_orders = SquarespaceOrder::whereIsProcessed(1)->orderByDesc('order_number')->paginate(25, ['*'], 'processed_orders');
 
@@ -60,8 +64,8 @@ class SquarespaceOrderController extends Controller
      */
     public function create(): RedirectResponse
     {
-        //use permisson of target, namely squarespace.order.index
-        $this->authorize('show-squarespace-order');
+        // use permisson of target, namely squarespace.order.index
+        Gate::authorize('show-squarespace-order');
 
         return Redirect::action([self::class, 'index']);
     }
@@ -72,8 +76,8 @@ class SquarespaceOrderController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        //use permisson of target, namely squarespace.order.index
-        $this->authorize('show-squarespace-order');
+        // use permisson of target, namely squarespace.order.index
+        Gate::authorize('show-squarespace-order');
 
         return Redirect::action([self::class, 'index']);
     }
@@ -83,7 +87,7 @@ class SquarespaceOrderController extends Controller
      */
     public function show(int $id): View
     {
-        $this->authorize('show-squarespace-order');
+        Gate::authorize('show-squarespace-order');
         $order = SquarespaceOrder::findOrFail($id);
 
         return view('squarespace.order.show', compact('order'));
@@ -96,7 +100,7 @@ class SquarespaceOrderController extends Controller
      */
     public function show_order_number($order_number): View
     {
-        $this->authorize('show-squarespace-order');
+        Gate::authorize('show-squarespace-order');
         $order = SquarespaceOrder::whereOrderNumber($order_number)->first();
 
         return view('squarespace.order.show', compact('order'));
@@ -107,7 +111,7 @@ class SquarespaceOrderController extends Controller
      */
     public function edit(int $id): View
     {
-        $this->authorize('update-squarespace-order');
+        Gate::authorize('update-squarespace-order');
         $order = SquarespaceOrder::findOrFail($id);
         $gift_certificate = (empty($order->gift_certificate_id)) ? null : GiftCertificate::findOrFail($order->gift_certificate_id);
         $prefixes = Prefix::orderBy('name')->pluck('name', 'id');
@@ -129,7 +133,7 @@ class SquarespaceOrderController extends Controller
         $state = (strlen($order->address_state) > 2) ?
                 StateProvince::whereCountryId(config('polanco.country_id_usa'))->whereName(strtoupper($order->address_state))->first() :
                 StateProvince::whereCountryId(config('polanco.country_id_usa'))->whereAbbreviation(strtoupper($order->address_state))->first();
-        //dd($order, $state);
+        // dd($order, $state);
         $order->preferred_language = ($order->preferred_language == 'Inglés') ? 'English' : $order->preferred_language;
         $order->preferred_language = ($order->preferred_language == 'Español') ? 'Spanish' : $order->preferred_language;
         $order->preferred_language = ($order->preferred_language == 'Vietnamita') ? 'Vietnamese' : $order->preferred_language;
@@ -142,7 +146,7 @@ class SquarespaceOrderController extends Controller
             $retreat = Retreat::whereIdnumber($order->retreat_idnumber)->first();
         }
 
-        $send_fulfillment = 0; //initialize to false
+        $send_fulfillment = 0; // initialize to false
         if (! empty($retreat->id)) {
             $send_fulfillment = (($retreat->capacity_percentage < 90) && ($retreat->days_until_start > 8)) ? 1 : 0;
         }
@@ -174,7 +178,7 @@ class SquarespaceOrderController extends Controller
         $couple->full_address = $order->full_address;
         $couple->date_of_birth = $order->couple_date_of_birth;
         $couple_matching_contacts = (isset($order->couple_name)) ? $this->matched_contacts($couple) : [null => 'No name provided'];
-        //dd($couple_matching_contacts, $matching_contacts);
+        // dd($couple_matching_contacts, $matching_contacts);
 
         return view('squarespace.order.edit', compact('order', 'matching_contacts', 'retreats', 'couple_matching_contacts', 'prefixes', 'states', 'countries', 'languages', 'parish_list', 'ids', 'genders', 'religions', 'send_fulfillment', 'gift_certificate'));
     }
@@ -333,7 +337,7 @@ class SquarespaceOrderController extends Controller
                 $relationship_parishioner->contact_id_a = $request->input('parish_id');
                 $relationship_parishioner->save();
             }
-            //TODO: when updating order, change parish name to the display name of the parish
+            // TODO: when updating order, change parish name to the display name of the parish
 
             // retreatant relationship
             $relationship_retreatant = Relationship::firstOrNew([
@@ -428,7 +432,7 @@ class SquarespaceOrderController extends Controller
             $person_note_health->note = ($request->filled('health')) ? $request->input('health') : $person_note_health->note;
             $person_note_health->save();
 
-            //emergency contact info
+            // emergency contact info
             $emergency_contact = EmergencyContact::firstOrNew([
                 'contact_id' => $contact_id,
             ]);
@@ -606,7 +610,7 @@ class SquarespaceOrderController extends Controller
                     // generate email
                     try {
                         Mail::to($request->input('email'))->send(new SquarespaceOrderFulfillment($order));
-                    } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
+                    } catch (\Exception $e) { // failed to send finance notification of event_id change on registration
                         flash('Error sending Squarespace Order Fulfillment Email for '.$order->order_description.': <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_description.'</a>')->warning();
                     }
                     flash('Fulfillment Email sent for: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_description.'</a>')->success();
@@ -641,7 +645,7 @@ class SquarespaceOrderController extends Controller
                     $gift_certificate->save();
                 }
             } else {
-                if (! empty($order->gift_certificate_id)) { //gift certificate redemption
+                if (! empty($order->gift_certificate_id)) { // gift certificate redemption
                     $gift_certificate = GiftCertificate::find($order->gift_certificate_id);
                     if (! empty($gift_certificate?->donation_id)) {
                         $gift_certificate_donation = Donation::find($gift_certificate->donation_id);
@@ -680,7 +684,7 @@ class SquarespaceOrderController extends Controller
                             $finance_email = config('polanco.finance_email');
                             try {
                                 Mail::to($finance_email)->send(new GiftCertificateRedemption($gift_certificate, $order, $negative_reallocation_payment, $reallocation_payment));
-                            } catch (\Exception $e) { //failed to send finance notification of gift certificate redemption
+                            } catch (\Exception $e) { // failed to send finance notification of gift certificate redemption
                                 // dd($e);
                                 flash('Email notification NOT sent to finance regarding Gift Certificate Redepmtion for #: <a href="'.url('/gift_certificate/'.$gift_certificate->id).'">'.$gift_certificate->certificate_number.'</a>')->warning();
                             }
@@ -726,8 +730,8 @@ class SquarespaceOrderController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        //use permisson of target, namely squarespace.order.index
-        $this->authorize('show-squarespace-order');
+        // use permisson of target, namely squarespace.order.index
+        Gate::authorize('show-squarespace-order');
 
         return Redirect::action([self::class, 'index']);
     }
@@ -737,7 +741,7 @@ class SquarespaceOrderController extends Controller
      */
     public function reset(int $id): RedirectResponse
     {
-        $this->authorize('update-squarespace-order');
+        Gate::authorize('update-squarespace-order');
 
         $order = SquarespaceOrder::findOrFail($id);
         $order->contact_id = null;

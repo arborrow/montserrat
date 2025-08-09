@@ -32,7 +32,7 @@ class RegistrationEventChange extends Mailable
      * Build the message.
      */
     public function build(): static
-    {   //TODO: consider looking up the preferred language of the contact with the finance email address and send message in preferred language - English is OK for now
+    {   // TODO: consider looking up the preferred language of the contact with the finance email address and send message in preferred language - English is OK for now
         return $this->subject('Notification of Registration Update: Event changed')
             ->replyTo('registration@montserratretreat.org')
             ->view('emails.en_US.registration-event-change');

@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class SquarespaceController extends Controller
+class SquarespaceController extends Controller implements HasMiddleware
 {
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth');
+        return [
+            'auth',
+        ];
     }
 
     /**
@@ -17,7 +21,7 @@ class SquarespaceController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('show-squarespace');
+        Gate::authorize('show-squarespace');
 
         return view('squarespace.index');
     }
@@ -27,7 +31,7 @@ class SquarespaceController extends Controller
      */
     public function contribution_index(): View
     {
-        $this->authorize('show-squarespace');
+        Gate::authorize('show-squarespace');
 
         return view('squarespace.contribution');
     }
@@ -37,7 +41,7 @@ class SquarespaceController extends Controller
      */
     public function order_index(): View
     {
-        $this->authorize('show-squarespace');
+        Gate::authorize('show-squarespace');
 
         return view('squarespace.order');
     }
