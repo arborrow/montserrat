@@ -12,6 +12,7 @@
                 <div class='row'>
                     <div class='col-lg-6 col-md-9'>
                         <strong>Environment (APP_ENV): </strong> @if(null!==App::environment()) <div class="alert alert-success alert-important" role="alert">Configured: {{ App::environment() }}</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
+                        <strong>Timezone: </strong> @if(null!==config('app.timezone')) <div class="alert alert-success alert-important" role="alert">Configured: {{ config('app.timezone') }}</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
                         <br /><strong>Debug (APP_DEBUG): </strong>  @if(null!==config('app.debug')) <div class="alert alert-success alert-important" role="alert">Configured: {{ config('app.debug') }}</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
                         <br /><strong>Key (APP_KEY): </strong>  @if(null!==config('app.key')) <div class="alert alert-success alert-important" role="alert">Configured: {{ config('app.key') }}</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
                         <br /><strong>URL (APP_URL): </strong>  @if(null!==config('app.url')) <div class="alert alert-success alert-important" role="alert">Configured: {{ config('app.url') }}</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf

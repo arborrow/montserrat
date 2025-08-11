@@ -68,9 +68,9 @@ class GateController extends Controller implements HasMiddleware
             $touchpoint = new \App\Models\Touchpoint;
             $touchpoint->person_id = config('polanco.self.id');
             $touchpoint->staff_id = $current_user->contact_id;
-            $touchpoint->touched_at = Carbon::now();
+            $touchpoint->touched_at = Carbon::now(config('app.timezone'));
             $touchpoint->type = 'Gate activity';
-            $touchpoint->notes = 'Request to open gate'.$text;
+            $touchpoint->notes = 'Request to open gate'.$text.' ('.config('app.timezone').')';
             $touchpoint->save();
         } else {
             $message = 'Gate settings are NOT sufficiently configured to OPEN the gate.';
@@ -115,9 +115,9 @@ class GateController extends Controller implements HasMiddleware
             $touchpoint = new \App\Models\Touchpoint;
             $touchpoint->person_id = config('polanco.self.id');
             $touchpoint->staff_id = $current_user->contact_id;
-            $touchpoint->touched_at = Carbon::now();
+            $touchpoint->touched_at = Carbon::now(config('app.timezone'));
             $touchpoint->type = 'Gate activity';
-            $touchpoint->notes = 'Request to close gate'.$text;
+            $touchpoint->notes = 'Request to close gate'.$text.' ('.config('app.timezone').')';
             $touchpoint->save();
         } else {
             $message = 'Gate settings are not sufficiently configured to CLOSE the gate.';
