@@ -66,7 +66,7 @@
                         {{ html()->number('donation_id', $gift_certificate->donation_id)->class('form-control') }}
                     </div>
                     <div class="col-lg-3">
-                        {{ html()->label('Participant ID:', 'participant_id') }}
+                        {{ html()->label('Retreat Registration ID:', 'participant_id') }}
                         {{ html()->number('participant_id', $gift_certificate->participant_id)->class('form-control') }}
                     </div>
                 </div>
