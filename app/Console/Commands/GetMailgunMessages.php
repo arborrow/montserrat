@@ -98,7 +98,7 @@ class GetMailgunMessages extends Command
         $queryString = ['event' => 'stored'];
         $events = $mg->events()->get("$domain", $queryString);
         $event_items = $events->getItems();
-
+        /*
         if (isset($event_items)) {
             foreach ($event_items as $event_item) {
                 $event_date = $event_item->getEventDate();
@@ -159,15 +159,16 @@ class GetMailgunMessages extends Command
                 }
             }
         }
-
+        */
         $messages = Message::whereIsProcessed(0)->get();
-
+        
         // dd($messages);
         foreach ($messages as $message) {
             // #TOUCHPOINT - if this is a touchpoint
             // if we have from and to ids for contacts go ahead and create a touchpoint
             // TODO: validate that from is from enforced domain (if applicable)
-            $clean_message = str_replace("\r\n", "\n", html_entity_decode(strip_tags($message->body)));
+            $clean_message = str_replace("\r\n", "\n", html_entity_decode(strip_tags($message->body))); 
+            
             if (($message->from_id > 0) && ($message->to_id > 0) && (str_contains($message->recipients, 'touchpoint'))) {
                 try {
                     $touch = new Touchpoint;
@@ -309,6 +310,63 @@ class GetMailgunMessages extends Command
 
             // #ORDER - if this is an order for a retreat
             if (str_contains($message->recipients, 'order')) {
+                // #Order for SQ5937036 - 
+                if (str_contains($clean_message,'SQ5937036')) {
+                    $order_number = $this->extract_value_between($clean_message, 'Order #', '.');
+                    $order_date = $this->extract_value_between($clean_message, 'Placed on', 'CT.');
+                    $message_info = $this->extract_value_between($clean_message, 'BILLED TO:', 'Item Subtotal');
+
+                    $retreat = array_values(array_filter(explode("\n", $message_info)));
+                    $retreat = array_map('trim', $retreat);
+                    // remove blank lines
+                    $retreat = array_filter($retreat);
+                    // remove line with only a space in it that was not removed from the trim above, grrr
+                    $retreat = array_filter($retreat, function ($value) {
+                        return $value !== "\xC2\xA0";
+                    });
+                    // rekey the array
+                    $retreat = array_values($retreat);
+
+                    
+                    $order = SquarespaceOrder::firstOrCreate([
+                        'order_number' => $order_number,
+                    ]);
+
+                    $order->message_id = $message->id;
+                    $order->created_at = (isset($order_date)) ? Carbon::parse($order_date) : Carbon::now();
+                    $order->retreat_category = "Workshop";
+                    $order->retreat_sku = "SQ5937036";
+                    $order->retreat_description="Prayer and Discernment Workshop";
+                    $order->retreat_dates="March 22, 2026 - November 8, 2026";
+                    // $order->event_id = 6334; //prod
+                    $order->event_id = 520; // dev
+                                       
+                    $order->retreat_start_date = Carbon::parse("2026-03-22");
+                    $order->retreat_idnumber = "20260322-W";
+                    $order->retreat_registration_type = "Registration and Payment in Full";
+                    $order->retreat_quantity = 1;
+                    $order->deposit_amount = 115;
+                    $order->unit_price = 115;
+                    $order->name = $retreat[0];
+
+                    $stripe_url = $this->extract_stripe_url($message->body);
+                    if (isset($stripe_url) && strpos($stripe_url, 'http') === 0) {
+                            $result = Http::timeout(2)->get($stripe_url)->getBody()->getContents();
+                            $charge = trim($this->extract_value($result, 'redirect=%2Fpayments%2F'));
+                            $stripe_charge = str_replace('">', '', $charge);
+                            $order->stripe_charge_id = (isset($stripe_charge)) ? $stripe_charge : null;
+                    }
+                    
+                    $order->save();
+
+                    // dd($order, $order_number,$order_date, $message->id, $retreat, $message_info, $clean_message);
+                    
+                    
+                    
+                    
+
+
+                } else {
                 try {
                     if (strpos($clean_message, 'Form Submission - Gift Certificate Registration') > 0) {
                         // gift certificate registration
@@ -403,6 +461,7 @@ class GetMailgunMessages extends Command
                     } else {
                         $order_number = $this->extract_value_between($clean_message, 'Order #', '.');
                         $order_date = $this->extract_value_between($clean_message, 'Placed on', 'CT. View in Stripe');
+                        
                         $order = SquarespaceOrder::firstOrCreate([
                             'order_number' => $order_number,
                         ]);
@@ -603,6 +662,8 @@ class GetMailgunMessages extends Command
                             $m->to(config('polanco.admin_email'))
                                 ->subject('Error Retrieving Mailgun Messages');
                         });
+                }
+
                 }
             }
 
