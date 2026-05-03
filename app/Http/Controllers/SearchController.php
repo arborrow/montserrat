@@ -16,7 +16,7 @@ class SearchController extends Controller
     #[Authorize('show-contact')]
     public function autocomplete(Request $request): JsonResponse
     {
-        $term = $request->get('term');
+        $term = $request->input('term');
         $results = [];
         $queries = \App\Models\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
         if (($queries->count() == 0)) {
@@ -32,10 +32,10 @@ class SearchController extends Controller
     #[Authorize('show-contact')]
     public function getuser(Request $request): RedirectResponse
     {   // dd($request);
-        if (empty($request->get('response'))) {
+        if (empty($request->input('response'))) {
             $id = 0;
         } else {
-            $id = $request->get('response');
+            $id = $request->input('response');
         }
 
         if ($id == 0) {
