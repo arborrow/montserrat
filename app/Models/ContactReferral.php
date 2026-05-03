@@ -12,5 +12,4 @@ class ContactReferral extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-
 }

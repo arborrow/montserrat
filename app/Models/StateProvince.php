@@ -14,5 +14,4 @@ class StateProvince extends Model implements Auditable
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-
 }

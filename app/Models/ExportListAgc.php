@@ -12,5 +12,4 @@ class ExportListAgc extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-
 }
