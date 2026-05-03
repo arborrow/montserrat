@@ -5,23 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUomRequest;
 use App\Http\Requests\UpdateUomRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class UomController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class UomController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-uom')]
     public function index(): View
     {
-        Gate::authorize('show-uom');
         $uoms = \App\Models\Uom::orderBy('unit_name')->get();
 
         return view('admin.uoms.index', compact('uoms'));
@@ -30,9 +24,9 @@ class UomController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-uom')]
     public function create(): View
     {
-        Gate::authorize('create-uom');
         $uom_types = config('polanco.uom_types');
 
         return view('admin.uoms.create', compact('uom_types'));
@@ -41,10 +35,9 @@ class UomController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-uom')]
     public function store(StoreUomRequest $request): RedirectResponse
     {
-        Gate::authorize('create-uom');
-
         $uom = new \App\Models\Uom;
         $uom->type = $request->input('type');
         $uom->unit_name = $request->input('unit_name');
@@ -62,10 +55,9 @@ class UomController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-uom')]
     public function show(int $id): View
     {
-        Gate::authorize('show-uom');
-
         $uom = \App\Models\Uom::findOrFail($id);
 
         return view('admin.uoms.show', compact('uom'));
@@ -74,10 +66,9 @@ class UomController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-uom')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-uom');
-
         $uom = \App\Models\Uom::findOrFail($id);
         $uom_types = config('polanco.uom_types');
 
@@ -87,10 +78,9 @@ class UomController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-uom')]
     public function update(UpdateUomRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-uom');
-
         $uom = \App\Models\Uom::findOrFail($id);
 
         $uom->type = $request->input('type');
@@ -109,9 +99,9 @@ class UomController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-uom')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-uom');
         $uom = \App\Models\Uom::findOrFail($id);
 
         \App\Models\Uom::destroy($id);

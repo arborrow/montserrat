@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Attributes\UseModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /*
@@ -13,15 +14,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  * Idnumber begins with 2018 and adds a random and unique 4 digit number
  */
 
+#[UseModel(\App\Models\Retreat::class)]
 class EventFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\Retreat::class;
-
     /**
      * Define the model's default state.
      */

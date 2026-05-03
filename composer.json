@@ -9,7 +9,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "barryvdh/laravel-snappy": "^1.0",
         "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.8",
@@ -19,12 +19,12 @@
         "jeremykenedy/laravel-logger": "^10.0",
         "kriswallsmith/buzz": "^1.3",
         "laracasts/flash": "^3.2",
-        "laravel/cashier": "^15.6",
-        "laravel/framework": "^12.19",
-        "laravel/helpers": "^1.7",
-        "laravel/sanctum": "^4.0",
-        "laravel/socialite": "^5.17",
-        "laravel/tinker": "^2.10.1",
+        "laravel/cashier": "^16.5",
+        "laravel/framework": "^13.7",
+        "laravel/helpers": "^1.8",
+        "laravel/sanctum": "^4.3",
+        "laravel/socialite": "^5.24",
+        "laravel/tinker": "^3.0",
         "laravel/ui": "^4.6",
         "mailgun/mailgun-php": "^3.5",
         "nyholm/psr7": "^1.5",
@@ -33,24 +33,24 @@
         "spatie/laravel-google-calendar": "^3.8",
         "spatie/laravel-stripe-webhooks": "^3.10",
         "stuyam/laravel-phone-validator": "dev-master",
-        "symfony/http-client": "^7.2",
-        "symfony/mailgun-mailer": "^7.2",
-        "spatie/laravel-html": "^3.11"
+        "symfony/http-client": "^7.4",
+        "symfony/mailgun-mailer": "^7.4",
+        "spatie/laravel-html": "^3.13"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.15",
-        "barryvdh/laravel-ide-helper": "^3.5",
-        "brianium/paratest": "^7.5",
+        "barryvdh/laravel-debugbar": "^4.0",
+        "barryvdh/laravel-ide-helper": "^3.7",
+        "brianium/paratest": "^7.9",
         "fakerphp/faker": "^1.23",
-        "jasonmccreary/laravel-test-assertions": "^2.5",
-        "laravel/pint": "^1.13",
-        "laravel/sail": "^1.41",
+        "jasonmccreary/laravel-test-assertions": "^2.9",
+        "laravel/pint": "^1.27",
+        "laravel/sail": "^1.53",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "orangehill/iseed": "^3.1",
+        "orangehill/iseed": "^3.8",
         "phpunit/phpunit": "^11.5.3",
-        "symfony/css-selector": "^7.2",
-        "symfony/dom-crawler": "^7.2"
+        "symfony/css-selector": "^7.4",
+        "symfony/dom-crawler": "^7.4"
     },
     "autoload": {
         "files": [
@@ -90,6 +90,21 @@
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
+        ],
+        "setup": [
+            "composer install",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php artisan key:generate",
+            "@php artisan migrate --force",
+            "npm install",
+            "npm run build"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test"
+        ],
+        "pre-package-uninstall": [
+            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
         ]
     },
     "extra": {

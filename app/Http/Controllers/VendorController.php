@@ -5,26 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreVendorRequest;
 use App\Http\Requests\UpdateVendorRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class VendorController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class VendorController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-contact')]
     public function index(): View
     {
-        Gate::authorize('show-contact');
         $vendors = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->paginate(25, ['*'], 'vendors');
 
         return view('vendors.index', compact('vendors'));   //
@@ -33,10 +27,9 @@ class VendorController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-contact')]
     public function create(): View
     {
-        Gate::authorize('create-contact');
-
         $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         $countries = \App\Models\Country::orderby('iso_code')->pluck('iso_code', 'id');
@@ -50,10 +43,9 @@ class VendorController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-contact')]
     public function store(StoreVendorRequest $request): RedirectResponse
     {
-        Gate::authorize('create-contact');
-
         $vendor = new \App\Models\Contact;
         $vendor->organization_name = $request->input('organization_name');
         $vendor->display_name = $request->input('organization_name');
@@ -156,9 +148,9 @@ class VendorController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-contact')]
     public function show(int $id): View
     {
-        Gate::authorize('show-contact');
         $vendor = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes')->findOrFail($id);
         $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
         $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at', 'DESC')->paginate(25, ['*'], 'touchpoints');
@@ -177,10 +169,9 @@ class VendorController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-contact')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-contact');
-
         $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         $countries = \App\Models\Country::orderby('iso_code')->pluck('iso_code', 'id');
@@ -208,10 +199,9 @@ class VendorController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-contact')]
     public function update(UpdateVendorRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-contact');
-
         $vendor = \App\Models\Contact::with('address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
         $vendor->organization_name = $request->input('organization_name');
         $vendor->display_name = $request->input('display_name');
@@ -340,10 +330,9 @@ class VendorController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-contact')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-contact');
-
         $vendor = \App\Models\Vendor::findOrFail($id);
         \App\Models\Relationship::whereContactIdA($id)->delete();
         \App\Models\Relationship::whereContactIdB($id)->delete();

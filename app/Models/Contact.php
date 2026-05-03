@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,16 +16,14 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Cashier\Billable;
 use OwenIt\Auditing\Contracts\Auditable;
 
+#[Table('contact')]
+#[Appends('full_name_with_city', 'agc_household_name')]
 class Contact extends Model implements Auditable
 {
     use Billable;
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-
-    protected $table = 'contact';
-
-    protected $appends = ['full_name_with_city', 'agc_household_name'];
 
     protected $with = ['prefix', 'suffix'];
 

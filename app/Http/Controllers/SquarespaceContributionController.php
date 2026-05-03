@@ -19,29 +19,23 @@ use App\Traits\SquareSpaceTrait;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class SquarespaceContributionController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class SquarespaceContributionController extends Controller
 {
     use SquareSpaceTrait;
-
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
 
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-squarespace-contribution')]
     public function index(): View
     {
-        Gate::authorize('show-squarespace-contribution');
         $ss_contributions = SquarespaceContribution::whereIsProcessed(0)->orderBy('created_at')->paginate(25, ['*'], 'ss_contributions');
         $processed_ss_contributions = SquarespaceContribution::whereIsProcessed(1)->orderByDesc('created_at')->paginate(25, ['*'], 'ss_unprocessed_contributions');
 
@@ -51,31 +45,29 @@ class SquarespaceContributionController extends Controller implements HasMiddlew
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('show-squarespace-contribution')]
     public function create(): RedirectResponse
     {
         // use permisson of target, namely squarespace.contribution.index
-        Gate::authorize('show-squarespace-contribution');
-
         return Redirect::action([self::class, 'index']);
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('show-squarespace-contribution')]
     public function store(Request $request): RedirectResponse
     {
         // use permisson of target, namely squarespace.contribution.index
-        Gate::authorize('show-squarespace-contribution');
-
         return Redirect::action([self::class, 'index']);
     }
 
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-squarespace-contribution')]
     public function show(int $id): View
     {
-        Gate::authorize('show-squarespace-contribution');
         $ss_contribution = SquarespaceContribution::findOrFail($id);
 
         return view('squarespace.contribution.show', compact('ss_contribution'));
@@ -84,10 +76,9 @@ class SquarespaceContributionController extends Controller implements HasMiddlew
     /**
      * Show a contribution to confirm the retreatant for a SquareSpace order.
      */
+    #[Authorize('update-squarespace-contribution')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-squarespace-contribution');
-
         $ss_contribution = SquarespaceContribution::findOrFail($id);
         $descriptions = DonationType::active()->orderby('name')->pluck('name', 'name');
 
@@ -287,21 +278,19 @@ class SquarespaceContributionController extends Controller implements HasMiddlew
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('show-squarespace-contribution')]
     public function destroy(int $id): RedirectResponse
     {
         // use permisson of target, namely squarespace.contribution.index
-        Gate::authorize('show-squarespace-contribution');
-
         return Redirect::action([self::class, 'index']);
     }
 
     /**
      * Reset to re-select the retreatant for a SquareSpace contribution.
      */
+    #[Authorize('update-squarespace-contribution')]
     public function reset(int $id): RedirectResponse
     {
-        Gate::authorize('update-squarespace-contribution');
-
         $ss_contribution = SquarespaceContribution::findOrFail($id);
         $ss_contribution->contact_id = null;
         $ss_contribution->save();

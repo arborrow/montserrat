@@ -4,23 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class RoleController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class RoleController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-role')]
     public function index(): View
     {
-        Gate::authorize('show-role');
         $roles = \App\Models\Role::orderBy('name')->get();
 
         return view('admin.roles.index', compact('roles'));
@@ -29,20 +23,18 @@ class RoleController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-role')]
     public function create(): View
     {
-        Gate::authorize('create-role');
-
         return view('admin.roles.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-role')]
     public function store(Request $request): RedirectResponse
     {
-        Gate::authorize('create-role');
-
         $role = new \App\Models\Role;
         $role->name = $request->input('name');
         $role->display_name = $request->input('display_name');
@@ -58,10 +50,9 @@ class RoleController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-role')]
     public function show(int $id): View
     {
-        Gate::authorize('show-role');
-
         $role = \App\Models\Role::with('users', 'permissions')->findOrFail($id);
         $permissions = \App\Models\Permission::orderBy('name')->pluck('name', 'id');
         $users = \App\Models\User::orderBy('name')->pluck('name', 'id');
@@ -72,10 +63,9 @@ class RoleController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-role')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-role');
-
         $role = \App\Models\Role::findOrFail($id);
 
         return view('admin.roles.edit', compact('role')); //
@@ -84,10 +74,9 @@ class RoleController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-role')]
     public function update(Request $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-role');
-
         $role = \App\Models\Role::findOrFail($request->input('id'));
         $role->name = $request->input('name');
         $role->display_name = $request->input('display_name');
@@ -102,10 +91,9 @@ class RoleController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-role')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-role');
-
         $role = \App\Models\Role::findOrFail($id);
         \App\Models\Role::destroy($id);
 
@@ -114,9 +102,9 @@ class RoleController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'index']);
     }
 
+    #[Authorize('update-role')]
     public function update_permissions(Request $request): RedirectResponse
     {
-        Gate::authorize('update-role');
         $role = \App\Models\Role::findOrFail($request->input('id'));
         $role->permissions()->detach();
         $role->permissions()->sync($request->input('permissions'));
@@ -126,9 +114,9 @@ class RoleController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'index']);
     }
 
+    #[Authorize('update-role')]
     public function update_users(Request $request): RedirectResponse
     {
-        Gate::authorize('update-role');
         $role = \App\Models\Role::findOrFail($request->input('id'));
         $role->users()->detach();
         $role->users()->sync($request->input('users'));

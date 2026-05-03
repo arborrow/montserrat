@@ -5,23 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAssetTypeRequest;
 use App\Http\Requests\UpdateAssetTypeRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class AssetTypeController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class AssetTypeController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-asset-type')]
     public function index(): View
     {
-        Gate::authorize('show-asset-type');
         $asset_types = \App\Models\AssetType::orderBy('label')->get();
 
         return view('admin.asset_types.index', compact('asset_types'));
@@ -30,9 +24,9 @@ class AssetTypeController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-asset-type')]
     public function create(): View
     {
-        Gate::authorize('create-asset-type');
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', 0);
 
@@ -42,10 +36,9 @@ class AssetTypeController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-asset-type')]
     public function store(StoreAssetTypeRequest $request): RedirectResponse
     {
-        Gate::authorize('create-asset-type');
-
         $asset_type = new \App\Models\AssetType;
         $asset_type->label = $request->input('label');
         $asset_type->name = $request->input('name');
@@ -63,10 +56,9 @@ class AssetTypeController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-asset-type')]
     public function show(int $id): View
     {
-        Gate::authorize('show-asset-type');
-
         $asset_type = \App\Models\AssetType::findOrFail($id);
 
         return view('admin.asset_types.show', compact('asset_type'));
@@ -75,10 +67,9 @@ class AssetTypeController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-asset-type')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-asset-type');
-
         $asset_type = \App\Models\AssetType::findOrFail($id);
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', 0);
@@ -89,10 +80,9 @@ class AssetTypeController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-asset-type')]
     public function update(UpdateAssetTypeRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-asset-type');
-
         $asset_type = \App\Models\AssetType::findOrFail($request->input('id'));
         $asset_type->name = $request->input('name');
         $asset_type->label = $request->input('label');
@@ -109,9 +99,9 @@ class AssetTypeController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-asset-type')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-asset-type');
         $asset_type = \App\Models\AssetType::findOrFail($id);
 
         \App\Models\AssetType::destroy($id);

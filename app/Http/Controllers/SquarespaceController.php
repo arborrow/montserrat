@@ -3,46 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\View\View;
 
-class SquarespaceController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class SquarespaceController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-squarespace')]
     public function index(): View
     {
-        Gate::authorize('show-squarespace');
-
         return view('squarespace.index');
     }
 
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-squarespace')]
     public function contribution_index(): View
     {
-        Gate::authorize('show-squarespace');
-
         return view('squarespace.contribution');
     }
 
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-squarespace')]
     public function order_index(): View
     {
-        Gate::authorize('show-squarespace');
-
         return view('squarespace.order');
     }
 

@@ -5,24 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class DepartmentController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class DepartmentController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-department')]
     public function index(): View
     {
-        Gate::authorize('show-department');
-
         $departments = \App\Models\Department::orderBy('name')->get();
 
         return view('admin.departments.index', compact('departments'));
@@ -31,10 +24,9 @@ class DepartmentController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-department')]
     public function create(): View
     {
-        Gate::authorize('create-department');
-
         $parents = \App\Models\Department::orderBy('name')->pluck('name', 'id');
         $parents->prepend('N/A', 0);
 
@@ -44,10 +36,9 @@ class DepartmentController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-department')]
     public function store(StoreDepartmentRequest $request): RedirectResponse
     {
-        Gate::authorize('create-department');
-
         $department = new \App\Models\Department;
         $department->name = $request->input('name');
         $department->label = $request->input('label');
@@ -66,10 +57,9 @@ class DepartmentController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-department')]
     public function show(int $id): View
     {
-        Gate::authorize('show-department');
-
         $department = \App\Models\Department::findOrFail($id);
         $children = \App\Models\Department::whereParentId($id)->get();
 
@@ -79,10 +69,9 @@ class DepartmentController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-department')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-department');
-
         $department = \App\Models\Department::findOrFail($id);
 
         $parents = \App\Models\Department::orderBy('name')->pluck('name', 'id');
@@ -94,10 +83,9 @@ class DepartmentController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-department')]
     public function update(UpdateDepartmentRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-department');
-
         $department = \App\Models\Department::findOrFail($id);
 
         $department->name = $request->input('name');
@@ -116,9 +104,9 @@ class DepartmentController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-department')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-department');
         $department = \App\Models\Department::findOrFail($id);
 
         \App\Models\Department::destroy($id);

@@ -5,23 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreWebsiteRequest;
 use App\Http\Requests\UpdateWebsiteRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class WebsiteController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class WebsiteController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-website')]
     public function index(): View
     {
-        Gate::authorize('show-website');
         $websites = \App\Models\Website::orderBy('url')->whereNotNull('url')->paginate(25, ['*'], 'websites');
 
         return view('admin.websites.index', compact('websites'));
@@ -30,20 +24,18 @@ class WebsiteController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-website')]
     public function create(): View
     {
-        Gate::authorize('create-website');
-
         return view('admin.websites.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-website')]
     public function store(StoreWebsiteRequest $request): RedirectResponse
     {
-        Gate::authorize('create-website');
-
         $website = new \App\Models\Website;
         $website->contact_id = $request->input('contact_id');
         $website->url = $request->input('url');
@@ -61,10 +53,9 @@ class WebsiteController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-website')]
     public function show(int $id): View
     {
-        Gate::authorize('show-website');
-
         $website = \App\Models\Website::findOrFail($id);
 
         return view('admin.websites.show', compact('website'));
@@ -73,10 +64,9 @@ class WebsiteController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-website')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-website');
-
         $website = \App\Models\Website::findOrFail($id);
 
         return view('admin.websites.edit', compact('website')); //
@@ -85,10 +75,9 @@ class WebsiteController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-website')]
     public function update(UpdateWebsiteRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-website');
-
         $website = \App\Models\Website::findOrFail($id);
 
         $website->contact_id = $request->input('contact_id');
@@ -107,9 +96,9 @@ class WebsiteController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-website')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-website');
         $website = \App\Models\Website::findOrFail($id);
 
         \App\Models\Website::destroy($id);

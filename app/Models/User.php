@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -10,34 +12,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+#[Fillable('name', 'email', 'password', 'provider', 'provider_id', 'avatar', 'username')]
+#[Hidden('password', 'remember_token')]
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, HasRoles, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'provider',
-        'provider_id',
-        'avatar',
-        'username',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 
     /**
      * Get the attributes that should be cast.

@@ -6,7 +6,8 @@ use Carbon\Carbon;
 use DateTime;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
@@ -14,15 +15,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use PDF;
 
-class PageController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class PageController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     public function about(): View
     {
         return view('pages.about');
@@ -64,9 +59,9 @@ class PageController extends Controller implements HasMiddleware
         return view('pages.kitchen');
     }
 
+    #[Authorize('show-donation')]
     public function finance(): View
     {
-        Gate::authorize('show-donation');
         $current_fiscal_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
 
         return view('pages.finance', compact('current_fiscal_year'));
@@ -104,9 +99,9 @@ class PageController extends Controller implements HasMiddleware
         return view('welcome', compact('quote'));   //
     }
 
+    #[Authorize('show-contact')]
     public function retreatantinforeport($idnumber): View
     {
-        Gate::authorize('show-contact');
         Gate::authorize('show-registration');
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
 
@@ -123,18 +118,17 @@ class PageController extends Controller implements HasMiddleware
         return view('reports.retreatantinfo2', compact('registrations'));   //
     }
 
+    #[Authorize('show-contact')]
     public function contact_info_report($id): View
     {
-        Gate::authorize('show-contact');
-
         $person = \App\Models\Contact::findOrFail($id);
 
         return view('reports.contact_info', compact('person'));
     }
 
+    #[Authorize('show-donation')]
     public function finance_cash_deposit($day = null)
     {
-        Gate::authorize('show-donation');
         if (is_null($day)) {
             $day = Carbon::now();
         } else { // ensures that we are adding dashes to string prior to parsing in response to issue #448
@@ -153,10 +147,9 @@ class PageController extends Controller implements HasMiddleware
         return view('reports.finance.cash_deposit', compact('report_date', 'grouped_payments', 'grand_total'));
     }
 
+    #[Authorize('show-donation')]
     public function finance_cc_deposit($day = null)
     {
-        Gate::authorize('show-donation');
-
         if (is_null($day)) {
             $day = Carbon::now();
         } else {
@@ -175,19 +168,17 @@ class PageController extends Controller implements HasMiddleware
     }
 
     // TODO: why allow an empty donation id?
+    #[Authorize('show-donation')]
     public function finance_invoice($donation_id = null): View
     {
-        Gate::authorize('show-donation');
-
         $donation = \App\Models\Donation::with('payments', 'contact', 'retreat')->findOrFail($donation_id);
 
         return view('reports.finance.invoice', compact('donation'));
     }
 
+    #[Authorize('show-donation')]
     public function finance_agc_acknowledge(Request $request, $donation_id = null)
     {
-        Gate::authorize('show-donation');
-
         $donation = \App\Models\Donation::with('payments', 'contact', 'retreat')->findOrFail($donation_id);
 
         $snippets = \App\Models\Snippet::whereTitle('agc_acknowledge')->get();
@@ -228,10 +219,9 @@ class PageController extends Controller implements HasMiddleware
         }
     }
 
+    #[Authorize('show-donation')]
     public function finance_retreatdonations($idnumber = null)
     {
-        Gate::authorize('show-donation');
-
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
         if (isset($retreat)) {
             $donations = \App\Models\Donation::whereEventId($retreat->id)->with('contact', 'payments')->get();
@@ -243,9 +233,9 @@ class PageController extends Controller implements HasMiddleware
         }
     }
 
+    #[Authorize('show-donation')]
     public function finance_deposits()
     {
-        Gate::authorize('show-donation');
         $donations = \App\Models\Donation::where('donation_description', 'Retreat Deposits')->whereDeletedAt(null)->where('donation_amount', '>', 0)->with('contact', 'payments', 'retreat')->get();
         $payments = \App\Models\Payment::whereHas('donation', function ($query) {
             $query->where('donation_description', '=', 'Retreat Deposits');
@@ -262,9 +252,9 @@ class PageController extends Controller implements HasMiddleware
         return view('reports.finance.deposits', compact('grouped_payments', 'payments'));
     }
 
+    #[Authorize('show-donation')]
     public function finance_reconcile_deposit_show($event_id = null)
     {
-        Gate::authorize('show-donation');
         Gate::authorize('show-registration');
 
         if (! isset($event_id)) {
@@ -295,10 +285,9 @@ class PageController extends Controller implements HasMiddleware
         return view('reports.finance.reconcile_deposits', compact('diffpg', 'diffrg'));
     }
 
+    #[Authorize('show-contact')]
     public function retreatlistingreport($idnumber): View
     {
-        Gate::authorize('show-contact');
-
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
 
         $retreatants = \App\Models\Registration::whereCanceledAt(null)
@@ -319,10 +308,9 @@ class PageController extends Controller implements HasMiddleware
         return view('reports.retreatlisting', compact('registrations'));   //
     }
 
+    #[Authorize('show-contact')]
     public function retreatrosterreport($idnumber): View
     {
-        Gate::authorize('show-contact');
-
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
         $retreatants = \App\Models\Registration::whereCanceledAt(null)
             ->whereEventId($retreat->id)
@@ -342,10 +330,9 @@ class PageController extends Controller implements HasMiddleware
         return view('reports.retreatroster', compact('registrations'));   //
     }
 
+    #[Authorize('show-contact')]
     public function retreatrosterphonereport($idnumber): View
     {
-        Gate::authorize('show-contact');
-
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
         $retreatants = \App\Models\Registration::whereCanceledAt(null)
             ->whereEventId($retreat->id)
@@ -365,10 +352,9 @@ class PageController extends Controller implements HasMiddleware
         return view('reports.retreatrosterphone', compact('registrations'));   //
     }
 
+    #[Authorize('show-registration')]
     public function retreatregistrations($idnumber): View
     {
-        Gate::authorize('show-registration');
-
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
         $registrations = \App\Models\Registration::whereCanceledAt(null)
             ->whereEventId($retreat->id)
@@ -381,10 +367,9 @@ class PageController extends Controller implements HasMiddleware
         return view('reports.retreatregistrations', compact('registrations'));   //
     }
 
+    #[Authorize('show-donation')]
     public function eoy_acknowledgment($contact_id = null, $start_date = null, $end_date = null)
     {
-        Gate::authorize('show-donation');
-
         if (! is_null($start_date)) {
             $start_date = $this->hyphenate_date($start_date);
         }
@@ -446,59 +431,51 @@ class PageController extends Controller implements HasMiddleware
         // return view('reports.finance.acknowledgment', compact('payments','contact', 'montserrat','start_date','end_date'));
     }
 
+    #[Authorize('show-admin-menu')]
     public function config_index(): View
     {
-        Gate::authorize('show-admin-menu');
-
         return view('admin.config.index');
     }
 
+    #[Authorize('show-admin-menu')]
     public function config_application(): View
     {
-        Gate::authorize('show-admin-menu');
-
         return view('admin.config.application');
     }
 
+    #[Authorize('show-admin-menu')]
     public function config_mail(): View
     {
-        Gate::authorize('show-admin-menu');
-
         return view('admin.config.mail');
     }
 
+    #[Authorize('show-admin-menu')]
     public function config_gate(): View
     {
-        Gate::authorize('show-admin-menu');
-
         return view('admin.config.gate');
     }
 
+    #[Authorize('show-admin-menu')]
     public function config_google_calendar(): View
     {
-        Gate::authorize('show-admin-menu');
-
         return view('admin.config.google_calendar');
     }
 
+    #[Authorize('show-admin-menu')]
     public function config_google_client(): View
     {
-        Gate::authorize('show-admin-menu');
-
         return view('admin.config.google_client');
     }
 
+    #[Authorize('show-admin-menu')]
     public function config_mailgun(): View
     {
-        Gate::authorize('show-admin-menu');
-
         return view('admin.config.mailgun');
     }
 
+    #[Authorize('show-admin-menu')]
     public function config_twilio(): View
     {
-        Gate::authorize('show-admin-menu');
-
         return view('admin.config.twilio');
     }
 

@@ -6,26 +6,21 @@ use App\Http\Requests\PaymentSearchRequest;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class PaymentController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class PaymentController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-payment')]
     public function index(): View
     {
-        Gate::authorize('show-payment');
         $payments = \App\Models\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(25, ['*'], 'payments');
 
         // dd($donations);
@@ -55,10 +50,9 @@ class PaymentController extends Controller implements HasMiddleware
         }
     }
 
+    #[Authorize('show-payment')]
     public function search(): View
     {
-        Gate::authorize('show-payment');
-
         $payment_methods = config('polanco.payment_method');
         $payment_methods[''] = 'N/A';
 
@@ -68,9 +62,9 @@ class PaymentController extends Controller implements HasMiddleware
         return view('payments.search', compact('payment_methods', 'descriptions'));
     }
 
+    #[Authorize('show-payment')]
     public function results(PaymentSearchRequest $request): View
     {
-        Gate::authorize('show-payment');
         if (! empty($request)) {
             $all_payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->get();
             $payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->paginate(25, ['*'], 'payments');
@@ -86,9 +80,9 @@ class PaymentController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-payment')]
     public function store(StorePaymentRequest $request): RedirectResponse
     {
-        Gate::authorize('create-payment');
         // dd($request);
 
         $donation = \App\Models\Donation::findOrFail($request->input('donation_id'));
@@ -115,9 +109,9 @@ class PaymentController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-payment')]
     public function show(int $id): View
     {
-        Gate::authorize('show-payment');
         $payment = \App\Models\Payment::with('donation.retreat', 'donation.contact', 'balance_transaction')->findOrFail($id);
 
         // dd($payment);
@@ -127,9 +121,9 @@ class PaymentController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-payment')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-payment');
         // get this retreat's information
         $payment = \App\Models\Payment::with('donation.contact', 'donation.retreat')->findOrFail($id);
         $payment_methods = config('polanco.payment_method');
@@ -140,10 +134,9 @@ class PaymentController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-payment')]
     public function update(UpdatePaymentRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-payment');
-
         $payment = \App\Models\Payment::findOrFail($id);
         $payment->payment_amount = $request->input('payment_amount');
         $payment->payment_date = $request->input('payment_date');
@@ -167,9 +160,9 @@ class PaymentController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-payment')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-payment');
         $payment = \App\Models\Payment::findOrFail($id);
 
         \App\Models\Payment::destroy($id);

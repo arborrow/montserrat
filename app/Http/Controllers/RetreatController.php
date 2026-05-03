@@ -9,29 +9,23 @@ use App\Http\Requests\UpdateRetreatRequest;
 use App\Models\Registration;
 use Auth;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Spatie\GoogleCalendar\Event;
 use Storage;
 
-class RetreatController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class RetreatController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-retreat')]
     public function index(): View
     {
-        Gate::authorize('show-retreat');
         // do once in controller to reduce excessive number of checks on blade
         $permission_checks = ['show-retreat', 'show-event-contract', 'show-event-schedule', 'show-event-evaluation'];
         foreach ($permission_checks as $permission_check => $permission) {
@@ -48,9 +42,9 @@ class RetreatController extends Controller implements HasMiddleware
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types', 'results'));   //
     }
 
+    #[Authorize('show-retreat')]
     public function index_type($event_type_id): View
     {
-        Gate::authorize('show-retreat');
         $permission_checks = ['show-retreat', 'show-event-contract', 'show-event-schedule', 'show-event-evaluation'];
         foreach ($permission_checks as $permission_check => $permission) {
             $results[$permission] = Auth::user()->can($permission);
@@ -69,10 +63,9 @@ class RetreatController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-retreat')]
     public function create(): View
     {
-        Gate::authorize('create-retreat');
-
         $retreat_house = \App\Models\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_ambassadors.contact_b')->findOrFail(config('polanco.self.id'));
         $event_types = \App\Models\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
         $is_active[0] = 'Canceled';
@@ -122,10 +115,9 @@ class RetreatController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-retreat')]
     public function store(StoreRetreatRequest $request): RedirectResponse
     {
-        Gate::authorize('create-retreat');
-
         $retreat = new \App\Models\Retreat;
 
         $retreat->idnumber = $request->input('idnumber');
@@ -241,9 +233,9 @@ class RetreatController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-retreat')]
     public function show(int $id, $status = null): View
     {
-        Gate::authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
         $attachments = \App\Models\Attachment::whereEntity('event')->whereEntityId($id)->whereFileTypeId(config('polanco.file_type.event_attachment'))->get();
 
@@ -344,18 +336,18 @@ class RetreatController extends Controller implements HasMiddleware
         return view('retreats.show', compact('retreat', 'registrations', 'status', 'attachments')); //
     }
 
+    #[Authorize('show-retreat')]
     public function show_waitlist($id): View
     {
-        Gate::authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
         $registrations = \App\Models\Registration::where('event_id', '=', $id)->whereStatusId(config('polanco.registration_status_id.waitlist'))->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
 
         return view('retreats.waitlist', compact('retreat', 'registrations')); //
     }
 
+    #[Authorize('show-retreat')]
     public function get_event_by_id_number($id_number, $status = null)
     {
-        Gate::authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->whereIdnumber($id_number)->firstOrFail();
 
         return $this->show($retreat->id, $status);
@@ -369,9 +361,9 @@ class RetreatController extends Controller implements HasMiddleware
     //   $retreats = \App\Models\Retreat::();
     //   return view('retreats.edit',compact('retreats'));
     //  }
+    #[Authorize('update-retreat')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-retreat');
         // get this retreat's information
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'assistants.contact', 'innkeepers.contact', 'ambassadors.contact')->findOrFail($id);
         $event_types = \App\Models\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
@@ -458,10 +450,9 @@ class RetreatController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-retreat')]
     public function update(UpdateRetreatRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-retreat');
-
         $retreat = \App\Models\Retreat::findOrFail($request->input('id'));
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start_date = $request->input('start_date');
@@ -625,9 +616,9 @@ class RetreatController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-retreat')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-retreat');
         $retreat = \App\Models\Retreat::findOrFail($id);
         // if there is a calendar id for the event then find the Google Calendar event, mark it as canceled and then remove it from the calendar (soft delete)
         if (! empty($retreat->calendar_id)) {
@@ -648,9 +639,9 @@ class RetreatController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'index']);
     }
 
+    #[Authorize('update-registration')]
     public function assign_rooms($id): View
     {
-        Gate::authorize('update-registration');
         // get this retreat's information
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'assistants.contact', 'innkeepers.contact', 'ambassadors.contact')->findOrFail($id);
         $registrations = \App\Models\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->whereStatusId(config('polanco.registration_status_id.registered'))->get();
@@ -660,9 +651,9 @@ class RetreatController extends Controller implements HasMiddleware
         return view('retreats.assign_rooms', compact('retreat', 'registrations', 'rooms'));
     }
 
+    #[Authorize('update-payment')]
     public function edit_payments($id): View
     {
-        Gate::authorize('update-payment');
         // get this retreat's information
         $retreat = \App\Models\Retreat::findOrFail($id);
         $registrations = \App\Models\Registration::where('event_id', '=', $id)->whereCanceledAt(null)->with('retreatant.parish', 'donation')->orderBy('register_date', 'DESC')->get();
@@ -673,20 +664,20 @@ class RetreatController extends Controller implements HasMiddleware
         return view('retreats.payments.edit', compact('retreat', 'registrations', 'donation_description', 'payment_description'));
     }
 
+    #[Authorize('show-payment')]
     public function show_payments($id): View
     {
-        Gate::authorize('show-payment');
         $retreat = \App\Models\Retreat::findOrFail($id);
         $registrations = \App\Models\Registration::where('event_id', '=', $id)->whereCanceledAt(null)->with('retreatant.parish', 'donation')->orderBy('register_date', 'DESC')->get();
 
         return view('retreats.payments.show', compact('retreat', 'registrations'));
     }
 
+    #[Authorize('update-registration')]
     public function checkout($id): RedirectResponse
     {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
         // TODO: consider also checking to see if the arrived_at time is empty and if it is put in the retreat start time
-        Gate::authorize('update-registration');
         $retreat = \App\Models\Retreat::findOrFail($id); // verifies that it is a valid retreat id
         $registrations = \App\Models\Registration::whereEventId($id)->whereCanceledAt(null)->whereDepartedAt(null)->whereNotNull('arrived_at')->get();
         foreach ($registrations as $registration) {
@@ -699,10 +690,10 @@ class RetreatController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'show'], $retreat->id);
     }
 
+    #[Authorize('update-registration')]
     public function checkin($id): RedirectResponse
     {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
-        Gate::authorize('update-registration');
         $retreat = \App\Models\Retreat::findOrFail($id); // verifies that it is a valid retreat id
         $registrations = \App\Models\Registration::whereEventId($id)->whereCanceledAt(null)->whereDepartedAt(null)->whereNull('arrived_at')->get();
         foreach ($registrations as $registration) {
@@ -715,10 +706,9 @@ class RetreatController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'show'], $retreat->id);
     }
 
+    #[Authorize('update-registration')]
     public function room_update(RoomUpdateRetreatRequest $request): RedirectResponse
     {
-        Gate::authorize('update-registration');
-
         if ($request->input('registrations') !== null) {
             foreach ($request->input('registrations') as $key => $value) {
                 $registration = \App\Models\Registration::findOrFail($key);
@@ -749,9 +739,9 @@ class RetreatController extends Controller implements HasMiddleware
         }
     }
 
+    #[Authorize('show-retreat')]
     public function calendar(): View
     {
-        Gate::authorize('show-retreat');
         if ($this->is_google_calendar_enabled()) {
             $calendar_events = \Spatie\GoogleCalendar\Event::get();
         } else {
@@ -761,6 +751,7 @@ class RetreatController extends Controller implements HasMiddleware
         return view('calendar.index', compact('calendar_events'));
     }
 
+    #[Authorize('show-registration')]
     public function event_room_list($event_id): View
     {
         // get buildings for which there are assigned rooms
@@ -768,7 +759,6 @@ class RetreatController extends Controller implements HasMiddleware
         // for each registration add contact sort_name to room
         // view room_lists
         // TODO: write unit tests for this method
-        Gate::authorize('show-registration');
         $event = \App\Models\Retreat::findOrFail($event_id);
         $registrations = \App\Models\Registration::whereEventId($event_id)->whereNull('canceled_at')->with('room')->get();
         $room_ids = \App\Models\Registration::whereEventId($event_id)->whereNull('canceled_at')->pluck('room_id');
@@ -809,11 +799,11 @@ class RetreatController extends Controller implements HasMiddleware
         return view('retreats.roomlist', compact('results', 'event'));
     }
 
+    #[Authorize('show-registration')]
     public function event_namebadges($event_id, $role = null): View
     {
         // for each registration add contact sort_name to namebadge
         // TODO: write unit tests for this method
-        Gate::authorize('show-registration');
         $event = \App\Models\Retreat::findOrFail($event_id);
         switch ($role) {
             case 'retreatant': $role = config('polanco.participant_role_id.retreatant');
@@ -862,11 +852,11 @@ class RetreatController extends Controller implements HasMiddleware
         return view('retreats.namebadges', compact('cresults', 'event'));
     }
 
+    #[Authorize('show-registration')]
     public function event_tableplacards($event_id): View
     {
         // for each registration add contact sort_name to namebadge
         // TODO: write unit tests for this method
-        Gate::authorize('show-registration');
         $event = \App\Models\Retreat::findOrFail($event_id);
         $registrations = \App\Models\Registration::whereEventId($event_id)->whereNull('canceled_at')->whereStatusId(config('polanco.registration_status_id.registered'))->get();
 
@@ -894,19 +884,18 @@ class RetreatController extends Controller implements HasMiddleware
         return view('retreats.tableplacards', compact('cresults', 'event'));
     }
 
+    #[Authorize('show-retreat')]
     public function search(): View
     {
-        Gate::authorize('show-retreat');
         $event_types = \App\Models\EventType::whereIsActive(true)->orderBy('label')->pluck('label', 'id');
         $event_types->prepend('N/A', '');
 
         return view('retreats.search', compact('event_types'));
     }
 
+    #[Authorize('show-retreat')]
     public function results(EventSearchRequest $request): View
     {
-        Gate::authorize('show-retreat');
-
         if (! empty($request)) {
             $events = \App\Models\Retreat::filtered($request)->orderBy('idnumber')->paginate(25, ['*'], 'events');
             $events->appends($request->except('page'));

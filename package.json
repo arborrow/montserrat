@@ -21,7 +21,7 @@
         "jquery": "~>3.5.0",
         "jquery-ui-bundle": "^1.12.1-migrate",
         "laravel-mix": "^6.0.6",
-        "laravel-vite-plugin": "^1.2.0",
+        "laravel-vite-plugin": "^2.0.0",
         "lodash": "^4.17.19",
         "popper.js": "^1.16.1",
         "postcss": "^8.4.47",
@@ -30,7 +30,7 @@
         "sass-loader": "^13.0.0",
         "select2": "^4.0.13",
         "tailwindcss": "^3.4.13",
-        "vite": "^6.0.11",
+        "vite": "^7.0.7",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10",
         "webpack": "^5.9.0",
@@ -44,5 +44,6 @@
         "@babel/preset-env": "^7.15.8",
         "font-awesome": "^4.7.0"
     },
-    "version": "0.0.0"
+    "version": "0.0.0",
+    "$schema": "https://www.schemastore.org/package.json"
 }

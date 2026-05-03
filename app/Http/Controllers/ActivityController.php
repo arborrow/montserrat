@@ -6,26 +6,20 @@ use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class ActivityController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class ActivityController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-activity')]
     public function index(): View
     {
-        Gate::authorize('show-activity');
         $activities = \App\Models\Activity::orderBy('activity_date_time', 'desc')->paginate(25, ['*'], 'activities');
 
         return view('activities.index', compact('activities'));
@@ -34,9 +28,9 @@ class ActivityController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-activity')]
     public function create(Request $request): View
     {
-        Gate::authorize('create-activity');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -64,9 +58,9 @@ class ActivityController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-activity')]
     public function store(StoreActivityRequest $request): RedirectResponse
     {
-        Gate::authorize('create-activity');
         $activity_type = \App\Models\ActivityType::findOrFail($request->input('activity_type_id'));
         $activity = new \App\Models\Activity;
         $activity->activity_type_id = $request->input('activity_type_id');
@@ -105,9 +99,9 @@ class ActivityController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-activity')]
     public function show(int $id): View
     {
-        Gate::authorize('show-activity');
         $activity = \App\Models\Activity::with('assignees', 'creators', 'targets')->findOrFail($id);
 
         return view('activities.show', compact('activity')); //
@@ -116,9 +110,9 @@ class ActivityController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-activity')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-activity');
         $activity = \App\Models\Activity::findOrFail($id);
         $target = $activity->targets->first();
         $assignee = $activity->assignees->first();
@@ -151,9 +145,9 @@ class ActivityController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-activity')]
     public function update(UpdateActivityRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-activity');
         $activity_type = \App\Models\ActivityType::findOrFail($request->input('activity_type_id'));
         $activity = \App\Models\Activity::findOrFail($id);
 
@@ -187,11 +181,11 @@ class ActivityController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-activity')]
     public function destroy(int $id): RedirectResponse
     {
         // delete activity contacts and then the activity (could be handled in model with cascading deletes)
 
-        Gate::authorize('delete-activity');
         \App\Models\ActivityContact::whereActivityId($id)->delete();
         \App\Models\Activity::destroy($id);
 

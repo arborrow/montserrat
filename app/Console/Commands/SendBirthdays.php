@@ -5,26 +5,16 @@ namespace App\Console\Commands;
 use App\Mail\RetreatantBirthday;
 use App\Models\Contact;
 use Carbon\Carbon;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
+#[Signature('email:birthdays')]
+#[Description('Sends out birthday emails to retreatants with birthdays of current day.')]
 class SendBirthdays extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'email:birthdays';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Sends out birthday emails to retreatants with birthdays of current day.';
-
     /**
      * Create a new command instance.
      *

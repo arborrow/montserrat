@@ -5,25 +5,15 @@ namespace App\Console\Commands;
 use App\Models\StripeBalanceTransaction;
 use App\Models\StripePayout;
 use Carbon\Carbon;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Stripe\StripeClient;
 
+#[Signature('import:stripe_payouts')]
+#[Description('Import Stripe Payouts')]
 class ImportStripePayouts extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'import:stripe_payouts';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Import Stripe Payouts';
-
     /**
      * Create a new command instance.
      *

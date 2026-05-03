@@ -5,25 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class LocationController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class LocationController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-location')]
     public function index(): View
     {
-        Gate::authorize('show-location');
-
         $location_types = config('polanco.locations_type');
         $location_types = Arr::sort($location_types);
 
@@ -32,10 +25,9 @@ class LocationController extends Controller implements HasMiddleware
         return view('admin.locations.index', compact('locations', 'location_types'));
     }
 
+    #[Authorize('show-location')]
     public function index_type($type = null): View
     {
-        Gate::authorize('show-location');
-
         $location_types = config('polanco.locations_type');
         $location_types = Arr::sort($location_types);
 
@@ -47,10 +39,9 @@ class LocationController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-location')]
     public function create(): View
     {
-        Gate::authorize('create-location');
-
         $location_types = config('polanco.locations_type');
         $location_types = Arr::sort($location_types);
 
@@ -66,10 +57,9 @@ class LocationController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-location')]
     public function store(StoreLocationRequest $request): RedirectResponse
     {
-        Gate::authorize('create-location');
-
         $location = new \App\Models\Location;
         $location->name = $request->input('name');
         $location->description = $request->input('description');
@@ -92,10 +82,9 @@ class LocationController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-location')]
     public function show(int $id): View
     {
-        Gate::authorize('show-location');
-
         $location = \App\Models\Location::findOrFail($id);
         $children = \App\Models\Location::whereParentId($id)->orderBy('name')->get();
 
@@ -105,10 +94,9 @@ class LocationController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-location')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-location');
-
         $location = \App\Models\Location::findOrFail($id);
 
         $location_types = config('polanco.locations_type');
@@ -126,10 +114,9 @@ class LocationController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-location')]
     public function update(UpdateLocationRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-location');
-
         $location = \App\Models\Location::findOrFail($id);
 
         $location->name = $request->input('name');
@@ -153,10 +140,9 @@ class LocationController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-location')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-location');
-
         $location = \App\Models\Location::findOrFail($id);
         \App\Models\Location::destroy($id);
 

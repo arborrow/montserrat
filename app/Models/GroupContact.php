@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
+#[Table('group_contact')]
+#[Fillable('contact_id', 'group_id', 'status')]
 class GroupContact extends Model implements Auditable
 {
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-
-    protected $table = 'group_contact';
-
-    protected $fillable = ['contact_id', 'group_id', 'status'];
 
     public function group(): BelongsTo
     {

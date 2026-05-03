@@ -3,27 +3,21 @@
 namespace App\Http\Controllers;
 
 use DB;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Collection;
 // use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class HealthController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class HealthController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Run all database health checks and display list of results
      */
+    #[Authorize('show-admin-menu')]
     public function index(): View
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
         $results->put('primary_address', $this->check_primary_address());
         $results->put('primary_email', $this->check_primary_email());
@@ -43,9 +37,9 @@ class HealthController extends Controller implements HasMiddleware
     /**
      * Run the primary address check to ensure there is one and only one primary email address for each contact_id
      */
+    #[Authorize('show-admin-menu')]
     public function check_primary_address(): Collection
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
         $address_primary = DB::table('address')->whereIsPrimary(1)->whereNull('deleted_at')->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id', 'street_address')->get();
 
@@ -55,9 +49,9 @@ class HealthController extends Controller implements HasMiddleware
     /**
      * Run the primary email check to ensure there is one and only one primary email address for each contact_id
      */
+    #[Authorize('show-admin-menu')]
     public function check_primary_email(): Collection
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
         $email_primary = DB::table('email')->whereIsPrimary(1)->whereNull('deleted_at')->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id', 'email')->get();
 
@@ -67,9 +61,9 @@ class HealthController extends Controller implements HasMiddleware
     /**
      * Run the primary address check to ensure there is one and only one primary email address for each contact_id
      */
+    #[Authorize('show-admin-menu')]
     public function check_primary_phone(): Collection
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
         $phone_primary = DB::table('phone')->whereIsPrimary(1)->whereNull('deleted_at')->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id', 'phone')->get();
 
@@ -79,9 +73,9 @@ class HealthController extends Controller implements HasMiddleware
     /**
      * Run the abandoned payments check to ensure there are no payments with a deleted donation
      */
+    #[Authorize('show-admin-menu')]
     public function check_abandoned_donations(): Collection
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $abandoned_donations = DB::table('Donations')
@@ -98,9 +92,9 @@ class HealthController extends Controller implements HasMiddleware
     /**
      * Run the abandoned payments check to ensure there are no payments with a deleted donation
      */
+    #[Authorize('show-admin-menu')]
     public function check_donations_with_zero_event_id(): Collection
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $donations_with_zero_event_id = DB::table('Donations')
@@ -117,9 +111,9 @@ class HealthController extends Controller implements HasMiddleware
     /**
      * Run the abandoned payments check to ensure there are no payments with a deleted donation
      */
+    #[Authorize('show-admin-menu')]
     public function check_abandoned_payments(): Collection
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $abandoned_payments = DB::table('Donations_payment')
@@ -136,9 +130,9 @@ class HealthController extends Controller implements HasMiddleware
     /**
      * Run the abandoned registrations check to ensure there are no registrations (participant) with a deleted contact
      */
+    #[Authorize('show-admin-menu')]
     public function check_abandoned_registrations(): Collection
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $abandoned_registrations = DB::table('participant')
@@ -155,9 +149,9 @@ class HealthController extends Controller implements HasMiddleware
      * Run the duplicate relationships check to ensure there are no duplicated relationships
      * // SELECT CONCAT(contact_id_a,":",contact_id_b,":",relationship_type_id) , COUNT(*) FROM relationship WHERE deleted_at IS NULL GROUP BY (CONCAT(contact_id_a,":",contact_id_b,":",relationship_type_id)) HAVING COUNT(*)>1
      */
+    #[Authorize('show-admin-menu')]
     public function check_duplicate_relationships(): Collection
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $duplicate_relationships = DB::table('relationship')
@@ -175,9 +169,9 @@ class HealthController extends Controller implements HasMiddleware
      * Check for primary addresses with no country
      * // SELECT * FROM address WHERE country_id = 0 AND deleted_at IS NULL AND street_address IS NOT NULL AND is_primary = 1;
      */
+    #[Authorize('show-admin-menu')]
     public function check_address_with_no_country(): Collection
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $address_with_no_country = DB::table('address')
@@ -195,9 +189,9 @@ class HealthController extends Controller implements HasMiddleware
      * Check for husbands with more than one wife and wives with more than one husband
      *     // SELECT contact_id_b FROM relationship WHERE deleted_at IS NULL AND relationship_type_id=2 GROUP BY contact_id_b HAVING COUNT(contact_id_b)>1;
      */
+    #[Authorize('show-admin-menu')]
     public function check_polygamy(): Collection
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $husbands = DB::table('relationship')
@@ -225,9 +219,9 @@ class HealthController extends Controller implements HasMiddleware
      * Check for primary addresses with no country
      * // SELECT * FROM address WHERE country_id = 0 AND deleted_at IS NULL AND street_address IS NOT NULL AND is_primary = 1;
      */
+    #[Authorize('show-admin-menu')]
     public function check_anonymous_balance_transactions(): Collection
     {
-        Gate::authorize('show-admin-menu');
         $results = collect([]);
 
         $anonymous_balance_transactions = DB::table('stripe_balance_transaction')

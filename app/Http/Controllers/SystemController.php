@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\View\View;
 
-class SystemController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class SystemController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -28,10 +22,9 @@ class SystemController extends Controller implements HasMiddleware
     /**
      * Displays phpinfo.
      */
+    #[Authorize('show-admin-menu')]
     public function phpinfo(): View
     {
-        Gate::authorize('show-admin-menu');
-
         return view('admin.config.phpinfo');
     }
 
@@ -62,19 +55,18 @@ class SystemController extends Controller implements HasMiddleware
         }
     }
 
+    #[Authorize('show-offeringdedup')]
     public function offeringdedup_index(): View
     {
-        Gate::authorize('show-offeringdedup');
-
         $offeringdedup = \App\Models\TmpOfferingDedup::orderBy('count', 'desc')->paginate(50);
 
         // dd($dioceses);
         return view('offeringdedup.index', compact('offeringdedup'));
     }
 
+    #[Authorize('show-offeringdedup')]
     public function offeringdedup_show($contact_id = null, $event_id = null): View
     {
-        Gate::authorize('show-offeringdedup');
         $donations = \App\Models\Donation::whereEventId($event_id)->whereContactId($contact_id)->whereDonationDescription('Retreat Funding')->get();
         $combo = $contact_id.'-'.$event_id;
 

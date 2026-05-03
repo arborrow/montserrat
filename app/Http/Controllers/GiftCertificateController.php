@@ -6,30 +6,24 @@ use App\Models\Contact;
 use App\Traits\SquareSpaceTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use PDF;
 
-class GiftCertificateController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class GiftCertificateController extends Controller
 {
     use SquareSpaceTrait;
-
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
 
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-gift-certificate')]
     public function index(): View
     {
-        Gate::authorize('show-gift-certificate');
         $gift_certificates = \App\Models\GiftCertificate::active()->orderBy('issue_date')->with(['purchaser', 'recipient'])->get();
         $applied_gift_certificates = \App\Models\GiftCertificate::applied()->orderBy('issue_date')->with(['purchaser', 'recipient'])->get();
         $expired_gift_certificates = \App\Models\GiftCertificate::expired()->orderBy('expiration_date')->with(['purchaser', 'recipient'])->get();
@@ -40,9 +34,9 @@ class GiftCertificateController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-gift-certificate')]
     public function create(Request $request): View
     {
-        Gate::authorize('create-gift-certificate');
         // dd($request);
         $purchaser = collect();
         $purchaser->name = ($request->filled('purchaser_name')) ? $request->input('purchaser_name') : null;
@@ -65,10 +59,9 @@ class GiftCertificateController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-gift-certificate')]
     public function store(Request $request): RedirectResponse
     {
-        Gate::authorize('create-gift-certificate');
-
         $purchaser = $request->input('purchaser_name');
         $recipient = $request->input('recipient_name');
 
@@ -149,9 +142,9 @@ class GiftCertificateController extends Controller implements HasMiddleware
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('show-gift-certificate')]
     public function show_pdf(int $id)
     {
-        Gate::authorize('show-gift-certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
 
         $pdf = PDF::loadView('gift_certificates.certificate', compact('gift_certificate'));
@@ -171,9 +164,9 @@ class GiftCertificateController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-gift-certificate')]
     public function show(int $id): View
     {
-        Gate::authorize('show-gift-certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
 
         return view('gift_certificates.show', compact('gift_certificate'));
@@ -182,9 +175,9 @@ class GiftCertificateController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-gift-certificate')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-gift-certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
 
         return view('gift_certificates.edit', compact('gift_certificate'));
@@ -193,10 +186,9 @@ class GiftCertificateController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-gift-certificate')]
     public function update(Request $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-gift-certificate');
-
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
 
         $gift_certificate->purchaser_id = $request->input('purchaser_id');
@@ -221,9 +213,9 @@ class GiftCertificateController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-gift_certificate')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-gift_certificate');
         $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
 
         \App\Models\GiftCertificate::destroy($id);

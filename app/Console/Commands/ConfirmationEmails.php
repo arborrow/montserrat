@@ -4,27 +4,17 @@ namespace App\Console\Commands;
 
 use App\Mail\RetreatConfirmation;
 use Carbon\Carbon;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+#[Signature('email:confirmations')]
+#[Description('Send out confirmation emails one week prior to start date for Ignatian retreats')]
 class ConfirmationEmails extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'email:confirmations';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Send out confirmation emails one week prior to start date for Ignatian retreats';
-
     protected $mailer;
 
     /**

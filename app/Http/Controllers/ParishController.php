@@ -5,29 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreParishRequest;
 use App\Http\Requests\UpdateParishRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class ParishController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class ParishController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('show-contact')]
     public function index()
     {
-        Gate::authorize('show-contact');
         $diocese = null;
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops', 'primary_bishop')->get();
         $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b.prefix', 'pastor.contact_b.suffix', 'diocese.contact_a')->get();
@@ -42,9 +36,9 @@ class ParishController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-contact')]
     public function create(): View
     {
-        Gate::authorize('create-contact');
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
         $pastors = \App\Models\Contact::whereHas('b_relationships', function ($query) {
             $query->whereRelationshipTypeId(config('polanco.relationship_type.pastor'))->whereIsActive(1);
@@ -63,9 +57,9 @@ class ParishController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-contact')]
     public function store(StoreParishRequest $request): RedirectResponse
     {
-        Gate::authorize('create-contact');
         $parish = new \App\Models\Contact;
         $parish->organization_name = $request->input('organization_name');
         $parish->display_name = $request->input('organization_name');
@@ -183,9 +177,9 @@ class ParishController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-contact')]
     public function show(int $id): View
     {
-        Gate::authorize('show-contact');
         $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'note_parish', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a')->findOrFail($id);
         $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at', 'DESC')->paginate(25, ['*'], 'touchpoints');
         $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'registrations');
@@ -202,10 +196,9 @@ class ParishController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-contact')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-contact');
-
         $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'note_parish')->findOrFail($id);
 
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
@@ -259,10 +252,9 @@ class ParishController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-contact')]
     public function update(UpdateParishRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-contact');
-
         $parish = \App\Models\Contact::with('pastor.contact_a', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
         $parish->organization_name = $request->input('organization_name');
         $parish->display_name = $request->input('display_name');
@@ -427,9 +419,9 @@ class ParishController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-contact')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-contact');
         $parish = \App\Models\Parish::findOrFail($id);
         \App\Models\Relationship::whereContactIdA($id)->delete();
         \App\Models\Relationship::whereContactIdB($id)->delete();
@@ -454,9 +446,9 @@ class ParishController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'index']);
     }
 
+    #[Authorize('show-contact')]
     public function parish_index_by_diocese($diocese_id): View
     {
-        Gate::authorize('show-contact');
         $diocese = \App\Models\Contact::findOrFail($diocese_id);
         // dd($diocese);
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops', 'primary_bishop')->get();

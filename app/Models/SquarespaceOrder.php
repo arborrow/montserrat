@@ -3,22 +3,22 @@
 namespace App\Models;
 
 use App\Traits\PhoneTrait;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
+#[Table('squarespace_order')]
+#[Fillable('order_number')]
 class SquarespaceOrder extends Model implements Auditable
 {
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
     use PhoneTrait;
     use SoftDeletes;
-
-    protected $table = 'squarespace_order';
-
-    protected $fillable = ['order_number'];
 
     public function message(): HasOne
     {

@@ -6,24 +6,18 @@ use App\Http\Requests\StoreExportListRequest;
 use App\Http\Requests\UpdateExportListRequest;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class ExportListController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class ExportListController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-export-list')]
     public function index(): View
     {
-        Gate::authorize('show-export-list');
         $export_lists = \App\Models\ExportList::orderBy('label')->get();
 
         return view('admin.export_lists.index', compact('export_lists'));
@@ -32,9 +26,9 @@ class ExportListController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-export-list')]
     public function create(): View
     {
-        Gate::authorize('create-export-list');
         $export_list_types = config('polanco.export_list_types');
 
         return view('admin.export_lists.create', compact('export_list_types'));
@@ -43,10 +37,9 @@ class ExportListController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-export-list')]
     public function store(StoreExportListRequest $request): RedirectResponse
     {
-        Gate::authorize('create-export-list');
-
         $export_list = new \App\Models\ExportList;
         $export_list->title = $request->input('title');
         $export_list->label = $request->input('label');
@@ -68,10 +61,9 @@ class ExportListController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-export-list')]
     public function show(int $id): View
     {
-        Gate::authorize('show-export-list');
-
         $export_list = \App\Models\ExportList::findOrFail($id);
 
         return view('admin.export_lists.show', compact('export_list'));
@@ -80,10 +72,9 @@ class ExportListController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-export-list')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-export-list');
-
         $export_list = \App\Models\ExportList::findOrFail($id);
         $export_list_types = config('polanco.export_list_types');
 
@@ -93,10 +84,9 @@ class ExportListController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-export-list')]
     public function update(UpdateExportListRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-export-list');
-
         $export_list = \App\Models\ExportList::findOrFail($id);
 
         $export_list->title = $request->input('title');
@@ -119,9 +109,9 @@ class ExportListController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-export-list')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-export-list');
         $export_list = \App\Models\ExportList::findOrFail($id);
 
         \App\Models\ExportList::destroy($id);
@@ -137,9 +127,9 @@ class ExportListController extends Controller implements HasMiddleware
      * @param  ExportListAGCRequest  $request
      */
     //    public function agc(ExportListAGCRequest $request)
+    #[Authorize('show-export-list')]
     public function agc(): RedirectResponse
     {
-        Gate::authorize('show-export-list');
         // $id = $request->input('id');
         // $export_list = \App\Models\ExportList::findOrFail($id);
         // $start_date = $request->input('start_date');

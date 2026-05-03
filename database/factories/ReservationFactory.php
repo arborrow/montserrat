@@ -4,17 +4,12 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Attributes\UseModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+#[UseModel(\App\Reservation::class)]
 class ReservationFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Reservation::class;
-
     /**
      * Define the model's default state.
      */

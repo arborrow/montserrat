@@ -2,23 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Appends;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
+#[Table('relationship')]
+#[Fillable('contact_id_a', 'contact_id_b', 'relationship_type_id', 'is_active', 'description')]
+#[Appends('contact_a_address', 'contact_b_address')]
 class Relationship extends Model implements Auditable
 {
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-
-    protected $table = 'relationship';
-
-    protected $fillable = ['contact_id_a', 'contact_id_b', 'relationship_type_id', 'is_active', 'description'];
-
-    protected $appends = ['contact_a_address', 'contact_b_address'];
 
     public function relationship_type(): HasOne
     {

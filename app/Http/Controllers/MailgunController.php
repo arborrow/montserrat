@@ -6,14 +6,15 @@ use App\Models\Message;
 use App\Traits\MailgunTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Mailgun\Mailgun;
 
-class MailgunController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class MailgunController extends Controller
 {
     use MailgunTrait;
 
@@ -26,16 +27,10 @@ class MailgunController extends Controller implements HasMiddleware
         }
     }
 
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /*
      * Get and processes stored mailgun emails
      */
+    #[Authorize('admin-mailgun')]
     public function get()
     {   // TODO: create database factories for mailgun/messages, squarespace order/donation
         // TODO: write unit tests for stripe, mailgun, squarespace order/donation controllers
@@ -44,8 +39,6 @@ class MailgunController extends Controller implements HasMiddleware
         // TODO: room preference of None or Ninguna Preferencia (verify in SS) should be saved to the order as NULL
         // TODO: evaluate whether gift certificate retreat field is necessary in ss_order table or if it is better just to use the retreat field
         // TODO: for the address, attempt to normalize the state data (TX to Texas - may always be two state from squarespace - double check if that is the case)
-
-        Gate::authorize('admin-mailgun');
 
         $fail = Artisan::call('mailgun:get'); // because commands return 0 when successful the logic is somewhat reversed as 1 is failure and 0 is success
         if ($fail) {
@@ -57,20 +50,19 @@ class MailgunController extends Controller implements HasMiddleware
         return Redirect::action([MailgunController::class, 'index']);
     }
 
+    #[Authorize('admin-mailgun')]
     public function index(): View
     {
         // TODO: consider adding processed/unprocessed/all drowdown selector to filter results and combine processed and index blades into one
-        Gate::authorize('admin-mailgun');
         $messages = Message::whereIsProcessed(0)->orderBy('mailgun_timestamp', 'desc')->paginate(25, ['*'], 'messages');
         $messages_processed = Message::whereIsProcessed(1)->orderBy('mailgun_timestamp', 'desc')->paginate(25, ['*'], 'messages_processed');
 
         return view('mailgun.index', compact('messages', 'messages_processed'));
     }
 
+    #[Authorize('admin-mailgun')]
     public function show($id): View
     {
-        Gate::authorize('admin-mailgun');
-
         $message = Message::with('contact_from', 'contact_to')->findOrFail($id);
         $body = explode("\n", $message->body);
 
@@ -84,18 +76,17 @@ class MailgunController extends Controller implements HasMiddleware
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('admin-mailgun')]
     public function edit(int $id)
     {
-        Gate::authorize('admin-mailgun');
-
         // $message = Message::with('contact_from','contact_to')->findOrFail($id);
         // return view('mailgun.edit', compact('message'));
         return Redirect::action([MailgunController::class, 'index']);
     }
 
+    #[Authorize('admin-mailgun')]
     public function unprocess($id)
     {
-        Gate::authorize('admin-mailgun');
         $message = Message::findOrFail($id);
         $message->is_processed = 0;
         $message->save();
@@ -109,10 +100,9 @@ class MailgunController extends Controller implements HasMiddleware
      * Mailgun messages are retrieved from server and not created
      * Hence, this method is an empty stub.
      */
+    #[Authorize('admin-mailgun')]
     public function create(): RedirectResponse
     {
-        Gate::authorize('admin-mailgun');
-
         return Redirect::action([MailgunController::class, 'index']);
     }
 
@@ -121,10 +111,9 @@ class MailgunController extends Controller implements HasMiddleware
      * Mailgun messages are retrieved from server and not created or stored
      * Hence, this method is an empty stub.
      */
+    #[Authorize('admin-mailgun')]
     public function store(Request $request): RedirectResponse
     {
-        Gate::authorize('admin-mailgun');
-
         return Redirect::action([MailgunController::class, 'index']);
     }
 
@@ -136,10 +125,9 @@ class MailgunController extends Controller implements HasMiddleware
      *
      * @return Redirect to mailgun.index
      */
+    #[Authorize('admin-mailgun')]
     public function update(Request $request, int $id): RedirectResponse
     {
-        Gate::authorize('admin-mailgun');
-
         return Redirect::action([MailgunController::class, 'index']);
     }
 
@@ -149,10 +137,9 @@ class MailgunController extends Controller implements HasMiddleware
      * deleting is not needed and soft-deleting can cause sql integrity duplicate entry error
      * Hence, the delete method is an empty stub.
      */
+    #[Authorize('admin-mailgun')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('admin-mailgun');
-
         // $message = Message::findOrFail($id);
         // Message::destroy($id);
         // flash('Mailgun message: '.$message->id.' deleted')->warning()->important();

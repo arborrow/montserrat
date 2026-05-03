@@ -11,36 +11,28 @@ use App\Mail\SquarespaceOrderFulfillment;
 use Auth;
 use Faker;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
-class SnippetController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class SnippetController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-snippet')]
     public function index(): View
     {
-        Gate::authorize('show-snippet');
-
         $titles = \App\Models\Snippet::groupBy('title')->with('language')->orderBy('title')->pluck('title', 'title');
         $snippets = \App\Models\Snippet::orderBy('title')->with('language')->orderBy('locale')->orderBy('label')->get();
 
         return view('admin.snippets.index', compact('snippets', 'titles'));
     }
 
+    #[Authorize('show-snippet')]
     public function index_type($title = null): View
     {
-        Gate::authorize('show-snippet');
-
         $titles = \App\Models\Snippet::groupBy('title')->with('language')->orderBy('title')->pluck('title', 'title');
         $snippets = \App\Models\Snippet::whereTitle($title)->with('language')->orderBy('title')->orderBy('locale')->orderBy('label')->get();
 
@@ -50,9 +42,9 @@ class SnippetController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-snippet')]
     public function create(): View
     {
-        Gate::authorize('create-snippet');
         $locales = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
 
         return view('admin.snippets.create', compact('locales'));
@@ -61,10 +53,9 @@ class SnippetController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-snippet')]
     public function store(StoreSnippetRequest $request): RedirectResponse
     {
-        Gate::authorize('create-snippet');
-
         $snippet = new \App\Models\Snippet;
         $snippet->title = $request->input('title');
         $snippet->label = $request->input('label');
@@ -81,10 +72,9 @@ class SnippetController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-snippet')]
     public function show(int $id): View
     {
-        Gate::authorize('show-snippet');
-
         $snippet = \App\Models\Snippet::findOrFail($id);
 
         return view('admin.snippets.show', compact('snippet'));
@@ -93,10 +83,9 @@ class SnippetController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-snippet')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-snippet');
-
         $snippet = \App\Models\Snippet::findOrFail($id);
         $locales = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
 
@@ -106,10 +95,9 @@ class SnippetController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-snippet')]
     public function update(UpdateSnippetRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-snippet');
-
         $snippet = \App\Models\Snippet::findOrFail($id);
 
         $snippet->title = $request->input('title');
@@ -127,9 +115,9 @@ class SnippetController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-snippet')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-snippet');
         $snippet = \App\Models\Snippet::findOrFail($id);
 
         \App\Models\Snippet::destroy($id);
@@ -139,10 +127,9 @@ class SnippetController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'index']);
     }
 
+    #[Authorize('show-snippet')]
     public function snippet_test(SnippetTestRequest $request): RedirectResponse
     {
-        Gate::authorize('show-snippet');
-
         $title = $request->input('title');
         $email = $request->input('email');
         $language = $request->input('language');
@@ -274,9 +261,9 @@ class SnippetController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('show-snippet')]
     public function test($title = null, $email = null, $language = 'en_US'): View
     {
-        Gate::authorize('show-snippet');
         $titles = \App\Models\Snippet::groupBy('title')->orderBy('title')->pluck('title', 'title');
         $languages = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
         if (empty($email)) {

@@ -6,7 +6,8 @@ use App\Http\Requests\StoreAttachmentRequest;
 use App\Http\Requests\UpdateAttachmentRequest;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
@@ -14,15 +15,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 
-class AttachmentController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class AttachmentController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     public function sanitize_filename($filename)
     {
         $sanitized = preg_replace('/[^a-zA-Z0-9\\-\\._]/', '', $filename);
@@ -95,9 +90,9 @@ class AttachmentController extends Controller implements HasMiddleware
         return $response;
     }
 
+    #[Authorize('create-attachment')]
     public function store_attachment($file, $entity = 'event', $entity_id = 0, $type = null, $description = null)
     {   // TODO: Not sure if this is being called from anywhere but contact attachments seems to be missing the attachments folder in the path (see update_attachment method)
-        Gate::authorize('create-attachment');
         $file_name = $this->sanitize_filename($file->getClientOriginalName());
         $attachment = new \App\Models\Attachment;
         $attachment->mime_type = $file->getClientMimeType();
@@ -359,10 +354,9 @@ class AttachmentController extends Controller implements HasMiddleware
         $attachment->save();
     }
 
+    #[Authorize('delete-attachment')]
     public function delete_attachment($file_name, $entity = 'event', $entity_id = 0, $type = null): RedirectResponse
     {
-        Gate::authorize('delete-attachment');
-
         $path = $entity.'/'.$entity_id.'/';
         switch ($type) {
             case 'group_photo':
@@ -437,42 +431,39 @@ class AttachmentController extends Controller implements HasMiddleware
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $entity_id);
     }
 
+    #[Authorize('show-attachment')]
     public function show_contact_attachment($user_id, $file_name)
     {
-        Gate::authorize('show-attachment');
-
         return $this->show_attachment('contact', $user_id, 'attachment', $file_name);
     }
 
+    #[Authorize('show-event-attachment')]
     public function show_event_attachment($event_id, $file_name)
     {
-        Gate::authorize('show-event-attachment');
-
         return $this->show_attachment('event', $event_id, 'event-attachment', $file_name);
     }
 
+    #[Authorize('delete-attachment')]
     public function delete_contact_attachment($user_id, $attachment): RedirectResponse
     {
-        Gate::authorize('delete-attachment');
         $this->delete_attachment($attachment, 'contact', $user_id, 'attachment');
 
         // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
         return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $user_id);
     }
 
+    #[Authorize('delete-attachment')]
     public function delete_event_attachment($event_id, $attachment): RedirectResponse
     {
-        Gate::authorize('delete-attachment'); // TODO: for testing simplicity I am not implementing the use of delete-event-attachment
         $this->delete_attachment($attachment, 'event', $event_id, 'event-attachment');
 
         // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
+    #[Authorize('show-avatar')]
     public function get_avatar($user_id)
     {
-        Gate::authorize('show-avatar');
-
         return $this->show_attachment('contact', $user_id, 'avatar', 'avatar.png');
     }
 
@@ -483,100 +474,93 @@ class AttachmentController extends Controller implements HasMiddleware
         return $this->show_attachment('contact', $contact_id, 'signature', 'signature.png');
     }
 
+    #[Authorize('delete-attachment')]
     public function delete_avatar($user_id): RedirectResponse
     {
-        Gate::authorize('delete-attachment');
         $this->delete_attachment('avatar.png', 'contact', $user_id, 'avatar');
 
         return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $user_id);
     }
 
+    #[Authorize('show-event-attachment')]
     public function get_event_contract($event_id)
     {
-        Gate::authorize('show-event-attachment');
-
         return $this->show_attachment('event', $event_id, 'contract', null);
     }
 
+    #[Authorize('show-event-schedule')]
     public function get_event_schedule($event_id)
     {
-        Gate::authorize('show-event-schedule');
-
         return $this->show_attachment('event', $event_id, 'schedule', null);
     }
 
+    #[Authorize('show-event-evaluation')]
     public function get_event_evaluations($event_id)
     {
-        Gate::authorize('show-event-evaluation');
-
         return $this->show_attachment('event', $event_id, 'evaluations', null);
     }
 
+    #[Authorize('delete-attachment')]
     public function delete_event_evaluations($event_id): RedirectResponse
     {
-        Gate::authorize('delete-attachment');
         $this->delete_attachment('evaluations.pdf', 'event', $event_id, 'evaluations');
 
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
+    #[Authorize('delete-attachment')]
     public function delete_event_schedule($event_id): RedirectResponse
     {
-        Gate::authorize('delete-attachment');
         $this->delete_attachment('schedule.pdf', 'event', $event_id, 'schedule');
 
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
+    #[Authorize('delete-attachment')]
     public function delete_event_contract($event_id): RedirectResponse
     {
-        Gate::authorize('delete-attachment');
         $this->delete_attachment('contract.pdf', 'event', $event_id, 'contract');
 
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
+    #[Authorize('delete-attachment')]
     public function delete_event_group_photo($event_id): RedirectResponse
     {
-        Gate::authorize('delete-attachment');
         $this->delete_attachment('group_photo.jpg', 'event', $event_id, 'group_photo');
 
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
+    #[Authorize('show-event-group-photo')]
     public function get_event_group_photo($event_id)
     {
-        Gate::authorize('show-event-group-photo');
-
         return $this->show_attachment('event', $event_id, 'group_photo', null);
     }
 
+    #[Authorize('delete-attachment')]
     public function delete_asset_photo($asset_id): RedirectResponse
     {
-        Gate::authorize('delete-attachment');
         $this->delete_attachment('asset_photo.jpg', 'asset', $asset_id, 'asset_photo');
 
         return Redirect::action([\App\Http\Controllers\AssetController::class, 'show'], $asset_id);
     }
 
+    #[Authorize('show-asset')]
     public function get_asset_photo($asset_id)
     {
-        Gate::authorize('show-asset');
-
         return $this->show_attachment('asset', $asset_id, 'asset_photo', null);
     }
 
+    #[Authorize('show-attachment')]
     public function show_asset_attachment($asset_id, $file_name)
     {
-        Gate::authorize('show-attachment');
-
         return $this->show_attachment('asset', $asset_id, 'attachment', $file_name);
     }
 
+    #[Authorize('delete-attachment')]
     public function delete_asset_attachment($asset_id, $file_name): RedirectResponse
     {
-        Gate::authorize('delete-attachment');
-
         $this->delete_attachment($file_name, 'asset', $asset_id, 'attachment');
 
         return Redirect::action([\App\Http\Controllers\AssetController::class, 'show'], $asset_id);
@@ -585,9 +569,9 @@ class AttachmentController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-attachment')]
     public function show(int $id): View
     {
-        Gate::authorize('show-attachment');
         $attachment = \App\Models\Attachment::findOrFail($id);
         // $this->authorize('show-'.$attachment->entity);
 
@@ -597,9 +581,9 @@ class AttachmentController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-attachment')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-attachment');
         $attachment = \App\Models\Attachment::findOrFail($id);
 
         return view('attachments.edit', compact('attachment'));
@@ -609,10 +593,9 @@ class AttachmentController extends Controller implements HasMiddleware
      * Update the specified resource in storage.
      * Really only used to allow for changing the description of a file
      */
+    #[Authorize('update-attachment')]
     public function update(UpdateAttachmentRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-attachment');
-
         $attachment = \App\Models\Attachment::findOrFail($id);
         $attachment->description = $request->input('description');
         $attachment->save();
@@ -625,9 +608,9 @@ class AttachmentController extends Controller implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-attachment')]
     public function index(): View
     {
-        Gate::authorize('show-attachment');
         $attachments = \App\Models\Attachment::orderByDesc('upload_date')->paginate(25, ['*'], 'attachments');
 
         return view('attachments.index', compact('attachments'));
@@ -636,10 +619,9 @@ class AttachmentController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-attachment')]
     public function create(): RedirectResponse
     {
-        Gate::authorize('create-attachment');
-
         flash('Attachment create route is undefined. To create an attachment upload it using the asset, contact or event pages.')->warning()->important();
 
         return Redirect::back();   //
@@ -648,10 +630,9 @@ class AttachmentController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-attachment')]
     public function store(StoreAttachmentRequest $request): RedirectResponse
     {
-        Gate::authorize('create-attachment');
-
         flash('Storing attachment is undefined.')->warning()->important();
 
         return Redirect::back();
@@ -660,10 +641,9 @@ class AttachmentController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-attachment')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-attachment');
-
         flash('Deleting attachment method is undefined.')->warning()->important();
 
         return Redirect::back();

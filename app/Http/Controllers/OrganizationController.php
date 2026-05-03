@@ -5,20 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class OrganizationController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class OrganizationController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -26,9 +20,9 @@ class OrganizationController extends Controller implements HasMiddleware
      *
      * //TODO: subcontact_type dependent on order in database which is less than ideal really looking for where not a parish or diocese organization
      */
+    #[Authorize('show-contact')]
     public function index(): View
     {
-        Gate::authorize('show-contact');
         $organizations = \App\Models\Contact::with('addresses', 'phone_main_phone', 'email_primary', 'websites', 'subcontacttype')->organizations_generic()->orderBy('organization_name', 'asc')->paginate(25, ['*'], 'organizations');
         $subcontact_types = \App\Models\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
 
@@ -36,9 +30,9 @@ class OrganizationController extends Controller implements HasMiddleware
         return view('organizations.index', compact('organizations', 'subcontact_types'));   //
     }
 
+    #[Authorize('show-contact')]
     public function index_type($subcontact_type_id): View
     {
-        Gate::authorize('show-contact');
         $subcontact_types = \App\Models\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
         $subcontact_type = \App\Models\ContactType::findOrFail($subcontact_type_id);
         $defaults = [];
@@ -51,9 +45,9 @@ class OrganizationController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-contact')]
     public function create(): View
     {
-        Gate::authorize('create-contact');
         $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
 
@@ -72,10 +66,9 @@ class OrganizationController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-contact')]
     public function store(StoreOrganizationRequest $request): RedirectResponse
     {
-        Gate::authorize('create-contact');
-
         $organization = new \App\Models\Contact;
         $organization->organization_name = $request->input('organization_name');
         $organization->display_name = $request->input('organization_name');
@@ -179,9 +172,9 @@ class OrganizationController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-contact')]
     public function show(int $id): View
     {
-        Gate::authorize('show-contact');
         $organization = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'phone_main_phone.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
         $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
         $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at', 'DESC')->paginate(25, ['*'], 'touchpoints');
@@ -207,9 +200,9 @@ class OrganizationController extends Controller implements HasMiddleware
      * // TODO: make create and edit bishop id multi-select with all bishops defaulting to selected on edit
      * // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship)
      */
+    #[Authorize('update-contact')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-contact');
         $organization = \App\Models\Contact::with('address_primary.state', 'address_primary.location', 'phone_main_phone.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
 
         $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
@@ -244,10 +237,9 @@ class OrganizationController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-contact')]
     public function update(UpdateOrganizationRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-contact');
-
         $organization = \App\Models\Contact::with('address_primary.state', 'address_primary.location', 'phone_main_phone.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'note_organization')->findOrFail($id);
         $organization->organization_name = $request->input('organization_name');
         $organization->display_name = $request->input('display_name');
@@ -386,9 +378,9 @@ class OrganizationController extends Controller implements HasMiddleware
      *
      * // TODO: delete addresses, emails, webpages, and phone numbers for persons, parishes, dioceses and organizations
      */
+    #[Authorize('delete-contact')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-contact');
         $organization = \App\Models\Organization::findOrFail($id);
         \App\Models\Relationship::whereContactIdA($id)->delete();
         \App\Models\Relationship::whereContactIdB($id)->delete();

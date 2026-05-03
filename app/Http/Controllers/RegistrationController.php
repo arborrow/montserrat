@@ -13,34 +13,26 @@ use App\Traits\SquareSpaceTrait;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class RegistrationController extends Controller implements HasMiddleware
+#[Middleware('auth', except: ['confirmAttendance'])]
+class RegistrationController extends Controller
 {
     use SquareSpaceTrait;
-
-    public static function middleware(): array
-    {
-        return [
-            new Middleware('auth', except: ['confirmAttendance']),
-        ];
-    }
 
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-registration')]
     public function index(): View
     {
-        Gate::authorize('show-registration');
-
         $registrations = \App\Models\Registration::with('contact.suffix')->with('contact.prefix')
             ->whereHas('retreat', function ($query) {
                 $query->where('end_date', '>=', date('Y-m-d'));
@@ -54,10 +46,9 @@ class RegistrationController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-registration')]
     public function create(): View
     {
-        Gate::authorize('create-registration');
-
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
         $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -75,9 +66,9 @@ class RegistrationController extends Controller implements HasMiddleware
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
+    #[Authorize('create-registration')]
     public function add($id = null): View
     {
-        Gate::authorize('create-registration');
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
         $retreatant = \App\Models\Contact::findOrFail($id);
@@ -104,10 +95,9 @@ class RegistrationController extends Controller implements HasMiddleware
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
+    #[Authorize('create-registration')]
     public function add_group($id): View
     {
-        Gate::authorize('create-registration');
-
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today()->subWeek())->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
         // if the $id parameter is not a valid group fail with 404
@@ -129,10 +119,9 @@ class RegistrationController extends Controller implements HasMiddleware
         // dd($retreatants);
     }
 
+    #[Authorize('create-registration')]
     public function register($retreat_id = 0, $contact_id = 0): View
     {
-        Gate::authorize('create-registration');
-
         if ($retreat_id > 0) {
             $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->whereId($retreat_id)->orderBy('start_date')->pluck('description', 'id');
         } else {
@@ -176,9 +165,9 @@ class RegistrationController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-registration')]
     public function store(StoreRegistrationRequest $request): RedirectResponse
     {
-        Gate::authorize('create-registration');
         $rooms = $request->input('rooms');
         $num_registrants = $request->input('num_registrants');
         // TODO: Should we check and verify that the contact type is an organization to allow multiselect or just allow any registration to book multiple rooms?
@@ -252,10 +241,9 @@ class RegistrationController extends Controller implements HasMiddleware
         // return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
     }
 
+    #[Authorize('create-registration')]
     public function store_group(StoreGroupRegistrationRequest $request): RedirectResponse
     {
-        Gate::authorize('create-registration');
-
         $retreat = \App\Models\Retreat::findOrFail($request->input('event_id'));
         $group = \App\Models\Group::findOrFail($request->input('group_id'));
         $group_members = \App\Models\GroupContact::whereGroupId($group->id)->whereStatus('Added')->get();
@@ -292,9 +280,9 @@ class RegistrationController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-registration')]
     public function show(int $id): View
     {
-        Gate::authorize('show-registration');
         $registration = \App\Models\Registration::with('retreat', 'retreatant', 'room')->findOrFail($id);
 
         return view('registrations.show', compact('registration')); //
@@ -303,10 +291,9 @@ class RegistrationController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-registration')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-registration');
-
         $registration = \App\Models\Registration::with('retreatant', 'retreat', 'room')->findOrFail($id);
         $retreatant = \App\Models\Contact::findOrFail($registration->contact_id);
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today())->orderBy('start_date')->pluck('description', 'id');
@@ -348,10 +335,9 @@ class RegistrationController extends Controller implements HasMiddleware
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('update-registration')]
     public function update(UpdateRegistrationRequest $request, int $id)
     {
-        Gate::authorize('update-registration');
-
         $registration = \App\Models\Registration::findOrFail($request->input('id'));
         $retreat = \App\Models\Retreat::findOrFail($request->input('event_id'));
         $contact = \App\Models\Contact::findOrFail($registration->contact_id);
@@ -417,10 +403,9 @@ class RegistrationController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-registration')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-registration');
-
         $registration = \App\Models\Registration::findOrFail($id);
         $retreat = \App\Models\Retreat::findOrFail($registration->event_id);
 
@@ -434,10 +419,9 @@ class RegistrationController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'index']);
     }
 
+    #[Authorize('update-registration')]
     public function confirm($id): RedirectResponse
     {
-        Gate::authorize('update-registration');
-
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->registration_confirm_date = Carbon::now();
         $registration->save();
@@ -445,9 +429,9 @@ class RegistrationController extends Controller implements HasMiddleware
         return redirect()->back();
     }
 
+    #[Authorize('update-registration')]
     public function attend($id): RedirectResponse
     {
-        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->attendance_confirm_date = Carbon::now();
         $registration->save();
@@ -455,9 +439,9 @@ class RegistrationController extends Controller implements HasMiddleware
         return redirect()->back();
     }
 
+    #[Authorize('update-registration')]
     public function arrive($id): RedirectResponse
     {
-        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->arrived_at = Carbon::now();
         $registration->save();
@@ -465,9 +449,9 @@ class RegistrationController extends Controller implements HasMiddleware
         return redirect()->back();
     }
 
+    #[Authorize('update-registration')]
     public function depart($id): RedirectResponse
     {
-        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->departed_at = Carbon::now();
         $registration->save();
@@ -475,9 +459,9 @@ class RegistrationController extends Controller implements HasMiddleware
         return redirect()->back();
     }
 
+    #[Authorize('update-registration')]
     public function cancel($id): RedirectResponse
     {
-        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->canceled_at = Carbon::now();
         $registration->save();
@@ -485,9 +469,9 @@ class RegistrationController extends Controller implements HasMiddleware
         return redirect()->back();
     }
 
+    #[Authorize('update-registration')]
     public function waitlist($id): RedirectResponse
     {
-        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->status_id = config('polanco.registration_status_id.waitlist');
         $registration->save();
@@ -495,9 +479,9 @@ class RegistrationController extends Controller implements HasMiddleware
         return redirect()->back();
     }
 
+    #[Authorize('update-registration')]
     public function offwaitlist($id): RedirectResponse
     {
-        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $registration->status_id = config('polanco.registration_status_id.registered');
         $registration->save();
@@ -505,10 +489,9 @@ class RegistrationController extends Controller implements HasMiddleware
         return redirect()->back();
     }
 
+    #[Authorize('show-registration')]
     public function registrationEmail(Registration $participant): RedirectResponse
     {
-        Gate::authorize('show-registration');
-
         // 1. Get a primary email address for participant.
         $primaryEmail = $participant->contact->primaryEmail()->first();
 
@@ -537,9 +520,9 @@ class RegistrationController extends Controller implements HasMiddleware
         return redirect('person/'.$participant->contact->id);
     }
 
+    #[Authorize('update-registration')]
     public function send_confirmation_email($id): RedirectResponse
     {
-        Gate::authorize('update-registration');
         $registration = \App\Models\Registration::findOrFail($id);
         $current_user = Auth::user();
         $primary_email = $registration->retreatant->email_primary_text;

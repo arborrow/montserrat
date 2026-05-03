@@ -6,8 +6,8 @@ use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 use App\Models\Address;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -16,21 +16,15 @@ use Illuminate\View\View;
  * In testing, the address controller uses CRUD-style permissions which are theoretical rather than the contact CRUD permissions used in production
  * In other words, in production, the create-contact permission is used rather than create-address.
  */
-class AddressController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class AddressController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-address')]
     public function index(): View
     {
-        Gate::authorize('show-address');
         $addresses = \App\Models\Address::orderBy('postal_code', 'asc')->with('addressee')->paginate(25, ['*'], 'addresses');
 
         return view('addresses.index', compact('addresses'));
@@ -39,9 +33,9 @@ class AddressController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-address')]
     public function create(): View
     {
-        Gate::authorize('create-address');
         $countries = \App\Models\Country::orderBy('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', '');
         $states = \App\Models\StateProvince::orderBy('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
@@ -55,9 +49,9 @@ class AddressController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-address')]
     public function store(StoreAddressRequest $request): RedirectResponse
     {
-        Gate::authorize('create-address');
         $address = new \App\Models\Address;
         $address->contact_id = $request->input('contact_id');
         $address->location_type_id = $request->input('location_type_id');
@@ -78,9 +72,9 @@ class AddressController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-address')]
     public function show(int $id): View
     {
-        Gate::authorize('show-address');
         $address = \App\Models\Address::with('addressee')->findOrFail($id);
 
         return view('addresses.show', compact('address'));
@@ -89,10 +83,9 @@ class AddressController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-address')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-address');
-
         $countries = \App\Models\Country::orderBy('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', '');
         $states = \App\Models\StateProvince::orderBy('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
@@ -107,9 +100,9 @@ class AddressController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-address')]
     public function update(UpdateAddressRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-address');
         $address = \App\Models\Address::findOrFail($id);
         $address->contact_id = $request->input('contact_id');
         $address->location_type_id = $request->input('location_type_id');
@@ -130,9 +123,9 @@ class AddressController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-address')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-address');
         $address = \App\Models\Address::findOrFail($id);
         $contact_id = $address->contact_id;
         \App\Models\Address::destroy($id);

@@ -15,30 +15,23 @@ use App\Traits\SquareSpaceTrait;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Stripe\StripeClient;
 
-class StripeBalanceTransactionController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class StripeBalanceTransactionController extends Controller
 {
     use SquareSpaceTrait;
-
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
 
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-stripe-balance-transaction')]
     public function index(): View
     {
-        Gate::authorize('show-stripe-balance-transaction');
-
         $processed_balance_transactions = StripeBalanceTransaction::whereNotNull('reconcile_date')->orderBy('created_at')->paginate(25, ['*'], 'processed_balance_transactions');
         $unprocessed_balance_transactions = StripeBalanceTransaction::whereNull('reconcile_date')->orderByDesc('created_at')->paginate(25, ['*'], 'unprocessed_balance_transactions');
 
@@ -50,9 +43,9 @@ class StripeBalanceTransactionController extends Controller implements HasMiddle
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('create-stripe-balance-transaction')]
     public function create()
     {
-        Gate::authorize('create-stripe-balance-transaction');
         // unused empty shell - records are imported from stripe payouts
     }
 
@@ -61,20 +54,18 @@ class StripeBalanceTransactionController extends Controller implements HasMiddle
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('create-stripe-balance-transaction')]
     public function store(Request $request)
     {
-        Gate::authorize('create-stripe-balance-transaction');
-
         // unused empty shell - balance transactions are imported from stripe payouts
     }
 
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-stripe-balance-transaction')]
     public function show($stripe_balance_transaction_id): View
     {
-        Gate::authorize('show-stripe-balance-transaction');
-
         $balance_transaction = StripeBalanceTransaction::whereBalanceTransactionId($stripe_balance_transaction_id)->with('payments')->first();
         // dd($balance_transaction);
 
@@ -87,10 +78,9 @@ class StripeBalanceTransactionController extends Controller implements HasMiddle
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-stripe-balance-transaction')]
     public function show_id(int $id): View
     {
-        Gate::authorize('show-stripe-balance-transaction');
-
         $balance_transaction = StripeBalanceTransaction::with('payments')->findOrFail($id);
         // dd($balance_transaction);
 
@@ -105,9 +95,9 @@ class StripeBalanceTransactionController extends Controller implements HasMiddle
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('update-stripe-balance-transaction')]
     public function edit(int $id)
     {
-        Gate::authorize('update-stripe-balance-transaction');
         $unprocessed_squarespace_contributions = collect();
         $donations = collect();
         // TODO: determine type of transaction order, donation, manual
@@ -266,10 +256,9 @@ class StripeBalanceTransactionController extends Controller implements HasMiddle
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('update-stripe-balance-transaction')]
     public function update(UpdateStripeBalanceTransactionRequest $request, int $id)
     {
-        Gate::authorize('update-stripe-balance-transaction');
-
         $balance_transaction = StripeBalanceTransaction::findOrFail($id);
 
         switch ($balance_transaction->transaction_type) {
@@ -505,9 +494,9 @@ class StripeBalanceTransactionController extends Controller implements HasMiddle
     /**
      * Import Stripe Balance Transactions for a given Stripe Payouts into stripe_balance_transaction table
      */
+    #[Authorize('import-stripe-balance_transaction')]
     public function import($payout_id): RedirectResponse
     {
-        Gate::authorize('import-stripe-balance_transaction');
         $payout = StripePayout::findOrFail($payout_id);
 
         $stripe = new StripeClient(config('services.stripe.secret'));
@@ -532,10 +521,9 @@ class StripeBalanceTransactionController extends Controller implements HasMiddle
         return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'], $payout->payout_id);
     }
 
+    #[Authorize('import-stripe-balance_transaction')]
     public function store_balance_transactions($payout, $stripe_balance_transactions)
     {
-        Gate::authorize('import-stripe-balance_transaction');
-
         $stripe = new StripeClient(config('services.stripe.secret'));
         foreach ($stripe_balance_transactions->autoPagingIterator() as $stripe_balance_transaction) {
             $balance_transaction = StripeBalanceTransaction::firstOrNew([
@@ -615,10 +603,9 @@ class StripeBalanceTransactionController extends Controller implements HasMiddle
     /**
      * Reset to re-select the donor for a Stripe Balance Transaction.
      */
+    #[Authorize('update-stripe-balance-transaction')]
     public function reset(int $id): RedirectResponse
     {
-        Gate::authorize('update-stripe-balance-transaction');
-
         $balance_transaction = StripeBalanceTransaction::findOrFail($id);
         $balance_transaction->contact_id = null;
         $balance_transaction->save();
