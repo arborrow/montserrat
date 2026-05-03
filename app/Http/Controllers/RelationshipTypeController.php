@@ -8,29 +8,23 @@ use App\Http\Requests\StoreRelationshipTypeRequest;
 use App\Http\Requests\UpdateRelationshipTypeRequest;
 use App\Traits\SquareSpaceTrait;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class RelationshipTypeController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class RelationshipTypeController extends Controller
 {
     use SquareSpaceTrait;
-
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
 
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-relationshiptype')]
     public function index(): View
     {
-        Gate::authorize('show-relationshiptype');
         $relationship_types = \App\Models\RelationshipType::whereIsActive(1)->orderBy('description')->get();
 
         return view('relationships.types.index', compact('relationship_types'));   //
@@ -39,9 +33,9 @@ class RelationshipTypeController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-relationshiptype')]
     public function create(): View
     {
-        Gate::authorize('create-relationshiptype');
         $contact_types = \App\Models\ContactType::OrderBy('name')->pluck('name', 'name');
 
         return view('relationships.types.create', compact('contact_types'));
@@ -50,10 +44,9 @@ class RelationshipTypeController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-relationshiptype')]
     public function store(StoreRelationshipTypeRequest $request): RedirectResponse
     {
-        Gate::authorize('create-relationshiptype');
-
         $relationship_type = new \App\Models\RelationshipType;
         $relationship_type->description = $request->input('description');
         $relationship_type->name_a_b = $request->input('name_a_b');
@@ -95,9 +88,9 @@ class RelationshipTypeController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-relationshiptype')]
     public function show(int $id): View
     {
-        Gate::authorize('show-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::findOrFail($id);
         $relationships = \App\Models\Relationship::whereRelationshipTypeId($id)->orderBy('contact_id_a')->with('contact_a', 'contact_b')->paginate(25, ['*'], 'relationships');
 
@@ -107,9 +100,9 @@ class RelationshipTypeController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-relationshiptype')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::findOrFail($id);
 
         return view('relationships.types.edit', compact('relationship_type'));
@@ -118,10 +111,9 @@ class RelationshipTypeController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-relationshiptype')]
     public function update(UpdateRelationshipTypeRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-relationshiptype');
-
         $relationship_type = \App\Models\RelationshipType::findOrFail($request->input('id'));
         $relationship_type->description = $request->input('description');
         $relationship_type->name_a_b = $request->input('name_a_b');
@@ -141,10 +133,9 @@ class RelationshipTypeController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-relationshiptype')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-relationshiptype');
-
         $relationship_type = \App\Models\RelationshipType::findOrFail($id);
         \App\Models\RelationshipType::destroy($id);
 
@@ -153,9 +144,9 @@ class RelationshipTypeController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'index']);
     }
 
+    #[Authorize('create-relationship')]
     public function addme(AddmeRelationshipTypeRequest $request): View
     {
-        Gate::authorize('create-relationship');
         $relationship_type_name = $request->input('relationship_type_name');
         $relationship_filter_alternate_name = ($request->input('relationship_filter_alternate_name') == null) ? null : $request->input('relationship_filter_alternate_name');
         $contact_id = $request->input('contact_id');
@@ -254,9 +245,9 @@ class RelationshipTypeController extends Controller implements HasMiddleware
         return view('relationships.types.add', compact('relationship_type', 'primary_contact', 'contact_list', 'direction'));
     }
 
+    #[Authorize('create-relationship')]
     public function make(MakeRelationshipTypeRequest $request): RedirectResponse
     {
-        Gate::authorize('create-relationship');
         // a very hacky way to get the contact_id of the user that we are creating a relationship for
         // this allows the ability to redirect back to that user
         $contact_id = ($request->input('direction') == 'a') ? $request->input('contact_a_id') : $request->input('contact_b_id');
@@ -272,9 +263,9 @@ class RelationshipTypeController extends Controller implements HasMiddleware
         return redirect()->to($contact->contact_url);
     }
 
+    #[Authorize('show-contact')]
     public function get_contact_type_list($contact_type = 'Individual', $contact_subtype = null, $contact_id = null, $relationship_filter_alternate_name = null)
     {
-        Gate::authorize('show-contact');
         // dd($contact_type, $contact_subtype);
         switch ($contact_type) {
             case 'Household':

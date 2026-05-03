@@ -6,26 +6,20 @@ use App\Models\Relationship;
 use DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class RelationshipController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class RelationshipController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-relationship')]
     public function index(): View
     {
-        Gate::authorize('show-relationship');
         $relationships = \App\Models\Relationship::paginate(25, ['*'], 'relationships');
 
         return view('relationships.index', compact('relationships'));   //
@@ -34,9 +28,9 @@ class RelationshipController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-relationship')]
     public function create(): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
-        Gate::authorize('create-relationship');
         flash('Relationships cannot be directly created as they are managed via contacts')->error();
 
         return Redirect::action([self::class, 'index']);
@@ -45,10 +39,10 @@ class RelationshipController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-relationship')]
     public function store(Request $request): RedirectResponse
     {   // relationships are not created directly here; they are created through the person controller
         // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
-        Gate::authorize('create-relationship');
         flash('Relationships cannot be directly stored as they are managed via contacts')->error();
 
         return Redirect::action([self::class, 'index']);
@@ -57,9 +51,9 @@ class RelationshipController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-relationship')]
     public function show(int $id): View
     {
-        Gate::authorize('show-relationship');
         $relationship = \App\Models\Relationship::findOrFail($id);
 
         return view('relationships.show', compact('relationship'));
@@ -68,9 +62,9 @@ class RelationshipController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-relationship')]
     public function edit(int $id): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
-        Gate::authorize('update-relationship');
         flash('Relationships cannot be directly edited as they are managed via contacts')->error();
 
         return Redirect::action([self::class, 'show'], $id);
@@ -79,9 +73,9 @@ class RelationshipController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-relationship')]
     public function update(Request $request, int $id): RedirectResponse
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
-        Gate::authorize('update-relationship');
         flash('Relationships cannot be directly updated as they are managed via contacts')->error();
 
         return Redirect::action([self::class, 'show'], $id);
@@ -90,10 +84,9 @@ class RelationshipController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-relationship')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-relationship');
-
         \App\Models\Relationship::destroy($id);
 
         flash('Relationship ID#: '.$id.' deleted')->warning()->important();
@@ -101,9 +94,9 @@ class RelationshipController extends Controller implements HasMiddleware
         return redirect()->back();
     }
 
+    #[Authorize('update-contact')]
     public function disjoined(): View
     {
-        Gate::authorize('update-contact');
         $couples = DB::table('relationship as r')
             ->select('r.id', 'r.contact_id_a as husband_id', 'h.sort_name as husband_name', 'r.contact_id_b as wife_id', 'w.sort_name as wife_name', 'ha.street_address as husband_address', 'ha.city as husband_city', 'ha.postal_code as husband_zip', 'wa.street_address as wife_address', 'wa.city as wife_city', 'wa.postal_code as wife_zip')
             ->leftJoin('contact as h', 'r.contact_id_a', '=', 'h.id')
@@ -125,9 +118,9 @@ class RelationshipController extends Controller implements HasMiddleware
         return view('relationships.disjoined', compact('couples'));
     }
 
+    #[Authorize('update-contact')]
     public function rejoin($id, $dominant): RedirectResponse
     {
-        Gate::authorize('update-contact');
         $relationship = \App\Models\Relationship::with('contact_a.address_primary', 'contact_b.address_primary')->findOrFail($id);
         switch ($dominant) {
             case $relationship->contact_id_a:

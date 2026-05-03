@@ -6,22 +6,16 @@ use App\Http\Requests\SearchRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\View\View;
 
-class SearchController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class SearchController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-contact')]
     public function autocomplete(Request $request): JsonResponse
     {
-        Gate::authorize('show-contact');
         $term = $request->get('term');
         $results = [];
         $queries = \App\Models\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
@@ -35,9 +29,9 @@ class SearchController extends Controller implements HasMiddleware
         return response()->json($results);
     }
 
+    #[Authorize('show-contact')]
     public function getuser(Request $request): RedirectResponse
     {   // dd($request);
-        Gate::authorize('show-contact');
         if (empty($request->get('response'))) {
             $id = 0;
         } else {
@@ -54,9 +48,9 @@ class SearchController extends Controller implements HasMiddleware
         }
     }
 
+    #[Authorize('show-contact')]
     public function results(SearchRequest $request): View
     {
-        Gate::authorize('show-contact');
         if (! empty($request)) {
             $persons = \App\Models\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(25, ['*'], 'persons');
             $persons->appends($request->except('page'));
@@ -68,10 +62,9 @@ class SearchController extends Controller implements HasMiddleware
         return view('search.results', compact('persons'));
     }
 
+    #[Authorize('show-contact')]
     public function search(): View
     {
-        Gate::authorize('show-contact');
-
         $contact_types = \App\Models\ContactType::whereIsReserved(true)->pluck('label', 'id');
         $contact_types->prepend('N/A', '');
 

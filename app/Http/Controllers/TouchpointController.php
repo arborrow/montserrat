@@ -9,29 +9,22 @@ use App\Http\Requests\StoreTouchpointRequest;
 use App\Http\Requests\UpdateTouchpointRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class TouchpointController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class TouchpointController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-touchpoint')]
     public function index(): View
     {
-        Gate::authorize('show-touchpoint');
-
         $staff = \App\Models\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
         $touchpoints = \App\Models\Touchpoint::orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix', 'staff.prefix', 'staff.suffix')->paginate(25, ['*'], 'touchpoints');
 
@@ -41,10 +34,9 @@ class TouchpointController extends Controller implements HasMiddleware
     /**
      * Display a listing of touchpoints associated with a particular staff member
      */
+    #[Authorize('show-touchpoint')]
     public function index_type(?int $staff_id = null): View
     {
-        Gate::authorize('show-touchpoint');
-
         $staff = \App\Models\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
         $touchpoints = \App\Models\Touchpoint::whereStaffId($staff_id)->orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix', 'staff.prefix', 'staff.suffix')->paginate(25, ['*'], 'touchpoints');
 
@@ -54,9 +46,9 @@ class TouchpointController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-touchpoint')]
     public function create(Request $request): View
     {
-        Gate::authorize('create-touchpoint');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -76,9 +68,9 @@ class TouchpointController extends Controller implements HasMiddleware
         return view('touchpoints.create', compact('staff', 'persons', 'defaults'));
     }
 
+    #[Authorize('create-touchpoint')]
     public function add_group(Request $request, $group_id = 0): View
     {
-        Gate::authorize('create-touchpoint');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -101,9 +93,9 @@ class TouchpointController extends Controller implements HasMiddleware
         return view('touchpoints.add_group', compact('staff', 'groups', 'defaults'));
     }
 
+    #[Authorize('create-touchpoint')]
     public function add_retreat(Request $request, $event_id = 0): View
     {
-        Gate::authorize('create-touchpoint');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -129,9 +121,9 @@ class TouchpointController extends Controller implements HasMiddleware
         return view('touchpoints.add_retreat', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
     }
 
+    #[Authorize('create-touchpoint')]
     public function add_retreat_waitlist(Request $request, $event_id = 0): View
     {
-        Gate::authorize('create-touchpoint');
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -157,10 +149,9 @@ class TouchpointController extends Controller implements HasMiddleware
         return view('touchpoints.add_retreat_waitlist', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
     }
 
+    #[Authorize('create-touchpoint')]
     public function add(Request $request, $id): View
     {
-        Gate::authorize('create-touchpoint');
-
         // lookup the contact type of the touchpoint being added and show similar ones in drop down (persons, parishes, etc.)
         $contact = \App\Models\Contact::findOrFail($id);
         if (isset($contact->subcontact_type)) {
@@ -192,10 +183,9 @@ class TouchpointController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-touchpoint')]
     public function store(StoreTouchpointRequest $request): RedirectResponse
     {
-        Gate::authorize('create-touchpoint');
-
         $touchpoint = new \App\Models\Touchpoint;
         $touchpoint->person_id = $request->input('person_id');
         $touchpoint->staff_id = $request->input('staff_id');
@@ -209,9 +199,9 @@ class TouchpointController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'index']);
     }
 
+    #[Authorize('create-touchpoint')]
     public function store_group(StoreGroupTouchpointRequest $request): RedirectResponse
     {
-        Gate::authorize('create-touchpoint');
         $group_id = $request->input('group_id');
         $group = \App\Models\Group::findOrFail($group_id);
         $group_members = \App\Models\GroupContact::whereGroupId($group_id)->whereStatus('Added')->get();
@@ -230,9 +220,9 @@ class TouchpointController extends Controller implements HasMiddleware
         return Redirect::action([\App\Http\Controllers\GroupController::class, 'show'], $group_id);
     }
 
+    #[Authorize('create-touchpoint')]
     public function store_retreat(StoreRetreatTouchpointRequest $request): RedirectResponse
     {
-        Gate::authorize('create-touchpoint');
         $event_id = $request->input('event_id');
         $event = \App\Models\Retreat::findOrFail($event_id);
         $participants = \App\Models\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
@@ -251,9 +241,9 @@ class TouchpointController extends Controller implements HasMiddleware
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
+    #[Authorize('create-touchpoint')]
     public function store_retreat_waitlist(StoreRetreatWaitlistTouchpointRequest $request): RedirectResponse
     {
-        Gate::authorize('create-touchpoint');
         $event_id = $request->input('event_id');
         $event = \App\Models\Retreat::findOrFail($event_id);
         $participants = \App\Models\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
@@ -275,9 +265,9 @@ class TouchpointController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-touchpoint')]
     public function show(int $id): View
     {
-        Gate::authorize('show-touchpoint');
         $touchpoint = \App\Models\Touchpoint::with('staff', 'person')->findOrFail($id);
 
         return view('touchpoints.show', compact('touchpoint')); //
@@ -286,9 +276,9 @@ class TouchpointController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-touchpoint')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-touchpoint');
         $touchpoint = \App\Models\Touchpoint::with('staff', 'person')->findOrFail($id);
 
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -319,9 +309,9 @@ class TouchpointController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-touchpoint')]
     public function update(UpdateTouchpointRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-touchpoint');
         $touchpoint = \App\Models\Touchpoint::findOrFail($request->input('id'));
         $touchpoint->person_id = $request->input('person_id');
         $touchpoint->staff_id = $request->input('staff_id');
@@ -338,10 +328,9 @@ class TouchpointController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-touchpoint')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-touchpoint');
-
         \App\Models\Touchpoint::destroy($id);
 
         flash('Touchpoint ID#: '.$id.' deleted')->warning()->important();

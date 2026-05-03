@@ -3,31 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AgcDonationsRequest;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class DashboardController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class DashboardController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-dashboard')]
     public function index(): View
     {
-        Gate::authorize('show-dashboard');
-
         return view('dashboard.index');
     }
 
+    #[Authorize('show-dashboard')]
     public function agc($number_of_years = 5): View
     {
-        Gate::authorize('show-dashboard');
-
         $current_year = (int) (date('m') > 6) ? date('Y') + 1 : date('Y');
 
         $years = [];
@@ -108,10 +100,9 @@ class DashboardController extends Controller implements HasMiddleware
         return view('dashboard.agc', compact('number_of_years', 'donors', 'agc_descriptions', 'data'));
     }
 
+    #[Authorize('show-donation')]
     public function agc_donations(AgcDonationsRequest $request): View
     {
-        Gate::authorize('show-donation');
-
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         $fiscal_year = (! isset($request->fiscal_year)) ? $current_year : $request->fiscal_year; // fiscal_year 4-digit year
 
@@ -149,9 +140,9 @@ class DashboardController extends Controller implements HasMiddleware
         return view('donations.results', compact('donations', 'all_donations'));
     }
 
+    #[Authorize('show-dashboard')]
     public function donation_description_chart(?int $category_id = null): View
     {
-        Gate::authorize('show-dashboard');
         $descriptions = \App\Models\DonationType::active()->orderBy('name')->pluck('id', 'name');
         if (! isset($category_id)) {
             $donation_type = \App\Models\DonationType::whereName('Retreat Funding')->first();
@@ -204,11 +195,10 @@ class DashboardController extends Controller implements HasMiddleware
         return view('dashboard.description', compact('donation_type', 'descriptions', 'data'));
     }
 
+    #[Authorize('show-dashboard')]
     public function events($year = null): View
     {
         // TODO: Create donut chart for average number of retreatants per event (get count of event_type_id) partipants/count(event_type_id) //useful for Ambassador goal of 40 (draw goal line)
-        Gate::authorize('show-dashboard');
-
         // default to current fiscal year
         if (! isset($year)) {
             $year = (date('m') > 6) ? date('Y') + 1 : date('Y');

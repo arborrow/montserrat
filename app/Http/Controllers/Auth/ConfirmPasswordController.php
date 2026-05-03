@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 
-class ConfirmPasswordController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class ConfirmPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -28,10 +29,4 @@ class ConfirmPasswordController extends Controller implements HasMiddleware
      */
     protected $redirectTo = '/home';
 
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
 }

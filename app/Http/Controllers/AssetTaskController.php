@@ -5,24 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAssetTaskRequest;
 use App\Http\Requests\UpdateAssetTaskRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class AssetTaskController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class AssetTaskController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-asset-task')]
     public function index(): View
     {
-        Gate::authorize('show-asset-task');
-
         $asset_tasks = \App\Models\AssetTask::with('asset')->orderBy('title')->get();
 
         return view('asset_tasks.index', compact('asset_tasks'));
@@ -31,10 +24,9 @@ class AssetTaskController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-asset-task')]
     public function create($asset_id = 0): View
     {
-        Gate::authorize('create-asset-task');
-
         // if creating a task for a particular asset (default behavior from asset.show blade) then no need to get long list of assets to choose from
         if (isset($asset_id) && $asset_id > 0) {
             $assets = \App\Models\Asset::whereId($asset_id)->pluck('name', 'id');
@@ -56,10 +48,9 @@ class AssetTaskController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-asset-task')]
     public function store(StoreAssetTaskRequest $request): RedirectResponse
     {
-        Gate::authorize('create-asset-task');
-
         $asset_task = new \App\Models\AssetTask;
 
         $asset_task->asset_id = $request->input('asset_id');
@@ -91,10 +82,9 @@ class AssetTaskController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-asset-task')]
     public function show(int $id): View
     {
-        Gate::authorize('show-asset-task');
-
         $asset_task = \App\Models\AssetTask::with('jobs')->findOrFail($id);
         $jobs_scheduled = \App\Models\AssetJob::whereAssetTaskId($id)->where('scheduled_date', '>=', now())->orderBy('scheduled_date')->get();
         $jobs_past = \App\Models\AssetJob::whereAssetTaskId($id)->where('scheduled_date', '<', now())->orderBy('scheduled_date')->get();
@@ -105,10 +95,9 @@ class AssetTaskController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-asset-task')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-asset-task');
-
         $asset_task = \App\Models\AssetTask::findOrFail($id);
 
         $assets = \App\Models\Asset::orderBy('name')->pluck('name', 'id');
@@ -126,10 +115,9 @@ class AssetTaskController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-asset-task')]
     public function update(UpdateAssetTaskRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-asset-task');
-
         $asset_task = \App\Models\AssetTask::findOrFail($id);
 
         $asset_task->asset_id = $request->input('asset_id');
@@ -161,9 +149,9 @@ class AssetTaskController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-asset-task')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-asset-task');
         $asset_task = \App\Models\AssetTask::findOrFail($id);
 
         \App\Models\AssetTask::destroy($id);
@@ -183,9 +171,9 @@ class AssetTaskController extends Controller implements HasMiddleware
      * This approach ensures job history is maintained by not deleting previously scheduled jobs
      * It also allows for Nonscheduled - not automated PM - to remain as only future, scheduled jobs are deleted
      */
+    #[Authorize('update-asset-task')]
     public function schedule_jobs(int $id): RedirectResponse
     {
-        Gate::authorize('update-asset-task');
         $asset_task = \App\Models\AssetTask::findOrFail($id);
         $jobs_created = 0;
 

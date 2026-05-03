@@ -3,22 +3,22 @@
 namespace App\Models;
 
 use App\Traits\PhoneTrait;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
+#[Table('squarespace_contribution')]
+#[Fillable('message_id')]
 class SquarespaceContribution extends Model implements Auditable
 {
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
     use PhoneTrait;
     use SoftDeletes;
-
-    protected $table = 'squarespace_contribution';
-
-    protected $fillable = ['message_id'];
 
     public function message(): HasOne
     {

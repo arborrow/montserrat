@@ -28,30 +28,24 @@ use App\Traits\SquareSpaceTrait;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class SquarespaceOrderController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class SquarespaceOrderController extends Controller
 {
     use SquareSpaceTrait;
-
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
 
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-squarespace-order')]
     public function index(): View
     {
-        Gate::authorize('show-squarespace-order');
         $unprocessed_orders = SquarespaceOrder::whereIsProcessed(0)->orderBy('order_number')->paginate(25, ['*'], 'unprocessed_orders');
         $processed_orders = SquarespaceOrder::whereIsProcessed(1)->orderByDesc('order_number')->paginate(25, ['*'], 'processed_orders');
 
@@ -62,11 +56,10 @@ class SquarespaceOrderController extends Controller implements HasMiddleware
      * Squarespace orders are created from parsed Mailgun messages
      * Hence, the create method is an empty slug
      */
+    #[Authorize('show-squarespace-order')]
     public function create(): RedirectResponse
     {
         // use permisson of target, namely squarespace.order.index
-        Gate::authorize('show-squarespace-order');
-
         return Redirect::action([self::class, 'index']);
     }
 
@@ -74,20 +67,19 @@ class SquarespaceOrderController extends Controller implements HasMiddleware
      * Squarespace orders are created from parsed Mailgun messages
      * Hence, the store method is an empty slug
      */
+    #[Authorize('show-squarespace-order')]
     public function store(Request $request): RedirectResponse
     {
         // use permisson of target, namely squarespace.order.index
-        Gate::authorize('show-squarespace-order');
-
         return Redirect::action([self::class, 'index']);
     }
 
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-squarespace-order')]
     public function show(int $id): View
     {
-        Gate::authorize('show-squarespace-order');
         $order = SquarespaceOrder::findOrFail($id);
 
         return view('squarespace.order.show', compact('order'));
@@ -98,9 +90,9 @@ class SquarespaceOrderController extends Controller implements HasMiddleware
      *
      * @param  int  $id
      */
+    #[Authorize('show-squarespace-order')]
     public function show_order_number($order_number): View
     {
-        Gate::authorize('show-squarespace-order');
         $order = SquarespaceOrder::whereOrderNumber($order_number)->first();
 
         return view('squarespace.order.show', compact('order'));
@@ -109,9 +101,9 @@ class SquarespaceOrderController extends Controller implements HasMiddleware
     /**
      * Show an order to confirm the retreatant for a SquareSpace order.
      */
+    #[Authorize('update-squarespace-order')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-squarespace-order');
         $order = SquarespaceOrder::findOrFail($id);
         $gift_certificate = (empty($order->gift_certificate_id)) ? null : GiftCertificate::findOrFail($order->gift_certificate_id);
         $prefixes = Prefix::orderBy('name')->pluck('name', 'id');
@@ -728,21 +720,19 @@ class SquarespaceOrderController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('show-squarespace-order')]
     public function destroy(int $id): RedirectResponse
     {
         // use permisson of target, namely squarespace.order.index
-        Gate::authorize('show-squarespace-order');
-
         return Redirect::action([self::class, 'index']);
     }
 
     /**
      * Reset to re-select the retreatant for a SquareSpace order.
      */
+    #[Authorize('update-squarespace-order')]
     public function reset(int $id): RedirectResponse
     {
-        Gate::authorize('update-squarespace-order');
-
         $order = SquarespaceOrder::findOrFail($id);
         $order->contact_id = null;
         $order->save();

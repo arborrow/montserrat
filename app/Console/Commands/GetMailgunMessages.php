@@ -13,28 +13,18 @@ use App\Models\SquarespaceOrder;
 use App\Models\Touchpoint;
 use App\Traits\MailgunTrait;
 use Carbon\Carbon;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Mailgun\Mailgun;
 
+#[Signature('mailgun:get')]
+#[Description('Retrieve stored events (messages) from Mailgun')]
 class GetMailgunMessages extends Command
 {
     use MailgunTrait;
-
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'mailgun:get';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Retrieve stored events (messages) from Mailgun';
 
     /**
      * Receive a full_address string from Squarespace and attempt to parse it.

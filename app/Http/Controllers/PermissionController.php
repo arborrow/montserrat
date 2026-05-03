@@ -4,23 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class PermissionController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class PermissionController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-permission')]
     public function index(Request $request): View
     {
-        Gate::authorize('show-permission');
         $actions = [
             '' => 'N/A',
             'create' => 'create',
@@ -85,19 +80,18 @@ class PermissionController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-permission')]
     public function create(): View
     {
-        Gate::authorize('create-permission');
-
         return view('admin.permissions.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-permission')]
     public function store(Request $request): RedirectResponse
     {
-        Gate::authorize('create-permission');
         $permission = new \App\Models\Permission;
         $permission->name = $request->input('name');
         $permission->display_name = $request->input('display_name');
@@ -112,9 +106,9 @@ class PermissionController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-permission')]
     public function show(int $id): View
     {
-        Gate::authorize('show-permission');
         $permission = \App\Models\Permission::with('roles.users')->findOrFail($id);
         $roles = \App\Models\Role::orderBy('name')->pluck('name', 'id');
 
@@ -124,9 +118,9 @@ class PermissionController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-permission')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-permission');
         $permission = \App\Models\Permission::findOrFail($id);
 
         return view('admin.permissions.edit', compact('permission'));
@@ -135,9 +129,9 @@ class PermissionController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-permission')]
     public function update(Request $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-permission');
         $permission = \App\Models\Permission::findOrFail($request->input('id'));
         $permission->name = $request->input('name');
         $permission->display_name = $request->input('display_name');
@@ -152,10 +146,9 @@ class PermissionController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-permission')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-permission');
-
         $permission = \App\Models\Permission::findOrFail($id);
 
         \App\Models\Permission::destroy($id);
@@ -165,9 +158,9 @@ class PermissionController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'index']);
     }
 
+    #[Authorize('update-permission')]
     public function update_roles(Request $request): RedirectResponse
     {
-        Gate::authorize('update-permission');
         Gate::authorize('update-role');
         $permission = \App\Models\Permission::findOrFail($request->input('id'));
         $permission->roles()->detach();

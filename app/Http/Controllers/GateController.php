@@ -4,32 +4,26 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Twilio\Rest\Client;
 
-class GateController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class GateController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-gate')]
     public function index(): View
     {
-        Gate::authorize('show-gate');
         $touchpoints = \App\Models\Touchpoint::whereType('Gate activity')->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(25, ['*'], 'touchpoints');
 
         return view('gate.index', compact('touchpoints'));
     }
 
+    #[Authorize('show-gate')]
     public function open(Request $request, $hours = null): View
     {
-        Gate::authorize('show-gate'); // Check to see if the user has permissions
-
         $account_sid = config('settings.twilio_sid');
         $auth_token = config('settings.twilio_token');
         $twilio_number = config('settings.twilio_number');
@@ -79,10 +73,9 @@ class GateController extends Controller implements HasMiddleware
         return view('gate.open', compact('hours', 'message'));
     }
 
+    #[Authorize('show-gate')]
     public function close(Request $request): View
     {
-        Gate::authorize('show-gate'); // Check to see if the user has permissions
-
         $account_sid = config('settings.twilio_sid');
         $auth_token = config('settings.twilio_token');
         $twilio_number = config('settings.twilio_number');

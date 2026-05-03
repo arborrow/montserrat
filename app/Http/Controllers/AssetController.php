@@ -6,24 +6,17 @@ use App\Http\Requests\AssetSearchRequest;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class AssetController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class AssetController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-asset')]
     public function index(): View
     {
-        Gate::authorize('show-asset');
-
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
 
@@ -32,10 +25,9 @@ class AssetController extends Controller implements HasMiddleware
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
+    #[Authorize('show-asset')]
     public function index_type($type = null): View
     {
-        Gate::authorize('show-asset');
-
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
 
@@ -44,10 +36,9 @@ class AssetController extends Controller implements HasMiddleware
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
+    #[Authorize('show-asset')]
     public function index_location($location_id = null): View
     {
-        Gate::authorize('show-asset');
-
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
 
@@ -56,10 +47,9 @@ class AssetController extends Controller implements HasMiddleware
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
+    #[Authorize('show-asset')]
     public function search(): View
     {
-        Gate::authorize('show-asset');
-
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', '');
 
@@ -96,9 +86,9 @@ class AssetController extends Controller implements HasMiddleware
         return view('assets.search', compact('asset_types', 'departments', 'depreciation_types', 'locations', 'parents', 'uoms_capacity', 'uoms_electric', 'uoms_length', 'uoms_time', 'uoms_weight', 'vendors'));
     }
 
+    #[Authorize('show-asset')]
     public function results(AssetSearchRequest $request): View
     {
-        Gate::authorize('show-asset');
         if (! empty($request)) {
             $assets = \App\Models\Asset::filtered($request)->orderBy('name')->paginate(25, ['*'], 'assets');
             $assets->appends($request->except('page'));
@@ -112,10 +102,9 @@ class AssetController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-asset')]
     public function create(): View
     {
-        Gate::authorize('create-asset');
-
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', '');
 
@@ -150,10 +139,9 @@ class AssetController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-asset')]
     public function store(StoreAssetRequest $request): RedirectResponse
     {
-        Gate::authorize('create-asset');
-
         $asset = new \App\Models\Asset;
         // General info
         $asset->name = $request->input('name');
@@ -235,10 +223,9 @@ class AssetController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-asset')]
     public function show(int $id): View
     {
-        Gate::authorize('show-asset');
-
         $asset = \App\Models\Asset::with('tasks.jobs')->findOrFail($id);
         $files = \App\Models\Attachment::whereEntity('asset')->whereEntityId($asset->id)->whereFileTypeId(config('polanco.file_type.asset_attachment'))->get();
 
@@ -248,10 +235,9 @@ class AssetController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-asset')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-asset');
-
         $asset = \App\Models\Asset::findOrFail($id);
 
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
@@ -288,10 +274,9 @@ class AssetController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-asset')]
     public function update(UpdateAssetRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-asset');
-
         $asset = \App\Models\Asset::findOrFail($id);
 
         // General info
@@ -380,9 +365,9 @@ class AssetController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-asset')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-asset');
         $asset = \App\Models\Asset::findOrFail($id);
 
         \App\Models\Asset::destroy($id);

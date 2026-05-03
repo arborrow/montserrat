@@ -8,28 +8,21 @@ use App\Models\StripePayout;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Stripe\StripeClient;
 
-class StripePayoutController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class StripePayoutController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-stripe-payout')]
     public function index(): View
     {
-        Gate::authorize('show-stripe-payout');
-
         $stripe = new StripeClient(config('services.stripe.secret'));
 
         $payouts = StripePayout::with('transactions')->orderByDesc('date')->paginate(25, ['*'], 'payouts');
@@ -86,10 +79,9 @@ class StripePayoutController extends Controller implements HasMiddleware
      *
      * @param  int  $id
      */
+    #[Authorize('show-stripe-payout')]
     public function show($payout_id): View
     {
-        Gate::authorize('show-stripe-payout');
-
         $stripe = new StripeClient(config('services.stripe.secret'));
         $stripe_payout = $stripe->payouts->retrieve($payout_id, []);
         $stripe_balance_transactions = $stripe->balanceTransactions->all(
@@ -130,9 +122,9 @@ class StripePayoutController extends Controller implements HasMiddleware
      *
      * @param  int  $id
      */
+    #[Authorize('show-stripe-payout')]
     public function show_date($date = null)
     {
-        Gate::authorize('show-stripe-payout');
         $payout_date = \Carbon\Carbon::parse($date);
         if (empty($payout_date)) {
             return redirect()->back();
@@ -177,10 +169,9 @@ class StripePayoutController extends Controller implements HasMiddleware
     /**
      * Create Stripe Fee donation/payment for a payout.
      */
+    #[Authorize('update-stripe-payout')]
     public function process_fees(?int $id = null): RedirectResponse
     {
-        Gate::authorize('update-stripe-payout');
-
         $stripe_vendor_id = config('polanco.contact.stripe');
         $payout = StripePayout::findOrFail($id);
         $donation = new \App\Models\Donation;
@@ -226,9 +217,9 @@ class StripePayoutController extends Controller implements HasMiddleware
     /**
      * Import Stripe Payouts into stripe_payout table
      */
+    #[Authorize('import-stripe-payout')]
     public function import(): RedirectResponse
     {
-        Gate::authorize('import-stripe-payout');
         // dd('Stripe Payout Import');
         $latest_payout = StripePayout::orderByDesc('date')->first();
         $stripe = new StripeClient(config('services.stripe.secret'));
@@ -267,9 +258,9 @@ class StripePayoutController extends Controller implements HasMiddleware
     /**
      * Process Stripe Payout into stripe_charge table
      */
+    #[Authorize('import-stripe-payout')]
     public function process($id): RedirectResponse
     {
-        Gate::authorize('import-stripe-payout');
         // dd('Stripe Payout Import');
         $stripe = new StripeClient(config('services.stripe.secret'));
         $payouts = $stripe->payouts->all([]);

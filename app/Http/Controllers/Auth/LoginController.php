@@ -6,8 +6,7 @@ use App\AuthenticateUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 // use Illuminate\Support\Facades\Redirect;
 
-class LoginController extends Controller implements HasMiddleware
+#[Middleware('guest', except: ['logout'])]
+class LoginController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -37,13 +37,6 @@ class LoginController extends Controller implements HasMiddleware
      * @var string
      */
     protected $redirectTo = '/';
-
-    public static function middleware(): array
-    {
-        return [
-            new Middleware('guest', except: ['logout']),
-        ];
-    }
 
     /**
      * Redirect the user to the GitHub authentication page.

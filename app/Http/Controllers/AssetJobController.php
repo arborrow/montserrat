@@ -5,25 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAssetJobRequest;
 use App\Http\Requests\UpdateAssetJobRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class AssetJobController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class AssetJobController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
+    #[Authorize('show-asset-job')]
     public function index(): View
     {
-        Gate::authorize('show-asset-job');
-
         $asset_jobs = \App\Models\AssetJob::with('asset_task.asset', 'assigned_to')->orderBy('scheduled_date')->get();
 
         return view('asset_jobs.index', compact('asset_jobs'));
@@ -32,10 +25,9 @@ class AssetJobController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-asset-job')]
     public function create($asset_task_id = 0): View
     {
-        Gate::authorize('create-asset-job');
-
         // if creating a task for a particular asset (default behavior from asset.show blade) then no need to get long list of assets to choose from
         if (isset($asset_task_id) && $asset_task_id > 0) {
             $asset_tasks = \App\Models\AssetTask::whereId($asset_task_id)->pluck('title', 'id');
@@ -58,10 +50,9 @@ class AssetJobController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-asset-job')]
     public function store(StoreAssetJobRequest $request): RedirectResponse
     {
-        Gate::authorize('create-asset-job');
-
         $asset_job = new \App\Models\AssetJob;
 
         // General info
@@ -95,10 +86,9 @@ class AssetJobController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-asset-job')]
     public function show(int $id): View
     {
-        Gate::authorize('show-asset-job');
-
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
         return view('asset_jobs.show', compact('asset_job'));
@@ -107,10 +97,9 @@ class AssetJobController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-asset-job')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-asset-job');
-
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
         $asset_tasks = \App\Models\AssetTask::orderBy('title')->pluck('title', 'id');
@@ -134,10 +123,9 @@ class AssetJobController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-asset-job')]
     public function update(UpdateAssetJobRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-asset-job');
-
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
         // General info
@@ -177,9 +165,9 @@ class AssetJobController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-asset-job')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-asset-job');
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
         \App\Models\AssetJob::destroy($id);

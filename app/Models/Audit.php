@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
+#[Table('audits')]
+#[Appends('user_name')]
 class Audit extends Model
 {
     use HasFactory;
-
-    protected $table = 'audits';
-
-    protected $appends = ['user_name'];
 
     protected function casts(): array
     {

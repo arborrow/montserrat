@@ -7,7 +7,8 @@ use App\Http\Requests\UpdatePersonRequest;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -15,30 +16,23 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-class PersonController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class PersonController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-contact')]
     public function index(): View
     {
-        Gate::authorize('show-contact');
-
         $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('address_primary.state', 'phones', 'emails', 'websites', 'parish.contact_a.address_primary', 'prefix', 'suffix')->paginate(25, ['*'], 'persons');
 
         return view('persons.index', compact('persons'));
     }
 
+    #[Authorize('show-contact')]
     public function lastnames($letter = null): View
     {
-        Gate::authorize('show-contact');
         $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $letter.'%')->paginate(25, ['*'], 'persons');
 
         return view('persons.index', compact('persons'));
@@ -47,9 +41,9 @@ class PersonController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-contact')]
     public function create(): View
     {
-        Gate::authorize('create-contact');
         $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         $parish_list[0] = 'N/A';
         // while probably not the most efficient way of doing this it gets me the result
@@ -108,9 +102,9 @@ class PersonController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-contact')]
     public function store(StorePersonRequest $request): RedirectResponse
     {
-        Gate::authorize('create-contact');
         $person = new \App\Models\Contact;
 
         $person->contact_type = $request->input('contact_type');
@@ -630,9 +624,9 @@ class PersonController extends Controller implements HasMiddleware
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('show-contact')]
     public function show(int $id)
     {
-        Gate::authorize('show-contact');
         $person = \App\Models\Contact::with(
             'addresses.country',
             'addresses.location',
@@ -723,10 +717,9 @@ class PersonController extends Controller implements HasMiddleware
      * @return \Illuminate\Http\Response
      *                                   TODO: Shift suggestion - review these instances for dynamic validation rules - handle in a custom request like EnvelopeRequest
      */
+    #[Authorize('show-contact')]
     public function envelope(int $id, Request $request)
     {
-        Gate::authorize('show-contact');
-
         // default size = 10; logo = false
         $size = (string) '10';
         $logo = (bool) 0;
@@ -773,9 +766,9 @@ class PersonController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-contact')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-contact');
         $person = \App\Models\Contact::with('prefix', 'suffix', 'addresses.location', 'emails.location', 'phones.location', 'websites', 'parish', 'emergency_contact', 'notes')->findOrFail($id);
         // dd($person);
 
@@ -930,10 +923,9 @@ class PersonController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-contact')]
     public function update(UpdatePersonRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-contact');
-
         $person = \App\Models\Contact::with('addresses.location', 'emails.location', 'phones.location', 'websites', 'emergency_contact', 'parish')->findOrFail($id);
 
         $person->contact_type = $request->input('contact_type');
@@ -1562,10 +1554,9 @@ class PersonController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-contact')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-contact');
-
         // TODO: consider creating a restore/{id} or undelete/{id}
         $person = \App\Models\Contact::findOrFail($id);
         // delete existing groups and relationships when deleting user
@@ -1591,11 +1582,10 @@ class PersonController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'index']);
     }
 
+    #[Authorize('delete-duplicate')]
     public function merge_destroy($id, $return_id): RedirectResponse
     {
         // TODO: consider creating a restore/{id} or undelete/{id}
-        Gate::authorize('delete-duplicate');
-
         $person = \App\Models\Contact::findOrFail($id);
 
         // delete existing groups and relationships when deleting user
@@ -1694,10 +1684,9 @@ class PersonController extends Controller implements HasMiddleware
         return $this->role(config('polanco.group_id.volunteer'));
     }
 
+    #[Authorize('show-contact')]
     public function role($group_id): View
     {
-        Gate::authorize('show-contact');
-
         $persons = \App\Models\Contact::with('groups', 'address_primary', 'ambassador_events')->whereHas('groups', function ($query) use ($group_id) {
             $query->where('group_id', '=', $group_id)->whereStatus('Added');
         })->orderBy('sort_name')->get();
@@ -1758,9 +1747,9 @@ class PersonController extends Controller implements HasMiddleware
         }
     */
 
+    #[Authorize('update-contact')]
     public function save_relationship($field, $contact_id_a, $contact_id_b, $relationship_type)
     {
-        Gate::authorize('update-contact');
         Gate::authorize('update-relationship');
 
         if ($field > 0) {
@@ -1773,10 +1762,9 @@ class PersonController extends Controller implements HasMiddleware
         }
     }
 
+    #[Authorize('update-contact')]
     public function duplicates(): View
     {
-        Gate::authorize('update-contact');
-
         $duplicates = \App\Models\Contact::whereIn('id', function ($query) {
             $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(null)->havingRaw('count(*)>1');
         })->orderBy('sort_name')->paginate(25, ['*'], 'duplicates');
@@ -1785,9 +1773,9 @@ class PersonController extends Controller implements HasMiddleware
         return view('persons.duplicates', compact('duplicates'));
     }
 
+    #[Authorize('update-contact')]
     public function merge($contact_id, $merge_id = null)
     {
-        Gate::authorize('update-contact');
         Gate::authorize('update-relationship');
         Gate::authorize('update-attachment');
         Gate::authorize('update-touchpoint');

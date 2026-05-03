@@ -5,27 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSquarespaceInventoryRequest;
 use App\Http\Requests\UpdateSquarespaceInventoryRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class SquarespaceInventoryController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class SquarespaceInventoryController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-squarespace-inventory')]
     public function index(): View
     {
-        Gate::authorize('show-squarespace-inventory');
-
         $inventory_items = \App\Models\SquarespaceInventory::orderBy('name')->with('custom_form')->get();
 
         return view('admin.squarespace.inventory.index', compact('inventory_items'));
@@ -34,9 +27,9 @@ class SquarespaceInventoryController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-squarespace-inventory')]
     public function create(): View
     {
-        Gate::authorize('create-squarespace-inventory');
         $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->pluck('name', 'id');
 
         return view('admin.squarespace.inventory.create', compact(['custom_forms']));
@@ -45,10 +38,9 @@ class SquarespaceInventoryController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-squarespace-inventory')]
     public function store(StoreSquarespaceInventoryRequest $request): RedirectResponse
     {
-        Gate::authorize('create-squarespace-inventory');
-
         $inventory = new \App\Models\SquarespaceInventory;
         $inventory->name = $request->input('name');
         $inventory->custom_form_id = $request->input('custom_form_id');
@@ -63,10 +55,9 @@ class SquarespaceInventoryController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-squarespace-inventory')]
     public function show(int $id): View
     {
-        Gate::authorize('show-squarespace-inventory');
-
         $inventory = \App\Models\SquarespaceInventory::with('custom_form')->findOrFail($id);
 
         return view('admin.squarespace.inventory.show', compact('inventory'));
@@ -75,10 +66,9 @@ class SquarespaceInventoryController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-squarespace-inventory')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-squarespace-inventory');
-
         $inventory = \App\Models\SquarespaceInventory::findOrFail($id);
         $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->pluck('name', 'id');
 
@@ -88,10 +78,9 @@ class SquarespaceInventoryController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-squarespace-inventory')]
     public function update(UpdateSquarespaceInventoryRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-squarespace-inventory');
-
         $inventory = \App\Models\SquarespaceInventory::findOrFail($id);
 
         $inventory->name = $request->input('name');
@@ -107,9 +96,9 @@ class SquarespaceInventoryController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-squarespace-inventory')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-squarespace-inventory');
         $inventory = \App\Models\SquarespaceInventory::findOrFail($id);
 
         \App\Models\SquarespaceInventory::destroy($id);

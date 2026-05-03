@@ -7,35 +7,29 @@ use App\Models\Audit;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class AuditController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class AuditController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-audit')]
     public function index(): View
     {
-        Gate::authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
         $audits = \App\Models\Audit::with('user')->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'audits');
 
         return view('admin.audits.index', compact('audits', 'users'));
     }
 
+    #[Authorize('show-audit')]
     public function index_type($user_id = null): View
     {
-        Gate::authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
         $audits = \App\Models\Audit::with('user')->whereUserId($user_id)->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'audits');
 
@@ -45,10 +39,10 @@ class AuditController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-audit')]
     public function create(): RedirectResponse
     {
         // cannot manually create audits
-        Gate::authorize('create-audit');
         flash('Manually creating an audit record is not allowed')->warning();
 
         return Redirect::action([self::class, 'index']);
@@ -57,10 +51,10 @@ class AuditController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-audit')]
     public function store(Request $request): RedirectResponse
     {
         // cannot manually create audits
-        Gate::authorize('create-audit');
         flash('Manually storing an audit record is not allowed')->warning();
 
         return Redirect::action([self::class, 'index']);
@@ -69,10 +63,9 @@ class AuditController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-audit')]
     public function show(int $id): View
     {
-        Gate::authorize('show-audit');
-
         $audit = \App\Models\Audit::findOrFail($id);
         $old_values = collect($audit->old_values);
         $new_values = collect($audit->new_values);
@@ -83,10 +76,10 @@ class AuditController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-audit')]
     public function edit(int $id): RedirectResponse
     {
         // cannot manually edit audits
-        Gate::authorize('update-audit');
         flash('Manually editing an audit record is not allowed')->warning();
 
         return Redirect::action([self::class, 'index']);
@@ -95,10 +88,10 @@ class AuditController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-audit')]
     public function update(Request $request, int $id): RedirectResponse
     {
         // cannot manually edit audits
-        Gate::authorize('update-audit');
         flash('Manually updating an audit record is not allowed')->warning();
 
         return Redirect::action([self::class, 'index']);
@@ -107,19 +100,18 @@ class AuditController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-audit')]
     public function destroy(int $id): RedirectResponse
     {
         // cannot manually destroy audits
-        Gate::authorize('delete-audit');
         flash('Manually destroying an audit record is not allowed')->warning();
 
         return Redirect::action([self::class, 'index']);
     }
 
+    #[Authorize('show-audit')]
     public function search(): View
     {
-        Gate::authorize('show-audit');
-
         $users = User::whereProvider('google')->pluck('name', 'id');
         $users->prepend('N/A', '');
 
@@ -131,9 +123,9 @@ class AuditController extends Controller implements HasMiddleware
         return view('admin.audits.search', compact('users', 'models', 'actions'));
     }
 
+    #[Authorize('show-audit')]
     public function results(AuditSearchRequest $request): View
     {
-        Gate::authorize('show-audit');
         if (! empty($request)) {
             $audits = Audit::filtered($request)->orderByDesc('created_at')->paginate(25, ['*'], 'audits');
             $audits->appends($request->except('page'));

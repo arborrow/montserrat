@@ -3,22 +3,22 @@
 namespace App\Models;
 
 use App\Traits\PhoneTrait;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
+#[Table('phone')]
+#[Fillable('contact_id', 'location_type_id', 'is_primary', 'phone', 'phone_type')]
 class Phone extends Model implements Auditable
 {
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
     use PhoneTrait;
     use SoftDeletes;
-
-    protected $table = 'phone';
-
-    protected $fillable = ['contact_id', 'location_type_id', 'is_primary', 'phone', 'phone_type'];
 
     public function owner(): BelongsTo
     {

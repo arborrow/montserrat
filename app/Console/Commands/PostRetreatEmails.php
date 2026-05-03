@@ -5,25 +5,15 @@ namespace App\Console\Commands;
 use App\Mail\PostRetreat;
 use App\Models\Retreat;
 use Carbon\Carbon;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
+#[Signature('email:post-retreat')]
+#[Description('Send out post retreat emails.')]
 class PostRetreatEmails extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'email:post-retreat';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Send out post retreat emails.';
-
     /**
      * Create a new command instance.
      *

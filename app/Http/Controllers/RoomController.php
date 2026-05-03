@@ -7,28 +7,22 @@ use App\Http\Requests\UpdateRoomRequest;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class RoomController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class RoomController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('show-room')]
     public function index()
     {
-        Gate::authorize('show-room');
         // TODO: consider eager loading building name and sorting on room.location.name
         $rooms = \App\Models\Room::with('location')->get();
         $roomsort = $rooms->sortBy(function ($building) {
@@ -41,9 +35,9 @@ class RoomController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-room')]
     public function create(): View
     {
-        Gate::authorize('create-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
         $floors = $this->get_floors();
 
@@ -53,10 +47,9 @@ class RoomController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-room')]
     public function store(StoreRoomRequest $request): RedirectResponse
     {
-        Gate::authorize('create-room');
-
         $room = new \App\Models\Room;
         $room->location_id = $request->input('location_id');
         $room->name = $request->input('name');
@@ -77,9 +70,9 @@ class RoomController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-room')]
     public function show(int $id): View
     {
-        Gate::authorize('show-room');
         $room = \App\Models\Room::findOrFail($id);
         $building = \App\Models\Room::findOrFail($id)->location;
         $room->building = $building->name;
@@ -90,9 +83,9 @@ class RoomController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-room')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
         $floors = $this->get_floors();
         $room = \App\Models\Room::findOrFail($id);
@@ -103,10 +96,9 @@ class RoomController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-room')]
     public function update(UpdateRoomRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-room');
-
         $room = \App\Models\Room::findOrFail($request->input('id'));
         $room->location_id = $request->input('location_id');
         $room->name = $request->input('name');
@@ -127,9 +119,9 @@ class RoomController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-room')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-room');
         $room = \App\Models\Room::findOrFail($id);
 
         \App\Models\Room::destroy($id);
@@ -161,9 +153,9 @@ class RoomController extends Controller implements HasMiddleware
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('show-room')]
     public function schedule(int|string|null $ymd = null)
     {
-        Gate::authorize('show-room');
         if ((! isset($ymd)) or ($ymd == 0)) {
             $dt = Carbon::now();
         } else {

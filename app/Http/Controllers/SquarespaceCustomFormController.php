@@ -7,27 +7,20 @@ use App\Http\Requests\StoreSquarespaceCustomFormRequest;
 use App\Http\Requests\UpdateSquarespaceCustomFormFieldRequest;
 use App\Http\Requests\UpdateSquarespaceCustomFormRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class SquarespaceCustomFormController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class SquarespaceCustomFormController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-squarespace-custom-form')]
     public function index(): View
     {
-        Gate::authorize('show-squarespace-custom-form');
-
         $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->with('fields')->get();
 
         return view('admin.squarespace.custom_forms.index', compact('custom_forms'));
@@ -36,19 +29,18 @@ class SquarespaceCustomFormController extends Controller implements HasMiddlewar
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-squarespace-custom-form')]
     public function create(): View
     {
-        Gate::authorize('create-squarespace-custom-form');
-
         return view('admin.squarespace.custom_forms.create');
     }
 
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-squarespace-custom-form')]
     public function create_field($id): View
     {
-        Gate::authorize('create-squarespace-custom-form');
         $custom_form = \App\Models\SquarespaceCustomForm::findOrFail($id);
 
         return view('admin.squarespace.custom_forms.fields.create', compact(['custom_form']));
@@ -57,10 +49,9 @@ class SquarespaceCustomFormController extends Controller implements HasMiddlewar
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-squarespace-custom-form')]
     public function store(StoreSquarespaceCustomFormRequest $request): RedirectResponse
     {
-        Gate::authorize('create-squarespace-custom-form');
-
         $custom_form = new \App\Models\SquarespaceCustomForm;
         $custom_form->name = $request->input('name');
         $custom_form->save();
@@ -73,9 +64,9 @@ class SquarespaceCustomFormController extends Controller implements HasMiddlewar
     /**
      * Store a newly created custom form field in storage.
      */
+    #[Authorize('create-squarespace-custom-form')]
     public function store_field(StoreSquarespaceCustomFormFieldRequest $request): RedirectResponse
     {
-        Gate::authorize('create-squarespace-custom-form');
         $id = $request->input('id');
         $custom_form = \App\Models\SquarespaceCustomForm::findOrFail($id);
         $custom_form_field = new \App\Models\SquarespaceCustomFormField;
@@ -94,10 +85,9 @@ class SquarespaceCustomFormController extends Controller implements HasMiddlewar
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-squarespace-custom-form')]
     public function show(int $id): View
     {
-        Gate::authorize('show-squarespace-custom-form');
-
         $custom_form = \App\Models\SquarespaceCustomForm::with('fields')->findOrFail($id);
 
         return view('admin.squarespace.custom_forms.show', compact('custom_form'));
@@ -106,10 +96,9 @@ class SquarespaceCustomFormController extends Controller implements HasMiddlewar
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-squarespace-custom-form')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-squarespace-custom-form');
-
         $custom_form = \App\Models\SquarespaceCustomForm::with('fields')->findOrFail($id);
 
         return view('admin.squarespace.custom_forms.edit', compact('custom_form')); //
@@ -118,10 +107,9 @@ class SquarespaceCustomFormController extends Controller implements HasMiddlewar
     /**
      * Show the form for editing custom form field.
      */
+    #[Authorize('update-squarespace-custom-form')]
     public function edit_field(int $id): View
     {
-        Gate::authorize('update-squarespace-custom-form');
-
         $custom_form_field = \App\Models\SquarespaceCustomFormField::with('form')->findOrFail($id);
 
         return view('admin.squarespace.custom_forms.fields.edit', compact('custom_form_field')); //
@@ -130,10 +118,9 @@ class SquarespaceCustomFormController extends Controller implements HasMiddlewar
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-squarespace-custom-form')]
     public function update(UpdateSquarespaceCustomFormRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-squarespace-custom-form');
-
         $custom_form = \App\Models\SquarespaceCustomForm::findOrFail($id);
 
         $custom_form->name = $request->input('name');
@@ -149,10 +136,9 @@ class SquarespaceCustomFormController extends Controller implements HasMiddlewar
      *
      * @param  int  $id
      */
+    #[Authorize('update-squarespace-custom-form')]
     public function update_field(UpdateSquarespaceCustomFormFieldRequest $request): RedirectResponse
     {
-        Gate::authorize('update-squarespace-custom-form');
-
         $custom_form_field = \App\Models\SquarespaceCustomFormField::findOrFail($request->input('id'));
 
         $custom_form_field->name = $request->input('name');
@@ -169,9 +155,9 @@ class SquarespaceCustomFormController extends Controller implements HasMiddlewar
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-squarespace-custom-form')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-squarespace-custom-form');
         $custom_form = \App\Models\SquarespaceCustomForm::findOrFail($id);
 
         \App\Models\SquarespaceCustomForm::destroy($id);

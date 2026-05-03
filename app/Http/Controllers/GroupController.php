@@ -5,26 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class GroupController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class GroupController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-group')]
     public function index(): View
     {
-        Gate::authorize('show-group');
         $groups = \App\Models\Group::whereIsActive(1)->orderBy('name')->with('members')->get();
         foreach ($groups as $group) {
             $group->count = $group->members()->count();
@@ -36,20 +30,18 @@ class GroupController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-group')]
     public function create(): View
     {
-        Gate::authorize('create-group');
-
         return view('groups.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    #[Authorize('create-group')]
     public function store(StoreGroupRequest $request): RedirectResponse
     {
-        Gate::authorize('create-group');
-
         $group = new \App\Models\Group;
         $group->name = $request->input('name');
         $group->title = $request->input('title');
@@ -68,9 +60,9 @@ class GroupController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-group')]
     public function show(int $id): View
     {
-        Gate::authorize('show-group');
         $group = \App\Models\Group::findOrFail($id);
         $members = \App\Models\Contact::whereHas('groups', function ($query) use ($id) {
             $query->whereGroupId($id)->whereStatus('Added');
@@ -82,9 +74,9 @@ class GroupController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-group')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-group');
         $group = \App\Models\Group::findOrFail($id);
 
         return view('groups.edit', compact('group'));
@@ -93,10 +85,9 @@ class GroupController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-group')]
     public function update(UpdateGroupRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-group');
-
         $group = \App\Models\Group::findOrFail($id);
         $group->name = $request->input('name');
         $group->title = $request->input('title');
@@ -117,10 +108,9 @@ class GroupController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-group')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-group');
-
         $group = \App\Models\Group::findOrFail($id);
 
         \App\Models\Group::destroy($id);

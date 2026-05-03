@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
+#[Table('emergency_contact')]
+#[Fillable('contact_id', 'name', 'relationship', 'phone', 'phone_alternate')]
 class EmergencyContact extends Model implements Auditable
 {
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-
-    protected $table = 'emergency_contact';
-
-    protected $fillable = ['contact_id', 'name', 'relationship', 'phone', 'phone_alternate'];
 
     public function contact(): BelongsTo
     {

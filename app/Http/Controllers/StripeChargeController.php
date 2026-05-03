@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
 use Illuminate\View\View;
 
 class StripeChargeController extends Controller
@@ -11,10 +11,9 @@ class StripeChargeController extends Controller
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-stripe-charge')]
     public function index(): View
     {
-        Gate::authorize('show-stripe-charge');
-
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
 
         $charges = $stripe->charges->all([]);
@@ -47,10 +46,9 @@ class StripeChargeController extends Controller
      *
      * @param  int  $id
      */
+    #[Authorize('show-stripe-charge')]
     public function show($charge_id): View
     {
-        Gate::authorize('show-stripe-charge');
-
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
         $charge = $stripe->charges->retrieve($charge_id, []);
         // $invoice = $stripe->invoices->retrieve($charge->invoice,[]);
@@ -94,9 +92,9 @@ class StripeChargeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    #[Authorize('import-stripe-charge')]
     public function import(int $id)
     {
-        Gate::authorize('import-stripe-charge');
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
         $charges = $stripe->charges->all([]);
         foreach ($charges->autoPagingIterator() as $charge) {

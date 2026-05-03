@@ -15,28 +15,21 @@ use App\Models\Retreat;
 use App\Models\SquarespaceContribution;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class DonationController extends Controller implements HasMiddleware
+#[Middleware('auth')]
+class DonationController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      */
+    #[Authorize('show-donation')]
     public function index(): View
     {
-        Gate::authorize('show-donation');
-
         // rather than using the active donation_descriptions from DonationType model, let's continue to show all of the existing donation_descriptions in the Donations table so that any that are not in the DonationType table can be cleaned up
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
         // dd($donation_descriptions);
@@ -46,9 +39,9 @@ class DonationController extends Controller implements HasMiddleware
         return view('donations.index', compact('donations', 'donation_descriptions'));
     }
 
+    #[Authorize('show-donation')]
     public function index_type($donation_id = null): View
     {
-        Gate::authorize('show-donation');
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
         $donation = Donation::findOrFail($donation_id);
         $donation_description = $donation->donation_description;
@@ -61,10 +54,9 @@ class DonationController extends Controller implements HasMiddleware
         return view('donations.index', compact('donations', 'donation_descriptions', 'defaults'));   //
     }
 
+    #[Authorize('show-donation')]
     public function search(): View
     {
-        Gate::authorize('show-donation');
-
         $descriptions = DonationType::active()->orderby('name')->pluck('name', 'name');
         $descriptions->prepend('N/A', '');
 
@@ -74,9 +66,9 @@ class DonationController extends Controller implements HasMiddleware
         return view('donations.search', compact('retreats', 'descriptions'));
     }
 
+    #[Authorize('show-donation')]
     public function results(DonationSearchRequest $request): View
     {
-        Gate::authorize('show-donation');
         if (! empty($request)) {
             $all_donations = Donation::filtered($request)->orderBy('donation_date')->get();
             $donations = Donation::filtered($request)->orderBy('donation_date')->paginate(25, ['*'], 'donations');
@@ -89,9 +81,9 @@ class DonationController extends Controller implements HasMiddleware
         return view('donations.results', compact('donations', 'all_donations'));
     }
 
+    #[Authorize('show-donation')]
     public function overpaid(): View
     {
-        Gate::authorize('show-donation');
         $overpaid = DB::table('Donations_payment as p')
             ->select(DB::raw('d.contact_id, c.sort_name, d.donation_id, d.donation_date, ROUND(SUM(p.payment_amount),2) as paid, ROUND(d.donation_amount,2) as pledged'))
             ->leftjoin('Donations as d', 'd.donation_id', '=', 'p.donation_id')
@@ -105,9 +97,9 @@ class DonationController extends Controller implements HasMiddleware
     }
 
     // TODO: add docs code here and create unit tests
+    #[Authorize('show-donation')]
     public function mergeable(): View
     {   // contact id 5847 hardcoded for anonymous user
-        Gate::authorize('show-donation');
         $mergeable = DB::table('Donations as d')
             ->select(DB::raw('CONCAT(d.contact_id,"-",d.event_id,"-",d.donation_description) as unique_value, COUNT(*) as donation_count, MAX(d.donation_date) as donation_date, MIN(d.donation_id) as min_donation_id, MAX(d.donation_id) as max_donation_id, MIN(c.sort_name) as sort_name, MIN(e.idnumber) as idnumber, MIN(e.title) as event_title, MIN(d.donation_description) as donation_description, MIN(d.contact_id) as contact_id'))
             ->leftjoin('event as e', 'd.event_id', '=', 'e.id')
@@ -121,9 +113,9 @@ class DonationController extends Controller implements HasMiddleware
     }
 
     // TODO: add docs code here and create unit tests
+    #[Authorize('update-donation')]
     public function merge($first_donation_id = 0, $second_donation_id = 0): RedirectResponse
     {
-        Gate::authorize('update-donation');
         $first_donation = Donation::findOrFail($first_donation_id); // target or destination donation
         $second_donation = Donation::findOrFail($second_donation_id); // source or donation being merged
         $second_donation_payments = Payment::whereDonationId($second_donation_id)->get();
@@ -178,10 +170,9 @@ class DonationController extends Controller implements HasMiddleware
         return Redirect::action([self::class, 'mergeable']);
     }
 
+    #[Authorize('show-donation')]
     public function agc($year, DonationAgcRequest $request): View
     {
-        Gate::authorize('show-donation');
-
         if (! isset($year)) {
             $year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         }
@@ -223,10 +214,9 @@ class DonationController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
+    #[Authorize('create-donation')]
     public function create($id = null, $event_id = null, $type = null): View
     {
-        Gate::authorize('create-donation');
-
         $subcontact_type_id = (isset($type)) ? config('polanco.contact_type.'.$type) : null;
 
         if ($id > 0) {
@@ -268,10 +258,9 @@ class DonationController extends Controller implements HasMiddleware
      * create and save new donation record
      * redirect to donation.index
      */
+    #[Authorize('create-donation')]
     public function store(StoreDonationRequest $request): RedirectResponse
     {
-        Gate::authorize('create-donation');
-
         $donation = new Donation;
         $donation->contact_id = $request->input('donor_id');
         if ($request->input('event_id') > 0) {
@@ -309,9 +298,9 @@ class DonationController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
+    #[Authorize('show-donation')]
     public function show(int $id): View
     {
-        Gate::authorize('show-donation');
         $donation = Donation::with('payments', 'contact')->findOrFail($id);
 
         return view('donations.show', compact('donation')); //
@@ -320,9 +309,9 @@ class DonationController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    #[Authorize('update-donation')]
     public function edit(int $id): View
     {
-        Gate::authorize('update-donation');
         // get this retreat's information
         $donation = Donation::with('payments', 'contact')->findOrFail($id);
         $descriptions = DonationType::active()->orderby('name')->pluck('name', 'name');
@@ -352,10 +341,9 @@ class DonationController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
+    #[Authorize('update-donation')]
     public function update(UpdateDonationRequest $request, int $id): RedirectResponse
     {
-        Gate::authorize('update-donation');
-
         $donation = Donation::findOrFail($id);
         $donation->contact_id = $request->input('donor_id');
         if ($request->input('event_id') > 0) {
@@ -386,9 +374,9 @@ class DonationController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    #[Authorize('delete-donation')]
     public function destroy(int $id): RedirectResponse
     {
-        Gate::authorize('delete-donation');
         $donation = Donation::findOrFail($id);
         $contact = Contact::findOrFail($donation->contact_id);
         // deletion of payments implied on the model
@@ -413,9 +401,9 @@ class DonationController extends Controller implements HasMiddleware
      *                                             this method will only be used for retreat offerings - other types of donations should be handled elsewhere
      *                                             primary use is for creating retreat offering donations but will have ability to edit existing retreat offerings
      */
+    #[Authorize('update-donation')]
     public function retreat_payments_update(Request $request): RedirectResponse
     {   // I removed the permission check for update-payment as it seemed redundant to update-donation and it makes testing a little easier
-        Gate::authorize('update-donation');
         if ($request->input('event_id')) {
             $event_id = $request->input('event_id');
         }
@@ -475,9 +463,9 @@ class DonationController extends Controller implements HasMiddleware
     }
 
     // TODO:: add unit test for this method
+    #[Authorize('update-donation')]
     public function process_deposits($event_id): RedirectResponse
     {
-        Gate::authorize('update-donation');
         $event = Retreat::findOrFail($event_id);
         $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription('Retreat Deposits')->get();
         foreach ($event_deposits as $event_deposit) {
@@ -496,9 +484,9 @@ class DonationController extends Controller implements HasMiddleware
     }
 
     // TODO:: add unit test for this method; creating method as proof of concept - need to come back and test
+    #[Authorize('update-donation')]
     public function unprocess_deposits($event_id): RedirectResponse
     {
-        Gate::authorize('update-donation');
         $event = Retreat::findOrFail($event_id);
         $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription('Retreat Funding')->get();
         foreach ($event_deposits as $event_deposit) {
