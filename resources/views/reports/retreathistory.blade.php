@@ -7,25 +7,27 @@
      
 <hr />
  <table width="100%">
-        <th class="row-1 row-name">Full name</th>
-        <th class="row-2 row-address">Address</th>
-        <th class="row-3 row-city">City, State, Zip</th>
-        <th class="row-4 row-phone">Cell phone</th>
-        <th class="row-5 row-phone">Home phone</th>
-        <th class="row-6 row-phone">Parish</th>
-        <th class="row-7 row-notes">Notes</th>
+        <th class="row-1 row-name">ContactID</th>
+        <th class="row-2 row-address">Lastname</th>
+        <th class="row-3 row-city">Firstname</th>
+        <th class="row-4 row-phone">Fullname</th>
+        <th class="row-5 row-phone">Displayname</th>
+        <th class="row-6 row-phone">PrimaryEmail</th>
+        <th class="row-7 row-notes">PrimaryPhone</th>
+        <th class="row-8 row-notes">PrimaryAddress</th>
     
                 
     @foreach($all_retreatants as $registration)
     
     <tr>
+        <td>{{$registration->contact_id}}</td>
+        <td>{{$registration->retreatant->last_name}}</td>
+        <td>{{$registration->retreatant->first_name}}</td>
+        <td>{{$registration->retreatant->full_name}}</td>
         <td>{{$registration->retreatant->display_name}}</td>
-        <td>{{$registration->retreatant->address_primary_street}}</td>
-        <td>{{$registration->retreatant->address_primary_city}}, {{$registration->retreatant->address_primary_state}}  {{$registration->retreatant->address_primary_postal_code}}</td>
-        <td>{{$registration->retreatant->phone_home_mobile_number}}</td>
-        <td>{{$registration->retreatant->phone_home_phone_number}}</td>
-        <td>{{$registration->retreatant->parish_name}}</td> 
-        <td>{{$registration->retreatant->note_regsitration_text}}</td>
+        <td>{{$registration->retreatant->email_primary_text}}</td>
+        <td>{{$registration->retreatant->primary_phone_number}}</td>
+        <td>{{$registration->retreatant->address_primary_google_map}}</td>
         
     </tr>    
     @endforeach
