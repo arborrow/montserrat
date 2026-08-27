@@ -336,13 +336,18 @@ class PageController extends Controller implements HasMiddleware
         // Create the countdown array
         $yearList = range($startYear, $endYear);
 
-        foreach ($yearList as $year) {
+	foreach ($yearList as $current_year) 
+	{
+
+	    $current_idnumber = $current_year.$retreat_number;	
+	    $current_retreat = \App\Models\Retreat::whereIdnumber($current_year.$retreat_number)->first();
+	
             $retreatants = \App\Models\Registration::whereCanceledAt(null)
-                ->whereEventId($year.$retreat_number)
+                ->whereEventId($current_retreat->id)
                 ->whereRoleId(config('polanco.participant_role_id.retreatant'))
-                ->whereStatusId(config('polanco.registration_status_id.registered'))
                 ->with('retreat', 'retreatant')
-                ->get();
+		->get();
+	    // dd($retreatants, $current_idnumber, $current_retreat);
             $all_retreatants= $retreatants->merge($all_retreatants ?? collect());
         }
 
