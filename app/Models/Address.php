@@ -85,4 +85,16 @@ class Address extends Model implements Auditable
 
         return $gmap;
     }
+    
+    public function getAddressTextAttribute()
+    {
+        // dd($this);
+        if (isset($this->state->abbreviation)) {
+            $text = $this->street_address.' '.$this->supplemental_address_1.' '.$this->city.' '.$this->state->abbreviation.' '.$this->postal_code;
+        } else {
+            $text = $this->street_address.' '.$this->supplemental_address_1.' '.$this->city.' '.$this->postal_code;
+        }
+
+        return $text;
+    }
 }
