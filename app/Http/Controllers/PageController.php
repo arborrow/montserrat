@@ -321,6 +321,38 @@ class PageController extends Controller implements HasMiddleware
         return view('reports.retreatlisting', compact('registrations'));   //
     }
 
+    public function retreathistoryreport($idnumber, $years = 3): View
+    {
+        Gate::authorize('show-contact');
+
+        $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
+        $year = substr($idnumber, 0, 4);
+        $retreat_number = substr($idnumber, 4);
+        
+ 
+        $startYear = $year - 1;
+        $endYear = $year - $years;
+
+        // Create the countdown array
+        $yearList = range($startYear, $endYear);
+
+        foreach ($yearList as $year) {
+            $retreatants = \App\Models\Registration::whereCanceledAt(null)
+                ->whereEventId($year.$retreat_number)
+                ->whereRoleId(config('polanco.participant_role_id.retreatant'))
+                ->whereStatusId(config('polanco.registration_status_id.registered'))
+                ->with('retreat', 'retreatant')
+                ->get();
+            $all_retreatants= $retreatants->merge($all_retreatants ?? collect());
+        }
+
+        
+        
+            $all_retreatants = $all_retreatants->sortBy('retreatant.sort_name');
+
+        return view('reports.retreathistory', compact('all_retreatants'));   //
+    }
+
     public function retreatrosterreport($idnumber): View
     {
         Gate::authorize('show-contact');

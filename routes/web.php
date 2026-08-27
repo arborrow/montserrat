@@ -288,6 +288,7 @@ Route::middleware('web', 'activity')->group(function () {
     Route::prefix('report')->group(function () {
         Route::get('retreatantinfo/{retreat_id}', [PageController::class, 'retreatantinforeport']);
         Route::get('retreatlisting/{retreat_id}', [PageController::class, 'retreatlistingreport']);
+        Route::get('retreathistory/{retreat_id}/{years?}', [PageController::class, 'retreathistoryreport']);
         Route::get('retreatregistrations/{retreat_id}', [PageController::class, 'retreatregistrations']);
         Route::get('retreatroster/{retreat_id}', [PageController::class, 'retreatrosterreport']);
         Route::get('retreatrosterphone/{retreat_id}', [PageController::class, 'retreatrosterphonereport']);
