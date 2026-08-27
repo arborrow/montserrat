@@ -94,23 +94,56 @@ class StripePayoutController extends Controller implements HasMiddleware
         $stripe_payout = $stripe->payouts->retrieve($payout_id, []);
         $stripe_balance_transactions = $stripe->balanceTransactions->all(
             ['payout' => $payout_id,
-                'type' => 'charge',
                 'limit' => 100,
             ]
-        );
+	);
+
+	$transactions = $stripe->balanceTransactions->all(
+	    ['payout' => $payout_id,
+	    'type' => 'charge',
+	    'limit' => 100,
+	    ]
+	);
+
+
+	$sbt_payments = $stripe->balanceTransactions->all(
+	    ['payout' => $payout_id,
+	    'type' => 'payment',
+	    'limit' => 100,
+	    ]
+	);
+
         $refunds = $stripe->balanceTransactions->all(
             ['payout' => $payout_id,
                 'type' => 'refund',
                 'limit' => 100,
             ]
-        );
+	);
 
-        $fees = 0;
-        foreach ($stripe_balance_transactions as $transaction) {
-            $fees += ($transaction->fee / 100);
-        }
+	$stripe_fees = $stripe->balanceTransactions->all(
+		['payout' => $payout_id,
+		'type' => 'stripe_fee',
+		'limit' => 100,
+		]
+	);
+
+        $transaction_fees_amount = 0;
+         foreach ($transactions as $transaction) {
+            $transaction_fees_amount += ($transaction->fee / 100);
+	}
+
+	foreach ($sbt_payments as $sbt_payment) {
+            $transaction_fees_amount += ($sbt_payment->fee / 100);
+	}
+
+	$stripe_fees_amount = 0;
+	foreach ($stripe_fees as $stripe_fee) {
+	    $stripe_fees_amount += ($stripe_fee->amount / 100);
+	}
+
         $payout = StripePayout::wherePayoutId($payout_id)->first();
-        $payout->total_fee_amount = $fees;
+	$payout->total_fee_amount = $transaction_fees_amount;
+	$payout->stripe_fee_amount = abs($stripe_fees_amount);
         $payout->save();
 
         $balance_transactions = StripeBalanceTransaction::wherePayoutId($payout_id)->get();
@@ -122,7 +155,7 @@ class StripePayoutController extends Controller implements HasMiddleware
             flash('Consider processing the <a href="'.url('/squarespace/contribution').'">'.$unprocessed_squarespace_contributions.' unprocessed Squarespace Contributions</a> before processing the Stripe Balance Transactions.')->warning()->important();
         }
 
-        return view('stripe.payouts.show', compact('payout', 'balance_transactions', 'stripe_balance_transactions', 'stripe_payout', 'refunds'));   //
+        return view('stripe.payouts.show', compact('payout', 'balance_transactions', 'stripe_balance_transactions', 'stripe_payout', 'transactions', 'refunds', 'stripe_fees','transaction_fees_amount','stripe_fees_amount'));   //
     }
 
     /**
@@ -145,8 +178,8 @@ class StripePayoutController extends Controller implements HasMiddleware
         $payout = $stripe->payouts->retrieve($stripe_payout->payout_id, []);
 
         $transactions = $stripe->balanceTransactions->all(
-            ['payout' => $stripe_payout->payout_id,
-                'type' => 'charge',
+		['payout' => $stripe_payout->payout_id,
+		'type' => 'charge',
                 'limit' => 100,
             ]
         );
@@ -183,11 +216,12 @@ class StripePayoutController extends Controller implements HasMiddleware
 
         $stripe_vendor_id = config('polanco.contact.stripe');
         $payout = StripePayout::findOrFail($id);
-        $donation = new \App\Models\Donation;
+	
+	$donation = new \App\Models\Donation;
         $donation->donation_date = $payout->date;
         $donation->donation_description = 'Bank & Credit Card Fees';
         $donation->donation_amount = -$payout->total_fee_amount;
-        $donation->contact_id = $stripe_vendor_id;
+	$donation->contact_id = $stripe_vendor_id;
         $donation->save();
 
         $payment = new \App\Models\Payment;
@@ -195,11 +229,31 @@ class StripePayoutController extends Controller implements HasMiddleware
         $payment->payment_amount = $donation->donation_amount;
         $payment->payment_date = $donation->donation_date;
         $payment->payment_description = 'Credit card';
+	$payment->note = 'Stripe Balance Transactions Fees';
         $payment->save();
 
         $payout->fee_payment_id = $payment->payment_id;
-        $payout->save();
+	
+	if ($payout->stripe_fee_amount > 0) {
+	$donation = new \App\Models\Donation;
+        $donation->donation_date = $payout->date;
+        $donation->donation_description = 'Bank & Credit Card Fees';
+        $donation->donation_amount = -$payout->stripe_fee_amount;
+	$donation->contact_id = $stripe_vendor_id;
+        $donation->save();
 
+        $payment = new \App\Models\Payment;
+        $payment->donation_id = $donation->donation_id;
+        $payment->payment_amount = $donation->donation_amount;
+        $payment->payment_date = $donation->donation_date;
+        $payment->payment_description = 'Credit card';
+	$payment->note = 'Stripe Fees';
+        $payment->save();
+
+	
+	$payout->stripe_fee_payment_id = $payment->payment_id;
+        $payout->save();
+    }
         return Redirect::action([self::class, 'index']);
     }
 
@@ -252,12 +306,17 @@ class StripePayoutController extends Controller implements HasMiddleware
                     'limit' => 100,
                 ]
             );
-
+	    $stripe_fee_amount=0;
             foreach ($transactions->autoPagingIterator() as $transaction) {
-                $fees += ($transaction->fee / 100);
-            }
+		$fees += ($transaction->fee / 100);
+		if ($transaction->type == 'stripe_fee') {
+		    $stripe_fee_amount += abs($transaction->amount);
+		}
+	    }
+			    
 
-            $stripe_payout->total_fee_amount = $fees;
+	    $stripe_payout->total_fee_amount = $fees;
+	    $stripe_payout->stripe_fee_amount = $stripe_fee_amount;
             $stripe_payout->save();
         }
 

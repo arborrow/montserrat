@@ -98,7 +98,7 @@ class GetMailgunMessages extends Command
         $queryString = ['event' => 'stored'];
         $events = $mg->events()->get("$domain", $queryString);
         $event_items = $events->getItems();
-        /*
+        
         if (isset($event_items)) {
             foreach ($event_items as $event_item) {
                 $event_date = $event_item->getEventDate();
@@ -159,7 +159,7 @@ class GetMailgunMessages extends Command
                 }
             }
         }
-        */
+        
         $messages = Message::whereIsProcessed(0)->get();
         
         // dd($messages);
@@ -338,8 +338,8 @@ class GetMailgunMessages extends Command
                     $order->retreat_sku = "SQ5937036";
                     $order->retreat_description="Prayer and Discernment Workshop";
                     $order->retreat_dates="March 22, 2026 - November 8, 2026";
-                    // $order->event_id = 6334; //prod
-                    $order->event_id = 520; // dev
+                    $order->event_id = 6334; //prod
+                    // $order->event_id = 520; // dev
                                        
                     $order->retreat_start_date = Carbon::parse("2026-03-22");
                     $order->retreat_idnumber = "20260322-W";

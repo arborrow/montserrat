@@ -164,14 +164,16 @@ class PageController extends Controller implements HasMiddleware
         }
 
         $report_date = Carbon::parse($day);
-        if (empty($report_date)) {
+	if (empty($report_date)) {
             return redirect()->back();
-        }
+	}
+	$payout = \App\Models\StripePayout::whereDate('date',$report_date)->first();
+	$payout_amount = $payout->credit_card_total;
         $payments = \App\Models\Payment::wherePaymentDate($report_date)->where('payment_description', '=', 'Credit Card')->with('donation')->get();
         $grand_total = $payments->sum('payment_amount');
         $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
 
-        return view('reports.finance.cc_deposit', compact('report_date', 'grouped_payments', 'grand_total'));   //
+        return view('reports.finance.cc_deposit', compact('report_date', 'grouped_payments', 'grand_total', 'payout'));   //
     }
 
     // TODO: why allow an empty donation id?

@@ -34,7 +34,15 @@
 <strong>Total of {{$payments->count()}} {{$donation_description}} payments totaling: ${{number_format($payments->sum('payment_amount'),2)}} </strong>
     <hr />
    @endforeach
-   <strong>Grand total of all payments: ${{number_format($grand_total,2)}} <br />
+   <strong>Grand total of all payments: ${{number_format($grand_total,2)}}
+
+@if ($grand_total == $payout->amount)
+(Reconciled)
+@else
+(Unreconciled: ${{number_format($payout->amount,2)}}); Diff: ${{number_format($payout->amount - $grand_total, 2)}}
+@endIf
+
+ <br />
    @endIf    
 <br />
 

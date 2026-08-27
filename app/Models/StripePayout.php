@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Models\Payment;
 
 class StripePayout extends Model implements Auditable
 {
@@ -26,6 +27,7 @@ class StripePayout extends Model implements Auditable
             'reconcile_date' => 'datetime',
         ];
     }
+    protected $appends = ['credit_card_total'];
 
     public function transactions(): HasMany
     {
@@ -37,5 +39,10 @@ class StripePayout extends Model implements Auditable
         $transactions = $this->transactions->whereNull('reconcile_date');
 
         return $transactions->count();
+    }
+
+    public function getCreditCardTotalAttribute()
+    {
+	return Payment::where('payment_description', 'Credit card')->whereDate('payment_date', $this->date)->sum('payment_amount');
     }
 }

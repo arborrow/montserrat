@@ -15,9 +15,10 @@
                     <thead>
                         <tr>
                             <th>Date (# Unreconciled)</th>
-                            <th class='text-right'>Amount</th>
-                            <th class='text-right'>Fees</th>
-                            <th class='text-right'>Total</th>
+                            <th class='text-right'>Payout Amount (CC Total)</th>
+			    <th class='text-right'>Transaction Fees</th>
+			    <th class='text-right'>Stripe Fees</th>
+                            <th class='text-right'>Gross Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,22 +32,44 @@
                             @else
                                 <tr class='table-warning'>
                             @endIf
-                        @endIf
+			@endIf
+
                             <td>
                                 <a href="{{ URL('stripe/payout/' . $payout->payout_id) }} ">{{ $payout->date->format('M d, Y') }}</a> 
                                 @if ($payout->unreconciled_count > 0)
                                     ({{$payout->unreconciled_count}})
-                                @endIf
-                            </td>
-                            <td class='text-right'>${{ number_format($payout->amount,2) }}</td>
+		 	        @endIf
+				    
+				@if ($payout->amount != $payout->credit_card_total)
+				    <div class="table-danger">Unreconciled</div> 
+				@endIf 
+			    </td>
+
+			    <td class="text-right">
+				<a href = "{{ URL('report/finance/cc_deposit/'.$payout->date->format('Ymd'))}}">
+					${{ number_format($payout->amount,2) }} 
+{{ $payout->amount != $payout->credit_card_total ? '($'.number_format($payout->credit_card_total,2).')' : '' }} 
+
+				</a>
+			    </td>
                             <td class='text-right'>
                                 @if (isset($payout->fee_payment_id))
                                     <a href = "{{ URL('/payment/'.$payout->fee_payment_id)}}">${{ number_format($payout->total_fee_amount,2) }} </a>
                                 @else
-                                    {{ html()->a(url(action([\App\Http\Controllers\StripePayoutController::class, 'process_fees'], $payout->id)), 'Create Stripe Fee Payment for $' . number_format($payout->total_fee_amount, 2))->class('btn btn-warning') }}
+				    {{ html()->a(url(action([\App\Http\Controllers\StripePayoutController::class, 'process_fees'], $payout->id)), 'Create Payments for Fee(s) for
+$' . number_format($payout->total_fee_amount, 2) .' / '. number_format($payout->stripe_fee_amount, 2))
+->class('btn btn-warning') }}
                                 @endIf
                             </td>
-                            <td class='text-right'>${{ number_format($payout->amount + $payout->total_fee_amount,2) }}</td>
+			    
+			    <td class='text-right'>
+			    @if (isset($payout->stripe_fee_payment_id))
+				<a href = "{{ URL('payment/'.$payout->stripe_fee_payment_id)}}">${{ number_format($payout->stripe_fee_amount,2) }} </a>
+			    @else
+				${{number_format($payout->stripe_fee_amount,2)}}
+			    @endIf
+			    </td>
+                            <td class='text-right'>${{ number_format($payout->amount + $payout->total_fee_amount + $payout->stripe_fee_amount,2) }}</td>
                         </tr>
                         @endforeach
 
