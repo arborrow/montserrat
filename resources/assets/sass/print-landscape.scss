@@ -81,6 +81,11 @@ td.box {
     font-size: 9pt;
 }
 
+.retreathistory {
+    page: rotated;
+    font-size: 9pt;
+}
+
 td {
     width: auto;
 }
@@ -102,6 +107,14 @@ table {
 
 .row-name {
     width: 15%
+}
+
+.row-contactid {
+    width: 5%
+}
+
+.row-shortname {
+    width: 10%
 }
 
 .row-address {

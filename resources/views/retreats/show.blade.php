@@ -29,8 +29,10 @@
                 <option value="{{url('report/retreatregistrations/'.$retreat->idnumber)}}">Registrations</option>
                 @can('show-donation')
                     <option value="{{url('report/finance/retreatdonations/'.$retreat->idnumber)}}">Donations</option>
-                @endCan
-
+		@endCan
+		@if ($retreat->retreat_type == 'Ignatian')
+                	<option value="{{url('report/retreathistory/'.$retreat->idnumber)}}">Registration History</option>
+		@endIf
             </select>
         @endCan
     </div>

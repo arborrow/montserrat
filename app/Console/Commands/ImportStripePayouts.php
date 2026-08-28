@@ -77,7 +77,7 @@ class ImportStripePayouts extends Command
 	    }
 
 	    foreach ($sbt_payments->autoPagingIterator() as $sbt_payment) {
-                $fees += ($payment->fee / 100);
+                $fees += ($sbt_payment->fee / 100);
 	    }
 
  	    $stripe_fee_amount = 0; //initialize
