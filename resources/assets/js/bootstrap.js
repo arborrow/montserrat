@@ -1,5 +1,6 @@
 
-window._ = require('lodash');
+import _ from 'lodash';
+window._ = _;
 window.Popper = require('popper.js').default;
 
 /**
