@@ -44,7 +44,7 @@ class ImportStripePayouts extends Command
         $stripe = new StripeClient(config('services.stripe.secret'));
 	
 	// $payouts = $stripe->payouts->all(['arrival_date' => ['gte' => $specific_date->timestamp - 24 * 60 * 60]]);
-	$payouts = $stripe->payouts->all(['arrival_date' => ['gte' => $latest_payout->date->timestamp - 24 * 60 * 60]]);
+		$payouts = $stripe->payouts->all(['arrival_date' => ['gte' => $latest_payout->date->timestamp - 24 * 60 * 60]]);
         foreach ($payouts->autoPagingIterator() as $payout) {
             $stripe_payout = StripePayout::firstOrNew([
                 'payout_id' => $payout->id,
@@ -74,25 +74,25 @@ class ImportStripePayouts extends Command
 
             foreach ($transactions->autoPagingIterator() as $transaction) {
                 $fees += ($transaction->fee / 100);
-	    }
+	        }
 
-	    foreach ($sbt_payments->autoPagingIterator() as $sbt_payment) {
-                $fees += ($sbt_payment->fee / 100);
-	    }
+            foreach ($sbt_payments->autoPagingIterator() as $sbt_payment) {
+                    $fees += ($sbt_payment->fee / 100);
+            }
 
- 	    $stripe_fee_amount = 0; //initialize
-	    $stripe_fees = $stripe->balanceTransactions->all(
-	        ['payout' => $stripe_payout->payout_id,
-	    	 'type' => 'stripe_fee',
-	     	 'limit' => 100,
-		]
-	    );
+            $stripe_fee_amount = 0; //initialize
+            $stripe_fees = $stripe->balanceTransactions->all(
+                ['payout' => $stripe_payout->payout_id,
+                'type' => 'stripe_fee',
+                'limit' => 100,
+            ]
+            );
 
-	    foreach ($stripe_fees as $stripe_fee) {
-	    	$stripe_fee_amount += (abs($stripe_fee->amount) / 100);
-	    }
-	    $stripe_payout->total_fee_amount = $fees;
-	    $stripe_payout->stripe_fee_amount = $stripe_fee_amount;
+            foreach ($stripe_fees as $stripe_fee) {
+                $stripe_fee_amount += (abs($stripe_fee->amount) / 100);
+            }
+            $stripe_payout->total_fee_amount = $fees;
+            $stripe_payout->stripe_fee_amount = $stripe_fee_amount;
             $stripe_payout->save();
 
             $stripe_balance_transactions = $stripe->balanceTransactions->all(
@@ -101,78 +101,84 @@ class ImportStripePayouts extends Command
                 ]
             );
 
-            // TODO: figure out how best to import and process stripe refunds
-            $stripe_refunds = $stripe->balanceTransactions->all(
-                ['payout' => $stripe_payout->payout_id,
-                    'type' => 'refund',
-                    'limit' => 100,
-                ]
-            );
-
             foreach ($stripe_balance_transactions->autoPagingIterator() as $stripe_balance_transaction) {
-		    // dd($balance_transaction->balance_transaction_id);
-		if ($stripe_balance_transaction->type == 'charge' || $stripe_balance_transaction->type == 'payment') 
-		{ 
-                	$balance_transaction = StripeBalanceTransaction::firstOrNew([
-                    	    'balance_transaction_id' => $stripe_balance_transaction->id,
-                	]);
+                // dd($balance_transaction->balance_transaction_id);
+                if ($stripe_balance_transaction->type == 'charge' || $stripe_balance_transaction->type == 'payment' || $stripe_balance_transaction->type == 'refund') 
+                    { 
+                        $balance_transaction = StripeBalanceTransaction::firstOrNew([
+                                'balance_transaction_id' => $stripe_balance_transaction->id,
+                        ]);
 
-                	$stripe_charge = $stripe->charges->retrieve($stripe_balance_transaction->source, []);
+                        if ($stripe_balance_transaction->type == 'refund') {
+                            // dd($stripe_balance_transaction);
+                            $stripe_refund = $stripe->refunds->retrieve($stripe_balance_transaction->source, []);
+                            $stripe_charge = $stripe->charges->retrieve($stripe_refund->charge, []);
+                            // dd($stripe_refund,$stripe_charge);
+                        } else {
+                            $stripe_charge = $stripe->charges->retrieve($stripe_balance_transaction->source, []);
+                        }            
 
-                	$stripe_customer = ! is_null($stripe_charge->customer) ? $stripe->customers->retrieve($stripe_charge->customer) : null;
-                	$receipt_email = $stripe_charge->receipt_email;
-                	$customer_email = (isset($stripe_customer)) ? $stripe_customer->email : null;
-                	$description = $stripe_balance_transaction->description;
-                	$description_email = null;
-                	if ((strpos($description, 'Charge for ')) === 0 || (strpos($description, 'Donation by ')) === 0) {
-                    	    $description_pieces = explode(' ', $description);
-                     	    $description_email = array_pop($description_pieces);
-                	}
+                        $stripe_customer = ! is_null($stripe_charge->customer) ? $stripe->customers->retrieve($stripe_charge->customer) : null;
+                        $receipt_email = $stripe_charge->receipt_email;
+                        $customer_email = (isset($stripe_customer)) ? $stripe_customer->email : null;
+                        $description = $stripe_balance_transaction->description;
+                        $description_email = null;
+                        if ((strpos($description, 'Charge for ')) === 0 || (strpos($description, 'Donation by ')) === 0) {
+                                $description_pieces = explode(' ', $description);
+                                $description_email = array_pop($description_pieces);
+                        }
 
-                	$balance_transaction->payout_id = $stripe_payout->payout_id;
-                	$balance_transaction->customer_id = $stripe_customer?->id;
-                	$balance_transaction->charge_id = $stripe_balance_transaction->source;
-                	$balance_transaction->payout_date = $stripe_payout->arrival_date;
-                	$balance_transaction->description = $stripe_balance_transaction->description;
-                	$balance_transaction->name = $stripe_charge->billing_details->name;
+                        $balance_transaction->payout_id = $stripe_payout->payout_id;
+                        $balance_transaction->customer_id = $stripe_customer?->id;
+                        $balance_transaction->charge_id = $stripe_balance_transaction->source;
+                        $balance_transaction->payout_date = $stripe_payout->arrival_date;
+                        $balance_transaction->description = $stripe_balance_transaction->description;
+                        $balance_transaction->name = $stripe_charge->billing_details->name;
 
-                	if (! isset($balance_transaction->name)) {
-                    		if (isset($stripe_customer->name)) {
-                        		$balance_transaction->name = $stripe_customer->name;
-                    		} else {
-                        		// unable to find a name but do not throw error; instead catch with database health check for anonymous stripe balance transactions
-                    		}
-                	}
+                        if (! isset($balance_transaction->name)) {
+                                if (isset($stripe_customer->name)) {
+                                    $balance_transaction->name = $stripe_customer->name;
+                                } else {
+                                    // unable to find a name but do not throw error; instead catch with database health check for anonymous stripe balance transactions
+                                }
+                        }
 
-                	$balance_transaction->email = (isset($description_email)) ? $description_email : $receipt_email;
-                	$balance_transaction->zip = $stripe_charge->billing_details->address->postal_code;
-                	$balance_transaction->cc_last_4 = ($stripe_balance_transaction->type == 'charge') ? $stripe_charge->payment_method_details->card->last4 : 'Payment';
-                	$balance_transaction->total_amount = $stripe_balance_transaction->amount / 100;
-                	$balance_transaction->fee_amount = $stripe_balance_transaction->fee / 100;
-                	$balance_transaction->net_amount = $stripe_balance_transaction->net / 100;
-                	$balance_transaction->available_date = Carbon::parse($stripe_balance_transaction->available_on);
-                	$balance_transaction->created_at = Carbon::parse($stripe_balance_transaction->created);
-                	$balance_transaction->type = $stripe_balance_transaction->type;
-                	$balance_transaction->note = null;
-                	$balance_transaction->phone = null;
+                        $balance_transaction->email = (isset($description_email)) ? $description_email : $receipt_email;
+                        $balance_transaction->zip = $stripe_charge->billing_details->address->postal_code;
+                        $balance_transaction->cc_last_4 = ($stripe_balance_transaction->type == 'charge') ? $stripe_charge->payment_method_details->card->last4 : 'Payment';
+                        // a bit hacky - probably should just use a switch statement to set the cc_last_4 value based on the type of balance transaction, but this works for now
+                        if ($balance_transaction->cc_last_4 = ($stripe_balance_transaction->type == 'refund')) {
+                            $balance_transaction->cc_last_4 = 'Refund';
+                        } 
+                        $balance_transaction->total_amount = $stripe_balance_transaction->amount / 100;
+                        $balance_transaction->fee_amount = $stripe_balance_transaction->fee / 100;
+                        $balance_transaction->net_amount = $stripe_balance_transaction->net / 100;
+                        $balance_transaction->available_date = Carbon::parse($stripe_balance_transaction->available_on);
+                        $balance_transaction->created_at = Carbon::parse($stripe_balance_transaction->created);
+                        $balance_transaction->type = $stripe_balance_transaction->type;
+                        $balance_transaction->note = null;
+                        $balance_transaction->phone = null;
 
-                	switch ($balance_transaction->description) {
-                    		case strpos($balance_transaction->description, 'Invoice ') === 0 || strpos($balance_transaction->description, 'Subscription creation') === 0:
-                        		$balance_transaction->transaction_type = 'Invoice';
-                        		break;
-                    		case strpos($balance_transaction->description, 'Donation by ') === 0:
-                        		$balance_transaction->transaction_type = 'Donation';
-                        		break;
-                    		case strpos($balance_transaction->description, 'Charge for ') === 0:
-                        		$balance_transaction->transaction_type = 'Charge';
-                        		break;
-                    		default:
-                        		$balance_transaction->transaction_type = 'Manual';
-                        		break;
-                	}
+                        switch ($balance_transaction->description) {
+                                case strpos($balance_transaction->description, 'Invoice ') === 0 || strpos($balance_transaction->description, 'Subscription creation') === 0:
+                                    $balance_transaction->transaction_type = 'Invoice';
+                                    break;
+                                case strpos($balance_transaction->description, 'Donation by ') === 0:
+                                    $balance_transaction->transaction_type = 'Donation';
+                                    break;
+                                case strpos($balance_transaction->description, 'Charge for ') === 0:
+                                    $balance_transaction->transaction_type = 'Charge';
+                                    break;
+                                case strpos($balance_transaction->description, 'REFUND') === 0:
+                                    $balance_transaction->transaction_type = 'Refund';
+                                    break;
+                                default:
+                                    $balance_transaction->transaction_type = 'Manual';
+                                    break;
+                        }
 
-                	$balance_transaction->save();
-		}
+                        $balance_transaction->save();
+                }
             }
         }
     }
