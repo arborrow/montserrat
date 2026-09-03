@@ -72,7 +72,13 @@ class StripePayoutController extends Controller implements HasMiddleware
         $perPage = 25;
         $page = request()->input('page', 1);
 
-        $collection = StripePayout::with('transactions')->orderByDesc('date')->get()->filter->is_unreconciled->values();
+        $collection = StripePayout::sinceConversionToStripe()
+            ->with('transactions')
+            ->orderByDesc('date')
+            ->get()
+            ->filter->is_unreconciled
+            ->values();
+
         $payouts = new LengthAwarePaginator(
             $collection->forPage($page, $perPage),
             $collection->count(),

@@ -50,4 +50,8 @@ class StripePayout extends Model implements Auditable
     {
         return $this->amount != $this->credit_card_total;
     }
+    public function scopeSinceConversionToStripe($query)
+    {
+        return $query->whereDate('arrival_date', '>=', '2022-06-15');
+    }
 }
