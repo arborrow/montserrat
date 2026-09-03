@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Stripe\StripeClient;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class StripePayoutController extends Controller implements HasMiddleware
 {
@@ -59,6 +60,29 @@ class StripePayoutController extends Controller implements HasMiddleware
         // $report = $stripe->reporting->reportRuns->retrieve('frr_1KofWcJPvjW38HM4QXghpsEK');
 
         return view('stripe.payouts.index', compact('payouts'));   //
+    }
+
+/**
+     * Display a listing of the resource.
+     */
+    public function unreconciled(): View
+    {
+        Gate::authorize('show-stripe-payout');
+
+        $perPage = 25;
+        $page = request()->input('page', 1);
+
+        $collection = StripePayout::with('transactions')->orderByDesc('date')->get()->filter->is_unreconciled->values();
+        $payouts = new LengthAwarePaginator(
+            $collection->forPage($page, $perPage),
+            $collection->count(),
+            $perPage, $page,
+                ['path' => request()->url(),
+                'query' => request()->query(),
+                ]
+            );
+
+    return view('stripe.payouts.unreconciled', compact('payouts'));   //
     }
 
     /**

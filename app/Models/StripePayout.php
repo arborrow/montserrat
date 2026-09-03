@@ -43,6 +43,11 @@ class StripePayout extends Model implements Auditable
 
     public function getCreditCardTotalAttribute()
     {
-	return Payment::where('payment_description', 'Credit card')->whereDate('payment_date', $this->date)->sum('payment_amount');
+	    return Payment::where('payment_description', 'Credit card')->whereDate('payment_date', $this->date)->sum('payment_amount');
+    }
+
+    public function getIsUnreconciledAttribute()
+    {
+        return $this->amount != $this->credit_card_total;
     }
 }
