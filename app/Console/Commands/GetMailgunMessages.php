@@ -583,6 +583,14 @@ class GetMailgunMessages extends Command
                                     $order->retreat_registration_type = 'Registration and Deposit';
                                     $order->retreat_description = $order->retreat_category;
                                     break;
+                                case 'TALLER DE ACOMPAÑAMIENTO ESPIRITUAL';
+                                    $idnumber = '20270621';
+                                    $order->retreat_dates = 'June 21, 2027';
+                                    $event = Retreat::whereIdnumber($idnumber)->first();
+                                    $order->retreat_start_date = $event?->start_date;
+                                    $order->event_id = $event?->id;
+                                    $order->retreat_description = $order->retreat_category;
+                                    break;
                                 default: //  "Women's Retreat", "Men's Retreat", "Young Adult's Retreat"
                                     break;
                             }
