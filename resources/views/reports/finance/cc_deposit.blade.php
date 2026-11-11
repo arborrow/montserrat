@@ -36,10 +36,10 @@
    @endforeach
    <strong>Grand total of all payments: ${{number_format($grand_total,2)}}
 
-@if ($grand_total == $payout->amount)
+@if ($grand_total == optional($payout)->amount)
 (Reconciled)
 @else
-(Unreconciled: ${{number_format($payout->amount,2)}}); Diff: ${{number_format($payout->amount - $grand_total, 2)}}
+(Unreconciled: ${{number_format(optional($payout)->amount,2)}}); Diff: ${{number_format(optional($payout)->amount - $grand_total, 2)}}
 @endIf
 
  <br />

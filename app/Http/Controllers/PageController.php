@@ -168,7 +168,7 @@ class PageController extends Controller implements HasMiddleware
             return redirect()->back();
 	}
 	$payout = \App\Models\StripePayout::whereDate('date',$report_date)->first();
-	$payout_amount = $payout->credit_card_total;
+	$payout_amount = optional($payout)->credit_card_total ?? 0;
         $payments = \App\Models\Payment::wherePaymentDate($report_date)->where('payment_description', '=', 'Credit Card')->with('donation')->get();
         $grand_total = $payments->sum('payment_amount');
         $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
